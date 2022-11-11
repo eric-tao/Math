@@ -1,0 +1,160 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+
+\newcommand{\supp}{{\text{supp}}} 
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#8}
+\author{Eric Tao\\
+Math 235: Homework \#8}
+\maketitle
+ 
+\section*{2.1}
+
+\begin{problem}{4.6.21}
+
+Assume that $E \subseteq \mathbb{R}^d$ is measurable. Let $f: E \to \overline{F}$ be a measurable function. Define the distribution function of $f$ as follows:
+
+$$\omega(t) = \left| \{ |f| > t \} \right|, t \geq 0$$
+
+By definition, $\omega$ is a non-negative, extended real-valued function. Prove the following:
+
+(a) $\omega$ is monotone decreasing on $[0,\infty)$.
+
+(b) $\omega$ is right-continuous, that is, $\lim_{s \to t^+} \omega(s) = \omega(t)$ for every $t \geq 0$.
+
+(c) If $f$ is integrable, then $\lim_{s \to t^-} \omega(s) = \left| \{ |f| \geq t \} \right| $.
+
+(d) $\int_0^\infty \omega(t) dt = \int_E |f(x)| dx$
+
+(e) $f$ is integrable $\iff$ $\omega$ is integrable.
+
+(f) If $f$ is integrable, then $\lim_{n \to \infty} n \omega(n) = 0 = \lim_{n \to \infty} \frac{1}{n} \omega(\frac{1}{n})$.
+
+\end{problem}
+\begin{proof}[Solution]
+
+(a)
+
+We notice that for any $t' \geq t$, that by definition, $\{ |f| > t' \} \subseteq \{ |f| > t \}$. Then, by the monotonicity of the Lebesgue measure, we have that $|\{ |f| > t' \}| \leq |\{ |f| > t \}| \implies f(t') \leq f(t)$. Since this is true for all $t' \geq t$, we have that $\omega$ is monotone decreasing.
+
+(b) 
+
+Let $\{ a_n \}_{n \in \mathbb{N}}$ be any sequence of positive numbers where $a_n \to 0$. Take a monotone subsequence $\{ a_{n_k} \}$ such that $a_{n_{k+1}} < a_{n_k}$  for all $k$.
+
+
+(e)
+
+We have the following:
+
+$$ f \text{ integrable } \iff \lim_{E} f < \infty \iff \int_0^\infty \omega < \infty \iff \omega \text{ integrable } $$
+
+where we use the result from (d).
+
+\end{proof}
+
+\begin{problem}{4.6.27}
+
+Let $f \in L^1(\mathbb{R}), g \in L^\infty(\mathbb{R})$. Prove the following:
+
+(a) The integral that defines $(f \ast g)(x)$ exists for every $x \in \mathbb{R}$.
+
+(b) $f \ast g$ is continuous on $\mathbb{R}$.
+
+(c) $f \ast g$ is bounded on $\mathbb{R}$, and $\Vert f \ast g \Vert_\infty \leq \Vert f \Vert_1 \Vert g \Vert_\infty$.
+
+\end{problem}
+\begin{proof}[Solution]
+
+(a)
+
+Recall that for any $x$, we define $(f \ast g)(x) = \int_{\mathbb{R}} f(y)g(x-y) dy$. Since we know that $f^+, f^- \leq |f|$ by definition, it suffices then to show that $\int_{\mathbb{R}} |f(y)g(x-y)| dy < \infty$. Since $g \in L^\infty(\mathbb{R})$, we can say that $|g| \leq M$ for some $M \in \mathbb{R}$ a.e.  But then, we have that $|f(y)g(x-y)| \leq M|f(y)|$ for almost every $y \in \mathbb{R}$. So, we have that:
+
+$$ \int_{\mathbb{R}} |f(y)g(x-y)| dy \leq \int_{\mathbb{R}} M|f(y)| dy \leq M \Vert f \Vert_1 < \infty$$
+
+Thus, $(f \ast g)(x)$ exists for all $x \in \mathbb{R}$.
+
+(b)
+
+
+
+\end{proof}
+
+\begin{problem}{4.6.28}
+
+(a) Show that if $f,g \in C_c(\mathbb{R})$, then $f \ast g \in C_c(\mathbb{R})$ and $$\supp(f \ast g) \subseteq \supp(f) + \supp(g) = \{ f + g : x \in \supp(f), y \in \supp(g) \}$$
+
+Conclude that $C_c(\mathbb{R})$ is closed under convolution.
+
+(b) Is $C_c^1(\mathbb{R})$ closed under convolution?
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+
+\end{proof}
+
+\begin{problem}{4.6.29}
+
+Let $E \subseteq \mathbb{R}$ be a measurable subset with $0 < |E| < \infty$.
+
+(a) Prove that the convolution $\chi_E \ast \chi_{-E}$ is continuous.
+
+(b) Prove the Steinhaus Theorem: The set $E - E = \{ x - y : x,y \in E\}$ contains an open interval centered at the origin.
+
+(c) Show that $\lim_{t \to 0} | E \cap (E + t)| = |E|, \lim_{t \to \pm \infty} |E \cap (E + t)| = 0$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+By 4.6.27 (b), since $\chi_{-E}$ is an indicator function, it is bounded on $\mathbb{R}$, in particular, by 1, so $\chi_{-E} \in L^\infty(\mathbb{R})$ and $\chi_{E} \in L^1(\mathbb{R})$ since $\int_{\mathbb{R}} \chi_{E} = |E|< \infty$, their convolution is continous.
+
+(b)
+
+
+
+\end{proof}
+
+\section*{2.2}
+
+\begin{problem}{5.1.5}
+
+Prove that the Cantor-Lebesgue function is H\"older continuous for $0 < \alpha \leq \log_3 2$. In particular, notice that it is not Lipschitz.
+
+\end{problem}
+\begin{proof}[Solution]
+
+\end{proof}
+
+\begin{problem}{5.1.7}
+
+Let $C$ be the Cantor set, let $\phi$ be the Cantor-Lebesgue function, and define $g(x) = \phi(x) + x$ for $x \in [0,1]$.
+
+(a) Prove that $g: [0,1] \to [0,2]$ is continous, strictly increasing, and a bijection. Further, its inverse $h = g^{-1}: [0,2] \to [0,1]$ is also a continuous, strictly increasing, bijection.
+
+(b) Show that $g(C)$ is a closed subset of $[0,2]$ and that $|g(C)| = 1$.
+
+(c) Since $g(C)$ has positive measure, it follows that there exists $N \subseteq g(C)$ such that $N$ is not Lebesgue measurable. Show that $A = h(N)$ is a Lebesgue measurable subset of $[0,1]$.
+
+(d) Set $f = \chi_A$. Prove that $f \circ h$ is not a Lebesgue measurable function.
+
+\end{problem}
+\begin{proof}[Solution]
+
+
+\end{proof}
+
+ 
+
+\end{document}

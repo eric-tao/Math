@@ -1,0 +1,299 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#1}
+\author{Eric Tao\\
+Math 235: Homework \#1}
+\maketitle
+ 
+\section*{2.1}
+
+\begin{problem}{1.1.20}
+Assume ${\{x_n\}_{n\in\mathbb{N}}}$ is a Cauchy sequence in a metric space X, and there exists a subsequence ${\{x_{n_k}\}_{k\in\mathbb{N}}}$  that converges to $x \in X$. Prove that $x_n \rightarrow x$.
+\end{problem}
+
+\begin{proof}[Proof]
+Let $ \epsilon > 0$ be given.
+
+Since ${\{x_n\}}$ is Cauchy, we can choose $N$ such that for all $ m,n > N$, $d(x_m,x_n) < \frac{\epsilon}{2}$.
+
+Similarly, since $x_{n_k} \rightarrow x$, there exists $N_k$ such that for all $n_k > N_k$, $d(x_{n_k},x) < \frac{\epsilon}{2}$. In particular, we may choose $N_k$ such that $N_k > N$
+
+Let $m > N_k$. 
+
+Then, by the triangle inequality, we have $d(x, x_m) \leq d(x,x_{n_k}) + d(x_m,x_{n_k})$, where $n_k > N_k$, as above. Since $n_k > N_k$, we have that $d(x,x_{n_k}) < \frac{\epsilon}{2}$, by the convergence of the subsequence.
+Similarly, since the entire sequence is Cauchy, and $m,n_k > N_k > N$, we have that $d(x_m,x_{n_k}) < \frac{\epsilon}{2}$.
+
+Thus, $d(x, x_m) \leq d(x,x_{n_k}) + d(x_m,x_{n_k}) <  \frac{\epsilon}{2} +  \frac{\epsilon}{2} = \epsilon $ 
+
+\end{proof}
+
+\begin{problem}{1.3.8}
+Let $g \in C_0(\mathbb{R})$ be any function that does not belong to $C_c(\mathbb{R})$. For each integer $n > 0$, define a compactly supported approximation to $g$ by setting $g_n(x) = g(x)$ for $|x| \leq n$ and $g_n(x) = 0$ for $|x| > n+1$, and let $g_n$ be linear on $[n,n+1]$ and $[-n-1, -n]$. Show that $\{g_n\}_{n \in \mathbb{N}}$ is Cauchy in $C_c(\mathbb{R})$ with respect to the uniform norm, but it does not converge uniformly to any function in $C_c(\mathbb{R})$. Conclude that $C_c(\mathbb{R})$ is not complete with respect to $\Vert \cdot \Vert_u$ and is not a closed subset of $C_0(\mathbb{R})$
+\end{problem}
+
+\begin{proof}[Proof]
+First, we begin by examining $\Vert g_m - g_n \Vert_u$, where, WLOG, we take $m > n$. We notice then, by the triangle inequality, we have that, for all $x \in \mathbb{R}$:
+$$|g_m(x) - g_n(x)| = |g_m(x) + (-g_n(x))| \leq |g_m(x)| + |g_n(x)|$$.
+
+We also notice that because $g_m$ and $g_n$ only differ on the interval $[n,m+1]$ and $[-m-1, -n]$, we need only consider $x \in [n,m+1] \cup [-m-1,-n]$ or, $ n \leq |x| \leq m+1$  as $|g_m - g_n| = 0$ for all $x$ outside of those two intervals.
+
+
+Then, we proceed as follows. Let $\epsilon > 0$ be given. Since $g \in C_0(\mathbb{R})$, we may choose $k \in \mathbb{N}$ such that for all $x > k$, $|g(x)| < \frac{\epsilon}{6}$.
+
+Now, choose $m > n > k$. From the remarks above, we see the following, where we define $I =  [n,m+1] \cup [-m-1,-n]$ for bookkeeping:
+$$ \Vert g_m - g_n \Vert_u = \sup_{x \in I} |g_m(x) - g_n(x)| \leq \sup_{x \in I} (|g_m(x)| + |g_n(x)|)$$.
+
+ However, since $m,n > k$, we have that both $|g_m(x)| < \frac{\epsilon}{6}$ and $|g_n(x)| < \frac{\epsilon}{6}$. Thus:
+
+$$ \Vert g_m - g_n \Vert_u \leq \sup_{x \in I} (|g_m(x)| + |g_n(x)|) \leq \sup_{x \in I} (\frac{\epsilon}{6} + \frac{\epsilon}{6}) = \frac{\epsilon}{3} < \epsilon $$. Thus,  $\{g_n\}_{n \in \mathbb{N}}$ is Cauchy in $C_c(\mathbb{R})$. However, it cannot be convergent to any function in $C_c(\mathbb{R})$ because it is convergent to $g$:
+
+Let $\epsilon > 0$ be given. Since $g \in C_0(\mathbb{R})$, we may choose $k \in \mathbb{N}$ such that for all $x > k$, $|g(x)| < \frac{\epsilon}{6}$. Choose any $n > k$. Then, we have:
+$$ \Vert g - g_n \Vert_u = \sup_{x \in \mathbb{R}} |g - g_n| = \sup_{ |x| > n } (|g|  + | g_n|) \leq \frac{\epsilon}{6} + \frac{\epsilon}{6} = \frac{\epsilon}{3} < \epsilon $$
+
+However, by construction, $g$ does not belong to $C_c(\mathbb{R})$, and belongs to the superset $C_0(\mathbb{R})$. Since limits are unique in normed metric spaces, the limit point does not belong in $C_c(\mathbb{R})$, not all Cauchy sequences are complete, and $C_c(\mathbb{R})$ does not contain all of its limit points and is therefore not closed.
+\end{proof}
+
+\begin{problem}{1.4.4}
+Prove the following statements:
+
+(a) If $f$ is H\"{o}lder continuous on an interval $I$ for some exponent $\alpha > 0$, then $f$ is uniformly continuous on $I$.
+
+(b) If $f$ is H\"{o}lder continuous on an interval $I$ for some exponent $\alpha > 1$, then $f$ is constant on $I$.
+
+(c) The function $f(x) = |x|^{\frac{1}{2}}$ is  H\"{o}lder continuous on $[-1,1]$ for exponents $0<\alpha\leq1/2$ but not for any exponent $\alpha >  1/2$.
+
+(d) The function $g$ defined by $g(x) = -1/\ln x$ for $x > 0$ and $g(0) = 0$ is uniformly continuous on $[0,1/2]$, but it is not H\"{o}lder continous for any exponent $\alpha > 0$.
+\end{problem}
+
+\begin{proof}[Proof]
+
+(a)
+
+Let $\epsilon > 0$ be given. Because $f$ is  H\"{o}lder continuous on $I$ for some $\alpha_0 > 0$, fix a $K_0 > 0$ such that $|f(b) - f(a)| \leq K_0|b - a|^{\alpha_0} = K_0 * d(a,b)^{\alpha_0}$.  Choose $\delta> 0$ such that $\delta = (\epsilon/K_0)^{1/\alpha_0}$. Then, for $d(a,b) < \delta$, our  H\"{o}lder continuity equation becomes:
+
+$$ d(f(a),f(b)) = |f(b) - f(a)|  \leq K_0|b - a|^{\alpha_0} = K_0 * d(a,b)^{\alpha_0} < K_0 * [(\epsilon/K_0)^{1/\alpha_0}]^{\alpha_0} = K_0 * \epsilon/K_0 = \epsilon$$.
+
+Thus, $f$ is uniformly continuous on $I$.
+
+(b)
+
+First, fix some point $x_0 \in I$ and assume $f$ is H\"{o}lder continuous with exponent $\alpha_1 > 1$. We may reexpress $\alpha_1 = 1 + \alpha_1'$, with $\alpha_1' > 0$. Then, for any other point $h \in I$, we have that, for some $K_1 > 0$:
+
+$$ |f(x_0) - f(h)| \leq K_1 |x_0 - h|^{\alpha_1' + 1} $$
+
+Rearranging, we have:
+
+$$ \frac{|f(x_0) - f(h)|}{|x_0 - h|} \leq K_1 |x_0 - h|^{\alpha_1'} $$
+
+Taking the limit as both sides of $h \rightarrow x_0$, we find that:
+
+$$\lim_{h \rightarrow x_0} \frac{|f(x_0) - f(h)|}{|x_0 - h|} \leq \lim_{h \rightarrow x_0} K_1 |x_0 - h|^{\alpha_1'} = 0 $$
+
+We recognize the left hand side as the derivative of $f$ at $x_0$, and so we find that at an arbitrary $x_0 \in I$, $f'$ exists and is equal to 0. In particular, since the choice of $x_0$ was arbitrary, we see that $f'$ exists on $I$ and is identically $0$. Then, by the mean value theorem, we have that:
+
+$$ \forall a,b \in I, \frac{f(b) - f(a)}{b-a} = f'(c) = 0  \implies f(b) - f(a) = 0 \implies f(a) = f(b)$$
+
+Thus, $f$ is constant.
+
+(c)
+
+By a similar argument to the proof of 1.4.3 above, we will look at $f(x) = |x|^{\frac{1}{2}}$ on $[0,1]$ and claim by symmetry, that this extends to $[-1,1]$. First, let's consider the following quantity, for $\alpha \in (0,1]$ and $a,b \in [0,1]$, with, wlog, $b > a$:
+
+$$ \frac{|f(b) - f(a)|}{|b-a|^{\alpha}} = \frac{|\sqrt{b} - \sqrt{a}|}{|\sqrt{b} - \sqrt{a}|^\alpha|\sqrt{a} +\sqrt{b}|^\alpha} = \frac{|\sqrt{b} - \sqrt{a}|^\alpha}{|\sqrt{a} +\sqrt{b}|^\alpha} * |\sqrt{b} - \sqrt{a}| ^{1-2\alpha} = \Big| 1 - \frac{2\sqrt{a}}{\sqrt{a} + \sqrt{b}}\Big|^{\alpha}  * |\sqrt{b} - \sqrt{a}| ^{1-2\alpha} $$
+
+We notice that for the quantity, $\frac{2\sqrt{a}}{\sqrt{a} + \sqrt{b}}$, it is non-negative, and since $b > a$, $\sqrt{b}+ \sqrt{a} > 2\sqrt{a}$ we have that $0 \leq \frac{2\sqrt{a}}{\sqrt{a} + \sqrt{b}} \leq \frac{2\sqrt{a}}{2\sqrt{a}} = 1$. Then:
+
+$$ \Big| 1 - \frac{2\sqrt{a}}{\sqrt{a} + \sqrt{b}}\Big|^{\alpha} \leq |1|^\alpha  = 1 $$
+
+Now, we look at the second quantity $K =|\sqrt{b} - \sqrt{a}| ^{1-2\alpha}$. Here, we split into three cases: $1-2\alpha < 0$,$1-2\alpha > 0$,$1-2\alpha = 0$.
+
+For $1-2\alpha<0$, or, $\alpha > 1/2$, we have that this quantity is unbounded, as it looks like $1/|\sqrt{b} - \sqrt{a}| ^{2\alpha - 1}$ where $2\alpha - 1$ is positive. Suppose, for example, we fix $ a = 0$. Then, for the quantity  $1/\sqrt{b} ^{2\alpha - 1}$, as $b \rightarrow 0$, this value is unbounded. Then, there can not exist any constant to make $f$  H\"{o}lder continuous.
+
+Now, suppose $1-2\alpha = 0 \implies \alpha = 1/2$. Then we have $K = 1$, and, in particular, $1$ is a bound.
+
+Finally, suppose $1 - 2\alpha > 0 \implies 0 < \alpha < 1/2$. We notice that $\sqrt{b} - \sqrt{a}$ is bounded above by $1$, so we have $1$ to a positive exponent, which is itself $1$. Then, as in the second case, $1$ is a bound.
+
+From these cases, we conclude that $f$ is  H\"{o}lder continuous on $[0,1]$ and thus $[-1,1]$ with exponent $\alpha$ when $\alpha \in (0,1/2]$ and not for any $\alpha > 1/2$.
+
+(d)
+
+Firstly, we see that because $-\ln x$ is continuous on $(0,0.5]$, we have that $-1/\ln x$ is continuous on $(0,0.5]$. Further, we see that because as $x \rightarrow 0$, $\ln x \rightarrow \infty$, so $-1/\ln x \rightarrow 0$, so $g$ is continuous all of $[0,0.5]$. Then, because $f$ is continous, $[0,0.5]$ a closed, bounded subset of $\mathbb{R}$ and thus compact, and we live in a metric space, we have that $f$ is uniformly continuous by the Heine-Cantor Theorem.
+
+However, consider the quantity for $\alpha \in (0,1]$ and $b \in [0,1]$:
+
+$$ \frac{|f(b) - f(0)|}{|b-0|^{\alpha}} = \frac{|-1/\ln b|}{(b)^{\alpha}} =  \frac{1/b^{\alpha}}{-\ln b}$$
+
+We notice that as $b \rightarrow 0$, $1/b^{\alpha} \rightarrow \infty$ and $-\ln b \rightarrow \infty$, $1/x, -\ln x$ differentiable on $(0,0.5)$, we satisfy the conditions of L'H\^{o}pital's rule.
+
+Then, we have that:
+
+$$ \lim_{b \rightarrow 0} \frac{1/b^{\alpha}}{-\ln b} =  \lim_{b \rightarrow 0} \frac{-\alpha/b^{\alpha + 1}}{-1/b} = \lim_{b \rightarrow 0} \frac{\alpha}{b^{\alpha}} \rightarrow \infty $$
+
+Then, by  L'H\^{o}pital's rule, the original quantity is unbounded. Since the choice of $\alpha$ did not affect the quantity, we conclude that $g$ cannot be  H\"{o}lder continuous for any $\alpha \in (0,1]$ on $[0,0.5]$.
+
+\end{proof}
+
+\section*{2.2}
+
+\begin{problem}{2.1.29}
+Prove that a countable union of sets that each have exterior measure zero has exterior measure zero. That is, if $Z_k \subseteq \mathbb{R}^d$ and $|Z_k|_e = 0$ for each $k \in \mathbb{N}$, then $|\cup_k Z_k|_e = 0$
+\end{problem}
+
+\begin{proof}[Proof]
+Here, we apply Theorem 2.1.13 from Heil, the countable subadditivity of exterior measures, by that, we have:
+
+$$ |\cup_k Z_k|_e \leq \Sigma_{k=1}^{\infty} |Z_k|_e$$
+
+Since $|Z_k|_e = 0$ for all $k$, then:
+
+$$ |\cup_k Z_k|_e \leq \Sigma_{k=1}^{\infty} |Z_k|_e = \Sigma_{k=1}^{\infty} 0 = 0 $$ Since by the definition of exterior measure, the measure of a set is non-negative as the volume of boxes are non-negative, we have that $|\cup_k Z_k|_e \leq 0 \rightarrow |\cup_k Z_k|_e = 0$
+\end{proof}
+
+\begin{problem}{2.1.32}
+Show that if $f: \mathbb{R} \rightarrow \mathbb{R}$ is continuous, then its graph
+
+$$ \Gamma_f = \{ (x, f(x)) | x \in \mathbb{R}\} \subseteq \mathbb{R}^2$$
+
+has measure zero, i.e., $|\Gamma_f|_e = 0$.
+\end{problem}
+
+\begin{proof}[Proof]
+Let $\epsilon > 0$ be given. Let $\{ q_n | n \in \mathbb{N} \}$ be an enumeration of the rationals.
+
+Because $f$ is continous, in particular, continuous at each point $q_n$, there exists a $\delta > 0$ such that $ |x - q_n| < \delta \rightarrow |f(x) - f(q_n)| < \epsilon / 2^{(n+1)}$. Set $0 < w_n < \text{max}(\delta,1/2)$ and define the interval $I_n = [q_n - w_n, q_n + w_n]$. Then, construct the box:
+$$Q_n = I_n \times [f(q_n) - \epsilon / 2^{n+1}, f(q_n) + \epsilon / 2^{n+1}]$$
+
+Since the rationals are dense, these intervals $I_n$ cover $\mathbb{R}$. Also, because of the continuity of $f$ as above, we see that $\Gamma_f$ in the interval $I_n$ is completely contained within $Q_n$. We see that for any $x_n$ in $I_n$, $|q_n - x_n| \leq w_n$, so that:
+$$|f(q_n) - f(x_n)| <  \epsilon / 2^{n+1} \rightarrow f(q_n) - \epsilon / 2^{n+1} <  f(x_n) < f(q_n) + \epsilon / 2^{n+1}$$
+
+Further, due to our condition on $w_n$, we have that:
+
+$$\text{vol}(Q_n) = ( [q_n + w_n] - [q_n - w_n]) * ([ f(q_n) + \epsilon / 2^{n+1}] - [ f(q_n) - \epsilon / 2^{n+1}]) = 2w_n * 2\epsilon/2^{n+1} < \epsilon/2^n $$
+
+Thus, we have that the collection of $\{ Q_n \}$ for $n \in \mathbb{N}$ has volume $\Sigma_{n=1}^{\infty} \epsilon/2^n = \epsilon$ and since we can construct a collection of boxes with the sum of their volumes as arbitrarily small, the outer measure $|\Gamma_f|_e = 0$.
+
+\end{proof}
+
+\begin{problem}{2.1.35}
+Find the exterior measures of the following sets.
+
+(a) $L = \{(x,x) | 0 \leq x \leq 1 \}$ the diagonal of the unit square in $\mathbb{R}^2$.
+
+(b) An arbitrary line segment, ray, or line in $\mathbb{R}^2$
+\end{problem}
+
+\begin{proof}[Proof]
+First, we will prove part (a).
+
+Define a parametrization of the line $L$ via $f: [0,1] \rightarrow L$ where $f(t) = t(1,1) + (0,0)$. We claim this has exterior measure 0. Before we prove that, let's first show that this line L is differentiable and thus continuous.
+
+$$ f'(t_0) = \lim_{h\rightarrow 0} \frac{f(t_0+h) - f(t_0)}{h} =  \lim_{h\rightarrow 0} \frac{(t_0+h)(1,1) + (0,0) - [t_0(1,1) + (0,0)] }{h}  = \lim_{h\rightarrow 0} \frac{h(1,1)}{h} = (1,1) $$.
+
+Since this is true irrespective of the point $t_0$, the derivative exists for all points on the domain. Therefore, $f$ is also continuous on its domain.
+
+Let $\epsilon > 0$ be given. 
+
+Let $\{ q_n \}$ be an enumeration of $\mathbb{Q} \cap [0,1]$. Then, use the same construction and argument as 2.1.32 above.
+
+Part (b) follows in a similar fashion. Here, we note that for a line segment $S$, we have a parametrization that looks like  $f: [0,1] \rightarrow \mathbb{R}^2$ where $f(t) = t(x_1,y_1) + (x_0,y_0)$, where $(x_0,y_0),(x_1,y_1)$ are the endpoints of the line segment. For a ray $R$, we have a parametrization of form $g: [0, \infty) \rightarrow \mathbb{R}^2$ where $g(t) = t(x'_1, y'_1) + (x'_0, y'_0)$ for $(x'_0,y'_0)$ the fixed starting point and $(x'_1,y'_1)$ any other point on the ray. Finally, for a line $L$, we have a parametrization of form $h: \mathbb{R} \rightarrow \mathbb{R}^2$ where $h(t) = t(x''_1, y''_1) + (x''_0, y''_0)$ for any two fixed points $(x''_1, y''_1),(x''_0, y''_0)$.
+
+The same argument applies. The functions $f,g,h$ are differentiable via the same calculation, therefore continuous. Then, we may apply a construction as 2.1.32 above, and therefore the exterior measure is 0.
+\end{proof}
+
+
+\begin{problem}{2.1.39}
+Given a set $E \subseteq \mathbb{R}^d$, show that $|E|_e = 0$ if and only if there exist countably many boxes $Q_k$ such that $\Sigma \text{vol}(Q_k) < \infty$ and each point $x \in E$ belongs to infinitely many $Q_k$.
+\end{problem}
+
+\begin{proof}[Proof]
+First, suppose $|E|_e = 0$. Then, for each $k \in \mathbb{N}$, there must exists some collection of countably many boxes $Q_k = \{ Q_{k,j} \}$ such that $\Sigma_j \text{vol}(Q_{k,j}) < 2^{-k}$ due to the properties of the infimum. Now, consider the collection of collection of boxes $\{  Q_{k} \} = \{ Q_{k,j} \} $ with $k,j \in \mathbb{N}$. This collection is countably infinite, because there exists a bijection from $\mathbb{N} \times \mathbb{N} \rightarrow \mathbb{N}$. Further, $\Sigma_{k} \Sigma_{j} \text{vol}(Q_{k,j}) \leq \Sigma_k 2^{-k} = 1$. Lastly, since each $Q_k$ is a cover of $E$, for any point $e \in E$, and for each $k$, there exists a box $\{ Q_{k,j} \}$ such that $e \in \{Q_{k,j}\}$.
+
+Now, suppose we have a set $E \subseteq \mathbb{R}^d$, and that there exists countably many boxes $Q_k$, $\Sigma \text{vol}(Q_k) < \infty$, and, for each point $x \in E$, $x$ belongs to infinitely many $Q_k$. Let $\epsilon > 0$ be given. Construct a collection of boxes $\{ Q_j \}$ as follows. First, choose any $Q_1$ such that $\text{vol}(Q_1) < \epsilon/2$. Then, choose any $Q_2$ such that $\text{vol}(Q_2) < \epsilon/2^2$ and $Q_2 \cap (E \setminus Q_1)$ is non-empty. More generally, construct $Q_i$ such that $\text{vol}(Q_i) < \epsilon/2^k$ and $Q_i \cap (E \setminus \cup_{n=1}^{i-1}Q_n)$ is non-empty, where this iterative process may or may not terminate.
+
+Let's justify our construction first. By hypothesis, $x \in E$ belongs to infinitely many $Q_k$, i.e. we have a collection of countably infinitely many $Q_k$. However, we also have that $\Sigma \text{vol}(Q_k) < \infty$, so then this implies that for some $k_0 > K$ and $\epsilon > 0$, that $\text{vol}(Q_k) < \epsilon$ for all $k > k_0$ as otherwise, we would have that the infimum is non-0, and then our lower bound on the sum of the volumes would be $\inf_k{Q_k} \times \#\{Q_k\} = \infty$. Further, we can refine this and say that for any point $x$, that we may find a small enough $Q_k$ that contains $x$ for approximately the same reason. Suppose not, then for every $Q_j$ that contains some $x_0$, we have that $\inf_j \{Q_j\} > 0$. But, there are infinitely many of such $Q_j$, so then we have that $\Sigma_j (Q_j) \geq \inf_j\{Q_j\} \times \#\{Q_j\} = \infty$, a contradiction. Finally, since we know that we have only countably many boxes, we are certain that this sequence either terminates, or becomes a countably infinite subset of $Q_k$.
+
+Now, we have that $\Sigma_i \text{vol}(Q_i) \leq \Sigma_i \epsilon/2^i = \epsilon$. Since we can find a sub-cover of arbitrarily small volume of $E$, it follows that $|E|_e = 0$.
+\end{proof}
+
+\section*{2.3}
+
+\begin{problem}{2.2.32}
+Show that if $A$ and $B$ are any measurable subsets of $\mathbb{R}^d$, then
+
+$$ | A \cup B | + | A \cap B | = |A| + |B| $$.
+\end{problem}
+
+\begin{proof}[Proof]
+We proceed here by using Carath\'eodory's criterion:
+
+Since $A$ is measurable, we have that $|B| = |A \cap B| + | A \setminus B |$, where we drop the exterior measure since we know that $B$ is measurable, $A \cap B$ is an intersection of measurable sets, thus measurable, and $A \setminus B$ is measurable because  $A \setminus B = A \cap B^c$, and $A, B^c$ are measurable sets.
+
+Similarly, we also have that $|A| = |B \cap A| + |B \setminus A|$ due to the measurability of $B$.
+
+So, we have that $|A| + |B| = 2 * |A \cap B | + |A \setminus B | + |B \setminus A|$. Now, we consider the sum $|A \cap B| + |A \setminus B| + |B \setminus A|$. These are measurable sets, but moreover, they must be disjoint. Then, via countable additivity, we have that:
+
+ $$|A| + |B| = |A \cap B | + [| A \cap B | + |A \setminus B | + |B \setminus A|] = |A \cap B| + | [ (A \cap B) \cup (A \setminus B) \cup (B \setminus A)] | = | A \cup B | + | A \cap B | $$.
+\end{proof}
+
+\begin{problem}{2.2.33}
+Assume that $\{E_n\}_{n \in \mathbb{N}}$ is a sequence of measurable subsets of $\mathbb{R}^d$ such that $|E_m \cap E_n| = 0$ whenever $m \not = n$. Prove that $|\cup E_n| = \Sigma | E_n | $
+\end{problem}
+
+\begin{proof}[Proof]
+
+Argue by induction on $n$ the number of distinct sets in the sequence.
+
+From 2.2.32, we have that $|E_1| + |E_2| = |E_1 \cup E_2 | + | E_1 \cap E_2 | =  |E_1 \cup E_2 |$.
+
+Now, suppose we have that $ |\cup_k E_k | = \Sigma_k|E_k| $ for $ k = 1,...m$. By 2.2.32 again, we have then that: $|E_{m+1}| + \Sigma_{k=1}^m |E_k| = |E_{m+1}| + |\cup_{k=1}^{m} E_k| = |\cup_{k=1}^{m+1} E_k | + | E_{m+1} \cap (\cup_{k=1}^{m} E_k)|$.
+
+But we see that $E_{m+1} \cap (\cup_{k=1}^{m} E_k) = \cup_{k=1}^m (E_{m+1} \cap E_k)$. But, by countable subadditivity and by hypothesis, we have that:
+
+$$|\cup_{k=1}^m (E_{m+1} \cap E_k)| \leq \Sigma_{k=1}^m (E_{m+1} \cap E_k) = 0 \implies |\cup_{k=1}^m (E_{m+1} \cap E_k)| = 0$$.
+
+So, we have that $|E_{m+1}| + |\cup_{k=1}^{m} E_k| = |\cup_{k=1}^{m+1} E_k | + | E_{m+1} \cap (\cup_{k=1}^{m} E_k)| = |\cup_{k=1}^{m+1} E_k | $, completing our inductive hypothesis.
+
+\end{proof}
+
+\begin{problem}{2.2.34}
+Let $S_r = \{ x \in \mathbb{R}^d | \Vert x \Vert = r \}$ be the sphere of radius $r$ in $\mathbb{R}^d$ centered at the origin. Prove that $|S_r|  = 0$.
+\end{problem}
+
+\begin{proof}[Proof]
+First, we remark that $S_r$ is measurable because $S_r$ is closed. This can be relatively easily seen by the fact that $S_r^c$ is the union of the open ball centered on the origin of radius r, and the compliment of the closed ball with the same radius and center.
+
+Now, we consider the following construction. Let $A_r$ be the closed ball of radius $r$, and let $B_r$ be the open ball of radius $r$, both centered at the origin. We claim that $|A_r| = |B_r|$, where we see that these are measurable already due to being closed and open, respectively.
+
+Now, let $\delta >0$, and consider $B_{r(1+\delta)}$. Obviously, we have the following inclusions:
+
+$$ B_r \subseteq |A_r| \subseteq |B_{r(1+\delta)}$$
+
+Then, we have via subadditivity:
+
+$$|B_r| \leq |A_r| \leq |B_{r(1+\delta)}|$$
+
+Even though we do not have a clear link between the volume of a ball and its measure yet, consider the following: Suppose we have a cover of the (open) ball of radius $r$ boxes. Suppose you then stretch each box by $(1 + \delta)$ in each dimension, that is, we take $\Pi_{i=1}^d [a_i,b_i] \mapsto \Pi_{i=1}^d [(1+\delta)a_i,(1+\delta)b_i]$. This is a covering of the ball of radius $r(1 + \delta)$, as, we can identify any point in $B_{r(1+\delta)}$ as coming from a point $B_{r}$ via $f: B_{r} \rightarrow B_{r(1+\delta)}$ via $\vec{x} \mapsto \vec{x}/\Vert x \Vert * (1+ \delta) * \Vert x \Vert$, so then we can find the box that it was covered by down in $B_{r}$, and then it must be covered in the expanded box.
+
+Then, that means, for any $\{ Q_k \}$ that covers $B_r$, we have that $\{ (1+ \delta)Q_k \}$ covers $B_{r(1+\delta)}$. Further, we notice that by the definition of the volume of a box, we have that $\text{vol}([1+\delta]Q_k) = \Pi(b_i(1+\delta) - a_i(1+\delta)) = (1+ \delta)^d \Pi(b_i -a_i) = (1+\delta)^d \text{vol}(Q_k)$ where $d$ denotes the dimension of our space. Since this is true for every covering of $B_r$, and because $|B_{r(1+\delta)}|$ is the infimum of all such coverings of $B_{r(1+\delta)}$, we have that $|B_{r(1+\delta)} \leq (1+ \delta)^d |B_r|$.
+
+Then, we have that
+
+$$|B_r| \leq |A_r| \leq  |B_{r(1+\delta)}| \leq (1+\delta)^d |B_r|$$.
+
+But, $\delta$ can be arbitrarily small, and as $\delta \to 0$, $(1+ \delta)^d \to 0$ as $d \geq 1$.
+
+Thus, we have that $|B_r| = |A_r|$.
+
+Now, then, since we have countable additivity for Lebesgue measurable sets, and we know that $A_r = B_r \cup S_r$, then we have that $|A_r| = |B_r| + |S_r|$, and thus, $|S_r| = 0$.
+
+\end{proof}
+
+\end{document}

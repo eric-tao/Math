@@ -1,0 +1,161 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+ 
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#3}
+\author{Eric Tao\\
+Math 235: Homework \#3}
+\maketitle
+ 
+\section*{2.1}
+
+\begin{problem}{2.4.8}
+(a) Prove that continuity from below holds for exterior Lebesgue measure. That is, if $E_1 \subseteq E_2 \subseteq ...$ is any nested increasing sequence of subsets of $\mathbb{R}^d$, then $|\cup E_k|_e = \lim_{k \to \infty} |E_k|_e$.
+
+(b) Show that there exists sets $E_1 \supseteq E_2 \supseteq ...$ in $\mathbb{R}$ such that $|E_k|_e < \infty$ for every $k$, and that:
+
+$$ | \cap_{k=1}^\infty E_k |_e < \lim_{k \rightarrow \infty} |E_k|_e $$
+\end{problem}
+\begin{proof}[Solution]
+(a)
+
+First, we note that due to the monotonicity of the outer measure, we have that $E_i \subseteq \cup_{k=1}^\infty E_i \implies | E_i |_e \leq |\cup_{k=1}^\infty E_i|_e$. Now, assume that $\lim{k \to \infty} |E_k|_e = \infty$. Then, due to monotonicity, we have that $ |\cup_{k=1}^\infty E_i|_e = \infty$, as otherwise, if it were bounded, we could find a $|E_i|_e \geq |\cup_{k=1}^\infty E_i|_e$. More generally, due to monotonicity, we already will have that  $\lim_{k \to \infty} |E_k|_e \leq |\cup E_k|_e$.
+
+Now, suppose $\lim{k \to \infty} |E_k|_e$ is finite. Let $\epsilon > 0$ be given. For each $E_i$, we may find an open set $U_i \supseteq E_i$ such that $|E_i| \leq |U_i| \leq |E_i| + \epsilon$. Construct the related sequence of sets $V_k \cup_{i=k}^\infty U_k$. By construction, we have that these sets are nested $V_1 \subseteq V_2 \subseteq ...$. Consider the union over all k $\cup_k V_k$. By the construction of the $U_i$, since $E_i \subseteq E_j$ for $j > i$, then, $E_i \subseteq U_i$ for all $j > i$, and thus $E_i \subseteq V_i \subseteq U_i$ for all $i$, it follows that $\cup E_k \subseteq \cup V_k$. Then, we have that, via continuity from below, that $|\cup E_k| \leq |\cup V_k| = \lim_{k \to \infty} |V_k|$. But, from our construction, we also have that for each $i$, $|E_i| \leq |V_i| \leq |U_i| \leq |E_i| + \epsilon$, and thus $\lim_{k \to \infty} |V_k| \leq \lim_{k \to \infty} |E_k| + \epsilon$. Then, we have that:
+
+ $$|\cup E_k| \leq |\cup V_k| = \lim_{k \to \infty} |V_k| \leq \lim_{k \to \infty} |E_k| + \epsilon$$
+
+Since $\epsilon$ can be taken to be arbitrarily small, this now implies that $|\cup E_k| = \lim_{k \to \infty} |E_k|$, as desired.
+
+(b)
+
+Take the set constructed in Heil for the proof of Theorem 2.4.5. That is, define the set $M$ as such: Start with the interval $[0,1]$ and define the equivalence relation $x \sim y = \{  x = y + q : q \in \mathbb{Q} \}$. Consider the equivalence classes of $[0,1]/\sim$. Construct $M$ by applying the axiom of choice, and selecting one element from each equivalence class. Continue and construct the collection $\{ M_k \}$ where we take $\{ q_k \}$ as an enumeration of the rationals, and we define $ M_k = (M + q_k)/[0,1]$, that is, modulo the interval $[0,1]$, so that each $M_k \subseteq [0,1]$. We notice that $M$ is in our collection, because $0$ is rational. Because equivalence classes partition a set, we are guaranteed that each $M_k$ is disjoint, and that $\cup M_k = [0,1]$.
+
+Now, consider the following sequence of sets. Define $E_1 = [0,1]$, and define $E_i = E_{1} \setminus \cup_{k=2}^i M_{k-1}$ for $i \geq 2$, where we just assume the enumeration of the $M_k$ starts at $k=1$. 
+
+Here, we go off to the side and prove a result from Heil: 2.2.43(d). Define the inner Lebesgue measure of a set $A \subseteq \mathbb{R}^d$ to be $|A|_i = \sup \{ |F| : F \text{ is closed and } F \subseteq A \}$. If $E$ is Lebesgue measurable, and $A \subseteq E$, then $|E| = |A|_i + |E \setminus A|_e$. Because $E$ is Lebesgue measurable, we may take a $U \supseteq E$ such that $|U \setminus E| < \epsilon$. Take any closed set $F \subseteq A$. We notice that $U \setminus F$ is open, because $U \cap F^c$ is an intersection of open sets. Moreover, it is a cover of $E \setminus A$ by construction. So, we have that $|U| = |E| + |U\setminus E| = |F| + |U \setminus F|$, where we have equality because $F, U \setminus F$ are measurable. Now, take any sequence of $F_k$ such that $|A|_i leq |F_k| + 1/k$, which we may do because the inner measure is a supremum. Then, we note for each $F_k$, $(U\setminus F_k)$ is a sequence of sets such that these are open, and converge to $|U \setminus A|_e$. Then, we have that $|E| + |U \setminus E| = |A|_i + |U \setminus A|_e$. Now, since the choice of $U$ is arbitrary, we can actually shrink $U$ such that $|U \setminus E| \to 0$, and $|U \setminus A|_e \to |E \setminus A|_e$, because $|U \setminus A | \leq |E \setminus A| + |(U \setminus E) \setminus A| \leq |E \setminus A| + |U \setminus E|$, and $| U \setminus E| < \epsilon$. Then, we find that $|E| = |A|_i + |E \setminus A|_e$.
+
+Now, consider the inner Lebesgue measure. Clearly, we have that it is translation invariant, as the Lebesgue measure of a closed set is translation invariant. Further, we also have monotonicity from the monotonicity of the Lebesgue measure, as well as subadditivity. (that is, suppose we have $A \cup B$, and $F_A \subseteq A, F_B \subseteq B$ with $F_A, F_B$ closed. Then, $F_A \cup F_B$ is closed, and $|F_A \cup F_B| \leq |F_A| + |F_B|$ since they need not be disjoint. Since this is true for any $F_A, F_B$, this implies that $|F_A \cup F_B|_i \leq |F_A|_i + |F_B|_i$.)
+
+Then, by the same argument that shows $M$ as non-measurable in Heil, we can claim that because $[0,1] = \overline{[0,1]}$, the closure, that $[0,1]$ has inner measure $1$, and that $|M|_i = 0$ because otherwise, we have a countable sum of inner measures of $M$ as $M_k$ are just translations.
+
+Now, consider the outer measure of each $E_i$. $E_1 = [0,1]$. From what we proved about the inner measure, we have that $|[0,1]| = |\cup_{k=2}^i M_{k-1}|_i + |[0,1] \setminus\cup_{k=2}^i M_{k-1}|_e \implies  |E_i|_e = |[0,1] \setminus\cup_{k=2}^i M_{k-1}|_e = |[0,1]| = 1$. So, we have a sequence of sets, with outer measure identically $1$, so then we have that $\lim_{k \to \infty} |E_k|_e = 1$. However, we know that $\cap E_k = \emptyset$ because since the $M_k$ partition $[0,1]$, for every $x \in [0,1]$, $x \in M_{k_0}$ for exactly one $k_0$. But then, by construction, this means that $x \in \cup_{k=2}^i M_{k-1}$ for $i > k_0$, so $x \not \in E_i$ for any $i > k_0$. Since the choice of $x$ was arbitrary, this is true for all $x$, and thus  $\cap E_k = \emptyset \implies |\cap E_k|_e = 0 < \lim_{k \to \infty} |E_k|_e = 1$
+\end{proof}
+
+\begin{problem}{2.4.10}
+Given any integer $d > 0$, show that there exists a set $N \subseteq \mathbb{R}^d$ that is not Lebesgue measurable.
+\end{problem}
+\begin{proof}[Solution]
+We use the same construction and argument in Heil, and extend to multiple dimensions.
+
+Fix a dimension $d$. Consider the rationals in the unit box $\Pi_{i=1}^d [0,1] \cap \mathbb{Q}^d$. We define the equivalence relationship $x \sim y \iff x -y \in \mathbb{Q}^d$. This is an equivalence relation because it is reflexive ( $ x - x = 0 \in \mathbb{Q}^d$), symmetric (if $x-y \in \mathbb{Q}^d$, then $-(x-y) = y-x \in \mathbb{Q}^d$ by being a ring) and transitive (if $x-y \in \mathbb{Q}^d$ and $y - z \in \mathbb{Q}^d$, then $x - z = x - y + y - z = (x-y) + (y-z) \in \mathbb{Q}^d$ due to $\mathbb{Q}^d$ being a ring). Then, the equivalence classes partition $[0,1]^d$ by virtue of being an equivalence relationship. Using the axiom of choice, construct a set $M$ such that $M$ has one representative from each (uncountably many) equivalence class.
+
+Suppose $M$, and actually, all sets are measurable, under the Lebesgue measure $\mu$, which we note to have the following properties for measurable sets:
+
+(a) $\mu([0,1]^d) = 1$
+
+(b) If $\{ E_i \}$ is a countable collection of disjoint measurable subsets of $\mathbb{R}^d$, then $\mu(\cup E_i) = \Sigma \mu(E_i)$
+
+(c) $\mu (E + h) = \mu(E)$ for every $E \subseteq \mathbb{R}^d$ and for any $h \in \mathbb{R}^d$.
+
+Take an enumeration of $\mathbb{Q}^d \cap [-1,1]^d$, and call it $\{ q_k \}$. This should exist because $d$ is finite, countable, and $\mathbb{Q}$ is countable, so has cardinality of at most $\mathbb{N} \times \mathbb{N}$, which is countable. Consider the sets $M_k = M + q_k$. These sets must be disjoint, because, suppose not, that is $x \in M_i \cap M_j$. Then, $x = [x] + q_i = [x'] + q_j$, for some equivalence classes $[x], [x']$. But then, we have that $[x] = [x'] + (q_j - q_i)$, with $q_j - q_i$ rational. But, then $[x],[x']$ differ by a rational, they are the same equivalence class then, which implies $x = x'$ as we only pick one element from each equivalence class, which implies that $q_j = q_i$.
+
+Consider the union of all such $M_k$, $\cup_{k=1}^\infty M_k$. This is a countable union of disjoint subsets of $\mathbb{R}^d$. Further, since $q_k \in [-1,1]^d$, we have that each $M_k \subseteq [-1,2]^d$. But also, because $M$ contains one element from every equivalence relation, we hit with any rational in $\mathbb{Q}^d \cap [-1,1]^d$, and every element of $[0,1]^d$ belongs to some equivalence class, $[0,1]^d \subseteq \cup M_k$.
+
+We notice by (a), that we have $\mu([0,1]^d) = 1$. By using the translations and countable additivity, we also have that $\mu( [-1,2]^d) = 3^d$.
+
+Then, using the monotonicity of the Lebesgue measure with our set inclusions, we have that:
+
+$$ 1 = \mu([0,1]^d) \leq \mu(\cup_{k=1}^\infty M_k) \leq \mu( [-1,2]^d) = 3^d $$
+
+However, by the definition of $M_k$, (b), and (c), we have that:
+
+$$  \mu(\cup_{k=1}^\infty M_k) = \Sigma_{k=1}^\infty \mu(M_k) = \Sigma_{k=1}^\infty \mu(M) $$
+
+Then, we have that $1 \leq \Sigma_{k=1}^\infty \mu(M) \leq 3^d$. But, $\mu$ can only take on values in $[0,\infty]$, and in particular then, $ \Sigma_{k=1}^\infty \mu(M)$ is either $0$ if $\mu(M) = 0$ and infinite otherwise. But that is a contradiction with our inequality.
+
+Thus, $M$ may not be a Lebesgue measurable set. 
+
+\end{proof}
+
+\section*{2.2}
+
+
+\begin{problem}{3.1.15}
+
+Let $E \subseteq \mathbb{R}^d$. Prove that $f: \to [-\infty,\infty]$ is measurable if and only if $\{ f > r \}$ is measurable for every rational number $r$.
+
+\end{problem}
+\begin{proof}[Solution]
+
+First, suppose $f$ is measurable. Then, we have that $\{ f > r \}$ is measurable for all $r \in \mathbb{R}$. In particular, since rational nubmers are real, this means that this is true for rational numbers as well.
+
+Now, suppose $\{ f > r \}$ is measurable for every rational number $r$. Let $x \in \mathbb{R} \setminus \mathbb{Q}$, that is, an irrational number. Take a sequence of points $\{ x_k \}_k$ such that $x_k \in (x,x + 1/k)$, which we can do, since the rationals are dense. Clearly, the sequence converges to $x$. We claim that $\cup_k \{ f > x_k \} = \{ f > x \}$. First, suppose $y \in \cup_k \{ f > x_k \}$. Then, for at least some $x_{k_0}$, $ y \in \{ f > x_{k_0} \}$. But, we have that $x_{k_0} > x$, by definition, so $f(y) \in (x_{k_0},\infty] \subseteq (x,\infty]$, and $y \in \{ f > x \}$, so $\cup_k \{ f > x_k \} \subseteq \{ f > x \}$. Now, suppose $y \in \{ f > x \}$. Then, $f(y) \in (x,\infty]$. Consider the interval $(x,f(y))$. In particular, for some $1/k_1$, we must have that $(x,x + 1/k_1) \subseteq (x,f(y))$ as otherwise, we would need $f(y) \leq x$, a contradiction. Then, $f(y) \in \{ f > x_{k_1} \}$, and thus $ \{ f > x \} \subseteq \cup_k \{ f > x_k \}$. Then, $\cup_k \{ f > x_k \} = \{ f > x \}$. But, this is a countable union of measurable sets, so $\{ f > x \}$ is measurable. Since the choice of $x$ was arbitrary, this is true for every irrational, so for every real number, $\{ f > x \}$ is measurable so $f$ is measurable.
+\end{proof}
+
+\begin{problem}{3.1.16}
+
+Let $E$ be a subset of $\mathbb{R}^d$. Prove that if $f: E \to [-\infty,\infty]$ is a measurable function, and $\{ f = -\infty \}$ is a measurable set, then $E$ is measurable.
+
+\end{problem}
+\begin{proof}[Solution]
+
+First, we notice that we can write $[-\infty, \infty] = \cup_{N=1}^\infty (-N,\infty] \cup \{ -\infty \}$. We see that by hypothesis, $f^{-1}(\{ -\infty \})$ is measurable. Further, because $f$ is measurable, we have that $f^{-1}( (-N,\infty])$ is measurable. Then, since this is a countable union, we have that the whole thing is measurable. So, $f^{-1}([-\infty,\infty])$ is measurable. Since the entirety of the codomain is measurable, that means our domain is measurable. Hence, $E$ is measurable.
+
+\end{proof}
+
+\begin{problem}{3.1.18}
+
+(a) Prove that $f: \mathbb{R}^d \to \mathbb{R}$ is a measurable function if and only if $f^{-1}(U)$ is a measurable set for every open set $U \subseteq \mathbb{R}$.
+
+(b) Prove that $f: \mathbb{R}^d \to \mathbb{C}$ is a measurable function if and only if $f^{-1}(U)$ is a measurable set for every open set $U \subseteq \mathbb{C}$.
+\end{problem}
+\begin{proof}[Solution]
+
+(a) 
+
+Clearly, if $f^{-1}(U)$ is measurable for every open set, then $f$ must be a measurable function because, let $x \in \mathbb{R}$. We may consider $\cup_{N=1}^\infty (x,x+N)$. Each of these are open sets, and this union is equal to $(x,\infty)$, since for any $y \in (x,\infty)$, I can find an $N \in \mathbb{N} : N > y-x \implies x+ N > y \implies y \in (x,x+N)$, and we clearly have that $(x,x+N) \subseteq (x,\infty)$ for every $N$. But, the inverse image of each $(x,x+N)$ is measurable, and taking the countable union over $N$, we have that $\{ f > x \}$ is measurable. Since the choice of $x$ was arbitrary, this works for any $x$, and hence $f$ is measurable.
+
+Now, suppose $f$ is a measurable function. Since we are working in $\mathbb{R}$, we may express any open set $U \subseteq \mathbb{C}$  as the union of at most countably many bounded open intervals $(a_k,b_k)$, that is, $U = \cup_{k=1}^\infty (a_k,b_k)$. However, we may rewrite $(a_k,b_k) = (-\infty,b_k) \cap (a_k,\infty)$. Since $f$ is measurable, we know that $f^{-1}((a_k,\infty))$ is measurable, and by Lemma 3.1.5 in Heil, we know that $f^{-1}((-\infty,b_k))$ is measurable too, for each $k$. Then, since measurable sets are closed under both countable unions and intersections, we have that $f^{-1}((a_k,b_k)) = f^{-1}((-\infty,b_k) \cap (a_k,\infty))$ is measurable, and  $f^{-1}(\cup_{k=1}^\infty (a_k,b_k)) = f^{-1}(U)$ is measurable. Since the choice of $U$ was arbitrary, the inverse image for every open set is measurable.
+
+(b)
+
+First, suppose $f^{-1}(U)$ is measurable for every open set in $\mathbb{C}$. Fix a real number $a \in \mathbb{R}$, and consider the open sets $U_n = \{ z \in \mathbb{C} : a < \Re(z) < a+ n \}$ for $n > 0$, that is, such that the real part is between $a,a+n \in \mathbb{R}$. This is open because we identify this set with the following set in $\mathbb{R}^2$: $\cup_{m=1}^\infty \{ (a,a+n) \times (-m,m) \}$, a countable union of open boxes, which is open. Consider the union of such sets, $\cup_n U_n$. In the same argument as part (a), this would be exactly the set $ \{ z \in \mathbb{C} : a < \Re(z) \}$. But, consider $f^{-1}(U_n)$. We know that this is measurable, but if we break into components $f = f_r + i f_i$, we have that $f^{-1}(U_n) = f_r^{-1}((a,a+n)) \cap f_i^{-1}(\mathbb{R})$, as it is exactly the points such that the image under $f_r$ lands within $(a,a+n)$ and $f_i$ is any imaginary part. But, $f_i^{-1}(\mathbb{R}) = \mathbb{R}^d$, so we have that $f^{-1}(U_n) = f_r^{-1}((a,a+n))$, and thus $f_r^{-1}((a,a+n))$ is measurable. Since each individual one is measurable, taking the union over $U_n$, we have that $f^{-1}(\cup_n U_n) = f_r^{-1}(\cup_{n=1}^\infty(a,a+n))= f_r^{-1}((a,\infty])$ is measurable. Thus, $f_r$ is measurable. Repeating the argument above for the open sets $V_n = \{ z \in \mathbb{C} : a < \Im(z) < a+n \}$ and identifying them in $\mathbb{R}^2$ as  $\cup_{m=1}^\infty \{ (-m,m) \times (a,a+n) \}$, we see that $f_i$ must be measurable. Then, $f$ is measurable.
+
+Now, suppose $f$ is a measurable function. Then, for $f = f_r + i f_i$, for $f: \mathbb{R}^d \to \mathbb{R}$, we have that $f_r$ and $f_i$ are measurable. Let $U \subseteq \mathbb{C}$ be an open set. Identifying the open sets in $\mathbb{C}$ as the open sets in $\mathbb{R}^2$, we see from Lemma 2.1.5, that we may find countably many (non-overlapping) cubes such that $U = \cup Q_k = \cup [x_k,x_k'] \times [y_k,y_k']$. However, here, we notice that we may rewrite, for each $k$, $ [x_k,x_k'] \times [y_k,y_k'] = \cup_{n=1}^\infty (x_k + 1/n,x_k' - 1/n) \times  (y_k + 1/n,y_k' - 1/n)$. Now, from part (a), since $f_r, f_i$ measurable, and $(x_k + 1/n,x_k' - 1/n), (y_k + 1/n,y_k' - 1/n)$ open sets for each $n$, then, the inverse image of those are measurable. Then, since we have that $f^{-1} = f_r^{-1} \cap f_i^{-1}$ on boxes, we have that the inverse image $f^{-1}([x_k,x_k'] \times [y_k,y_k'])$ is measurable. Finally, since each individual inverse image is measurable, we have that $f^{-1}(U) = f^{-1}( \cup [x_k,x_k'] \times [y_k,y_k']) = \cup f^{-1}( [x_k,x_k'] \times [y_k,y_k'])$, a countable union of measurable sets, thus measurable. Since the choice of $U$ was arbitrary, we have that  $f^{-1}(U)$ is a measurable set for every open set $U \subseteq \mathbb{C}$.
+
+\end{proof}
+
+\begin{problem}{3.1.19}
+Let $E \subseteq \mathbb{R}^d$ be a measurable set with $|E| > 0$, and assume that $f: E \to \overline{F}$ is a measurable function.
+
+(a) Show that if $f$ is finite almost everywhere, then there exists a measurable set $A \subseteq E$ such that $|A| > 0$ and $f$ is bounded on $A$. 
+
+(b) Suppose that it is not the case $f=0$ almost everywhere, that is, $f$ is non-zero on a set of positive measure. Prove that there exists a measurable set $A \subseteq E$ and a number $\delta > 0$ such that $|A| > 0$ and $|f| \geq \delta$ on $A$.
+
+\end{problem}
+\begin{proof}[Solution]
+
+(a)
+
+Suppose such an $A$ does not exist. Then, we have, for any $x \in \mathbb{R} \setminus \{ 0 \}$, that the measure of $\{ f > |x| \} \cup \{ f < |x| \}$ must be equal to that of $|E|$, as otherwise, the complement is exactly what we're looking for, $A$. In particular, this must be true for every $x$. Then, take a sequence $x_k  = N$ where $N  = 1,2...$. We would have that  $|\{ f > |x_k| \} \cup \{ f < |x_k| \}|  = |E|$ for all $k$, and thus $f$ is infinity almost everywhere, a contradiction. Thus, such an $A$ must exist. Note that we can run this same argument when $\overline{F} = \mathbb{C}$, simply by breaking things up into components, and considering the measure of $(\{ f_r > |x| \} \cup \{ f_r < |x| \}) \cap (\{ f_i > |x| \} \cup \{ f_i < |x| \})$.
+
+(b)
+
+%Construct the related function $g = 1/f$ where we say if $f = 0$, then $g = \infty$ and if $f = \pm \infty$, then $g = 0$. This is a measurable function, because if $a \in \mathbb{R}$, then $g > a \implies 0 < f < 1/a$, and $\{ 0 < f < 1/a \} = \{ f < 1/a \} \cap \{ f > 0 \}$, which are both measurable. Now, we run the same argument as part (a), with a modification. Let $A = \{ x  \in E : f(x) = 0 \}$, and partition $E = A \cup A^c$, where we take $A^c$ to be the compliment only in $E$. $A^c$ must be measurable, as we can rewrite it as $\{ f < 0 \} \cup \{ f > 0 \}$, so $A$ itself must be measurable as well. Further, by hypothesis, $|A^c| \not = 0$. Now, by the same argument in part (a), suppose that there does not exist a $|B|, \delta$ such that $B \subseteq A^c$, $|B| > 0$ and $g$ is bounded above by $\delta$. If we considered constructions that look like $U_x = \{ g > |x| \} \cup \{ g < |x| \}$, we would have that $A^c \subseteq \cup U_x^c$, and $|U_x^c| = 0$ since such a $B$ cannot exist. Then, $|A^c| = 0$, a contradiction. Thus, there exists a $|B|, \delta$ such that $|B| > 0$ and $-\delta < g < \delta$ on $B$ and $f \not = 0$. But, if $ -\delta < g < \delta$, then we have that $-\delta < 1/f < \delta \implies f < -1/\delta \text{ or } f > 1/\delta$. But that's exactly what we want, just instead, choosing $\delta' = 1/\delta$, and we recover $|f| > \delta'$. Again, if $\overline{F}= \mathbb{C}$, we may run this same argument, just noting that this would take $f = f_r + f_i i$ to $g = 1/f = (f_r - f_i i )/(f_r^2 + f_i^2)$, and we notice $f_r/(f_r^2 + f_i^2)$ is measurable because we see that $f_r^2 + f_i^2$ is measurable, since if $f_r$ is measurable, so must be $f_r^2$, since we may just take $\{ f_r > \sqrt{a} \} \cup \{ f_r < - \sqrt{a} \}$. Then, their sum
+
+%Then, consider the restricted function $\overline{g}: A^c =\to \overline{F}$. This is still a measurable function, as 
+
+First, we notice we may rewrite $E = A \cup B$, where $A = \{ x \in E : f(x) = 0 \}$ and $B = E \setminus A$, $|B| > 0$. Suppose that, contrary to hypothesis, there does not exist a $C, \delta$ such that $|C| > 0$ and $|f| \geq \delta$ on  $C$. In a similar fashion to part (a), for any real number $a \in \mathbb{R} \setminus \{ 0 \}$, and consider the set $\{ f < -a \} \cup \{ f > a \}$. This is measurable since it is the union of measurable sets. Further, take a sequence of rational numbers to $0$, for example, take the sets  $\{ f < -1/k \} \cup \{ f > 1/k \}$ for $k \geq 1$. Then, we have that $B = \cup_{k=1}^\infty (\{ f < -1/k \} \cup \{ f > 1/k \})$, so $B$ is measurable, and $|B| \leq |\cup_{k=1}^\infty (\{ f < -1/k \} \cup \{ f > 1/k \})|$. By our hypothesis, since no $C$ exists with positive measure, then $| (\{ f < -1/k \} \cup \{ f > 1/k \})| = 0$ for all $k$. Then, we have that $|B| = 0$. But this is a contradiction. Then, that means, for some $k_0$, we have that  $| (\{ f < -1/k_0 \} \cup \{ f > 1/k_0 \})|  > 0$, and we may take that to be our $C$, and $\delta = 1/k$. We may run the same argument for $\overline{F} = \mathbb{C}$, where we need just break things up into components again, and run over  $(\{ f_r < -1/k \} \cup \{ f_r > 1/k \}) \cap  (\{ f_i < -1/k \} \cup \{ f_i > 1/k \})$.
+\end{proof}
+
+
+\end{document}

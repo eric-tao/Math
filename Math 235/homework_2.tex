@@ -1,0 +1,221 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+ 
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#2}
+\author{Eric Tao\\
+Math 235: Homework \#2}
+\maketitle
+ 
+\section*{2.1}
+
+\begin{problem}{2.2.38}
+
+Let $E \subseteq \mathbb{R}^d$ with $|E| < \infty$. Prove that the following statements are equivalent:
+
+(a) $E$ is Lebesgue measurable.
+
+(b) For each $\epsilon > 0$, we can write $E = (S \cup A) \setminus B$ where $S$ is a union of finitely many nonoverlapping boxes and $|A|_e, |B|_e < \epsilon$.
+
+\end{problem}
+\begin{proof}[Solution]
+First, suppose $E$ is Lebesgue measurable. Let $\epsilon > 0$ be given. Due to the measurability, we may find an open set $U$ such that $|U \setminus E| < \epsilon$. But also, by Lemma 2.1.5 in Heil, since $U$ is open, there exists countably many nonoverlapping cubes $\{ Q_k \}$ such that $U = \cup Q_k$. Since $|E| < \infty$, this implies that our choice of $|U| < \infty$ as well, unless $\epsilon = \infty$. Then, since cubes are measurable, this implies that $|\cup Q_k| = |U| < \infty$. So, since this converges, we may choose $k_0$ such that $|\cup_{k=0}^{k_0} Q_k| > |U| - \epsilon \implies |U| - |\cup_{k=0}^{k_0} Q_k| < \epsilon$. Set $S = \cup_{k=0}^{k_0} Q_k$, $A = \cup_{k=k_0+1}^\infty Q_k$ and $B = U \setminus E$. Then, by our constructions, we have that $(S \cup A) \setminus B = ([\cup_{k=0}^{k_0} Q_k] \cup [\cup_{k=k_0+1}^\infty Q_k]) \setminus (U \setminus E) = (\cup_{k=0}^\infty Q_k) \setminus (U \setminus E) = U \setminus (U \setminus E) = U \cap [U \cap E^c]^c = U \cap (E \cup U^c) = (U \cap E) \cup (U \cup U^c) = E$, $|B| = |U \setminus E| < \epsilon$, and $|A| = |\cup_{k=k_0+1}^\infty Q_k| = |U| - |\cup_{k=0}^{k_0} Q_k| < \epsilon$.
+
+(b)
+
+Firstly, define $E = E_{1,k} = (S_k \cup A_k) \setminus B_k$ for $k \geq 1$ where $|A_k|_e,|B_k|_e < \frac{\epsilon}{2^{k + 1}} $. We claim that $E = ((\cup_k S_k) \cup (\cap_k A_k)) \setminus (\cup_k B_k)$.
+
+First, suppose $x \in E$. Then, for every $k$, we have that either that $x$ is in every $A_k$, so $x \in \cap_k A_k$. If $x \not \in A_{k_0}$ for some $k_0$, then $x \in S_{k_0} \subseteq \cup_k S_k$  and $x \not \in B_k$ for all $k$, so $x \not \in (\cap_k B_k)$. So $E \subseteq ((\cup_k S_k) \cup (\cap_k A_k)) \setminus (\cap_k B_k)$. Now, suppose that we have an $x \in  ((\cup_k S_k) \cup (\cap_k A_k)) \setminus (\cup_k B_k)$. In particular then, for each $E_k = (S_k \cup A_k) \setminus B_k$, we have that either $x \in A_k$ or, if not, $x \in S_k$. Further, $x \not \in B_k$, as otherwise, $x \in \cup_k B_k$. Thus, we have that $E= E_1 = ((\cup_k S_k) \cup (\cap_k A_k)) \setminus (\cap_k B_k)$. We identify the following: $S_1 = \cup_k S_k, A_1 = \cap_k A_k, B_1 = \cup_k B_k$. We notice then that since $A_1 \subseteq A_k$ for all $k$, then $|A_k| < \frac{\epsilon}{2^{k + 1}}$  then $|A_1|_e = 0$ and thus measurable. Further, we have that $S_1$ is measurable, as it is a countable union of measurable sets. Finally, we have that $ |B_1|_e = |\cup_k B_k|_e \leq \Sigma |B_k| < \Sigma \frac{\epsilon}{2^{k + 1}} = \frac{\epsilon}{2}$.
+
+Now, construct $E_i$ in the same way, but instead, force that $|A_k|_e,|B_k|_e < \frac{\epsilon}{2^{k + i}} $. We notice that $S_i$ is still measurable, and $A_i$ is still a set of measure 0, but we have $|B_i| = \Sigma_k \frac{\epsilon}{2^{k+i}} = \frac{\epsilon}{2^i}$, and $E = E_i$ for all $i$.  We now have a countable collection of $E_i$. Here, we enforce that $S_i \cup A_i = \emptyset$ as if not, we can always just take $\overline{A_i} = A_i \setminus S_i$, which will keep $|\overline{A_i}|_e = 0$ and keep $S_i$ as a union of union of boxes. Further, we enforce that $A_i \cap B_i = \emptyset$ as, if not, we can always find $\overline{A_i} = A_i \setminus B_i$ and same for $B_i$, which will keep the upper bound on $|B_i|_e <  \frac{\epsilon}{2^i}$. Then, we may rewrite $E_i = (S_i \cup A_i) \setminus B_i = (S_i \cup A_i) \cap B_i^c = (S_i \cap B_i^c) \cup (A_i \cap B_i^c) = (S_i \setminus B_i) \cup A_i$.
+
+
+We claim from here, that we can write $E =  (\cap_i S_i \setminus \cap_i B_i) \cup (\cup_i A_i)$. Suppose $x \in E$. Then, for every $i$ we can write $x \in (S_i \setminus B_i) \cup A_i$. If $x \in A_i$ for any $i$, then we're done. Otherwise, we have that $x \in S_i$ for every $i$ and $x \not \in B_i$ for any $i$. Then $x \in  (\cap_i S_i \setminus \cap_i B_i)$ and thus, $E \subseteq  (\cap_i S_i \setminus \cap_i B_i) \cup (\cup_i A_i)$. Now, instead, suppose we have an element $x \in  (\cap_i S_i \setminus \cap_i B_i) \cup (\cup_i A_i)$. If $x \in (\cup_i A_i)$, then for some $i_0$, $x \in A_{i_0}$, so then $x \in (S_{i_0} \setminus B_{i_0}) \cup A_{i_0} = E$. Now, suppose not. Then, $x \in (\cap_i S_i \setminus \cap_i B_i)$ which implies that for all $i$, $x \in S_i$ and $x \not \in B_i$. But then, for any $i$, $x \in S_i \setminus B_i \subseteq  (S_i \setminus B_i) \cup A_i = E$. So we have set equality. But, that means that since $ \cap_i B_i \subseteq B_i$ for all $i$, then $|\cap_i B_i|_e \leq |B_i|_e =\frac{\epsilon}{2^i}$ which implies that $|\cap_i B_i|_e = 0$. Then, we have a presentation of $E$ such that $\cap_i S_i$ is measurable, being a countable intersection of measurable sets,  $\cap_i B_i$ is a set of outer measure 0 and thus measurable, and $\cup_i A_i$ is a countable union of measurable sets, so thus measurable. Since $E$ lies within the algebra of measurable sets then, $E$ itself is measurable. 
+
+
+\end{proof}
+
+\begin{problem}{2.2.39}
+Let $E$ be a subset of $\mathbb{R}^d$ such that $0 < |E|_e < \infty$. Given $0 < \alpha < 1$, prove that there exists a cube $Q$ such that $|E \cap Q|_e \geq \alpha |Q|$.
+\end{problem}
+\begin{proof}[Solution]
+
+Fix an $\alpha \in (0,1)$ and an $E \subseteq \mathbb{R}^d$. Choose $\epsilon < \frac{\alpha - 1}{\alpha} |E|_e$. We claim that we may relax our conditions to being a box $Q$ such that $|E \cap Q|_e \geq \alpha |Q|$, because if this is true for the box, we may refine our countable cover to find a cube by rearranging our boxes to be cubes. We may find a countable cover of $E$ with boxes $\{ Q_k \}$ such that $|E|_e \leq \Sigma |Q_k| \leq |E|_e + \epsilon$. Now, suppose, to the contrary, that $|E \cap Q_k|_e < \alpha |Q_k|$ for all $k$. Then, we have that since $E = \cup (E \cap Q_k)$, that $|E|_e \leq |\cup (E \cap Q_k)|_e \leq  \Sigma |E \cap Q_k|_e \leq \Sigma \alpha |Q_k|$. But, from our original statement, we have $\Sigma |Q_k| \leq |E|_e + \epsilon \implies \Sigma \alpha |Q_k| \leq \alpha |E|_e + \alpha \epsilon$, so then we have that $|E|_e \leq  \alpha |E|_e + \alpha \epsilon$. However, from our choice of $\epsilon$, we have that $\alpha |E|_ + \alpha \epsilon < \alpha |E|_e + \alpha  \frac{1 - \alpha}{\alpha} |E|_e =  \alpha |E|_e + \alpha - 1 |E|_e = |E|_e$. But this implies from our inequality that $|E|_e < |E|_e$, which is a contradiction. Then, for any $\alpha \in (0,1)$, we can find a box $Q$ and thus a cube such that $|E \cap Q|_e \geq \alpha |Q|$.
+
+\end{proof}
+
+\begin{problem}{2.2.44}
+Let $E$ be a measurable subset of $\mathbb{R}^d$ such that $|E| < \infty$. Suppose that $A$ and $B$ are disjoint subsets of $E$ such that $E = A \cup B$. Prove that:
+
+$A$ and $B$ are measurable $\iff |E| = |A|_e + |B|_e$
+
+\end{problem}
+\begin{proof}[Solution]
+Clearly, if $A,B$ are measurable, then from our disjoint union and countable additivity, we have that $|E| = |A| + |B|$.
+
+Now, suppose we have $|E| = |A|_e + |B|_e$. Since $E$ is measurable, we may find a $U \supseteq E$ such that $|U \setminus E| < \epsilon/2$. Now, let $\{ Q_{k_A} \}$ be a collection of boxes that cover $A$ such that their interiors cover $A$, and that $\Sigma_{k=1}^\infty |Q_{k_A}|  = |A|_e + \epsilon/4$. Choose $\{ Q_{k_B} \}$ in the same way.
+
+Now, consider the related collection of sets $\{ U \cap Q_{k_A}^o \}$ and $\{ U \cap Q_{k_B}^o \}$, where $Q_{k_A}^o$ denotes the interior of $Q_{k_A}$ and same for $Q_{k_B}$. Since the interior of boxes is open, and $U$ is open, each $U \cap Q_{k_A}^o$ and $U \cap Q_{k_B}^o$  is open. Further, since $A \subseteq E$ and $A \subseteq \cup_{k_A = 1}^\infty Q_{k_A}^o$ by construction, we have that $U_B = \cup_{k_A = 1}^\infty U \cap Q_{k_A}^o \supseteq A$ and the same occurs for  $U_B = \cup_{k_B = 1}^\infty U \cap Q_{k_B}^o \supseteq B$. Since $U_A, U_B$ are unions of open sets, they are open. Then we consider the following. By Caratheodory’s Criterion, we take $U_A \setminus A$ as our set, and $E$ as our measurable set to yield:
+
+$$ | U_A \setminus A|_e = | (U_A \setminus A) \cap E|_e +  | (U_A \setminus A) \setminus E|_e $$.
+
+But, we notice that $ (U_A \setminus A) \cap E = U_A \cap A^c \cap (A \cup B) = U_A \cap B$, and $(U_A \setminus A) \setminus E  = U_A \cap A^c \cap E^c = U_A \cap E^c = U_A \setminus E$. Now, due to our construction, we have that since $U_A \subset U$, that $(U_A  \setminus E) \subseteq ( U \setminus E)$. Further, because we have $|E| = |A|_e + |B|_e$, then, we can claim from our construction that $| U_A \cup U_B| + |U_A \cap U_B| = |U_A| + |U_B| \leq |\Sigma_{k=1}^\infty |Q_{k_A}|  + \Sigma_{k=1}^\infty |Q_{k_B}|  = |A|_e + \epsilon/4 + |B|_e + \epsilon/4 = |E| + \epsilon$, but, by construction, we have $U_A \cup U_B \supseteq E$, so $|U_A \cup U_B|_e \geq |E|$, so $|U_A \cap U_B|  \leq \epsilon/2$. But, since $B \subseteq U_B$, we have then that $|U_A \cap B| \leq |U_A \cap U_B| \leq \epsilon/2$.
+
+Thus, we have that:
+
+$$ | U_A \setminus A|_e = |U_A \cap B|_e + |U_A \setminus E|_e \leq |U_A \cap U_B|_e + |U \setminus E|_e  \leq \epsilon/2 + \epsilon/2 = \epsilon$$
+
+Thus, $A$ is Lebesgue measurable, and $B$ follows with the same argument, switching the labels.
+
+
+\end{proof}
+
+\begin{problem}{2.2.50}
+Let $X$ be a set, and let $\Sigma$ be the collection of all $E \subseteq X$ such that at least one of $E$ or $X\setminus E$ is countable. Prove that $\Sigma$ is a $\sigma$-algebra on $X$.
+\end{problem}
+\begin{proof}[Solution]
+Here, we check that $\Sigma$ is non-empty, that it is closed under complements in $X$, and that it is closed under countable unions.
+
+Clearly, $\Sigma$ is non-empty, as $\emptyset$ is countable, vacuously. Then, $\emptyset, X \in \Sigma$.
+
+Further, by construction, we can see that $\Sigma$ is closed under complements. Suppose $E \in \Sigma$. Then, consider $E^c = X \setminus E$. Because $E \in \Sigma$, if $X \setminus E$ is countable, then we're done. Otherwise, suppose $X \setminus E$ is not countable, and $E$ is countable. Well, by deMorgan's Laws, we have that: $X \setminus (X \setminus E) = X \cap (X \setminus E)^c = X \cap (X \cap E^c)^c = X \cap (X^c \cup E) = X \cap E = E$, which is countable. Then, $E^c$ is countable.
+
+Now, suppose we have $\cup_{k=1}^\infty E_k$, with $E_i \in \Sigma$ for all $i \in \mathbb{N}$. If each $E_i$ is countable, then we're done, since a countable union of countable sets is countable. Else, suppose $E_n$ is uncountable for some $n$. Then, because $E_n \in \Sigma$, we have that $E_n^c$ must be countable. Consider, by deMorgan's Laws, $(\cup_{k=1}^\infty E_k)^c = \cap_{k=1}^\infty E_k^c $. In particular, we have then that $ \cap_{k=1}^\infty E_k^c  \subseteq E_n^c$, and a subset of a countable set is countable. Thus, $\Sigma$ is closed under countable unions.
+
+Thus, such a $\Sigma$ is a $\sigma$-algebra.
+\end{proof}
+
+\section*{2.2}
+
+\begin{problem}{2.3.17}
+Assume that $E \subseteq \mathbb{R}^d$ is measurable, with $0 < |E| < \infty$, and $A_n \subseteq E$ are measurable sets such that $|A_n| \rightarrow |E|$ as $n \rightarrow \infty$. Prove that there exists a subsequence $\{ A_{n_k} \}_{k \in \mathbb{N}}$ such that $|\cap A_{n_k}| > 0$. Show by example that this may fail if $|E| = \infty$.
+\end{problem}
+\begin{proof}[Solution]
+Arbitrarily, choose $A_{n_1}$ as $A_i : |A_i| > 0.9|E|$. Now, choose $A_{n_2}$ such that $|A_{n_2}| \geq 0.99|E|$ which we can do, because $|A_n| \rightarrow |E|$ as $n \rightarrow \infty$. We notice that because $A_{n_1}, A_{n_2}$ are measurable, so are their intersection. From 2.2.32 in homework \#1, since $A_i$ are measurable for all $i$, we have that $|A_{n_1}| + |A_{n_2}| = |A_{n_1} \cup A_{n_2}| + |A_{n_1} \cap A_{n_2}|$. But because all of these have finite measure, and because we chose $|A_{n_2}| + |A_{n_1}| \geq |E|$, this implies that $ |A_{n_1} \cap A_{n_2}| > 0$. In particular, we have that $|A_{n_1} \cap A_{n_2}| \geq |A_{n_1}| + |A_{n_2}| - |E| \geq (0.9 + 0.99 -1)|E| = 0.89|E| = (1 - \Sigma_{n=1}^2 10^{-n})|E|$. Iteratively, we can continue this process at each step, taking $|A_{n_{m+1}}| \geq (1-10^{-n_{m+1}})|E|$, which we can always do due to the convergence. But then, we have that $|\cap_{k=1}^m A_{n_k} \cap A_{n_{m+1}}| \geq |\cap_{k=1}^m A_{n_k}| + |A_{n_{m+1}}| - |E| \geq  (1 - \Sigma_{n=1}^m 10^{-n})|E| + (1-10^{-(m+1)})|E| - |E| = (1 - \Sigma_{n=1}^{m+1} 10^{-n}) |E|$.
+
+Now, we have a sequence of measurable sets $\{ \cap_{i=1}^k A_{n_k} \}_{k \in \mathbb{N}} $, and further, a decreasing set with $A_{n_1} \supseteq A_{n_1} \cap A_{n_2} \supseteq .... \supseteq  \cap_{i=1}^k A_{n_k} \supseteq ... $ all with finite measure. Then, we apply continuity from above to find that $|\cap_{i=1}^\infty A_{n_i}| = |\cap_{i=1}^\infty \cap_{k=1}^i A_{n_k}| = \lim_{j \to \infty} | \cap_{k=1}^j A_{n_k}|$. But, we have by construction that  $| \cap_{k=1}^j A_{n_k}| =  (1 - \Sigma_{n=1}^{j} 10^{-n}) |E|$. Taking the limit of that, we find then that $\lim_{j \to \infty} | \cap_{k=1}^j A_{n_k}|= \lim_{j \to \infty} (1 - \Sigma_{n=1}^{j} 10^{-n}) |E| = 8/9 |E| > 0$.
+
+Now, take $d = 2$, and let $\{ p_k \}$ be an enumeration of the prime numbers. Define $E = \cup_{k} \{ (x,y) : p_k < x < p_{k+1} \}$. This is measurable because this is a countable union of open sets, and has infinite measure because it is unbounded in the $y$-direction. Now, consider $A_i =  \{ (x,y) : p_i < x < p_{i+1} \}$. This is also measurable, an open set, contained within $E$, and $|A_i| = |E| = \infty$ for all $i$. However, by construction, $A_i \cap A_j = \emptyset$ for all $i \not = j$, so there cannot exist a subsequence with intersection with postiive measure.  
+
+
+\end{proof}
+
+\begin{problem}{2.3.19}
+Let $E$ be a measurable subset of $\mathbb{R}^d$, and set $f(t) = |E \cap B_t(0)|$ for $t > 0$. Prove the following statements:
+
+(a) $f$ is monotone increasing and continuous on $(0,\infty)$
+
+(b) $\lim_{t \rightarrow 0^+} f(t) = 0$
+
+(c) $\lim_{t \rightarrow \infty } f(t) = |E|$
+
+(d) If $|E| < \infty$, then $f$ is uniformly continuous on $(0,\infty)$.
+\end{problem}
+\begin{proof}[Solution]
+
+(a)
+
+Firstly, we claim that $f$ is monotone increasing. Take real numbers $t_1 > t_0$ where $t_0,t_1 > 0$. Suppose $x \in E \cap B_{t_0}(0)$. Then, $x \in E$ and $x \in B_{t_0}(0)$. Since $t_1 > t_0$, $B_{t_0}(0) \subseteq B_{t_1}(0)$. Then, $x \in  B_{t_1}(0)$ and thus, $x \in E \cap B_{t_1}(0)$. Since the choice of $x$ was arbitrary, we have that $ E \cap B_{t_0}(0) \subseteq  E \cap B_{t_1}(0)$, and by the monotonicity of the Lebesgue measure, this implies that $|E \cap B_{t_0}(0)| \leq  |E \cap B_{t_1}(0)|$. Since the choice of $t_0,t_1$ was arbitrary other than $t_1 > t_0$, this is true for every $t_1 > t_0$, and thus $f$ is monotone increasing.
+
+Now, claim that this is continuous. From Theorem 2.3.15, we have that if $L$ is a linear transformation $L: \mathbb{R}^d \to \mathbb{R}^d$, and $E$ a measurable set, then $|L(E)|  = |\det(L)||E|$. Then, since $rI$ for $r$ a real postiive number, $I$ the identity matrix maps the unit ball centered on the origin to the ball with radius $r$ centered on the origin, and $\det(rI) = r^d$, we have that $|B_{t_0}(0)| = t_0^n|B_{1})(0)|$. Consider $f(x) - f(y)$ and, wlog, choose x > y. Then we have $f(x) - f(y) = |E \cap B_{x}(0)| - |E \cap B_{y}(0)|$. Due to measures being positive, the worst this could be would be if $|E \cap B_{y}(0)| = 0$. But, in that case, since $B_{y}(0) \subseteq B_{x}(0)$, we would have $  |E \cap B_{x}(0)| - |E \cap B_{y}(0)| \leq |E \cap (B_{x}(0) \setminus B_{y}(0))| \leq |B_{x}(0) \setminus B_{y}(0)| = |B_{x}(0)| - |B_{y}(0)| = x^d|B_{1}(0)| - y^d|B_{1}(0)|$. But, we already know that polynomials are continuous, so we know that for any $\epsilon > 0$, we can choose $\delta > 0$ such that $d(x,y) \implies |x^d - y^d||B_{1}(0)| < \epsilon$. Thus, $f$ is continuous.
+
+(b)
+
+To prove this, we want to prove a related claim: $\lim_{t \to 0} B_t(0) = \{0\}$.
+
+Let $\epsilon > 0$ be given. Then, we choose $\delta =  \epsilon$. Here, we recall quickly that the defintion of $B_t(0) = \{ x \in \mathbb{R}^d : \Vert x \Vert = d(x,0) \leq t \}$, where we use $\Vert x \Vert$ to denote the norm of $x$. Let $x_t \in B_t(0)$ such that $0 < t < \delta$. Well, $d(x_t,0)  = \Vert x_t \Vert \leq t < \delta = \epsilon$. Then, by problem 1.1.23's definition, we have that $x_t \to 0$ as $t \to 0$. Since the choice of $x_t$ was arbitrary, this implies that $\lim_{t \to 0} B_t(0) = \{0\}$.
+
+Then, we have that, since $E$ is constant with respect to $t$,  $\lim_{t \rightarrow 0^+} f(t) = \lim_{t \rightarrow 0^+} |E \cap B_t(0)| = | E \cap ( \lim_{t \rightarrow 0^+} B_t(0))  = |E \cap \{0\} | \leq |\{0\}|$. This is a countable set, so $|\{ 0 \}| = 0$, so $\lim_{t \rightarrow 0^+} f(t) = 0$.
+
+(c)
+
+In a similar vein to (b), we will prove the related claim: $\lim_{t \to \infty} B_t(0) = \mathbb{R}^d$. Here, we just need to show that for any $x \in \mathbb{R}^d$, there exists a $t_0$ such that $x \in B_{t_1}(0)$ when $t_1 > t_0$. But this is easy - just choose $t_0 =  \Vert x \Vert$. Then, by construction, $x \in B_{t_1}(0)$ for $t_1 > t_0$.
+
+Then, in the same fashion, because $E$ is independent of $t$, we have that $\lim_{t \rightarrow \infty} f(t) = \lim_{t \rightarrow \infty} |E \cap B_t(0)| = | E \cap ( \lim_{t \rightarrow \infty} B_t(0))  = |E \cap \mathbb{R}^d | = |E|$.
+
+(d)
+
+Essentially, we have a monotone, continous, bounded function. So, let $\epsilon > 0$ be given. If $|E| = 0$, then we're done, as $f(t)$ is identically zero. Else, because the function is monotone, there exists $t_0$ such that $|E| > f(t_1) > (|E| - \epsilon)$ for all $t_1 > t_0$. This implies then, that for $t_2,t_3 > t_0$, that $|f(t_3) - f(t_2)| \leq (|E| - (|E| - \epsilon)) = \epsilon$, irrespective of the point on the interval $(t_0, \infty)$. Now, consider the related function on $[0,t_0]$, $\overline{f}$ which agrees with $f$ on $(0,t_0]$ and attains $0$ at $ t = 0$. By part (a) combined with part (b), this function is continous. Moreover, because this is a continous function on a compact set, it is uniformly continuous on the entirety of the compact set. Then, this implies that for our $\epsilon$, there exists a $\delta$ such that $d(x,y) < \delta \implies d(\overline{f}(x),\overline{f}(y)) < \epsilon$. But, because $\overline{f} = f$ on $(0,t_0)$, this $\delta$ works for $f$ on $(0,t_0]$ as well. Since $\delta$ exists, and is independent of a point in $(0,\infty)$ that we are checking continuity at, $f$ is uniformly continuous.
+\end{proof}
+
+\section*{2.3}
+
+\begin{problem}{2.4.8}
+(a) Prove that continuity from below holds for exterior Lebesgue measure. That is, if $E_1 \subseteq E_2 \subseteq ...$ is any nested increasing sequence of subsets of $\mathbb{R}^d$, then $|\cup E_k|_e = \lim_{k \to \infty} |E_k|_e$.
+
+(b) Show that there exists sets $E_1 \supseteq E_2 \supseteq ...$ in $\mathbb{R}$ such that $|E_k|_e < \infty$ for every $k$, and that:
+
+$$ | \cap_{k=1}^\infty E_k |_e < \lim_{k \rightarrow \infty} |E_k|_e $$
+\end{problem}
+\begin{proof}[Solution]
+(a)
+
+First, we note that due to the monotonicity of the outer measure, we have that $E_i \subseteq \cup_{k=1}^\infty E_i \implies | E_i |_e \leq |\cup_{k=1}^\infty E_i|_e$. Now, assume that $\lim{k \to \infty} |E_k|_e = \infty$. Then, due to monotonicity, we have that $ |\cup_{k=1}^\infty E_i|_e = \infty$, as otherwise, if it were bounded, we could find a $|E_i|_e \geq |\cup_{k=1}^\infty E_i|_e$. More generally, due to monotonicity, we already will have that  $\lim_{k \to \infty} |E_k|_e \leq |\cup E_k|_e$.
+
+Now, suppose $\lim{k \to \infty} |E_k|_e$ is finite. Let $\epsilon > 0$ be given. For each $E_i$, we may find an open set $U_i \supseteq E_i$ such that $|E_i| \leq |U_i| \leq |E_i| + \epsilon$. Construct the related sequence of sets $V_k \cup_{i=k}^\infty U_k$. By construction, we have that these sets are nested $V_1 \subseteq V_2 \subseteq ...$. Consider the union over all k $\cup_k V_k$. By the construction of the $U_i$, since $E_i \subseteq E_j$ for $j > i$, then, $E_i \subseteq U_i$ for all $j > i$, and thus $E_i \subseteq V_i \subseteq U_i$ for all $i$, it follows that $\cup E_k \subseteq \cup V_k$. Then, we have that, via continuity from below, that $|\cup E_k| \leq |\cup V_k| = \lim_{k \to \infty} |V_k|$. But, from our construction, we also have that for each $i$, $|E_i| \leq |V_i| \leq |U_i| \leq |E_i| + \epsilon$, and thus $\lim_{k \to \infty} |V_k| \leq \lim_{k \to \infty} |E_k| + \epsilon$. Then, we have that:
+
+ $$|\cup E_k| \leq |\cup V_k| = \lim_{k \to \infty} |V_k| \leq \lim_{k \to \infty} |E_k| + \epsilon$$
+
+Since $\epsilon$ can be taken to be arbitrarily small, this now implies that $|\cup E_k| = \lim_{k \to \infty} |E_k|$, as desired.
+
+(b)
+
+Take the set constructed in Heil for the proof of Theorem 2.4.5. That is, define the set $M$ as such: Start with the interval $[0,1]$ and define the equivalence relation $x \sim y = \{  x = y + q : q \in \mathbb{Q} \}$. Consider the equivalence classes of $[0,1]/\sim$. Construct $M$ by applying the axiom of choice, and selecting one element from each equivalence class. Continue and construct the collection $\{ M_k \}$ where we take $\{ q_k \}$ as an enumeration of the rationals, and we define $ M_k = (M + q_k)/[0,1]$, that is, modulo the interval $[0,1]$, so that each $M_k \subseteq [0,1]$. We notice that $M$ is in our collection, because $0$ is rational. Because equivalence classes partition a set, we are guaranteed that each $M_k$ is disjoint, and that $\cup M_k = [0,1]$.
+
+Now, consider the following sequence of sets. Define $E_1 = [0,1]$, and define $E_i = E_{1} \setminus \cup_{k=2}^i M_{k-1}$ for $i \geq 2$, where we just assume the enumeration of the $M_k$ starts at $k=1$. 
+
+Here, we go off to the side and prove a result from Heil: 2.2.43(d). Define the inner Lebesgue measure of a set $A \subseteq \mathbb{R}^d$ to be $|A|_i = \sup \{ |F| : F \text{ is closed and } F \subseteq A \}$. If $E$ is Lebesgue measurable, and $A \subseteq E$, then $|E| = |A|_i + |E \setminus A|_e$. Because $E$ is Lebesgue measurable, we may take a $U \supseteq E$ such that $|U \setminus E| < \epsilon$. Take any closed set $F \subseteq A$. We notice that $U \setminus F$ is open, because $U \cap F^c$ is an intersection of open sets. Moreover, it is a cover of $E \setminus A$ by construction. So, we have that $|U| = |E| + |U\setminus E| = |F| + |U \setminus F|$, where we have equality because $F, U \setminus F$ are measurable. Now, take any sequence of $F_k$ such that $|A|_i leq |F_k| + 1/k$, which we may do because the inner measure is a supremum. Then, we note for each $F_k$, $(U\setminus F_k)$ is a sequence of sets such that these are open, and converge to $|U \setminus A|_e$. Then, we have that $|E| + |U \setminus E| = |A|_i + |U \setminus A|_e$. Now, since the choice of $U$ is arbitrary, we can actually shrink $U$ such that $|U \setminus E| \to 0$, and $|U \setminus A|_e \to |E \setminus A|_e$, because $|U \setminus A | \leq |E \setminus A| + |(U \setminus E) \setminus A| \leq |E \setminus A| + |U \setminus E|$, and $| U \setminus E| < \epsilon$. Then, we find that $|E| = |A|_i + |E \setminus A|_e$.
+
+Now, consider the inner Lebesgue measure. Clearly, we have that it is translation invariant, as the Lebesgue measure of a closed set is translation invariant. Further, we also have monotonicity from the monotonicity of the Lebesgue measure, as well as subadditivity. (that is, suppose we have $A \cup B$, and $F_A \subseteq A, F_B \subseteq B$ with $F_A, F_B$ closed. Then, $F_A \cup F_B$ is closed, and $|F_A \cup F_B| \leq |F_A| + |F_B|$ since they need not be disjoint. Since this is true for any $F_A, F_B$, this implies that $|F_A \cup F_B|_i \leq |F_A|_i + |F_B|_i$.)
+
+Then, by the same argument that shows $M$ as non-measurable in Heil, we can claim that because $[0,1] = \overline{[0,1]}$, the closure, that $[0,1]$ has inner measure $1$, and that $|M|_i = 0$ because otherwise, we have a countable sum of inner measures of $M$ as $M_k$ are just translations.
+
+Now, consider the outer measure of each $E_i$. $E_1 = [0,1]$. From what we proved about the inner measure, we have that $|[0,1]| = |\cup_{k=2}^i M_{k-1}|_i + |[0,1] \setminus\cup_{k=2}^i M_{k-1}|_e \implies  |E_i|_e = |[0,1] \setminus\cup_{k=2}^i M_{k-1}|_e = |[0,1]| = 1$. So, we have a sequence of sets, with outer measure identically $1$, so then we have that $\lim_{k \to \infty} |E_k|_e = 1$. However, we know that $\cap E_k = \emptyset$ because since the $M_k$ partition $[0,1]$, for every $x \in [0,1]$, $x \in M_{k_0}$ for exactly one $k_0$. But then, by construction, this means that $x \in \cup_{k=2}^i M_{k-1}$ for $i > k_0$, so $x \not \in E_i$ for any $i > k_0$. Since the choice of $x$ was arbitrary, this is true for all $x$, and thus  $\cap E_k = \emptyset \implies |\cap E_k|_e = 0 < \lim_{k \to \infty} |E_k|_e = 1$
+\end{proof}
+
+\begin{problem}{2.4.10}
+Given any integer $d > 0$, show that there exists a set $N \subseteq \mathbb{R}^d$ that is not Lebesgue measurable.
+\end{problem}
+\begin{proof}[Solution]
+We use the same construction and argument in Heil, and extend to multiple dimensions.
+
+Fix a dimension $d$. Consider the rationals in the unit box $\Pi_{i=1}^d [0,1] \cap \mathbb{Q}^d$. We define the equivalence relationship $x \sim y \iff x -y \in \mathbb{Q}^d$. This is an equivalence relation because it is reflexive ( $ x - x = 0 \in \mathbb{Q}^d$), symmetric (if $x-y \in \mathbb{Q}^d$, then $-(x-y) = y-x \in \mathbb{Q}^d$ by being a ring) and transitive (if $x-y \in \mathbb{Q}^d$ and $y - z \in \mathbb{Q}^d$, then $x - z = x - y + y - z = (x-y) + (y-z) \in \mathbb{Q}^d$ due to $\mathbb{Q}^d$ being a ring). Then, the equivalence classes partition $[0,1]^d$ by virtue of being an equivalence relationship. Using the axiom of choice, construct a set $M$ such that $M$ has one representative from each (uncountably many) equivalence class.
+
+Suppose $M$, and actually, all sets are measurable, under the Lebesgue measure $\mu$, which we note to have the following properties for measurable sets:
+
+(a) $\mu([0,1]^d) = 1$
+
+(b) If $\{ E_i \}$ is a countable collection of disjoint measurable subsets of $\mathbb{R}^d$, then $\mu(\cup E_i) = \Sigma \mu(E_i)$
+
+(c) $\mu (E + h) = \mu(E)$ for every $E \subseteq \mathbb{R}^d$ and for any $h \in \mathbb{R}^d$.
+
+Take an enumeration of $\mathbb{Q}^d \cap [-1,1]^d$, and call it $\{ q_k \}$. This should exist because $d$ is finite, countable, and $\mathbb{Q}$ is countable, so has cardinality of at most $\mathbb{N} \times \mathbb{N}$, which is countable. Consider the sets $M_k = M + q_k$. These sets must be disjoint, because, suppose not, that is $x \in M_i \cap M_j$. Then, $x = [x] + q_i = [x'] + q_j$, for some equivalence classes $[x], [x']$. But then, we have that $[x] = [x'] + (q_j - q_i)$, with $q_j - q_i$ rational. But, then $[x],[x']$ differ by a rational, they are the same equivalence class then, which implies $x = x'$ as we only pick one element from each equivalence class, which implies that $q_j = q_i$.
+
+Consider the union of all such $M_k$, $\cup_{k=1}^\infty M_k$. This is a countable union of disjoint subsets of $\mathbb{R}^d$. Further, since $q_k \in [-1,1]^d$, we have that each $M_k \subseteq [-1,2]^d$. But also, because $M$ contains one element from every equivalence relation, we hit with any rational in $\mathbb{Q}^d \cap [-1,1]^d$, and every element of $[0,1]^d$ belongs to some equivalence class, $[0,1]^d \subseteq \cup M_k$.
+
+We notice by (a), that we have $\mu([0,1]^d) = 1$. By using the translations and countable additivity, we also have that $\mu( [-1,2]^d) = 3^d$.
+
+Then, using the monotonicity of the Lebesgue measure with our set inclusions, we have that:
+
+$$ 1 = \mu([0,1]^d) \leq \mu(\cup_{k=1}^\infty M_k) \leq \mu( [-1,2]^d) = 3^d $$
+
+However, by the definition of $M_k$, (b), and (c), we have that:
+
+$$  \mu(\cup_{k=1}^\infty M_k) = \Sigma_{k=1}^\infty \mu(M_k) = \Sigma_{k=1}^\infty \mu(M) $$
+
+Then, we have that $1 \leq \Sigma_{k=1}^\infty \mu(M) \leq 3^d$. But, $\mu$ can only take on values in $[0,\infty]$, and in particular then, $ \Sigma_{k=1}^\infty \mu(M)$ is either $0$ if $\mu(M) = 0$ and infinite otherwise. But that is a contradiction with our inequality.
+
+Thus, $M$ may not be a Lebesgue measurable set. 
+
+
+\end{proof}
+
+\end{document}

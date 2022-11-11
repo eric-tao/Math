@@ -1,0 +1,123 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+ 
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#5}
+\author{Eric Tao\\
+Math 235: Homework \#5}
+\maketitle
+ 
+\section*{2.1}
+
+\begin{problem}{3.4.7}
+Let $E \subseteq \mathbb{R}^d$ be a measurable set such that $|E| < \infty$, and assume that $f_n$ and $f$ are measurable functions that are finite a.e. and satisfy $f_n \to f$ a.e. on $E$. Prove that there exist measurable sets $E_k \subseteq E$ such that $E \setminus (\cup_{k=1}^\infty E_k)$ has measure zero and for each individual $k$, we have that $f_n \to f$ uniformly on $E_k$. Even so, show by example that $f_n$ need not converge uniformly to $f$ on $E$.
+\end{problem}
+\begin{proof}[Solution]
+
+By Egorov's Theorem, we can find a measurable set $A_n \subseteq E$ such that $|A_n| < 1/n$ and $f_n$ converges to $f$ uniformly on $|E \setminus A_n|$. We notice that because $A_n$ is measurable, and $E$ is measurable, then $E_n = E \setminus A_n$ is also measurable. We can see that by looking at $E \setminus (\cup_k E_k)$:
+
+$$ E \setminus (\cup_k E_k) = E \cap (\cup_k E_k)^c =  E \cap (\cap_k E_k^c) = \cap_k (E \cap E_k^c) = \cap_k A_k $$
+
+where we use the fact that because we define $E_k = E \setminus A_k$, then it follows that $E \setminus E_k = A_k$. But, we have that $\cap_k A_k \subseteq A_k$ for every $k$, so $|\cap_k A_k| < 1/n$ for all $n$, so $|E \setminus (\cup_k E_k)| =  |\cap_k A_k| = 0$.
+
+However, take for example the example in the book 3.4.1:
+
+$$ f_n(x) = \begin{cases} 0, & \text{ at } x= 0 \\
+\text{linear}, & \text{ for } 0 < x < \frac{1}{2n} \\
+1, & \text{ at } x = \frac{1}{2n} \\
+\text{linear}, & \text{ for } \frac{1}{2n} < x < \frac{1}{n} \\
+0, & \text{ for } \frac{1}{n} \leq x \leq 1 \\
+\end{cases} $$
+
+This is a family of functions indexed on $n$, finite a.e., and pointwise converges to $f = 0$ on $[0,1]$. Fix an $x_0 \in [0,1]$. If $x_0 = 0$, then $f_n(0) = 0$ for all $n$, so suppose $x_0 > 0$. Consider $|f_n(x_0)|$. By the Archimidean principle, there exists $N \in \mathbb{N}$ such that $x_0 > \frac{1}{N}$. In particular, then, take $n > N$. Since $\frac{1}{n} < \frac{1}{N} < x_0 < 1$, by construction of our function, we have $f(x_0) = 0$.
+
+Further, we may take $A_k = [0,1/k]$. We can see that, using the same argument, $f_n \to 0$ uniformly on $(1/k,1]$ as if we take $n > k$, then, for every $x \in (1/k,1]$, $x > 1/k > 1/n$, so $f_n(x) = 0$. So, $\sup_{x \in (1/k,1]} (f_n(x)) = 0$ for every $n > k$, and so $\lim_{n \to \infty} ( \sup_{x \in (1/k,1]} |f_n(x) - 0|) = 0$. However, we are still not uniformly continuous on all of $[0,1]$ because for any $n$, $\sup_{x \in [0,1]} | f_n  - 0|  \geq 1 > 0$, because for each $n$, $f_n(1/2n) = 1$, so the limit of the supremums is at least $1$. Thus, we are not uniformly convergent on $[0,1]$ to $f = 0$.
+
+\end{proof}
+
+\section*{2.2}
+
+\begin{problem}{4.1.12}
+Let $E$ be a measurable subset of $\mathbb{R}^d$. Suppose that $f,g$ are measurable functions on $E$ such that $0 \leq f \leq g$ and $\int_E f < \infty$. Prove that $g-f$ is measurable, $0 \leq \int_E (g-f) \leq \infty$, and, as extended real numbers:
+
+$$\int_E (g-f) = \int_E g - \int_E f$$
+\end{problem}
+\begin{proof}[Solution]
+
+Firstly, since $\int_E f < \infty$, by Lemma 4.1.8, we know that $f < \infty$ a.e. If $g < \infty$ a.e., then by 3.2.2 $g - f$ is measurable. Otherwise, suppose $g = \infty$ on $A \subseteq E$ with $|A| > 0$, and $g$ is finite on $E \setminus A$. It should be clear that $A$ is measurable, because $A = \{ g = \infty \} = \cap_{n=1}^\infty \{ g > n \}$, a countable intersection of measurable sets. Then, we have that $E \setminus A$ is also measurable. Then, by 3.2.2 again, $g - f$ is measurable on $E \setminus A$, as on $E \setminus A, f,g$ are finite a.e. Further, on $A$, we have that $g - f = \infty$. So, then, we can see that $\{ g - f > a \}_E = \{ g - f > a \}_{E \setminus A} \cup A$, which is the union of two measurable sets, thus measurable.
+
+Now, because $0 \leq f \leq g$, we have that $0 \leq g - f$. Then, taking the integrals of both sides, we have that $0 = \int_E 0 \leq \int_E g - f$. On the other side, since $\int_E \phi \in [0,\infty]$ for arbitrary simple functions, and $\int_E (g-f) = \sup(\{ \int_E \phi : 0 \leq \phi \leq (g-f), \phi$ simple $\})$, then $\int_E (g-f) \leq \infty$. So we have $0 \leq \int_E (g-f) \leq \infty$.
+
+Now, first, assume $g \not < \infty$ for a.e. $x \in E$. Then, by 4.1.8, by the contrapositive of (d), we have that $\int_E g = \infty$. Further, suppose $g  = \infty$ on exactly $A \subseteq E$, $|A| > 0$. Suppose we take $Z = \{ x \in E : f(x) = \infty \}$. Then, we look at $g - f$ on $A \setminus Z$. By construction, we have that $g$ is infinite and $f$ is finite here. Further, since $f$ finite a.e., we have that $|Z| = 0$, so $|A \setminus Z| > 0$. Then, again by (d), we have that $\int_E g - f = \infty$, and since $\int_E f < \infty$ by hypothesis, we are done, as we have $\infty = \infty - \int_E f$, which is true.
+
+Now, suppose $g < \infty$ a.e. as well. Consider $\int_E (g-f) + \int_E f =  \sup(\{ \int_E \phi : 0 \leq \phi \leq (g-f), \phi$ simple $\}) +  \sup(\{ \int_E \phi : 0 \leq \psi \leq f, \psi$ simple $\})$, where we notice $g-f$ and $f$ are nonnegative measurable functions. Let $\phi_n, \psi_n$ be simple functions $0 \leq \phi_n \leq (g-f)$ and $0 \leq \psi_n \leq f$, and $\int_E \phi_n \to \int_E (g-f), \int_E \psi_n  \to \int_E f$. We notice that $\phi_n + \psi_n$ is a simple function as well, and $0 \leq \phi_n + \psi_n \leq (g - f) + f = g$. Since this is true for any arbitrary $\phi_n, \psi_n$ simple functions approximating $g-f,f$ and we can find a simple function that approximates $g$ by their sum, we have that $ \int_E (g-f) + \int_E f \leq \int_E g$. However, by properties of the sup, we also have then that for $\phi,\psi$ as above, we have that $\sup (\phi_n + \psi_n) \leq \sup_n \phi_n + \sup_n \psi_n$, so we have that $\int_E g \leq \int_E (g-f) + \int_E f$. So we have equality, and since $\int_E f < \infty$, we may rearrange to recover $\int_E (g-f) = \int_E g - \int_E f$.
+\end{proof}
+
+\section*{2.3}
+
+\begin{problem}{4.2.11}
+Assume $E \subseteq \mathbb{R}^d$ and $f: E \to [0,\infty]$ are measurable, and $\int_E f < \infty$. Given $\epsilon > 0$, prove that there exists a measurable set $A \subseteq E$ such that $|A| < \infty$ and $\int_A f \geq \int_E f - \epsilon$.
+\end{problem}
+\begin{proof}[Solution]
+Construct the sets $A_n = E \cap [-n,n]^d$. First of all, these are measurable, being the intersection of a box and a measurable set. Clearly, we have that since $A_n \subseteq [-n,n]^d$, $|A_n| \leq (2n)^d < \infty$. Further, since $\cup_n^\infty [-n,n]^d = \mathbb{R}^d$, we have that $\cup_n^\infty A_n = E$. Further, since $[-n,n]^d \subseteq [-(n+1),n+1]^d$, we have that $A_1 \subset A_2 \subset ...$. Then, we may apply the result of exercise 4.2.5, and we have that $ \int_E f = \lim_{n \to \infty} \int_{A_n} f$. Now, let $\epsilon > 0$ be given. Then by the definition of the limit, there exists $N \in \mathbb{N}$ such that for all $n > N$, $| \int_{A_n} f  - \int_E f | < \epsilon$. Take any $n > N$. Since $A_n \subseteq E$, from 4.1.8, we know that $\int_{A_n} f \leq \int_E f < \infty$, so we have that $\int_E f - \int_{A_n} f< \epsilon$, and because they are both finite, we may rearrange to find $\int_E f - \epsilon < \int_{A_n} f$ as desired.
+
+
+\end{proof}
+
+\begin{problem}{4.2.14}
+Let $f$ be a continuous, non-negative function on the interval $[a,b]$. Prove that the Riemann integral on $[a,b]$ coincides with its Lebesgue integral $\int_a^b f(x) dx$.
+\end{problem}
+\begin{proof}[Solution]
+Take $\Gamma$ be a partition of $[a,b]$, $\Gamma = \{ a = x_0 < ... < x_n = b \}$. Consider the lower Riemann sum $L_\Gamma = \Sigma_{j=1}^n m_j (x_j - x_{j-1})$ where if we call $E_j = [x_j - x_{j-1}]$, $m_j = \inf_{ x \in   E_j} f(x)$. , and construct the simple function $\phi = \Sigma_j^n m_j \chi_{E_j}$, which must be simple because we have only finitely many intervals. By the definition of the $m_j$'s, we have that $0 \leq \phi \leq f$. Further, we see that $L_\Gamma = \int_E \phi \leq \int_E f(x)$, where $E = [a,b]$ because if we look at what the Lebegue integral of $\phi$ is, it is exactly $L_\Gamma$ as $|\chi_{E_j}| = (x_j - x_{j-1})$. Now, take the upper Riemann sum, $U_\Gamma = \Sigma_j^n M_j (x_j - x_{j-1}), M_j =  \sup_{ x \in   E_j} f(x)$, and construct the simple function $\psi = \Sigma_j^n M_j \chi_{E_j}$, simple for the same reason as $\phi$. In particular, this is a simple function where we have $f \leq \psi$. Then, we have that $\int_E f \leq \int_E \psi = U_\Gamma$. So, we have that for a fixed partition, $L_\Gamma \leq \int_E f \leq U_\Gamma$. However, now, we use that because $f$ is continuous, $f$ is integrable. Then, we know that $\sup_\Gamma L_\Gamma = \inf_\Gamma U_\Gamma = I \in \mathbb{R}$. Since $L_\Gamma \leq \int_E f$ was true for any $\Gamma$, and $\int_E f \leq U_\Gamma$ as well, we can say that $\sup_\Gamma L_\Gamma \leq \int_E f\leq  \inf_\Gamma U_\Gamma$. But, by the squeeze theorem then, $\int_E f = \sup_\Gamma L_\Gamma = \inf_\Gamma U_\Gamma = I$ and we are done.
+\end{proof}
+ 
+\begin{problem}{4.2.17}
+Let $f: E \to [0,\infty]$ be a nonnegative, measurable function defined on a measurable set $E \subseteq \mathbb{R}^d$.
+
+(a) Define the graph of $f$ as:
+
+$$ \Gamma_f = \{ (x,f(x)) : x \in E, f(x) < \infty \}$$
+
+Show that $|\Gamma_f| = 0$.
+
+(b) The region under the graph of $f$ is the set $R_f$ that consists of all points $(x,y) \in \mathbb{R}^{d+1} = \mathbb{R}^d \times \mathbb{R}$ such that $x \in E$, and $y$ satisfies:
+
+$$\begin{cases}
+0 \leq y \leq f(x), & \text{ if } f(x) < \infty,\\
+0 \leq y < \infty, & \text { if } f(x) = \infty.
+\end{cases}$$
+
+Show that $R_f$ is a measurable subset of $\mathbb{R}^{d+1}$ and its Lebesgue measure is:
+
+$$ |R_f| = \int_E f(x) dx $$
+\end{problem}
+\begin{proof}[Solution]
+(a)
+
+First, define $A = \{ x \in E : f(x) = \infty \}$, and define $g = \left.f\right|_{E \setminus A}$ to be the restriction of $f$ on $g$. We notice that the graph is only defined on $E \setminus A$, so this is a reasonable restriction to make. Now, consider, for $n \geq 1$, the sets $E_n = E \cap  ([-(n+1),n+1]^d \setminus [-n,n]^d)$. We notice that for each $E_n$, since $E_n \subseteq ([-(n+1),n+1]^d \setminus [-n,n]^d)$, that is, between the cube of side length 2n and 2n+2 centered on $0$, that $E_n$ is in particular bounded, and measurable as they are the intersection of two measurable sets. Further, by our restriction, $g$ is still measurable, and finite a.e. So, for each $E_n$, we apply Luzin's theorem as follows: take the sequence $\{ 1/m \}_{m \in \mathbb{N}}$, and construct $F_{E_n,m}$ to be a closed set such that $|E_n \setminus F_{E_n,m}| < 1/m$ and $g$ is continuous on $ F_{E_n,m}$. In particular then, consider $\cup_m F_{E_n,m}$ and call this $B_n$. This is a union of measurable sets, thus measurable. Further, we have that $|E_n \setminus \cup_m F_{E_n,m}| < 1/m$ for all $m \geq 1$, so $|E_n \setminus \cup_m F_{E_n,m}| = 0$. Call this set $Z_n$. Now, via our identification of $E = \cup_n E_n$, we may divide $E$ into $E = \cup_n B_n \cup \cup_n Z_n$. Since $g$ is continous on each $B_n$, it must be continous on their union, we have that the graph of a continous function has measure 0. Now, consider $\cup_n Z_n \times \mathbb{R}$. Clearly, the graph of $g$ is a subset of this set, and this set, being a Cartesian product of spaces, has measure $|\cup_n Z_n||\mathbb{R}|$. But, this is a union of sets of measure 0, and each disjoint by the construction of $E_n$, so $|\cup_n Z_n | = 0$, and by our convention, we have that $0 * \infty = 0$. So, this is a set of measure 0, and thus the graph on $\cup_n Z_n$ has measure 0. Since the graph has measure 0 both on $\cup_n Z_n$ and $\cup_n B_n$, it has measure $0$ on $E \setminus A$, which is exactly its domain, and so we are done.
+
+%Aside: Let $f: E \to \mathbb{R}^d$ be continuous. Consider an enumeration of $\mathbb{Q}^d \cap E, \{ q_k \}$. Let $\epsilon > 0$ be given. For each $q_k \in \mathbb{Q}^d \cap E$, choose $\sqrt[d+1]{\epsilon/2^k}$. Because $f$ is continous, there exists a $\delta > 0 : d(q_k,y) \implies d(f(q_k), f(y)) < (\sqrt[d+1]{\epsilon/2^k})/2$. Consider the cube centered on $q_k$ then with side length $\sqrt[d+1]{\epsilon/2^k}$. In particular, so long we take $y \in E : d(q_k,y) < \min(\delta, (\sqrt[d+1]{\epsilon/2^k})/2)$, we have that $ d(f(q_k), f(y)) < (\sqrt[d+1]{\epsilon/2^k})/2$. But, the condition that $y$ is within that distance of $q_k$ implies that the point $(y,f(y)$ is within that cube of $q_k$. Call this cube $Q_k$. Because $ \mathbb{Q}^d \cap E$ is dense in $E$, 
+
+(b)
+
+By Theorem 3.2.14, we have that there exists simple functions $\phi_n$ such that $0 \leq \phi_1 \leq ...$ and $\lim_{n \to \infty} \phi_n(x) = f(x)$ for all $x \in E$. Consider the graph of each function $R_{\phi_n}$ defined in the same way as $R_f$, that is, $R_{\phi_n} =  \{ (x,y) : x \in E, 0 \leq y \leq \phi_n(x) \}$. Look at any $\phi_n = \Sigma_{k=1}^m c_k \chi_{E_k}$. By the defintion of $R_{\phi_n}$ then, we have that $R_{\phi_n} = \cup_{k=1}^m E_k \times [0,c_k]$. However, we see that because the $E_k$ are disjoint, each of these pieces are disjoint. Further, by 2.3.7, we have that $ E_k \times [0,c_k]$ is measurable and takes on the value $| E_k \times [0,c_k]| = |E_k|c_k$. Then, $R_{\phi_n}$ is measurable, as it is the union of measurable sets, and since they are disjoint, we have that $|R_{\phi_n}| = \Sigma_{k=1}^m c_k |E_k|$, but that is exactly the definition of $\int_E \phi_n$, so $|R_{\phi_n}| = \int_E \phi_n$. 
+
+Now, because we have that  $0 \leq \phi_1 \leq ...$, we have that $R_{\phi_1} \subseteq R_{\phi_2} \subseteq...$ because suppose $(x,y) \in R_{\phi_k}$. Then, because $(x,y) \in x \times [0,\phi_k(x)]$. Since we have that $\phi_k \leq \phi_{k+1}$, we must have that, at $x$, $\phi_{k+1}(x) \geq \phi_{k}(x)$. Then, $y \in [0,\phi_k(x)] \subseteq [0,\phi_{k+1}(x)]$, and so $(x,y) \in R_{\phi_{k+1}}$. Since this is true for arbitrary $(x,y)$, we have the nested sets that we desired. Then, we have that by continuity from below, we have that $|\cup_{i=1}^\infty R_{\phi_i}| = \lim_{n \to \infty} | R_{\phi_n} | = \lim_{n \to \infty} \int_E \phi_n$. On one side, we have that because $\phi_n \nearrow f$ by the construction of 3.2.14, by the monotone convergence theorem, we have that $\lim_{n \to \infty} \int_E \phi_n = \int_E f$. On the other side, we claim that $\cup_{i=1}^\infty R_{\phi_i} = R_f$. It is clear that because  $0 \leq \phi_1 \leq ...$ and $\phi_n \nearrow f$, that $R_{\phi_i} \subseteq R_f$ for all $i$. Then, we have that $\cup_{i=1}^\infty R_{\phi_i} \subseteq R_f$. Now, suppose we have a point $(x,y) \in \{x \} \times [0,f(x)]$ if $f(x) < \infty$ or $(x,y) \in \{x \} \times [0,\infty)$. In the first case, since $\lim_{n \to \infty} \phi_n(x) = f(x)$ for all $x \in E$, we may find $N \in \mathbb{N}$ such that $f(x) - \phi_n(x) < f(x) - y$ for all $n > N$. Then, we see that rearranging this inequality, we have that $y < \phi_n(x)$ for such an $n$, so we have that $(x,y) \in \{ x \} \times [0,\phi_n(x)] \subseteq R_{\phi_n}$. Now, suppose we're in the second case. Then, we have that by the convergence, since $\lim_{n \to \infty} \phi_n(x) = f(x)$ still, that we can find $M \in \mathbb{M}$ such that for all $m > M$, $\phi_m(x) > y$. Then, for such an $m$, we have that $(x,y) \in R_{\phi_m}$. Therefore, regardless of the finiteness of $f(x)$, we have that there exists some $n$ such that $(x,y) \in R_{\phi_n}$. Since the choice of $(x,y)$ was arbitrary, we have that $R_f \subseteq \cup_{i=1}^\infty R_{\phi_i}$. Then, that means we have:
+
+$$| R_f| =  |\cup_{i=1}^\infty R_{\phi_i}| = \lim_{n \to \infty} | R_{\phi_n} | = \lim_{n \to \infty} \int_E \phi_n = \int_E f$$
+
+%First, suppose that $f = \infty$ on a set of positive measure $A \subseteq E$. Then, we have that $\int_E f = \infty$, since we can see easily that if $f = \infty$, then $\phi_n = n \chi_A, n \geq 1$ is a simple function $0 \leq \phi_n \leq f$, and $\int_A \phi_n  = n |A| > 0$ for all $n$, so $\infty = \int_A f  \leq \int_E f \implies \int_E f = \infty$. However, we can also see then that $A \times [0,\infty] \subseteq R_f$. Then, by 2.3.7, we have that $|A \times [0,\infty]| = |A| |[0,\infty]| = \infty$, as $|A| > 0$, and by monotonicity, we have then that $|R_f| = \infty = \int_E f$.
+
+
+\end{proof}
+
+
+\end{document}

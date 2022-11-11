@@ -1,0 +1,125 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Assignment}
+\author{Eric Tao\\
+Math 240: Homework \#5}
+\maketitle
+ 
+\begin{problem}{5.1}
+
+Let $X \subset \mathbb{A}^n, Y \subset \mathbb{A}^m$ be algebraic sets, with $X \times Y \subseteq \mathbb{A}^{m+n}$
+
+(a) Show that the natural projections $\pi_1: X \times Y \to X$, and  $\pi_1: X \times Y \to Y$ are regular morphisms.
+
+(b) Let $\psi_1: Z \to X, \psi_2: Z \to Y$ be regular maps. Show that there is a unique regular map $\psi: Z \to X \times Y$ such that $\pi_1 \circ \psi = \psi_1, \pi_2 \circ \psi = \psi_2$.
+
+(c) Let $W$ be an affine variety such that there exists regular maps $p_1: W \to X, p_2: W \to Y$ and such that for every affine variety $Z$ and pair of regular maps $\alpha_1: Z \to X, \alpha_2: Z \to Y$, there exists a unique regular function $\alpha: Z \to W$. Show that then $W \cong X \times Y$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+We may realize the natural projection $\pi_1$ by sending a point $(x_1,...,x_n,y_1,...,y_m) \to (x_1,...,x_n)$. In particular, $x_1,...,x_n \in k[x_1,....,x_n,y_1,...,y_m]$ are regular functions everywhere, so $\pi_1$ must be a regular morphism. We see that $\pi_2$ must be as well, where we send $(x_1,...,x_n,y_1,...,y_m) \to (y_1,....,y_m)$.
+
+(b) 
+
+We can take $Z \subseteq \mathbb{A}^l$. Then, we can see that $\psi_1, \psi_2$ can be realized as regular functions $f_1,...,f_n$ to $X$ and $g_1,...,g_m$ to $Y$. Construct the regular map $\psi$ in the natural way, that sends $(z_1,...,z_l) \to (f_1,...,f_n,g_1,...,g_m)$. By defintion then, we have that  $\pi_1 \circ \psi = \psi_1, \pi_2 \circ \psi = \psi_2$. Now, suppose we have another regular map $\psi'$ such that $\pi_1 \circ \psi' = \psi_1, \pi_2 \circ \psi' = \psi_2$. Since it is a regular morphism, we have regular functions $h_1,...,h_{m+n}$ that send $(z_1,....,z_{l}) \to (h_1,...,h_{m+n})$. Since $\pi_1 \circ \psi' = \psi_1$, we have that by the action of $\pi_1$ as we saw in (a), that we have $\pi_1 \circ \psi'$ has the action of sending $(z_1,...,z_{l}) \to (h_1,...,h_n)$. But, since this has to agree with the action of $\pi_1$, we have that $f_i = h_i$ for $1 \leq i \leq n$. Since they must agree on all of $Z$, they must be the same regular function. Repeating the same argument, we can see that $g_i = h_{n + i}$ for $ 1 \leq i \leq m $, and thus, $\psi  = \psi'$.
+
+(c)
+
+Let $Z = X \times Y$, equipped with the natural projections as $\alpha_1, \alpha_2$. By part (b), there exists then a regular map $p: W \to X \times Y$ such that $\alpha_1 \circ p = p_1, \alpha_2 \circ p = p_2$ as maps from $W \to X, Y$ respectively. But also, by hypothesis, $W$ induces a map from $X \times Y$ such that $p_1 \circ \alpha = \alpha_1, p_2 \circ \alpha = \alpha_2$. Let $w \in W$. We may find the points $p_1(w) \in X, p_2(w) \in Y$, and, specifically, we have $(p_1(w),p_2(w)) \in X \times Y$ such that $\alpha(p_1(w),p_2(w)) = w$. Now, suppose $\alpha((x,y)) = \alpha((x',y'))$. Then, traveling on $p_1,p_2$, we have that $p_1(\alpha((x,y))) = p_1(\alpha((x',y')))$ and same with $p_2$. But, because this commutes with the action of the natural projections, we have that $x = x'$, $y = y'$. Then, we have that $(x,y) = (x',y')$ in $X \times Y$. Thus, we have that $\alpha$ is injective, and surjective, and thus we have an isomorphism beween $W \cong X \times Y$, in an universal property of products. 
+
+\end{proof}
+
+\begin{problem}{5.2}
+
+Let $\phi_1: X_1 \to B, \phi_2: X_2 \to B$ be regular morphisms of projective varieties. Define the fiber product as:
+
+$$ X_1 \times_B X_2 = \{ (x_1,x_2) \in X_1 \times X_2 : \phi_1(x_1) = \phi_2(x_2) \} $$
+
+(a) Show that $ X_1 \times_B X_2$ is a projective subvariety of $X_1 \times X_2$. Recall that if $X_1 \subseteq \mathbb{P}^{n_1}, X_2 \subseteq \mathbb{P}^{n_2}$, we consider $X_1 \times X_2 \subseteq \mathbb{P}^{n_1} \times \mathbb{P}^{n_2}$ that we showed as a projective variety.
+
+(b)  Show that $ X_1 \times_B X_2$ satisfies the following universal property: given any projective variety $Y$ and regular morphisms $\psi_1: Y \to X_1, \psi_2: Y \to X_2$ such that $\phi_1 \circ \psi_1 = \phi_2 \circ \psi_2$, there exists a unique regular morphism $\psi: Y \to X_1 \times_B X_2$ such that $\pi_1 \circ \psi = \psi_1, \pi_2 \circ \psi = \psi_2$, where $\pi_1,\pi_2$ represent the restriction of the projection maps $X_1 \times X_2 \to X_1, X_1 \times X_2 \to X_2$ respectively.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+Suppose $B$ has dimension $d$ as a projective space. Since $\phi_1$, $\phi_2$ are regular morphisms, we may describe them as the action of regular functions on projective varieties. In particular then, let $\phi_1 = F_i/G_i, 0 \leq i \leq d$ where $F_i,G_i$ have  homogeneous degree $n$ and $\phi_2 = F_i'/G_i'$ where $F_j'/G_j'$ have homogeneous degree $m$. Consider the set of polynomials that are given by $F_iG_i' - F_i' G_i$. It should be clear that every point in the fiber product vanishes on each of these equations: let $(x_1,x_2)$ be in the fiber product. Then, we have that $\phi_1(x_1) = \phi_2(x_2)$. In particular, on the $d_0$-th component of $B$, we have that $F_{d_0}/G_{d_0}(x_1) = F_{d_0}'/G_{d_0}'(x_2)$. Since we know that $G, G'$ does not vanish on an open subset of $X_1, X_2$, we may take it to be non-0 on an open neighborhood around $x_1,x_2$. So, if we multiply through to clear denominators, we find that we get $F_{d_0}G_{d_0}' - F_{d_0}'G_{d_0} = 0$. Since the choice of component of $B$ was arbitrary, this works for all $i$, and so each of the polynomials vanish. Now, suppose we have a point $(x_1,x_2)$ that vanishes on each of the polynomials $F_iG_i' - F_i' G_i$. Then, since $F,G$ act only on $x_1$, and $F',G'$ act only on $x_2$, we may describe this as $F_iG_i' - F_i' G_i(x_1,x_2) = F_i(x_1)G_i'(x_2) - F_i'(x_2) G_i(x_1) = 0$. Since the $G, G'$ come from regular functions, we can find open neighborhoods around $x_1,x_2$ such that $G_i(x_1) \not = 0$ and $G_i(x_2)' \not = 0$. Then, rearranging, these must be the points such that $F_{d_0}/G_{d_0}(x_1) = F_{d_0}'/G_{d_0}'(x_2)$. But these are exactly the points in the fiber product. Thus, the fiber product is exactly the set of points that vanish on the set of polynomials that look like $F_iG_i' - F_i' G_i$, for $0 \leq i \leq d$. Further, since $F$ has homogeneous degree $m$ and $G_i'$ has homogeneous degree $n$, $F_iG_i'$ has homogeneous degree $mn$ and so does $F_i'G_i$. Then, their difference either has homogeneous degree $mn$ or is the 0 polynomial. In particular, because $\phi_1,\phi_2$ are regular morphisms, at least one $F_i,F_i'$ pair does not vanish for every point $(x_1,x_2)$. Then, at least one of these polynomials is non-identically 0. Thus, because we have found a system of equations in $x_1,...,x_{n_1}$ and $x_1,...,x_{n_2}$, homogeneous separately in each set of variables, by theorem 1.9 in Shafarevich, we have that the fiber product is a closed algebraic subvariety.
+
+(b)
+
+Here, we take the natural morphism, and take $\psi: Y \to X_1 \times X_2$ that sends $y \to (\psi_1(y),\psi_2(y))$. This is a morphism as $\psi_1,\psi_2$ are regular morphisms realized by regular functions, so we end up with $\psi$ as a collection of regular functions. In particular, because we have that $\phi_1 \circ \psi_1 = \phi_2 \circ \psi_2$, for any $(x_1,x_2) \in \psi(Y)$, we have that $\phi_1(x_1) = \phi_2(x_2)$, since we have a $y \in Y$ such that $\psi_1(y) = x_1, \psi_2(y) = x_2$, and $\phi_1\psi_1(y) = \phi_2\psi_2(y) \implies \phi_1(x_1) = \phi_2(x_2)$. Then, $\psi$ is naturally a regular morphism from $Y \to X_1 \times_B X_2$ as well. Further, by construction, this commutes with the natural projection maps $\pi_1,\pi_2$ to $X_1,X_2$, respectively. 
+
+\end{proof}
+
+\begin{problem}{5.3}
+
+Let $ A \in GL_{n+1} (k)$, that is, $A$ is an invertible matrix of dimension $n+1$ with field elements as matrix elements.
+
+(a) Show that the function $\phi: \mathbb{P}^n \to \mathbb{P}^n$ given by $\phi(\begin{bmatrix} X_0 \\ \vdots \\ X_n \end{bmatrix}) = A(\begin{bmatrix} X_0 \\ \vdots \\ X_n \end{bmatrix})$ gives an isomorphism in $\mathbb{P}^n$, that is, it is a bijective morphism of projective varieties whose inverse is also a morphism of varieties.
+
+(b) Let $P_0,...,P_n, Q \in \mathbb{P}^n$ be $n+2$ points such that no $n+1$ of them lie in the same hyperplane. Show that there is an isomorphism of $\mathbb{P}^n$ such that:
+
+$$\phi(\begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}) = P_0, \phi\begin{bmatrix} 0 \\ 1 \\ \vdots \\ 0 \end{bmatrix}) = P_1, \phi(\begin{bmatrix} 0 \\ 0 \\ \vdots \\ 1 \end{bmatrix}) = P_n, \phi(\begin{bmatrix} 1 \\ 1 \\ \vdots \\ 1 \end{bmatrix}) = Q $$ 
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+We look at the action of $A(\begin{bmatrix} X_0 \\ \vdots \\ X_n \end{bmatrix})$. This gives a set of linear equations that have the form: $Y_i = \Sigma_{j = 0}^{n} A_{ij} X_j$ where $A_{ij}$ denotes the field element in the i-th row and j-th column. This is a homogeneous polynomial of degree 1, thus a regular function for each $i$. Further, we know that they may not all vanish simultaneously because since $A$ is invertible, then it has trivial kernel equal to the origin, i.e. $(0,...0)$ for all n+1 coordinates. However, by the definition of a projective space, the origin is not a point of $\mathbb{P}^n$. Thus, on no point of $\mathbb{P}^n$ does $Y_i$ vanish for all $i$. Thus, $\phi$ is a morphism of varities. Further, since $A$ is invertible, we may define $\phi^{-1}$ in the natural way, that sends $(\begin{bmatrix} X_0 \\ \vdots \\ X_n \end{bmatrix}) \to A^{-1}(\begin{bmatrix} X_0 \\ \vdots \\ X_n \end{bmatrix})$. It should be clear that due to linear algebra, we have that $\phi^{-1} \circ \phi = A^{-1} A = I = A A^{-1} = \phi \circ \phi^{-1}$ and by the same arguments for $A$, $A^{-1}$ is also defines an $n+1$ tuple of regular functions that do not simultaneously vanish. Thus, $\phi$ is an isomorphism of projective varieties. 
+ 
+(b)
+
+Construct a matrix of the form $A = [ P_0 P_1 ... P_N ]$, that is, a $n+1$ dimensional square matrix where the columns are the coordinates of the point $P_i$. This must be an invertible matrix since each of the columns must be linearly independent - if not, then we could find a hyperplane that contains all $n+1$ points. So, define $\phi(\begin{bmatrix} X_0 \\ \vdots \\ X_n \end{bmatrix}) = A(\begin{bmatrix} X_0 \\ \vdots \\ X_n \end{bmatrix})$. Then, this is an isomorphism from part (a), that satisfies that $\phi(e_i) = P_i$, where we denote $e_i$ as a column vector with 1 in the i-th component and 0 else, where we index starting from 0. So, we need only show that $\phi(\begin{bmatrix} 1 \\ 1 \\ \vdots \\ 1 \end{bmatrix}) = Q$. Well, because the $P_i$ span the space, not being contained in a hyperplane, there exists $k_i \in k$ such that $\Sigma_i k_i P_i = Q$. Now, consider $\phi(\begin{bmatrix} k_0 \\ k_2 \\ \vdots \\ k_n \end{bmatrix})$. By linearity, this must equal $\Sigma P_i$, as $\begin{bmatrix} k_0 \\ 0 \\ \vdots \\ 0 \end{bmatrix} + \begin{bmatrix} 0 \\ k_1 \\ \vdots \\ 0 \end{bmatrix} + ... + \begin{bmatrix} 0 \\ 0 \\ \vdots \\ k_n \end{bmatrix}  = \begin{bmatrix} k_0 \\ k_1 \\ \vdots \\ k_n \end{bmatrix}$. But, since we work in a projective space, for each $k_i$, we have $ \begin{bmatrix} 0 \\ k_1 \\ \vdots \\ 0 \end{bmatrix} \sim  \begin{bmatrix} 0 \\ 1 \\ \vdots \\ 0 \end{bmatrix}$. Then, since $\phi$ must be well-defined on equivalence classes, we have that:
+
+$$ Q = \Sigma_i k_i P_i = \phi(\begin{bmatrix} k_0 \\ k_1 \\ \vdots \\ k_n \end{bmatrix}) = \phi(\begin{bmatrix} k_0 \\ 0 \\ \vdots \\ 0 \end{bmatrix}) + ... + \phi(\begin{bmatrix} 0 \\ 0 \\ \vdots \\ k_n \end{bmatrix})  = \phi(\begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}) + ... + \phi(\begin{bmatrix} 0 \\ 0 \\ \vdots \\ 1 \end{bmatrix}) =  \phi(\begin{bmatrix} 1 \\ 1 \\ \vdots \\ 1 \end{bmatrix})$$
+
+\end{proof}
+
+\begin{problem}{5.4}
+
+Recall that the Grassmannian of lines in $\mathbb{P}^3$ can be parametrized by the quadric of $\mathbb{P}^5$ with equation $Z_{01}Z_{23} - Z_{02}Z_{13} + Z_{03}Z_{12} = 0$. The line that contains the points $(p_0,...,p_3),(q_0,...,q_3)$ has coordinates $Z_{ij} =\begin{vmatrix} p_i & p_j \\  q_i & q_j \end{vmatrix}$.
+
+Note that by a plane in $\mathbb{P}^5$, we are referring to a linear subvariety of $\mathbb{P}^5$ of dimension $2$.
+
+(a) Show that the set of lines that contain a fixed point gives a $2$-dimensional plane in $\mathbb{P}^5$ contained in the Grassmanian. (Hint: the coordinates of such a point in the Grassmannian are linear combinations of the coordinates of the second point that determines the line).
+
+(b) Show that the set of lines contained in a fixed plane of $\mathbb{P}^3$ gives a $2$-dimensional plane in $\mathbb{P}^5$ contained in the Grassmannian. (Hint: For points in a plane, one of the coordinates can be written as a linear combination of the other three).
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+First, we may fix a point $(p_0,...,p_3)$, and consider varying over all $(q_0,...,q_3)$. Then, the points within the Grassmannian have the form $Z_{ij} =\begin{vmatrix} p_i & p_j \\  q_i & q_j \end{vmatrix} = p_iq_j - q_ip_j$, that is, linear combinations of the coordinates of the second point. In particular then, because other than ensuring not all of the $q_i$ are identically 0, this represents two free variables in each coordinate. In particular, we can view this as two independent vectors in each coordinate, and two independent vectors trace out a dimension 2 subspace.
+
+(b)
+
+From the hint, find a line in the fixed plane, and take two points on the line and call them $p = (p_0,...,p_3)$,  $q = (q_0,...,q_3)$. Because they're in a plane, we may take, wlog, $p = (p_0,p_1,p_2, ap_0 + bp_1 + cp_2), q =  (q_0,...,aq_0 + bq_1 + cq_2)$, where $a,b,c \in k$. Then, we have that the coordinates of the point in the Grassmannian look like:
+\begin{gather}
+Z_{01} = p_0q_1 - q_0 p_1, \\ Z_{02} = p_0q_2 - q_0 p_2, \\Z_{03} = p_0(aq_0 + bq_1 + cq_2) - q_0(ap_0 + bp_1 + cp_2) = bZ_{01} + cZ_{02}, \\Z_{12} = p_1q_2 - q_1 p_2, \\Z_{13} = p_1(aq_0 + bq_1 + cq_2) - q_1(ap_0 + bp_1 + cp_2) = -aZ_{01} + cZ_{12}, \\ Z_{23} = p_2(aq_0 + bq_1 + cq_2)- q_2 (ap_0 + bp_1 + cp_2) = -aZ_{02} - bZ_{12}
+\end{gather}
+
+Since this is traced out by 3 independent coordinates and 3 dependent coordinates, linear combinations of the other 3, this corresponds to a 3-space in affine space, which corresponds to a plane in projective space.
+
+\end{proof}
+
+
+\end{document}

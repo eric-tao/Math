@@ -1,0 +1,169 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Assignment}
+\author{Eric Tao\\
+Math 240: Homework \#7}
+\maketitle
+ 
+\begin{problem}{7.1}
+Let $\mathcal{O}_i$ be the local ring of the origin on an affine line.
+
+(a) Show that if $\mathcal{O} = \mathcal{O}_{V(xy),(0,0)}$ is the local ring at the origin of the closed set with equation $xy = 0$, then $\mathcal{O}$ is the subring of $\mathcal{O}_1 \bigoplus \mathcal{O}_2$ consisting of functions whose value at the origin is the same.
+
+(b) If $\mathcal{O} = \mathcal{O}_{V(xyz),(0,0,0)}$ is the local ring at the origin of the closed set of $\mathcal{A}^3$ with equation $xyz = 0$, describe the local ring at the origin.
+
+(c) Show that $V(xy(x-y)) \subseteq \mathbb{A}^2$ and $V(xyz) \subseteq \mathbb{A}^3$ are not isomorphic.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+We start by looking at the coordinate ring of $V(xy)$. This has form $k[x,y]/(xy)$, and we can see that we can view elements of this ring as having the form $k + f(x) + g(y)$ where $f(0) = g(0) = 0$, that is, $f,g$ are polynomials of only $x,y$ without constant term, and $k$ is some field element. Then, we can identify the local ring $\mathcal{O}$ as being of the form fractions of $(k + f + g)/(k' + f' + g')$, but, because we need to be regular at $(0,0)$, where $k' \not = 0$. 
+
+Now, we recall that $\mathcal{O}_i$ has the shape $m/n$ such that $m,n \in k[x]$ and $n(0) \not = 0$. Then, we claim that we can construct an injective map that takes $(k + f + g)/(k' + f' + g') \to ((k + f)/(k' + f'), (k + g)/(k' + g'))$, where we identify one local ring as the polynomials in $x$, and the other as the polynomials in $y$. 
+
+Primarily, we just need to show that this map is well-defined, and behaves as an injective homomorphism of rings. Suppose we have $(k + f + g)/(k' + f' + g') \sim (k'' + f'' + g'')/(k''' + f''' + g''')$. Then, we have $h$ such that $h((k''' + f''' + g''')(k + f + g) - (k'' + f'' + g'')(k' + f' + g')) = 0$. Multiplying out, we have that $h(k'''k + f'''k + g'''k + k'''f + g'''f + f'''f + k'''g + f'''g + gg''' - k''k' - k''f' - k''g' -f''k' -f''f' - f''g' - g''k' - g''f' - g''g') = 0$. We recall we modded out by $(xy)$ in the coordinate ring, so any terms that look like $fg$ perish. Further, since we're localizing at $(0,0)$, we can take $h = k'''' + f'''' + g''''$. Then, we have that $(k'''' + f'''' + g'''')([k'''k - k'k''] + [f'''k + k'''f + f'''f - k''f' - f'k' - f' f''] + [g'''k + gk''' + gg''' - k''g' - g''k' - g''g']) = 0$. Separating into field elements, polynomials in $x$, and polynomials in $y$, we have the following conditions:
+
+$$ \begin{cases} k''''[k'''k - k'k''] = 0, \\ f''''[k'''k - k'k''] + (k'''' + f'''')[f'''k + k'''f + f'''f - k''f' - f''k' - f' f''] = 0 \\ g''''[k'''k - k'k''] + (k'''' + g'''') [g'''k + k'''g + g'''g - k''g' - g''k' - g'g''] = 0 \end{cases} $$
+
+Where we have that $k'''', k, k' \not = 0$
+
+
+Now, consider the images $((k + f)/(k'+f'),(k + g)/(k' + g'))$ and $((k'' + f'')/(k'''+f'''),(k'' + g'')/(k''' + g'''))$. In particular, consider $(k'''' + f'''')[(k'''+f''')(k + f) - (k'' + f'')(k'+f')]$ and the same for the $g$'s. Multiplying out and grouping, we find that:
+
+$$(k'''' + f'''')[(k'''+f''')(k + f) - (k'' + f'')(k'+f')] = k''''(k'''k - k''k') + f''''(k'''k - k''k')$$
+$$ + (k''''+f'''')(f'''k + k'''f + f''f - k''f' - f''k' - f''f') = 0 + 0$$
+
+by the conditions we found above. It is clear to see that $(k'''' + g'''')$ will work for the $g$'s for the same reason. Further, since $k'''' \not = 0$ by the construction of $h$ above, we have that $k'''' + f''''$ is a valid factor since it does not vanish at $x = 0$ and same for $k'''' + g''''$. Thus, we have that this map is well-defined. It should be easy to see that this map is further a homomorphism:
+
+$$\frac{(k + f + g)}{(k' + f' + g')} +  \frac{(k'' + f'' + g'')}{(k''' + f''' + g''')}=$$ 
+$$\frac{(kk''' + k''k') + (kf''' + k'''f + ff''' + k'f'' + k''f' + f'f'') + (kg''' + k'''g + gg''' + k'g'' + k''g' + g'g'')}{(k'k'' + (k'f''' + f'k''' + f'f''') + (k'g''' + g'k''' +g'g''')}  \to $$
+$$ (\frac{(kk''' + k''k') + (kf''' + k'''f + ff''' + k'f'' + k''f' + f'f'')}{(k'k'' + (k'f''' + f'k''' + f'f'''))},\frac{(kk''' + k''k') + (kg''' + k'''g + gg''' + k'g'' + k''g' + g'g'')}{(k'k'' + (k'g''' + g'k''' + g'g'''))} = $$
+$$ (\frac{(k+f)(k'''+f''') + (k'+f')(k''+f'')}{(k'+f')(k''+f'')},....)$$
+
+$$ \frac{(k + f + g)}{(k' + f' + g')} +  \frac{(k'' + f'' + g'')}{(k''' + f''' + g''')} \to (\frac{k + f}{k' + f'},\frac{k + g}{k' + g'}) +  (\frac{k'' + f''}{k''' + f'''},\frac{k'' + g''}{k'''' + g'''}) = $$
+$$ (\frac{(k+f)(k'''+f''') + (k'+f')(k''+f'')}{(k'+f')(k''+f'')},....)$$
+
+and
+
+$$ \frac{(k + f + g)}{(k' + f' + g')}\frac{(k'' + f'' + g'')}{(k''' + f''' + g''')}= \frac{(k + f + g)(k'' + f'' + g'')}{(k' + f' + g')(k''' + f''' + g''')} \to$$
+$$ (\frac{(k+f)(k''+f'')}{(k'+f')(k'''+f''')},...)$$
+
+$$ \frac{(k + f + g)}{(k' + f' + g')}\frac{(k'' + f'' + g'')}{(k''' + f''' + g''')} \to (\frac{k+f}{k'+f'},...)(\frac{k''+f''}{k'''+f'''},...) =$$
+$$  (\frac{(k+f)(k''+f'')}{(k'+f')(k'''+f''')},...)$$
+
+Finally, this is an injective hom, as we can look at the kernel. For this to be $0$ in the image, it has to come from something that looks like $0/k + f + g$ in $\mathcal{O}$. In particular, we can see trivially that every fraction $0/k + f + g \sim 0/k' + f ' + g'$. So then this map has trivial kernel, so then the image is a subring of the target space, and $\mathcal{O} \cong \mathcal{O}/\{ 0/1\} \cong \text{Image}$, so we can identify the image as a copy of $\mathcal{O}$. Further, we notice from our construction, that evaluated at 0, we have that $\frac{k + f(0)}{k' + f'(0)} = \frac{k}{k'} = \frac{k + g(0)}{k' + g'(0)}$ because $f,g$ are polynomials without constant term.
+
+(b)
+
+We recall by definition, $\mathcal{O}$ is just the regular functions of $k[x,y,z]/(xyz)$ at the origin. Then, in particular, we have exactly objects that look like $f/g$ where $g(0,0,0) \not = 0$ and $f,g$ are representatives of some coset of $(xyz)$, which we may realize as equivalent to polynomials without any terms  with every variable. That is, we have no terms of the form $kx^ay^bc^d, a,b,c> 0$.
+
+(c)
+
+Here, we examine the contangent space for each. That is, let $\mathcal{O} = \mathcal{O}_{V(xy(y-x),(0,0))}$ and $\mathcal{O}' = \mathcal{O}_{V(xyz),(0,0,0)}$. If the varieties were isomorphic, then we should admit an isomorphism of the cotangent spaces at the origin, because we can linearly transform any other point to recover the origin. From remark 4.2.5, we may look at $m$ the maximal ideal in the broader coordinate ring, and since we localize at (0,0,0), we should be looking at the maximal ideal $(x,y,z)$. Then, $m^2$ here would have shape $(x^2,xy,xz,y^2,yz,z^2)$, and looking at $m/m^2$ as a k-vector space, we see that elements of degree at least 2 perish, and we retain elements of degree 1, so we should have degree 3 as we have 3 indepedent variables. On the other hand, looking at $(x,y)/(x^2,xy,y^2)$ and with the same logic, we should get a degree 2 vector space. Then, since the local rings differ on an invariant, they cannot admit an isomorphism between them.
+
+\end{proof}
+
+\begin{problem}{7.2}
+Show that if $x \in X, y\in Y$ are non-singular points, then $(x,y) \in X \times Y$ is a non-singular point.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+Take $X= V(f_1,...,f_i) \subseteq \mathbb{A}^m, Y = V(g_1,...,g_j) \subseteq \mathbb{A}^n$ and $X \times Y \subseteq \mathbb{A}^{m+n}$ by the inclusion that sends a point $(x_1,....,x_m) \to (x_1,...,x_m,0,...,0)$ and $(y_1,...,y_n) \to (0,...,0,y_1,...,y_n)$ and we take the maps from the polynomial ring of $\mathbb{A}^m$ that identifies the variables as the first $m$ variables of $k[x_1,...,x_{m+n}]$ and the ones for $Y \subseteq \mathbb{A}^{n}$ as the last $n$ variables of $k[x_1,...,x_{m+n}]$
+
+Consider the Jacobian matrix of $X \times Y$. We recall working with the product space, that we can take the polynomials that generate the ideal of $X \times Y$ as being exactly $f_1,...,f_i, g_1,...,g_j$. Then, our Jacobian has form:
+
+$$ \begin{bmatrix} \frac{\partial f_1}{x_1} & \hdots & \frac{\partial f_1}{x_{m+n}} \\ \vdots & \ddots &  \vdots \\ \frac{\partial f_i}{x_1} & \hdots & \frac{\partial f_i}{x_{m+n}} \\ \frac{\partial g_1}{x_1} & \hdots & \frac{\partial g_1}{x_{m+n}} \\ \vdots & \ddots &  \vdots \\ \frac{\partial g_j}{x_1} & \hdots & \frac{\partial g_j}{x_{m+n}} \end{bmatrix} $$
+
+However, here, we recall our identification of the variables in the larger polynomial ring. Since we send the polynomials of $X$ as the first $n$ variables, we have that $\frac{\partial f_k}{x_l} = 0$ for any $1 \leq k \leq i$ and  $l > n$ and similarly for $g$, that $\frac{\partial g_k}{x_l} = 0, 1 \leq k \leq j$ and $l < n+1$. Then, we can simplify our Jacobian to look like, in block matrix form:
+
+$$ \begin{bmatrix} J_X & 0 \\ 0 & J_Y \end{bmatrix} $$
+
+where $J_X, J_Y$ are the Jacobian matricies for $X,Y$ respectively in their immersed $\mathbb{A}^m,\mathbb{A}^n$. Now, because $x$ is a non-singular point of $X$, we have that since we chose the $f_i$'s to generate $I(X)$, that the rank of $J_X$ is exactly $m - d$, where $d = \dim_x X$, and $J_Y$ has rank $n-d'$ where $d' = \dim_y Y$. Then, because of the shape of our Jacobian, we must have that the rank of $J$ is exactly $(m - d) + (n - d') = (m + n) - (d + d')$, because of how the $f,g$ polynomials span completely separate variables.
+
+Now, we know that from a corollary in class, that since $x\in X, y \in Y$ non-singular, we can find the unique $X', Y'$ irreducible such that $x \in X', y \in Y'$. By the definition of $\dim_x X, \dim_y Y$, we have that $\dim(X') = d$ and $\dim(Y') = d'$. From homework 3, we have that $X' \times Y'$ is irreducible, with dimension $d + d'$. Then, we have that $\dim_{(x,y)} X \times Y   \geq  d + d'$, because if it is the maximum dimension of irreducible components, it must be at least the value that we have. However, by 4.3.2 in Osserman, we have that because the Jacobian can have rank at most $a - b$ where $a$ is the dimension of the immersed space $\mathbb{A}^a$ and $b = \dim_{p} Z$ for a point $p \in Z$, then we have that $m + n - (d + d') \leq (m + n) - \dim_{(x,y)} X \times Y$. Then, we have that $\dim_{(x,y)} X \times Y \leq (d + d')$, so we have that $\dim_{(x,y)} X \times Y = d + d'$. Then, we have that the rank of $J$ is exactly equal to $m + n - \dim{(x,y)} X \times Y$, and therefore $(x,y)$ is non-singular.
+
+\end{proof}
+
+\begin{problem}{7.3}
+
+(a) Show that if a cubic hypersurface contains two distinct singular points, that the line that joins them is contained within the hypersurface.
+
+(b) Show that a cubic curve in the plane that contains 2 singular points is reducible.
+
+(c) Show that a cubic curve in the plane that contains 3 singular points consists of the union of 3 lines.
+
+\end{problem}
+
+\begin{proof}[Solution]
+(a)
+
+Let $f$ be a cubic and let $V(f)$ be its hypersurface immersed in $\mathbb{A}^n$ for some $n$. Suppose we have two singular points $a_1, a_2 \in V(f)$, and consider the line $I(t) = ta_1 + (1-t)a_2$. We may take two transformations that send $a_1 \to (0,...,0); a_2 \to (1,0,...0)$, because we can first take a translation that achieves the first transformation, and then a dilation+rotation that achieves the second such that their composition is as desired. Then, our line is exactly the line $I(t) = (t,0,...,0)$. Now, since we are cut out by a hypersurface, we have that $f,\partial f/\partial x_i$ for all $x_i$ vanish at the origin, and $(1,0,...0)$. Because these vanish at the origin, we notice that all degree 0 and 1 terms of $f$ must vanish. Now, look at $f$ as a polynomial in $x_1$. We have $f = ax_1^3 + bx_1^2 g(x_2,...,x_n)$ and $\partial f / \partial x_1 = 3ax_1^2 + 2bx_1 g(x_2,...,x_n)$. Evaluating at $(1,...0)$, we compute:
+
+$$ \begin{cases}f((1,0...,0)) = a + b g(0,...,0) = 0, \\ \frac{\partial f}{\partial x_1}(1,...,0) = 3a + 2b g(0,...,0) = 0 \end{cases}$$
+
+Then, we have that $a = 0 = bg(0,...,0) \implies g(0,...,0) = 0, b \not = 0$. Then, we can say $f =  2bx_1 g(x_2,...,x_n)$. In particular, we notice that $f((t,0,...0)) = 2btg(0,...,0) = 0$, so the line vanishes on $f$, therefore $I(t) \subseteq V(f)$.
+
+
+
+(b)
+
+Suppose a cubic curve in the plane contains 2 distinct singular points, $a$, and $b$. We may take two transformations that send $a \to (0,0); b \to (1,0)$, because we can first take a translation that achieves the first transformation, and then a dilation+rotation that achieves the second such that their composition is as desired.
+
+Now, consider, in these new coordinates, the equation of a general cubic function:
+
+$$f(x,y) = ax^3 + by^3 + cx^2y + dxy^2 + ex^2 + fxy + gy^2 + hx + iy + j$$
+
+Since we have that $(0,0)$ is a point on the variety, we have that the polynomial vanishes at these points. Therefore, we have that $j=0$
+
+Next, because $(0,0)$ is in particular singular, we know that it also vanishes on the Jacobian polynomials. Then, we have that
+
+$$ \partial f/\partial x = 3ax^2 + 2cxy + dy^2 + 2ex + fy + h,\text{  } \partial f/\partial x(0,0) = h = 0 $$
+$$ \partial f/ \partial y = 3by^2 + cx^2 + 2dxy + fx + 2gy + i, \text{  } \partial f /\partial y (0,0) = i = 0 $$
+
+So, at this point, we have that
+
+$$ \begin{cases} f(x,y) = ax^3 + by^3 + cx^2y + dxy^2 + ex^2 + fxy + gy^2,\\ \partial f/\partial x = 3ax^2 + 2cxy + dy^2 + 2ex + fy,\\  \partial f/ \partial y = 3by^2 + cx^2 + 2dxy + fx + 2gy \end{cases}$$
+
+Now we do the same thing, evaluating at the point $(1,0)$. We find the following:
+
+$$ \begin{cases} f(1,0) = a +  e  = 0,\\ \partial f/\partial x(1,0) = 3a +  2e = 0,\\  \partial f/ \partial y(1,0) = c + f = 0\end{cases}$$
+
+Combining the first two equations, we find then that $a = 0 = e$. Now, at this point, we look back at $f(x,y)$ removing terms that vanish:
+
+$$ f(x,y) = by^3 + cx^2y  + dxy^2 + fxy + gy^2 = y(by^2 + cx^2 + dxy + fx + gy) $$
+
+We know that because this an actual cubic curve, that at least one of $b,c, d$ is non 0, so splits and thus the curve cannot be irreducible $\implies$ the curve is reducible.
+
+(c)
+
+Now, suppose we have a cubic curve $V(f)$ in the plane that contains 3 singular points. First, suppose they are not all collinear. Then, if we look at pairs of points, we have lines $l_{12} = \overline{a_1a_2}, l_{23} = \overline{a_2a_3}, l_{13} = \overline{a_1a_3}$. Pick any of the lines, wlog, $l_{12}$. This can be realized as a linear polynomial, call it $g_{12}$, and, because $l_{12} \subseteq V(f)$, then we must have that $<g_{12}> \supseteq <f>$. In particular, then, we have that $g_{12} | f$. We may repeat this argument for each polynomial $g_{23}, g_{13}$, and because the points were not collinear, these are all distinct polynomials, that cannot be multiples of each other. Then, by degree arguments, $f = kg_{12}g_{23}g_{13}$ up to some field element $k$, which is exactly the product/union of three lines.
+
+Now, suppose $V(f)$ has 3 singular points, collinear. Then, in the same vein as problem (b), we can choose that the singular points are $(0,0), (1,0), (a,0)$ for some $a \in k$, via some changes of coordinates.
+
+Look at:
+
+$$ \begin{cases} f(x,y) = by^3 + cx^2y + dxy^2 + fxy + gy^2,\\ \partial f/\partial x =  2cxy + dy^2 + fy,\\  \partial f/ \partial y = 3by^2 + cx^2 + 2dxy + fx + 2gy \end{cases}$$
+
+In particular, let's look at the level curve $(k,0)$, where $k$ is just some field element:
+
+$$ \begin{cases} f(k,0) = 0,\\ \partial f/\partial x(k,0) = 0,\\  \partial f/ \partial y(k,0) = ck^2 + fk\end{cases}$$
+
+So, to be singular, we must have that $ck^2 + fk = 0$. But, we notice, this is a polynomial of degree 2 in a single variable, and admits only 2 solutions. So, we cannot have 3 collinear singular points, and so we always have 3 non-collinear points and the splitting into 3 lines.
+
+\end{proof}
+
+\end{document}

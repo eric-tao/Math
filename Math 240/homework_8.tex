@@ -1,0 +1,177 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Assignment}
+\author{Eric Tao\\
+Math 240: Homework \#8}
+\maketitle
+ 
+\begin{problem}{8.1}
+
+Let $\mathbb{M}_{m\times n}$ be the space of all $m \times n$ matrices, with the natural structure of the affine space $\mathbb{A}^{mn}$. For any $k \leq \min(m,n)$, we define the determinantal variety $\mathbb{M}_{m\times n}^k$ as the set of matrices of rank at most $k$.
+
+(a) Show that $\mathbb{M}_{m\times n}^k$ is an affine closed subset of $\mathbb{M}_{m\times n}^k \simeq \mathbb{A}^{mn}$.
+
+(b) Compute the dimension of  $\mathbb{M}_{2\times 3}^1$ and show it is irreducible. Hint: You can show that there is an inclusion of an open set of $\mathbb{A}^4$ whose image is an open, dense set in $\mathbb{M}_{2\times 3}^1$.
+
+(c) Find the singular points of $\mathbb{M}_{2\times 3}^1$, and find the dimension of the tangent space at these singular points. Hint: You should have explcit equations for $\mathbb{M}_{2\times 3}^1$ in $\mathbb{A}^6$, so you may use the description of the tangent space via the partials.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+First, we notice that if $k = \min(m,n)$, then this is every matrix, and so this is the entirety of $\mathbb{A}^{mn}$.
+
+Now, look at any $k < \min(m,n)$. For this to have rank less than or equal to $k$, we can look at determinants of minors of shape $k+1 \times k+1$, as if these all vanish, then we know that there are at most $k$ independent sub-vectors in the column space. However, the determinant of a square matrix is just a polynomial equation in those entries, and there are only finitely many $k+1 \times k+1$ minors, so we can just take $I = <f_1,..,f_m>$.
+
+(b)
+Consider the open set in $\mathbb{A}^4$ that cuts out the closed set defined by $V(x_1,x_2)$, that is, the plane where $x_1 = x_2 = 0$ and call this $U$. Now, take a map from $\phi: U \to M_{2\times3}^1$ that acts as follows:
+
+$$ (x_1,x_2,x_3,x_4) \to \begin{bmatrix} x_1 & x_1x_3  & x_1x_4 \\ x_2 & x_2x_3 & x_2x_4 \end{bmatrix} $$
+
+We notice three facts: First of all, this is truly a matrix of at most rank 1, since the 2nd and 3rd columns are scalar multiples of the first, possibly 0. Secondly, this must be an injective map, as suppose we have:
+
+$$ \phi((x_1,x_2,x_3,x_4) = \begin{bmatrix} x_1 & x_1x_3  & x_1x_4 \\ x_2 & x_2x_3& x_2x_4 \end{bmatrix} = \begin{bmatrix} y_1 & y_1y_3  & y_1y_4 \\ y_2 & y_2y_3 & y_2y_4 \end{bmatrix} = \phi((y_1,y_2,y_3,y_4)) $$.
+
+Then, reading off matrix entries, we have that automatically, $x_1 = y_1$ and $x_2 = y_2$. Then, looking at $x_1x_3 = y_1 y_3$, since these are scalars in our field, since $x_1 = y_1$, we can multiply on the left by $x_1^{-1}$ to retrieve $x_3 = y_3$ and make a similar argument to get $x_4 = y_4$.
+
+Lastly, we notice that the matrices that we are missing are the matrices with first column $$\begin{bmatrix} 0 \\ 0 \end{bmatrix}$$.
+
+But, that is exactly a closed condition - take this as the zero locus of the 2x2 determinants, as well as $x_1,x_2$, to be explicit, using the following notation for the matrix elements:
+
+$$ \begin{bmatrix} x_1 & x_2  & x_3 \\ x_4 & x_5 & x_6 \end{bmatrix} $$
+
+the matrices of rank at most 1 and 0s in the first column can be realized as the zero locus of the following set of polynomials $\{x_1x_5 - x_2x_4, x_1x_6 - x_3x_4, x_2x_6 - x_3x_5, x_1, x_4 \}$. Thus, the image is an open set - call this $U'$. 
+
+Now, we notice that the matrices in $M^1_{2\times 3}$ missed by $\phi$ are exactly those with $0$s in the first column, but we wish to use Corollary 3.2.11 from Osserman. Well, we consider the similar maps of form:
+
+$$ \psi_1: (y_1,y_2,y_3,y_4) \to \begin{bmatrix} y_1y_3 & y_1  & y_1y_4 \\ y_2y_3 & y_2 & y_2y_4 \end{bmatrix} $$
+
+$$ \psi_2: (z_1,z_2,z_3,z_4) \to \begin{bmatrix} z_1z_3 & z_1z_4  & z_1 \\ z_2z_3 & z_2z_4 & z_2 \end{bmatrix} $$
+
+
+That is, where we privilege the 2nd and 3rd columns, and then patch the 0 matrix using $\phi$ on all of $\mathbb{A}^4$. In particular, we take the domain as the quasiaffine variety $\mathbb{A}^4 \setminus V(x_1, x_2)$ for $\psi_1, \psi_2$, that is where $x_1,x_2$ do not simultaneously vanish, so that the 2nd and 3rd column, respectively, are never simultaneously 0. This will patch our space so that for any $m \in M^1_{2 \times 3}$ such that $m \not \in \text{Im}(\phi)$, we can have achieve these through at least one of these maps as if we are rank 1, we can never have every column identically the 0 vector, so we can choose a corresponding map that with non-vanishing column vector. Further, suppose now that we have a matrix in $\text{Im}(\phi)$. Consider $\psi_1^{-1}(\text{Im}(\phi))$, though the same argument works for $\psi_2$. This is only really defined on the image of $\psi_1$, which is matrices that do not vanish on the 2nd column vector as well as non-vanishing on the first column due to the shape of $\phi$. Then, we take:
+
+$$ \psi_1^{-1}  \begin{bmatrix} x_1 & x_1x_3  & x_1x_4 \\ x_2 & x_2x_3 & x_2x_4 \end{bmatrix} = (x_1x_3, x_2x_3, 1/x_3, x_4/x_3) $$
+
+where, we know that due to the restrictions on $\phi$, we have that $x_3 \not = 0$ since they do not belong to the image under $\phi_1$ from our domain, and we cannot have $x_1,x_2$ identically 0. But, that amounts to the complement of a closed condition on this copy of $\mathbb{A}^4$, meaning that this is an open set on $\mathbb{A}^4$ and therefore dense. The same argument works for $\psi_3$, with some switching of labels.
+
+Patching the $0$ matrix using $\phi$ on all of $\mathbb{A}^4$ is reasonable, since we already showed that the original image came from an open set of $\mathbb{A}^4$, thus dense from irreducibility.
+
+Then, applying 3.2.11, we have that $M^1_{2 \times 3}$ is irreducible. Further, we return to look at $\phi$ from $U \to U'$. This we claimed as an injection earlier. Then, since cutting out a single plane does not reduce the dimensionality of $\mathbb{A}^4$, we have a 4 dimensional subset sitting within our matrix space. But, our matrix space is irreducible, thus this subset is in particular, dense. Then, its closure must be dense. But that must be all of $M^1_{2 \times 3}$. So, we conclude that our matrix space has dimension 4.
+
+(c)
+
+First, we write the Jacobian matrix for $\mathbb{M}_{2\times 3}^1$, where we take our matrices to be of form:
+
+$$ \begin{bmatrix} x_1 & x_2  & x_3 \\ x_4 & x_5 & x_6 \end{bmatrix} $$
+
+and our polynomials to be then $f_1 = x_1x_5 - x_2x_4, f_2  = x_1x_6 - x_3x_4, f_3 = x_2x_6 - x_3x_5$.
+
+Then, $\mathcal{J}(f_1,f_2,f_3)$ has form:
+
+$$ \begin{bmatrix} x_5 & -x_4  & 0 & -x_2 & x_1 & 0  \\ x_6 & 0 & -x_4 & -x_3 & 0 & x_1  \\ 0 & x_6  & -x_5 & 0 & -x_3 & x_2  \end{bmatrix} $$
+
+Because we know that $\mathbb{M}_{2\times 3}^1$ has dimension 4, then, by the Jacobian criterion from Osserman, we know that the Jacobian matrix has rank at most $6 - 4 = 2$, and if the rank is $2$ at a point $p$ then we know that our point is non-singular. Then, we need only consider when this matrix is rank 1 or rank 0.
+
+Suppose the matrix is rank 1. Then, we know that at least one coordinate is non-0. Suppose we know that $x_1$ is non-0. Then, we focus on the columns that contain $x_1$:
+
+$$ \begin{bmatrix} x_1 & 0 \\ 0 & x_1 \\ -x_3 & x_2 \end{bmatrix} $$
+
+In particular, looking at the determinant of the minor of the top half, the determinant is $x_1^2$. We notice that more generally, we can find 2x2 minors with determinant $x_i^2$ for every $i$, up to a negative sign. But then, we know that the Jacobian would have rank 2 if any of these do not vanish. But that is a contradiction, if the matrix is rank 1. So we cannot have Jacobians of rank 1.
+
+Now, suppose the Jacobian has rank 0. Then, we have that $x_1 = x_2 = x_3 = x_4 = x_5 = x_6 = 0$. So the only singular point is at the origin, with the $0$ matrix. But at the origin, the tangent space is every vector, which in our case, is every vector in $\mathbb{A}^6$, so the tangent space has dimension 6.
+
+\end{proof}
+
+\begin{problem}{8.2}
+
+Let $K$ be an algebraically closed field of characteristic different from two. Let $g(x) \in K[x]$ be any polynomial not a perfect square, and define $f(x,y) = y^2 - g(x)$.
+
+(a) Show that $V(f)$ is an irreducible affine plane curve.
+
+(b) Show that $V(f)$ is non-singular if and only if $g(x)$ has no double roots.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+It is clear that if we embed this in a copy of $\mathbb{A}^2$, that we have a plane curve, as a hypersurface of dimension 1 is merely a curve. Then, we need only check that this is irreducible. Since we are cut out by a single polynomial, it suffices to show that $f$ must be an irreducible polynomial. By degree arguments, since $g$ has degree 0 as a polynomial in $y$, then it could only split as a degree 2 times a degree 0 in $y$, or 1 and 1. Note that in what follows, when we talk of degree, we mean the degree in y.
+
+Clearly, it could not be degree 2 times degree 0. Then, this would look like $[f(x) y^2 + j(x) y + h(x)] * k(x)$. But, multiplying this out, we would need that $fk y^2 + jk y + hk = y^2 + g$. In particular then, we would need that $jk = 0, fk = 1, hk = g$. $jk = 0$ implies that either $k = 0, j = 0$ since we're in a domain. Since this would be impossible if $k(x) = 0$, we take $j(x) = 0$. Then, we look at $fk = 1$. This implies that $f,k \in K[x]^x$, that is, we are units of $K[x]$. But, this implies then we can only split into a degree 2 polynomial times a unit, so we do not get smaller irreducible elements.
+
+Now, we look at degree 1 times degree 1. In general, we see that we would want that $(ay + b)(cy + d) = acy^2 + ady + bcy + bd = y^2 - g$, where $a,b,c,d, g \in K[x]$. Then, we recover the equations:
+
+$$ ac = 1, ad + bc  = 0, bd = -g$$.
+
+We see that from $ac = 1$, that $a,c$ are units. Then, from $ad + bc = 0 \implies ad = -bc$, since $a,c$ are units, we can multiply both sides by $-a$ to get $- (a^2) d = b$. Then, finally, using the last equation, we substitute for $b$ to get that $- (a^2)(d^2) = -g \implies g = (ad)^2$. But, by hypothesis, $g$ is not a perfect square. Then, we cannot split into polynomials of degree 1 either, and thus, we are done, and $f$ is irreducible $\implies V(f)$ is an irreducible curve.
+
+(b)
+
+We recall that $V(f)$ non-singular if and only if the Jacobian does not vanish for any $(x,y)$ on the curve, since we are cut out by a single curve.
+
+By the explicit form, we have that:
+
+$$ \mathcal{J} = [ \partial f/ \partial x , \partial f / \partial y ] = [ -g'(x), 2y] $$
+
+Then, $\mathcal{J}$ vanishes exactly at the set $\{ (x,0) : g'(x) = 0 \}$. However, we notice that since we are looking at points where $y = 0$, when we look at $f(x,0) = -g(x) = 0$, since we need to be on the curve $V(f)$ as well, the x-coordinate must also be roots of $g$, so we may take $g$ to be of at least degree 1, as otherwise, there are no roots unless $g = 0$, a perfect square of itself. 
+
+Here, since $K$ is an algebraically closed field, we have that every polynomial splits, and we live in a UFD, we may write $g = k\Pi_{i=1}^n (x-a_i)^d_i$ for some $n, k \in K$, where $d_i \geq 1$ and the $a_i \in K$ are distinct. If we take the formal derivative then, using the product rule, we get that this has form $g' = \Sigma_{j=1}^n   d_j(x-a_j)^{d_j - 1}\Pi_{i \not = j} (x-a_i)^{d_i}$. Now, suppose $(x-a_k) | g'$ for some $a_k$, where we can enforce that it is one of the $a_k$ because to be in $V(f)$, it must be a root of $g$. Then, it must divide, for each $j$, $d_j(x-a_j)^{d_j - 1} \Pi_{i \not = j} (x-a_i)^{d_i}$. We can see that for any $j \not = k$, $(x-a_k) | \Pi_{i \not = j} (x-a_i)^{d_i}$ since $(x-a_k)^{d_k}$ is in that product. Then, since it divides every other term, it must divide $d_k (x-a_k)^{d_k -1}\Pi_{i \not = k} (x-a_i)^{d_i}$. Since the $a_i$ are distinct, $(x - a_k) \nmid (x - a_i)$ for any $i \not = k$. Then, for this to divide this term, we must have that $(x-a_k) | d_k (x-a_k)^{d_k - 1}$, which tells us that $d_k -1 \geq 1 \implies d_k \geq 2$, that is, $a_k$ is a double root. So, $g$ has a double root if and only if the Jacobian vanishes there. 
+
+Thus, we have that $V(f)$ non-singular if and only if the Jacobian does not vanish if and only if $g$ does not contain a double root.
+
+
+\end{proof}
+
+\begin{problem}{8.3}
+
+A quasiaffine variety $G$ is said to be an algebraic group is it has a group structure such that the product and inverse functions:
+
+$$ P: G \times G \to G : (x,y) \to xy $$
+$$ I: G \to G : x \to x^{-1}$$
+are regular maps of varieties.
+
+(a) Show that an algebraic group is non-singular.
+
+(b) The general linear group is defined as the set of square matrices with non-zero determinant. Show that the general linear group is an affine algebraic group.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+Suppose not. Then, there exists at least some singular points. However, consider group actions of the form $P_g: G \to G$, for $g$ not the identity, that takes $g' \in G$ to $g g'$. In particular, this is an isomorphism, because this map is injective(if $gg' = gg''$, then $g^{-1}gg' = g^{-1}gg'' \implies g' = g''$) and surjective (for $g' \in G$, we notice $g^{-1}g' \to gg^{-1}g' = g'$). Further, because $P$ is a regular map, then in particular, multiplying by a single element is a regular map. Thus, we have an isomorphism of varieties. Isomorphisms must take singular points to singular points, so for $s$ a singular point, we have that $P_g(s)$ is a singular point as well. However, now we consider repeating this for all $g \in G$. In particular, this implies that for any $g' \in G$, we may take $g = g's^{-1}$, so that we send $s \to g's^{-1}s = g'$, so then this implies that we can get to every other point from a single singular point. Then, every point in an algebraic group is singular. However, we have that singular points form a closed proper subset of a variety, a contradiction, so an algebraic group must be non-singular.
+
+(b)
+
+First, we identify the general linear group of $n\times n$ matrices in $\mathbb{A}^{n^2+1}$ in the following way: Let $A$ be a matrix, and let $m_{a,b}$, be the matrix entry at (a,b) where a denotes the row, and b denotes the column. Then, we send $A$ to $(m_{1,1}, m_{1,2},...,m_{a,b},...,1/\det(A))$ that is, we count across the rows and associate each matrix entry to a coordinate one by one and we set the last component to be equal to its determinant. It is clear that this is injective - if two $n^2+1$-tuples coincide, they must coincide in each entry. If they coincide in each entry, then they must come from matrices that coincide on every entry. Then, they come from the same matrix.
+
+Now, we confirm that the expected multiplication and inverse maps behave as regular maps of varieties. For $(m_{1,1}, m_{1,2},...,m_{a,b},...,1/\det(A))$ and $(n_{1,1}, n_{1,2},...,n_{a,b},...,1/\det(B))$, with $A,B \in GL_n(k)$ thinking about how we want $A*B$ to work, by taking dot products of row vectors in A against column vectors in B, we enforce that $(m_{1,1}, m_{1,2},...,m_{a,b},...,1/\det(A)) \times (n_{1,1}, n_{1,2},...,n_{a,b},...,1/\det(B)) \to (l_{1,1},...,1/(\det(A)*\det(B)))$, where $l_{i,j} = \Sigma_{k=1}^n m_{i,k}n_{k,j}$. In particular, this is a polynomial equation in terms of the coordinates of the copies of $GL_n(k)$, and by construction, this multiplication of points works in the same fashion as multiplication of matrices, because we know that $\det(AB) = \det(A) \det(B) \not = 0$. But, this is then merely a regular function in each coordinate, so this must be a regular map of varieties.
+
+We can also realize the inverse function as a regular function. By Cramer's rule, we find that $A^{-1} = \frac{1}{\det(A)} \text{adj}(A)$, where the adjugate matrix is the transpose of the cofactor matrix. However, the cofactor matrix consists of elements that are determinants of the minors of $A$ with the $i$-th row and $j$-th column removed, up to a factor of -1. That is, for example, the $2,3$ entry of the cofactor matrix is the determinant of the minor of $A$ where we remove the 2nd row and 3rd column. So then, this informs how we map our points under an inverse function: we take a $(m_{1,1}, m_{1,2},...,m_{a,b},...,1/\det(A)) \to (c_{1,1}/\det(A), c_{2,1}/\det(A),...,c_{b,a}/\det(A),...,\det(A))$ where $n_{i,j}$ is the value of the cofactor matrix at position $i,j$. However, we notice that $n_{i,j}$ is a determinant of minors, which is a polynomial equation, times either $1$ or $-1$, and $\det(A)$ is a polynomial equation that cannot vanish, as these are exactly the matrices with non-0 determinant. We also notice that since $\det(A^{-1}) = 1/\det(A)$, that this is well defined in the last coordinate. Thus, these are realized as regular functions in each coordinate, and therefore this is also a regular map on varieties. Since both the product and the inverse maps can be realized as regular maps, this is an algebraic group.
+
+Now, we wish to show this is affine. We consider the polynomial $1 - \det(A)*x_{n^2+1}$, where we view $\det(A)$ not as the numerical product, but as a polynomial of the matrix entries, viewing each entry as a variable. By construction of the points in $\mathbb{A}^{n^2+1}$, these all vanish on this polynomial as $x_{n+1} = 1/\det(A)$, so $1 - \det(A) * 1/\det(A) = 0$. Now, suppose we have a set of points $(x_1,...,x_{n^2+1})$ satisfying this polynomial equation. Well, we consider the matrix of form 
+
+$$ D = \begin{bmatrix} x_1 & \hdots  & x_n \\ x_{n+1} & \ddots & \vdots \\ \vdots & \ddots & \vdots \\ x_{n^2-n+1} & \hdots & x_{n^2} \end{bmatrix}$$
+
+Well, this is a matrix, and due to the closed condition, we know that $\det(D) = 1/x_{n^2+1}$ which cannot be 0 to satisfy $1 - \det(D)*x_{n^2+1}$. Thus, $D \in GL_n(k)$. So we have containment in both directions, so we have set equality. So since we can realize $GL_n(k)$ as an affine variety in $\mathbb{A}^{n^2+1}$, we can say that it is in particular an affine algebraic group.
+
+
+\end{proof}
+
+
+
+\end{document}

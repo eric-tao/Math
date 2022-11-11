@@ -1,0 +1,78 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Assignment}
+\author{Eric Tao\\
+Math 240: Homework \#6}
+\maketitle
+ 
+\begin{problem}{6.1}
+
+Let $L,L' \subset \mathbb{P}^n$ be complementary linear subspaces, that is, if $l,l'$ denote their dimension, $l + l' = n -1$ and $L,L'$ do not intersect. Let $X \subset L, X' \subset L'$ be projective subvarieties. Let $Y$ be the union of all the lines that join a point in $X$ to a point in $X'$.
+
+(a) Show that $Y$ is a projective subvariety of $\mathbb{P}^n$.
+
+(b) Compute the dimension of $Y$.
+
+(c) Show that if $X,X'$ are irreducible, then $Y$ is irreducible.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+Firstly, we note that from problem 5.3, if we have complementary linear subspaces, we may identify, as a linear isomorphism from $\mathbb{P}^n \to \mathbb{P}^n$, a matrix with $n+1$ rows and columns with block entries of form:
+$$
+    \left[ 
+    \begin{array}{c|c} 
+      L & 0 \\ 
+      \hline 
+      0 & L' 
+    \end{array} 
+    \right] 
+$$
+
+where we identify a block matrix of dimension $l+1 \times l+1$ that forms $L$ and the same for $L'$ with $l' + 1 \times l' +1$, and $0$ otherwise. Then, from here, this identification implies that $L$ can be identified where the last $l'+ 1$ coordinates are 0, and vice versa for $L'$, where the first $l + 1$ coordinates are $0$. Under this identification then, we can say that $L = V(X_{l + 1},...,X_n), L' = V(X_1,...,X_l)$ and points have the form $(x_1,...,x_l,0,...,0) \in L$ and $(0,...,0,y_{l+1},...y_n) \in L'$ where the index here denotes the coordinate.
+
+%Now, let $a = (a_1,...,a_n)$ be a point in $Y$, and take an arbitrary point $x \in X$. By the identification of $L$, we can say that it has point $x = (x_1,...,x_l,0,....0)$. Now, consider the line through these points, of form $h(t) = at + x(1-t)$ for $t \in k$. By the identification of $L'$, we can say that this intersects $X'$ only when the first $l$ coordinates are $0$, which, if we choose $a_1$ arbitrarily, happens when $a_1t + x_1(1-t) = 0$, which implies that $t_{X'} = \frac{1}{a_1 - x_1}$. At $X'$ then, our points on the line will look like, for coordinates in the last $l' + 1$ coordinates, $x_{j} = \frac{a_j}{a_1 - x_1}$. Now, consider the polynomials that $X'$ vanishes on, and, in the same vein as problem 3.2, we may rewrite these polynomials . In particular, here, if we clear denominators, we still recover a homogeneous polynomial, since $(X_m - X_n)^k$ is homogeneous, and if
+
+Now, consider points on the line joining $x \in X, x' \in X'$. Because a line has form $sx + tx'$, we can say an arbitrary point $y \in Y$ has form $(sx_1,...,sx_l,t y_{l+1},...,t y_n)$. In particular, because we live in complementary subspaces looking like copies of $\mathbb{P}^l, \mathbb{P}^{l'}$, we can take the polynomials $X$ vanishes on to be functions of only $X_0...X_l$ and similar for $X'$, outside of vanishing on the coordinates outside of the linear subspace. Now, take $f$ to be a generator of $I(X)$ and $g$ to be a generator of $I(X')$. Because we have homogeneous polynomials, and that we argued that $f,g$ are only polynomials in the first/last coordinates, respectively, we see that $y$ must vanish on $fg$, as the scale factors $s,t$ can be factored out due to being homogenous.
+
+(b)
+
+Consider the set of triples that have the form $\{ (a,x,x') : x \in X, x' \in X', a \in Y \text{ and a lies on the line between x,x' } \}$. We have a natural morphism into $X \times X'$ via a projection that sends $(a,x,x') \to (x,x')$, which is surely surjective by the construction of lines. Further, these fibers are lines, so then we have that the set of triples has dimension equal to  $\dim(X) + \dim(X') + 1$, the dimension of the product space. Now, projecting these triples instead into $\mathbb{P}^n$ via sending $(a,x,x') \to a$, we have a map that sends the points in our lines back into the ambient $\mathbb{P}^n$, but its image is exactly $Y$. In particular, for any point $a \in Y$, the fiber is exactly just the triple $(a,x,x')$, since it can only come from a single possible line. Then, we have that $\dim Y = \dim(\text{triples}) = \dim(X) + \dim(Y) + 1$
+
+(c)
+
+Looking at the same idea, looking at the first projection from our triples into $X \times X'$. Again, this is surjective, and we have that $X \times X'$ is irreducible from homework 3. Again, the fibers are lines, irreducible, and of the same dimension. Then, from the theorem done in class, we can say that the set of triples is irreducible.
+
+Now, taking the second projection down into $Y$, this is a continuous map, and onto from a irreducible set, therefore the image is irreducible from homework 1.
+\end{proof}
+
+\begin{problem}{6.2}
+
+Consider a quadric in $\mathbb{P}^3$ such as $X_0X_1 - X_2 X_3 = 0$. We showed that this quadric contains two families of lines. Show that each of these families of lines as a subset of the Grassmannian of lines is a conic inside a $\mathbb{P}^2$, contained within the ambient $\mathbb{P}^5$ of the Grassmannian.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+We recall that the two families of lines have form $ax_0 = bx_2, ax_3 = b x_1$, and either $X: x_0 = x_3 = 0$ or $Y: x_1 = x_2 = 0$. Then, we notice that we may express points on lines in $X$ as points that have the form $(0,a,0,b)$ and points on lines in $Y$ have the form $(b,0,a,0)$. If we follow the embedding of the Grassmannian of lines from $\mathbb{P}^3 \to \mathbb{P}^5$, we may take the 2x2 determinants of the matrix of form: $$  \begin{pmatrix} b & 0 & a & 0 \\ 0 & a & 0 & b \end{pmatrix}$$
+
+Identifying points in $\mathbb{P}^5$ as those determinants, we find that the points in $\mathbb{P}^5$ have form $(ab,0,a^2,b^2,0,ab)$. We notice that $z_0  = z_5$ and $z_1 = z_4 = 0$ identically, so we can identify this as a linear subspace in $z_0, z_2, z_3, z_5$, where the numbering is somewhat arbitrary based off of the identification of which determinant maps to which coordinate. In particular, since $z_0 = z_5$ always, we can claim this as being contained in a $\mathbb{P}^2$ subspace, as we only have 3 coordinates that vary independently. From the identification of the points in $\mathbb{P}^5$, we see that they are the zero set of the polynomial $Z_0^2 - Z_2Z_3 = 0$, a conic in this $\mathbb{P}^2$ subspace. 
+
+\end{proof}
+
+
+
+
+\end{document}

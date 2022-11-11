@@ -1,0 +1,193 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+ 
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#6}
+\author{Eric Tao\\
+Math 235: Homework \#6}
+\maketitle
+ 
+\section*{2.1}
+
+\begin{problem}{4.3.9}
+Assume that $f: \mathbb{R}^d \to \overline{F}$ is measurable. Show that if $\int_{\mathbb{R}^d} f$ exists, then for each point $a \in \mathbb{R}^d$, that:
+
+$$ \int_{\mathbb{R}^d} f(x-a) = \int_{\mathbb{R}^d} f = \int_{\mathbb{R}^d} f(a-x)$$
+\end{problem}
+\begin{proof}[Solution]
+
+First, suppose $f$ is a function to the extended reals. Then, by definition, we can rewrite $\int_{\mathbb{R}^d} f = \int_{\mathbb{R}^d} f^+ - \int_{\mathbb{R}^d} f^-$. Here, we define $A = \{ x \in \mathbb{R}^d : f(x) \geq 0 \}, B = \{ x \in \mathbb{R}^d : f(x) < 0 \}$. We notice, by the definition of $f^+, f^-$, that we may say $\int_{\mathbb{R}^d} f^+ = \int_A f^+, \int_{\mathbb{R}^d} f^- = \int_B f^-$. Now, consider $f(x-a) = f^+(x-a) - f^-(x-a)$, and for distinction, we will use $f^* = (f^*)^+ - (f^*)^-$. In particular, we have that $(f^+)^*$ is non-zero when $x -a \in A \implies x \in a + A$. Then, consider a simple function $\phi : 0 \leq \phi \leq f^+$ with representation $\phi = \Sigma_{k=1}^M c_k \chi_{E_k}$. $\int_A \phi = \Sigma_{k=1} c_k |E_k|$. We notice here that $\cup a + E_k = a + A$: if $x \in \cup a + E_k$, then $x \in a + E_i$ for some $i$. Then, since $E_i \subseteq A$, we have that $x \in a + A$. In the backwards direction, we have that if $x \in a + A$, because the $E_k$ (disjointly) cover $A$, we have that $x \in a + E_i$ for some $E_i$ and we are done. But, then, by the translation invariance of the Lebesgue integral, we have that:
+
+$$\int_A \phi = \Sigma_{k=1} c_k |E_k| = \Sigma_{k=1} c_k |a + E_k| = \int_{a + A} \phi^*$$
+
+where we notice that we can find a $\phi^* = c_k \chi_{a + E_k}$. In particular, for any $x \in A$, we have that $\phi^*(x-a) = \phi(x)$ by the definition of the $a + E_k$. Then, we have that $0 \leq \phi^* \leq (f^*)^+$. Then, since for every $\phi$, we can find a simple function approximating $(f^*)^+$, we must have that $\int_A f^+ \leq \int_{a + A} (f^+)^*$. But, we may run this exact argument in reverse, taking a simple function approximating $(f^+)^*$ and going from $A^* \to -a + A^*$, where $A^* = \{ x \in \mathbb{R}^d : f^*(x) \geq 0 \}$. Then we have that $\int_A f^+ = \int_{a + A} (f^+)^*$ and using the same argument for $f^-$, $\int_B f^- = \int_{a + B} (f^-)^*$. Then, we have that $ \int_{\mathbb{R}^d} f(x-a) = \int_{\mathbb{R}^d} f $. It is not hard to see the same argument will work for $ f(a-x)$, where we just take $a - A = \{ a - x : x \in A \}$ and we are done.
+
+Now, suppose $f$ is instead a complex-valued function. Then, by definition, we may split into real valued functions via $\int_{\mathbb{R}^d} f = \int_{\mathbb{R}^d} f_r + i\int_{\mathbb{R}^d} f_i$. However, we just proved this to be true for real-valued functions, so translations will work for the components $f_r, f_i$, and thus extend to $f$. Explicitly, that is, we have that $ \int_{\mathbb{R}^d} f_r(x-a) =  \int_{\mathbb{R}^d} f_r(x) =  \int_{\mathbb{R}^d} f_r(a-x)$ and same for $i$, by what we just proved, so this is true for their sum.
+
+\end{proof}
+
+\section*{2.2}
+
+\begin{problem}{4.4.17}
+
+(a)
+
+Suppose that $f,g: E \to [-\infty,\infty]$ are measurable functions, where $E \subseteq \mathbb{R}^d$ is a measurable subset. Prove that if $f$ is integrable, $f \leq g$ a.e., then $g-f$ is measurable, and $\int_E (g-f) = \int_E g - \int_E f$.
+
+(b)
+
+Show that the MCT and Fatou's Lemma remain valid if we replace the assumption that $f_n \geq 0$ with $f_n \geq g$ a.e. where $g$ is an integrable function on $E$. However, note that this may fail if $g$ is not integrable.
+
+\end{problem}
+\begin{proof}[Solution]
+
+(a) 
+
+Clearly, we already have that $g-f$ is measurable, by the algebra of measurable functions. So, we need only look at $\int_E (g-f) = \int_E g - \int_E f$. First, we notice $\int_E g-f$ must exist, as if it attained $\infty - \infty$, this would imply that we have a set where $\int_E (g-f)^-$ diverges. However, we know that this may only be negative when $g \leq 0$. In particular, call the set where $g^- \leq 0$ $A$, we know that $f \leq g \implies f^- \geq g^-$. Then, on this set, $\int_A f^- \geq \int_A g^- = \infty$, a contradiction since $f$ is integrable. In a similar vein, we further know that $\int_E g-f > -\infty$ as the same argument would apply. Now, suppose $\int_E g-f = \infty$. Then, since $f$ is integrable, we must have that $\int_E g = \infty$ as suppose not. Then, $g$ would be integrable, so we would have that $\int_E g - \int_E f = \int_E g-f = \infty$ and since $\int_E f  < \infty$, $\int_E g = \infty$, a contradiction. Therefore, $g$ cannot be integrable, so $\int_E g = \infty$, and our sum holds.
+
+Now, suppose $g-f$ were integrable. Then, consider $\int_E (g-f) + \int_E f$. Since $g-f, f$ are integrable, by linearity we have that $\int_E (g-f) + \int_E f = \int_E  (g-f) + f = \int_E g$. Since $\int_E (g-f), \int_E f < \infty$, $\int_E g < \infty$. Therefore we may subtract $\int_E f$ to retrieve $\int_E (g-f) = \int_E g - \int_E f$.
+
+(b)
+
+Now, suppose in the statement of the Monotone Convergence Theorem, we have that $f_n : E \to [-\infty,\infty]$ measurable functions that converge pointwise a.e. to $f$, and suppose that we have $g$ integrable on $E$ such that $f_n \geq g$ a.e. Then, applying part (a), we may consider $\int_E f_n - g$ for each $n$. We can see pointwise, that $\lim_n [f_n(x) - g(x)] = \lim_n[f_n(x)] - g(x) = f(x) - g(x)$. In particular, since $f_n \geq g \implies f_n-g \geq 0$, we may apply the MCT to this sequence of non-negative functions to find:
+
+$$ \lim_n \int_E (f_n - g)  = \int_E (f - g)$$
+
+But, we know that from part (a), we have that $ \int_E (f_n - g) = \int_E f_n - \int_E g$ for each $n$. Similarly, from part (a), we have that $\int_E (f-g) = \int_E f  - \int_E g$, so:
+
+$$  \lim_n \int_E f_n - \int_E g = \lim_n [\int_E (f_n - g)]  = \int_E (f - g) = \int_E f - \int_E g$$
+
+where we've used the linearity of limits and the fact that $g$ is constant with respect to $n$. Since $\int_E g < \infty$, we may add $\int_E g$ to both sides to recover:
+
+$$  \lim_n \int_E f_n  =  \int_E f$$.
+
+Similarly, in Fatou's lemma we do the exact same thing: $f_n - g$ is a sequence of non-negative measurable functions, so we apply Fatou's lemma to find that:
+
+$$ \int_E (\liminf_n  (f_n - g)) \leq \liminf_n \int_E (f_n - g)$$
+
+Using the fact that $g$ is constant with respect to $n$, and applying part (a), we find the following:
+
+$$  \int_E (\liminf_n  (f_n - g)) = \int_E [(\liminf_n f_n) - g] = \int_E \liminf_n f_n - \int_E g$$
+and
+$$ \liminf_n \int_E (f_n - g) = \liminf_n \int_E f_n - \int_E g = [\liminf_n \int_E f_n ] - \int_E g$$
+
+So, we have that since $\int_E g$ is finite:
+
+$$  \int_E \liminf_n f_n - \int_E g \leq  [\liminf_n \int_E f_n ] - \int_E g \implies \int_E \liminf_n f_n  \leq  \liminf_n \int_E f_n $$
+
+We notice since $g$ being integrable was key to proving part (a), this may go wrong if $g$ is not integrable, as then we cannot just add $\int_E g$ to both sides.
+
+ 
+\end{proof}
+
+\begin{problem}{4.4.19}
+Prove that if $f \in L^1(\mathbb{R})$ is differentiable at $x = 0$ and $f(0) = 0$, then $\int_{\mathbb{R}} \frac{f(x)}{x}$ exists. 
+\end{problem}
+\begin{proof}[Solution]
+
+We notice that, for $\epsilon > 0$, we can break up this integral into disjoint intervals $\int_{-\infty}^-\epsilon f/x + \int_{-\epsilon}^\epsilon f/x + \int_\epsilon^\infty f/x$. First, consider, $\int_{[\epsilon,\infty]} \frac{f}{x}$. This is bounded by $\pm f/\epsilon$ when $0 < \epsilon < 1$, and similar for $\int_{[-\infty,-\epsilon]} \frac{f}{x}$ , which implies that we have  $\int_{[\epsilon,\infty]} \frac{f}{x} \leq \int_{[\epsilon,\infty]} \frac{f}{\epsilon} < 1/\epsilon \Vert f \Vert_1 < \infty $ and same for the negative side. So we need only consider $\lim_{\epsilon \to 0} \int_\epsilon^\epsilon \frac{f}{x}$.
+
+Now, since $f$ is at least first differentiable, so we can claim that around 0, that $f(x) = f(0) + f'(0)x + h_k(x)x^2  = f'(0)x + h_k(x)x^2$ such that $\lim_{x \to 0} h_k(x) \to 0$. Then, we can view $\lim_{\epsilon \to 0} \int_\epsilon^\epsilon \frac{f}{x} = \lim_{\epsilon \to 0} \int_\epsilon^\epsilon \frac{ f'(0)x + h_k(x)x^2}{x} =  \lim_{\epsilon \to 0} \int_\epsilon^\epsilon f'(0)+ h_k(x)x $. Fix a $0 < \epsilon_0 < 1$.  Because $h_k(x) \to 0$, for $\epsilon_0$, we can find $\delta > 0$ such that for $x \in [-\delta,\delta], h_k(x) < \epsilon_0$. Since we are taking the limit as $\epsilon \to 0$, we may enforce that $\epsilon < \min(\epsilon_0,\delta)$. Then, for such a $\epsilon$, we have that $f'(0) + h_k(x)x \leq f'(0) +  \delta \epsilon_0 \leq f'(0) + \epsilon^2 $ on $[-\epsilon,\epsilon]$, a constant. Then, we have that $\int_{[-\epsilon,\epsilon]} f'(0)+ h_k(x)x \leq  \int_{[-\epsilon,\epsilon]}  f'(0) + \epsilon^2 \leq 2\epsilon f'(0) + 2\epsilon^3)$. But, as $\epsilon \to 0$, this goes to $0$. So, we have that for each part tjhe integral is bounded, and since they were disjoint, their sum is bounded. Thus, $\int_{\mathbb{R}} f/x$ is bounded, and thus exists.
+
+%Because $f$ is cts at $0$, we can say that if we take a $1 > \delta > 0$, we can find an $\epsilon_0 : d(y,0)< \epsilon_0 \implies d(f(y),0) < \delta$. Since we can take $\epsilon \to 0$, we can enforce $\epsilon < \min(\epsilon_0,1)$, so for $y \in [-\epsilon,\epsilon], d(0,y) < \epsilon \implies d(0,f(y)) < \delta$ for some $\delta$. But, using the form provided by Taylor's theorem, we can say that $|f'(0)y + h_k(y)y^2| < \delta$.  
+\end{proof}
+
+\begin{problem}{4.4.21}
+Given a measurable set $E \subseteq\mathbb{R}^d$, prove the following:
+
+(a) If $f \in L^1(E)$ and $g \in L^\infty(E)$, then $fg \in L^1(E)$.
+
+(b) If $|E| > 0$, then $L^1(E)$ is not closed under products, that is, there exists $f,g \in L^1(E) : fg \not \in L^1(E)$.
+
+(c) If $f,g$ are measurable functions on $E$ such that $|f|^2, |g|^2 \in L^1(E)$, then $fg \in L^1(E)$.
+\end{problem}
+\begin{proof}[Solution]
+
+(a)
+
+We notice that if $g \in L^\infty(E)$, then there exists $M \in \mathbb{R}, M > 0$ such that $g \leq M$ a.e on $E$. Then, we have that $fg \leq Mf$ a.e on $E$. Then, we have that $\int_E fg \leq \int_E Mf = M \int_E f = M \Vert f \Vert_1 < \infty$. Thus, since $\int_E fg < \infty$, $fg \in L^1(E)$.
+
+(b)
+
+As the book works in Lemma 4.4.12, we apply the results of problem 2.3.20. Let $E \subseteq \mathbb{R}^d$ be a measurable subset such that $|E| > 0$. WLOG, enforce that $|E| < \infty$ by applying 2.3.20(a) if $E' \subseteq E : 0 < |E'| < \infty$. Now, using part (c) of 2.3.20, we may find disjoint, measurable subsets of $E$ such that  $|E_k| = 2^{-k} |E|$. Define a function $f: E \to \mathbb{R}^d$ such that $f = \Sigma_k 2^{3k/4} \chi_{E_k}$. Coinsider $\int_E f$. By definition, this is exactly $\Sigma_k 2^{3k/4} |E_k|= \Sigma_k 2^{3k/4} 2^{-k} |E| =  |E| \Sigma_k 2^{-k/4} =  |E| \frac{1}{\sqrt[4]{2} -1}$. However, consider $f^2$. Because the $E_k$ are disjoint, this is exactly $f^2 =  \Sigma_k 2^{3k/2} \chi_{E_k}$. But, here, $\int_E f^2 = \Sigma_k 2^{3k/2} |E_k|= \Sigma_k 2^{3k/2} 2^{-k} |E|= |E| \Sigma_k 2^{1/2}$, a divergent geometric series. Thus, $L^1(E)$ is not closed under products. 
+
+(c)
+
+First, assume $f,g$ are extended real-valued functions. Define $A = \{ f \geq g \}$ and $B = \{ g < f \}$. These are clearly disjoint, so we can write $\int_E |fg| = \int_A |fg| + \int_B |fg|$. On $A$, since $f \geq g$, we have that $|f| \geq |g|$, so then $|fg| \leq |f|^2$, and analogously, on $B$, we have that $|fg| \leq |g|^2$. Then, we have that $\int_A |fg| + \int_B |fg| \leq \int_A |f|^2 + \int_B |g|^2 \leq \int_E |f|^2 + \int_E |g|^2 < \infty $, because $|f|^2, |g|^2 \in L^1(E)$, and using the fact that for non-negative functions, if $A, B\subseteq E$, then $\int_A |f|^2 \leq \int_E |f|^2$. Therefore, $\int_E |fg| < \infty$, and thus $fg \in L^1(E)$.
+
+Now, suppose $f,g$ are complex functions. Then, we can take $f = f_r + i f_i$ and $g = g_r + i g_i$. Then we notice $|fg| = |(f_rg_r - f_ig_i) + i(f_rg_i + f_ig_r)| = \sqrt{(f_rg_r - f_ig_i)^2 + (f_rg_i + f_ig_r)^2} = \sqrt{f_r^2g_r^2 + f_i^2g_i^2 + f_r^2g_i^2 + g_r^2f_i^2}$. But here, since we notice $|f|^2 = |f_r + if_i|^2 = f_r^2 + f_i^2$, and same with $g$, we use the same type of argument, instead looking at the cases $f_r > g_r, f_i > g_i$, etc. Then, we notice, looking at $|fg|$, for example, under $f_r > g_r, f_i > g_i$, $|fg| \leq \sqrt{f_r^4 + f_i^4 + 2f_r^2 f_i^2} = \sqrt{(f_r^2 + f_i^2)^2} = f_r^2 + f_i^2 = |f|^2$ and proceed as above.
+\end{proof}
+ 
+\begin{problem}{4.4.22}
+Suppose that $f \in L^1[a,b]$ satisfies that $\int_a^x f(t) dt = 0$ for all $x \in [a,b]$. Prove that $f = 0$ a.e.
+\end{problem}
+\begin{proof}[Solution]
+
+First, we notice that for any $[c,d] \subseteq [a,b]$ that $\int_{[c,d]} f(t) dt = 0$, where we have $a \leq c \leq d \leq b$. This is because consider $[a,d]= [a,c + 1/n] \cup (c + 1/n,d]$ for any $n \geq 1$. By the construction, these are disjoint measurable sets, so we have that $\int_{[a,d]} f = \int_{[a,c + 1/n]} f + \int_{(c + 1/n,d]} f$. But, by hypothesis, we have that $\int_{[a,d]}f = 0 = \int_{[a,c + 1/n]} f \implies \int_{(c + 1/n,d]} f = 0$ for all $n \geq 1$. Now, consider $\cup_{n=1}^\infty (c + 1/n,d]$. This is clearly $[c,d]$, and we also have that $(c + 1/n,d] \subseteq (c + 1/(n+1),d]$ since $1/n > 1/(n+1) \implies c + 1/n > c + 1/(n+1)$. So, we have nested sets, therefore, $\int_{[c,d]} f = \lim_n \int_[c + 1/n,d] f = \lim 0 = 0$.
+
+Now, we use this to show that if $[x,y], [x',y']$ are boxes such that $[x,y],[x',y'] \subseteq [a,b]$, and they are non-overlapping, that is, either they are disjoint or, wlog, $y = x'$, then $\int_{[x,y] \cup [x',y']} f = \int_{[x,y]} f + \int_{[x',y']} f$. If they are disjoint, then we're done and this is identically 0. If they overlap, wlog, $y = x'$, then by the first part, we have that on the full interval $[x,y'] = [x,y] \cup [x',y']$, $\int_{[x,y']} f = 0$, so $\int_{[x,y']} f = 0 = 0 + 0 =   \int_{[x,y]} f + \int_{[x',y']} f$. 
+
+Now, let $F$ be any closed set in $[a,b]$. Consider $F \cup F^c$. By definition, $F^c$ is an open set, and thus by 2.1.5, admits a cover via countably many nonoverlapping cubes $\{ Q_k \}$ such that $F^c = \cup_k Q_k$. But, in $\mathbb{R}$, $Q_k$ are exactly intervals. Further, if we take the intersection $Q_k \cap [a,b]$, these are the intersection of two closed intervals, which is either empty, or another closed interval. So then, using the non-overlapping part already proved, we find that $\int_{F^c \cap [a,b]} f = \Sigma_k \int_{F^c \cap Q_k} f = \Sigma_k 0 = 0$. Then, we have that since $[a,b] = F \cup (F^c \cap [a,b])$, we have that:
+
+$$ 0 = \int_{[a,b]} f = \int_F f + \int_{F^c \cap [a,b]} f = \int_F f $$
+
+Since the choice of $F$ was arbitrary, this must be true for all $F \subseteq [a,b]$, $F$ closed.
+
+Now, let $E \subseteq [a,b]$ be a measurable set. Then, we can write this set as a $E = H \cup Z$ where $H$ is a $F-\sigma$ set and $Z$ is a set of measure 0. Then, we have that $\int_H f = \int_E f + \int_Z f$. Since $|Z| = 0$, we have that $f = 0$ a.e. on $Z$ trivially, so $\int_Z f = 0$. Now,since $H$ is a $F-\sigma$ set, there exist closed sets $F_k$ such that $H = \cup_k F_k$. Then, since $H \subseteq [a,b]$, we can look at the closed sets $F_k \cap [a,b]$, closed because $[a,b]$ is compact. In particular, we look at the nested sets $\cup_k^n F_k \cap [a,b]$, as $n$ varies. In particular, since they are closed sets contained within $[a,b]$, we have that $\int_{\cup_k^n F_k \cap [a,b]} f = 0$ for any $n$. Then, we apply the property about nested sets to find that $\int_{E} f = \lim{k \to\infty}\int_{\cup_k^n F_k \cap [a,b]} f = 0$. Then, by groupwork 5, since $f$ is a real-valued, integrable function such that for every measurable $E \subseteq [a,b]$, $\int_E f = 0$, we conclude that $f = 0$ a.e. on $[a,b]$. 
+
+\end{proof}
+
+\begin{problem}{4.4.23}
+(a)
+
+Let $E$ be a measurable subset of $\mathbb{R}^d$ and that $\{ f_n\}_{n \in \mathbb{N}}$ is a sequence of integrable functions on $E$ such that $\sup \Vert f_n \Vert_1 < \infty$ and $f_n \to f$ pointwise a.e. Prove that $f \in L^1(E)$ and that 
+
+$$ \lim_{n \to \infty}(\int_E |f_n| - \int_E |f - f_n|) = \int_E |f|$$
+
+(b)
+
+Find a sequence of integrable functions where $f_n \to f$ pointwise a.e., but $\sup \Vert f_n \Vert_1 = \infty$, and where this limit fails. 
+\end{problem}
+\begin{proof}[Solution]
+(a)
+
+By Fatou's lemma, since $|f_n|$ are non-negative, we have that $\int_E \liminf |f_n| \leq \liminf \int_E |f_n|$. But, on the left-hand side, since $f_n \to f$ a.e., we have that, except on a set of measure 0, that $\liminf |f_n| \to |f|$. On the other hand, because $\sup \Vert f_n \Vert_1 < \infty, we have that the \sup_n \int_E |f_n| < \infty$. Then, since $\liminf \int_E |f_n| = \lim_n \inf_{m \geq n}  \int_E |f_n|$, since $\inf_{m \geq n}  \int_E |f_n| \leq \sup_{n} \int_E |f_n| < \infty$, we have that $\int_E |f| \leq \sup_{n} \int_E |f_n| < \infty$, thus $f \in L^1(E)$. 
+
+Now, we have that since $f,f_n \in L^1(E)$, $f-f_n$ also in $L^1(E)$ due to the triangle inequality. But, we also have then that via the reverse triangle inequality,$| \Vert f_n \Vert_1 - \Vert f_n - f \Vert_1 | \leq \Vert f_n - (f_n - f) \Vert_1 \implies  \Vert f_n \Vert_1 - \Vert f - f_n \Vert_1 | \leq \Vert f \Vert_1$, where we apply homogeneity on $\Vert f - f_n \Vert_1 = \Vert f_n - f \Vert_1$. Then, we have that $ \lim_{n \to \infty}(\int_E |f_n| - \int_E |f - f_n|) \leq \int_E |f|$. Now, on the other hand, for the left hand side, the existence of the limit means that $\lim_{n \to \infty}(\int_E |f_n| - \int_E |f - f_n|) = \liminf_{n \to \infty}(\int_E |f_n| - \int_E |f - f_n|)$. But, by the properties of the $\liminf$, we have that 
+
+$$ \liminf_{n \to \infty}(\int_E |f_n| - \int_E |f - f_n|) \geq \liminf_{n \to \infty}\int_E |f_n| + \liminf_{n \to \infty}(- \int_E |f - f_n|)) = \liminf_{n \to \infty}\int_E |f_n| + \liminf_{n \to \infty}(\int_E -|f - f_n|)) $$
+
+By Fatou's lemma, then, we have that:
+
+$$ \liminf_{n \to \infty}\int_E |f_n| + \liminf_{n \to \infty}(\int_E -|f - f_n|)) \geq \int_E \liminf_n |f_n|  + \liminf{n} \int_E -|f - f_n|$$.
+
+However, we know that pointwise, $f_n \to f$ a.e., so on all but a set of measure 0, we have that $\liminf_n |f_n| = |f|$. Further, similarly, if we take Fatou's lemma on the second  part, we have that $\liminf -| f - f_n| = 0$ for the same reason, on all but a set of measure 0. Then, we can look at this integral over $E' = E \setminus Z_1 \cup Z_2$ where $Z_1, Z_2$ are the measure 0 sets where convergence fails, in case they fail on different sets (though, we expect them to be the same), and say that 
+
+$$ \int_E \liminf_n |f_n|  + \liminf{n} \int_E -|f - f_n| = \int_{E'} |f| + \int_{E'}0 = \int_{E'} |f| = \int_E |f|$$ 
+
+Thus, we have that $\int_E |f| \leq \lim_{n \to \infty}(\int_E |f_n| - \int_E |f - f_n|)$, and so we have equality.
+
+(b)
+
+Let $d = 1, E = [0,\infty], f_n(x) = x \chi_{[0,n]}, f(x) = x$. It should be clear that $f_n \to f$ pointwise everywhere. Further, we have that $\sup \Vert f_n \Vert_1 = \infty$, as $\Vert f_n \Vert_1 = n^2/2$, which diverges to positive infinity as $ n \to \infty$. 
+
+However, we notice, firstly, $\int_E |f| = \infty$ pretty clearly, since if we take the nested sets $[0,1] \subseteq [0,2] \subseteq ... $, we can take $\lim_{n \to \infty} \int_{[0,n]} |f| = \int_{[0,\infty]} |f|$. But the left hand side matches $\Vert f_n \Vert_1$ for $n$ an integer, and we showed that was divergent.
+
+On the other hand, consider, for any fixed $n \in \mathbb{N}$, $\int_E |f_n| - \int_E |f - f_n|$. We have that $\int_E |f_n| = n^2/2$, but on the other hand, we have that $f - f_n = x \chi_{[n,\infty]}$, so that $\int_E |f - f_n| = \infty$. So, $\int_E |f_n| - \int_E |f - f_n| =  n^2/2 - \infty = -\infty$.
+
+So, we have that $ \lim_{n \to \infty}(\int_E |f_n| - \int_E |f - f_n|) = -\infty \not = \infty = \int_E |f|$
+
+
+
+
+\end{proof}
+
+\end{document}

@@ -1,0 +1,160 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+ 
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#4}
+\author{Eric Tao\\
+Math 235: Homework \#4}
+\maketitle
+ 
+\section*{2.1}
+
+\begin{problem}{3.2.19}
+
+Let $E \subseteq \mathbb{R}$ be a measurable set contained within an interval $I$, and assume that $f: I \to \mathbb{C}$ is a measurable function that is differentiable at each point in $E$, that is, $f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}$ exists and is a scalar for every $x \in E$. Show that $f'$ is measurable on $E$. 
+
+\end{problem}
+\begin{proof}[Solution]
+First, we rewrite $f = f_r + i f_i$, for $f_r, f_i$ real-valued measurable functions on $E$. Then, we may rewrite the derivative as:
+
+$$\lim_{h \to 0} \frac{f(x+h) - f(x)}{h} = \lim_{h \to 0} \frac{f_r(x+h) + i f_i(x+h) - f_r(x) - i f_i(x)}{h}$$
+
+Since we have that $f_r(x+h) - f_r(x)$ and $[f_i(x+h) - f_i(x)]i$ are linearly independent, for the sum to converge, they must both converge separately as well, so we can rewrite this as:
+
+$$ \lim_{h \to 0} \frac{f_r(x+h) + i f_i(x+h) - f_r(x) - i f_i(x)}{h} = \lim_{h \to 0}\frac{f_r(x+h) - f_r(x)}{h} +  i * \lim_{h \to 0}\frac{f_i(x+h) - f_i(x)}{h}$$
+
+Now, we notice that if $f_r(x)$ is measurable, so is $f_r(x+h)$, as measurable sets are still measurable after translation by a vector. Then, because the derivative exists and is a scalar, we can see that for any sequence $h_n \to 0$, we have that $\frac{f_r(x+h_n) - f_r(x)}{h_n}$ is bounded and measurable, so $ \lim_{h_n \to 0}\frac{f_r(x+h_n) - f_r(x)}{h_n}$ is measurable by Lemma 3.2.7, and by the same argument, the imaginary portion is also measurable. Then, we have that the real function is measurable, and the imaginary function is measurable, so the complex valued function $f'$ is measurable on $E$. 
+
+\end{proof}
+
+\begin{problem}{3.2.20}
+
+Suppose that $f: \mathbb{R}^d \to \mathbb{R}$ is measurable, and $\phi: \mathbb{R}^d \to \mathbb{R}^d$ is a bijection, such that $\phi^{-1}$ is Lipschitz. Prove that $f \circ \phi$ is measurable.
+\end{problem}
+\begin{proof}[Solution]
+
+Fix some $a \in \mathbb{R}$. Consider $(f \circ \phi)^{-1}( (a,\infty))$. This is exactly equal to $\phi^{-1}(f^{-1} ((a,\infty)))$. By hypothesis, we have that $f^{-1} ((a,\infty))$ is measurable. But further, we have from Lecture/Heil 2.3.13, that if $\phi^{-1}$ is Lipschitz, that it maps measurable sets to measurable sets. Then, $\phi^{-1}(f^{-1} ((a,\infty)))$ is measurable. Since the choice of $a$ was arbitrary, this is true for every real number. 
+
+\end{proof}
+
+\begin{problem}{3.2.21}
+Assume that $E$ is a measurable subset of $\mathbb{R}^d$ such that $|E| < \infty$.
+
+(a) Suppose that $f: E \to \mathbb{R}$ is measurable. Prove that for each $\epsilon > 0$, there exists a closed set $F \subseteq E$ such that $|E \setminus F| < \epsilon $ and $f$ is bounded on $F$.
+
+(b) Let $f_n$ be a measurable function on $E$ for each $n \in \mathbb{N}$. Suppose that for all $x \in E$, we have $M_x = \sup_{n \in \mathbb{N}} |f_n(x)| < \infty$. Prove that for each $\epsilon > 0$, there exists a closed set $F \subseteq E$ and a finite constant $M$ such that $|E \setminus F| < \epsilon$ and $|f_n(x)| \leq M$ for all $x \in F$ and $n \in \mathbb{N}$. 
+\end{problem}
+
+(a)
+
+Take $n \in \mathbb{N}, n \geq 1$. Consider the sets of the form $E_n = \{ f < -n \} \cup \{ f > n \}$. First of all, because $f$ is measurable, $E_n$ is a union of measurable sets, thus measurable. Further, we have that  $E_n \supseteq E_{n+1}$, as of course, $\{ f < -n \} \supseteq \{ f < -(n+1) \}$ and $\{ f > n \} \supseteq \{ f > n+1 \}$. Lastly, we have that each of these sets are contained within $E$, so in particular, for each $E_n$, $|E_n| < \infty$. Then, by continuity from above, we have that $|\cap E_n| = \lim |E_n|$. However, since this is a function into the real line, the intersection must be empty. Thus, we have that $\lim_{n\to \infty} |E_n| = 0$. In particular then, this means that we may choose $N$ such that $|E_n| < \epsilon/2$. Choose an $E_{n_0}$ such that $n_0 > N$ and look at its complement. This would be exactly $\{ f \geq - n_0 \} \cap \{ f  \leq n_0 \}$, that is, the set on which $|f| < n_0$. Since $E_{n_0}$ is measurable, so too is this set. In particular, because by definition, it is disjoint with $E_{n_0}$, we have that $|E| = |E_{n_0}| + |E_{n_0}^c|$. Since $E_{n_0}^c$ is measurable, by Lemma 2.2.15, there exists a closed set $V \subseteq E_{n_0}^c$ such that $|E_{n_0}^c \setminus V| < \epsilon/2$. Finally, we may write $E \setminus V = E_{n_0} \cup (E_{n_0}^c \setminus V)$ by construction, because we have 2 disjoint measurable sets in $E$, $E_{n_0}, E_{n_0}^c$, and the latter may be further broken up into disjoint, measurable $V, E_{n_0}^c \setminus V$. Then, we have that $|E \setminus V| = |E_{n_0}| + |(E_{n_0}^c \setminus V)|< \epsilon/2 + \epsilon/2 = \epsilon$, and $f$ bounded above by $n_0$ on $V$.
+
+(b)
+
+Define $f(x)  = \sup_n |f_n(x)|$. Clearly, this is a real valued function, regardless of if $f_n$ is a complex or real-valued function, the absolute value or modulus is real. Consider $\{ f > a \}$ if $f_n$ are real valued. This would be exactly $\cap_n (\{ f_n < -a \} \cup \{ f_n > a \})$, which is a countable intersection of a union of measurable sets, thus, measurable. If $f_n$ are complex valued, then we have that $|f_n|= \sqrt{f_{r_n}^2 + f_{i_n}^2}$, where $f_{r_n},f_{i_n}$ are the real, imaginary components of $f_n$. In particular, these are measurable real valued functions, thus $ \sqrt{f_{r_n}^2 + f_{i_n}^2}$ is measurable, if $f_{r_n},f_{i_n}$ are measurable, so are their squares, the sum of their squares, and, since $f_{r_n}^2 + f_{i_n}^2$ is non-negative, the composition with $\phi: \mathbb{R}^+ \to \mathbb{R}$ via $x \to \sqrt{x}$ is continuous, thus the whole thing is measurable.
+
+Then, we have that $f$ is a measurable function, and, since we have by hypothesis that $M_x < \infty$ for all $x$, $f < \infty$ as well, so we maytake $f : E \to \mathbb{R}$. Then, applying part (a), we know that for any $\epsilon > 0$, we can find a closed set $F \subseteq E$ such that $|E \setminus F| < \epsilon$ and $f$ is bounded on $F$, and we take $M$ as the bound for $f$ on $F$.
+\begin{proof}[Solution]
+
+
+
+\end{proof}
+
+\section*{2.2}
+
+
+\begin{problem}{3.3.9}
+For each $a \in \mathbb{R}$, let $f_a = \chi_{[a,a+1]}$. Prove that $\{ f_a \}_{a \in \mathbb{R}}$ is an uncountable set of functions in $L^\infty(\mathbb{R})$ such that $\Vert f_a - f_b \Vert_\infty = 1$ for all real numbers $a \not = b$.
+\end{problem}
+\begin{proof}[Solution]
+
+First, we wish to show that this is an uncountable set. Then, we need only show that for $a \not = b$, $f_a \not = f_b$. In particular, we can see that for any $a \not = b$, where wlog, we assume $a < b$, we have that $f_a(a) = 1$, but $f_b(a) = 0$. Then, for each real number, this function is distinct, and since the reals are uncountable, so too is this family of functions.
+
+Now, suppose $a \not = b$, and wlog, we say $a < b$. We recall that $\Vert f_a - f_b \Vert_\infty = \text{esssup}_{x \in \mathbb{R}}(f_a - f_b) = \inf \{ M \in [-\infty,\infty] : f_a - f_b(x) \leq M \text{ for a.e. } x \in \mathbb{R} \}$. In particular though, we may find all the values that $f_a - f_b$ takes on. Firstly, if $b < a+1$, we have:
+
+$$ f_a - f_b(x) = \begin{cases}
+0 & x \in (-\infty,a) \cup [b,a+1] \cup (b+1,\infty) \\
+1 & x \in  [a,b) \\
+-1 & x \in (a+1,b+1]
+\end{cases}$$
+
+Else, if $b > a+1$, we have:
+
+$$ f_a - f_b(x) = \begin{cases}
+0 & x \in (-\infty,a) \cup (a+1,b) \cup (b+1,\infty) \\
+1 & x \in  [a,a+1] \\
+-1 & x \in [b,b+1]
+\end{cases}$$
+
+Regardless, we see that $f_a - f_b$ takes on the value of one on a set of positive measure. Thus, we have that $ \inf \{ M \in [-\infty,\infty] : f_a - f_b(x) \leq M \text{ for a.e. } x \in \mathbb{R} \} = 1$.
+
+
+\end{proof}
+
+\section*{2.3}
+
+\begin{problem}{3.4.6}
+(a) Exhibit a sequence of functions that converges almost uniformly but does not converge in $L^\infty$-norm.
+
+(b) Exhibit a sequence of functions that converges pointwise almost everywhere, but does not converge almost uniformly.
+\end{problem}
+\begin{proof}[Solution]
+(a)
+Consider the sequence of functions on $[0,1]$:
+
+$$ f_n(x) = \begin{cases} 0, & \text{ at } x= 0 \\
+\text{linear}, & \text{ for } 0 < x < \frac{1}{4n} \\
+1, & \text{ from } \frac{1}{4n} <  x < \frac{3}{4n} \\
+\text{linear}, & \text{ for } \frac{3}{4n} < x < \frac{1}{n} \\
+0, & \text{ for } \frac{1}{n} \leq x \leq 1 \\
+\end{cases} $$
+
+That is, similar to example 3.4.1, but with a plateau. This converges almost uniformly, as we can always converge uniformly on sets that look like $(1/n,1]$. Formally, we see that let $\epsilon > 0$ be given. Choose $A = [0,\epsilon)$. We see that $f_n \to f$ uniformly on $[0,1] \setminus A$ - for any $n > 1/\epsilon$, that is, $1/n < \epsilon$, which exists due to the Archimedean principle, $f_n = 0$ on $[1/\epsilon,1]$. So, then, because this is true for all $n > 1/\epsilon$, we have that $\lim_{n \to 0}( \sup_{x \in [1/\epsilon,1]} (f_n(x) - 0) )  = 0$. However, for every $n$, $\text{esssup}_{x \in [0,1]} | f_n(x) |  = 1$, because $f_n = 1$ on a set of measure $1/2n > 0$.
+
+(b)
+
+Consider the sequence of functions:
+
+$$ f_n = \begin{cases} 0 & \text { for } x \in [0,n] \cup [n+1,\infty) \\
+1 & \text{ at } x = n + \frac{1}{2} \\
+linear & \text { otherwise }\\ \end{cases} $$ 
+
+Clearly, this converges pointwise everywhere. For any $x$, if we pick $n > \text{ceil}(x)$, $f_n(x) = 0$. However, this cannot converge almost uniformly - for each $f_n$, $f_n > 0$ on a set of measure $1$. Then, if we remove a set of, say, measure $1/2$, we can never have that $\sup f_n \to 0$.
+\end{proof}
+
+\begin{problem}{3.4.7}
+Let $E \subseteq \mathbb{R}^d$ be a measurable set such that $|E| < \infty$, and assume that $f_n$ and $f$ are measurable functions that are finite a.e. and satisfy $f_n \to f$ a.e. on $E$. Prove that there exist measurable sets $E_k \subseteq E$ such that $E \setminus (\cup_{k=1}^\infty E_k)$ has measure zero and for each individual $k$, we have that $f_n \to f$ uniformly on $E_k$. Even so, show by example that $f_n$ need not converge uniformly to $f$ on $E$.
+\end{problem}
+\begin{proof}[Solution]
+
+By Egorov's Theorem, we can find a measurable set $A_n \subseteq E$ such that $|A_n| < 1/n$ and $f_n$ converges to $f$ uniformly on $|E \setminus A_n|$. We notice that because $A_n$ is measurable, and $E$ is measurable, then $E_n = E \setminus A_n$ is also measurable. We can see that by looking at $E \setminus (\cup_k E_k)$:
+
+$$ E \setminus (\cup_k E_k) = E \cap (\cup_k E_k)^c =  E \cap (\cap_k E_k^c) = \cap_k (E \cap E_k^c) = \cap_k A_k $$
+
+where we use the fact that because we define $E_k = E \setminus A_k$, then it follows that $E \setminus E_k = A_k$. But, we have that $\cap_k A_k \subseteq A_k$ for every $k$, so $|\cap_k A_k| < 1/n$ for all $n$, so $|E \setminus (\cup_k E_k)| =  |\cap_k A_k| = 0$.
+
+However, take for example the example in the book 3.4.1:
+
+$$ f_n(x) = \begin{cases} 0, & \text{ at } x= 0 \\
+\text{linear}, & \text{ for } 0 < x < \frac{1}{2n} \\
+1, & \text{ at } x = \frac{1}{2n} \\
+\text{linear}, & \text{ for } \frac{1}{2n} < x < \frac{1}{n} \\
+0, & \text{ for } \frac{1}{n} \leq x \leq 1 \\
+\end{cases} $$
+
+This is a family of functions indexed on $n$, finite a.e., and pointwise converges to $f = 0$ on $[0,1]$. Fix an $x_0 \in [0,1]$. If $x_0 = 0$, then $f_n(0) = 0$ for all $n$, so suppose $x_0 > 0$. Consider $|f_n(x_0)|$. By the Archimidean principle, there exists $N \in \mathbb{N}$ such that $x_0 > \frac{1}{N}$. In particular, then, take $n > N$. Since $\frac{1}{n} < \frac{1}{N} < x_0 < 1$, by construction of our function, we have $f(x_0) = 0$.
+
+Further, we may take $A_k = [0,1/k]$. We can see that, using the same argument, $f_n \to 0$ uniformly on $(1/k,1]$ as if we take $n > k$, then, for every $x \in (1/k,1]$, $x > 1/k > 1/n$, so $f_n(x) = 0$. So, $\sup_{x \in (1/k,1]} (f_n(x)) = 0$ for every $n > k$, and so $\lim_{n \to \infty} ( \sup_{x \in (1/k,1]} |f_n(x) - 0|) = 0$. However, we are still not uniformly continuous on all of $[0,1]$ because for any $n$, $\sup_{x \in [0,1]} | f_n  - 0|  \geq 1 > 0$, because for each $n$, $f_n(1/2n) = 1$, so the limit of the supremums is at least $1$. Thus, we are not uniformly convergent on $[0,1]$ to $f = 0$.
+
+\end{proof}
+ 
+
+\end{document}
