@@ -47,8 +47,29 @@ We notice that for any $t' \geq t$, that by definition, $\{ |f| > t' \} \subsete
 
 (b) 
 
-Let $\{ a_n \}_{n \in \mathbb{N}}$ be any sequence of positive numbers where $a_n \to 0$. Take a monotone subsequence $\{ a_{n_k} \}$ such that $a_{n_{k+1}} < a_{n_k}$  for all $k$.
+Let $\{ a_n \}_{n \in \mathbb{N}}$ be any sequence of positive numbers where $a_n \to 0$. Take a monotone subsequence $\{ a_{n_k} \}$ such that $a_{n_{k+1}} < a_{n_k}$  for all $k$. Then, consider the sequence of measurable sets $A_{a_{n_k}} =  \{ |f| > t + a_{n_k} \}$. This is a sequence of measurable sets, with the property that $A_{a_{n_{k+1}}} \subseteq A_{a_{n_k}}$ since we took the monotone subsequence. Then, by convergence from below, we have that $\lim_{n_k \to 0} |A_{a_{n_k}}| = \cup_{n_k} A_{a_{n_k}} = \{ |f| > t \}$. Now, we only need to check that this is convergent in the full sequence. First suppose that $|\{ |f| > t \}|  = \infty$. Then, we have that this must diverge for $a_n$, because since we know $|A_{a_{n_k}}| \to \infty$ monotonically, and $a_n \to 0$, for any $M \in \mathbb{R}$, we take $N_{k_0}$ such that for all $n_k > N_{k_0}, |A_{a_{n_k}}| \geq M$. Then, we pick $N$ such that for all $i > N$, $a_i < a_{N_{k_0}}$, by the convergence of $a_n$. Then, we know that since this is monotone, $|A_{a_{n_i}}| \geq |A_{a_{N_{k_0}}}| \geq M$. 
 
+Now, suppose  $|\{ |f| > t \}|  < \infty$. Then, we can choose $N_{k_0}$ such that $|\{ |f| > t \}| - |A_{a_{N_{k_0}}}| < \epsilon$. We may choose $N$ such that $a_j < A_{N_{k_0}}$ by the convergence of the $a_n$ for all $j > N$. Then, we have by the monotonicity, that $ |\{ |f| > t \}| \geq |A_{a_j}| \geq |A_{a_{N_{k_0}}}| \implies |\{ |f| > t \}| - |A_{a_j}| < \epsilon$.
+
+(c)
+
+First, we see that if $|E| < \infty$, then we can use continuity from above. Otherwise, suppose $|E| = \infty$. First, for $t = 0$, since we use left-continuous, but $\omega$ only defined for $t \geq 0$, the only permissible sequence is the constant sequence, and of course $|\{ |f| > 0 \} | = |\{ |f| > 0 \} |$. Then, for any $ t > 0 $, we see that $|\{ |f| > t \}| < \infty$ as suppose not, then we know that $|f| > t$ the constant function on a set of infinite measure, so $\int_E |f| = \infty$, a contradiction. As such, regardless, we may use continuity from above since we are guaranteed that the sets have finite measure.
+
+Now, then, let $\{ b_n \}$ be any sequence of non-negative numbers such that $b_n \to t$, where $t > 0$. We use the same construction as (b), where we find a monotone sequence $ b_{n_k} \to t$, which extends to a nested sequence of sets $\{ |f| > b_{n_0} \} \supseteq \{ |f| > b_{n_1} \} ...$. We call these sets $B_{b_{n_k}}$. Then, since we are assured that this is eventually constant, since eventually, at least one $b_{n_k} > 0$, we apply continuity from above to find that $\lim_{n_k \to \infty} |B_{b_{n_k}}| = |\cap B_{b_{n_k}}|$. But, we have that $\cap B_{b_{n_k}} = \cap \{ |f| > b_{n_k} \} = \{ |f| \geq t \}$ because $b_{n_k} \to t$ from the left. Finally, in the same vein as (b), we use the convergence of $b_n \to t$ from the left as well as the monotonicity of $\omega$ to get that the whole thing converges.
+
+(d)
+
+Consider the integral, over $E \times \mathbb{R}^+$, that is, the non-negative real numbers, of $\chi_{\Gamma_{|f|}}$, where $\Gamma_{|f|}$ is the region under the graph of $|f|$ without the boundary defined in previous work $\{ (x,t) : x \in E, t < |f(t)| \}$ where $|f(t)|$ can be infinite. Clearly, this is measurable, being a characteristic function of a measurable set, where we know the graph is measurable because of a previous homework 4.2.17, (b) and (a), since the boundary has measure 0. Then, we apply Tonelli's theorem:
+
+$$ \int_{\mathbb{R}^+} \left( \int_E \chi_{\Gamma_{|f|}} dx \right) dt =  \int_E \left( \int_{\mathbb{R}^+} \chi_{\Gamma_{|f|}} dt \right) dx$$ 
+
+Here, we notice that fixing $t$, $\int_E \chi_{\Gamma_{|f|}} dx  = | \{ |f| > t \}|  = \omega(t)$, since at any fixed $t_0$, the points in the graph consist of the $(x,t_0)$ such that $|f(x)| > t_0$. On the other side, we have that $ \int_{\mathbb{R}^+} \chi_{\Gamma_{|f|}} dt = |f(x)|$ since if we fix an $x_0$, then the points in the graph are just $(x_0,t)$ such that $0 \leq t < |f(x_0)| \implies t \in [0 ,|f(x_0)|)$, and $| [0 ,|f(x_0)|)| = |f(x_0)|$ for every $x_0 \in E$.
+
+Then, substituting back into Tonelli's:
+
+$$ \int_{\mathbb{R}^+} \left( \int_E \chi_{\Gamma_{|f|}} dx \right) dt =  \int_E \left( \int_{\mathbb{R}^+} \chi_{\Gamma_{|f|}} dt \right) dx \implies  \int_{\mathbb{R}^+} \omega(t) dt = \int_E |f(x)| dx $$
+
+as desired.
 
 (e)
 
@@ -57,6 +78,10 @@ We have the following:
 $$ f \text{ integrable } \iff \lim_{E} f < \infty \iff \int_0^\infty \omega < \infty \iff \omega \text{ integrable } $$
 
 where we use the result from (d).
+
+(f)
+
+Suppose not. Take the sequence $a_n \to \infty$. Then, we have that for all $n \geq N$ for some $N \in \mathbb{N}$, $a_n \omega(a_n) \geq \epsilon$ for some $\epsilon > 0$, where we use the fact that $\omega$ is non-negative to conclude $a_n \omega(a_n) \geq 0$ and monotone decreasing to conclude that it must have a minimum value. But then, we see that $\omega(a_n) \geq \epsilon/a_n$ for all $n \geq N$. This implies then, that on the set $[a_N,\infty]$, that $\omega(a_N)$ is larger than the constant function $\epsilon/a_N$. But then, since $\omega$ is non-negative, we have that $\int_{[0,\infty]} \omega \geq \int_{[a_N, \infty]} \omega \geq \epsilon/a_N |[a_N,\infty]| = \infty$ a contradiction, since we know that by part (d), the integral of $\omega$ aligns with the integral of $|f|$. Then, $a_n \omega(a_n) \to 0$, and since the choice of $a_n$ was arbitrary, this must be true for any sequence $\to \infty$. The same argument works for the second half of the equality, since if we look at $1/b_n \omega(1/b_n) \geq \epsilon \implies \omega(1/b_n) \geq b_n \epsilon$, so we have that on $[1/b_N, \infty]$, $\omega \geq b_N \epsilon$, which has a divergent integral.
 
 \end{proof}
 
@@ -75,14 +100,44 @@ Let $f \in L^1(\mathbb{R}), g \in L^\infty(\mathbb{R})$. Prove the following:
 
 (a)
 
-Recall that for any $x$, we define $(f \ast g)(x) = \int_{\mathbb{R}} f(y)g(x-y) dy$. Since we know that $f^+, f^- \leq |f|$ by definition, it suffices then to show that $\int_{\mathbb{R}} |f(y)g(x-y)| dy < \infty$. Since $g \in L^\infty(\mathbb{R})$, we can say that $|g| \leq M$ for some $M \in \mathbb{R}$ a.e.  But then, we have that $|f(y)g(x-y)| \leq M|f(y)|$ for almost every $y \in \mathbb{R}$. So, we have that:
+Recall that for any $x$, we define $(f \ast g)(x) = \int_{\mathbb{R}} f(y)g(x-y) dy$. Since we know that $f^+, f^- \leq |f|$ by definition, it suffices then to show that $\int_{\mathbb{R}} |f(y)g(x-y)| dy < \infty$. Since $g \in L^\infty(\mathbb{R})$, we can say that $|g| \leq \Vert g \Vert_\infty$  a.e.  But then, we have that $|f(y)g(x-y)| \leq \Vert g \Vert_\infty|f(y)|$ for almost every $y \in \mathbb{R}$. So, we have that:
 
-$$ \int_{\mathbb{R}} |f(y)g(x-y)| dy \leq \int_{\mathbb{R}} M|f(y)| dy \leq M \Vert f \Vert_1 < \infty$$
+$$ \int_{\mathbb{R}} |f(y)g(x-y)| dy \leq \int_{\mathbb{R}} \Vert g \Vert_\infty|f(y)| dy \leq \Vert g \Vert_\infty \Vert f \Vert_1 < \infty$$
 
 Thus, $(f \ast g)(x)$ exists for all $x \in \mathbb{R}$.
 
 (b)
 
+By theorem 4.5.8, we can find a function $h \in L^1(\mathbb{R})$ such that $h \in C_c(\mathbb{R})$ and $\Vert f - h \Vert_1 < \epsilon$, for any $\epsilon > 0$. We also notice that $\int_\mathbb{R} |h(y)g(x-y)| dy \leq \int_\mathbb{R} |h(y)| \Vert g \Vert_\infty dy  = \Vert g \Vert_\infty \Vert h \Vert_1$ where we don't know if $h$ is $L^1$ yet, so this could be infinite. But, by the reverse triangle inequality, we have that $| \Vert f \Vert_1 - \Vert h \Vert_1 | \leq \Vert f - h \Vert_1 < \epsilon < \infty$, and since $\Vert f \Vert_1 < \infty$, so too must be $\Vert h \Vert_1$. Thus, $h(y)g(x-y)$ is integrable.
+
+Further, we notice that the convolution is commutative, since we can take the translation $z = x-y \implies y = x - z$, as then $(f \ast g)(x) = \int_\mathbb{R} f(y) g(x-y) dy = \int_\mathbb{R} f(x-z)g(z) dz = (g \ast f)(x)$. 
+
+Now $h$ be an arbitrary continuous function with compact support, we can say that $h$ is uniformly continuous. Further, since $h$ is compactly support, let $S$ be the support of $h$, then we can say that $S+S \subseteq [-n,n]$ for some $n$, since compact sets are bounded in $\mathbb{R}$. Then, we can say $|S+S| < \infty$, where $|S+S|$ is the same as 4.6.28. Let $\eta > 0$. Then, we may choose $\delta(x) > 0$ such that $d(x,y) < \delta \implies d(h(x),h(y)) < \eta/|S+S|\Vert g \Vert_\infty$. Now, let $x,x' \in \mathbb{R}$ such that $d(x,x') < \delta$. Then, we have that, by the commutativity of the convolution, that
+
+$$ |(h \ast g)(x) - (h \ast g)(x')| = \left| \int_\mathbb{R} h(x-y) g(y) dy - \int_\mathbb{R} h(x'-y)g(y) \right| = \left| \int_\mathbb{R} g(y)[ h(x-y) - h(x' - y) ] \right | \leq $$
+$$ \int_\mathbb{R} |g(y)| |h(x-y) - h(x' - y)| \leq \Vert g \Vert_\infty \int_\mathbb{R}  |h(x-y) - h(x' - y)|$$
+
+However, we have that $d(x-y,x'-y) = | (x-y) - (x'-y)| = |x - x'| = d(x,x') < \delta$, so we have that:
+
+$$\Vert g \Vert_\infty \int_\mathbb{R}  |h(x-y) - h(x' - y)| \leq \Vert g \Vert_\infty \int_\mathbb{S+S}  |h(x-y) - h(x' - y)| \leq  \Vert g \Vert_\infty \frac{\eta}{|S+S|\Vert g \Vert_\infty} |S+S| = \eta$$
+
+Thus, we have that $(h \ast g)$ is continuous, actually, uniformly continuous. Now, consider:
+
+$$ |(f \ast g)(x) - (f \ast g)(x')| = \left| \int_\mathbb{R} f(x-y)g(y) dy - \int_\mathbb{R} f(x'-y)g(y)dy \right| = $$ $$ \left| \int_\mathbb{R} f(x-y)g(y) dy - \int_\mathbb{R} h(x-y)g(y) +  \int_\mathbb{R} h(x-y)g(y) + \int_\mathbb{R} h(x'-y)g(y) -  \int_\mathbb{R} h(x'-y)g(y)  - \int_\mathbb{R} f(x'-y)g(y)dy \right| $$
+
+Using the triangle inequality, we break the sum up into:
+
+$$  \left| \int_\mathbb{R} f(x-y)g(y) dy - \int_\mathbb{R} h(x-y)g(y) \right| \leq \Vert g \Vert_\infty \Vert f - h \Vert_1$$
+$$  \left| \int_\mathbb{R} h(x-y)g(y) dy - \int_\mathbb{R} h'(x-y)g(y) \right| \leq \Vert g \Vert_\infty \int_\mathbb{R} | h(x-y) - h'(x-y)|$$
+$$  \left| \int_\mathbb{R} h(x'-y)g(y) dy - \int_\mathbb{R} f(x'-y)g(y) \right| \leq \Vert g \Vert_\infty \Vert h - f \Vert_1$$
+
+Then, since we can control $h$ such that $\Vert f - h \Vert_1 = \Vert h - f \Vert_1 < \epsilon/3\Vert g \Vert_\infty$ due to the statement of the theorem, and we can control $d(x,x')$ such that $d(x,x') < \delta \implies \int_\mathbb{R} | h(x-y) - h'(x-y)| < \epsilon/3 \Vert g \Vert_\infty$ due to the continuity on $h$ if $h \in C_c(\mathbb{R})$, we can control the whole sum to be less than $\epsilon$.
+
+(c)
+
+Well, I somehow did this to show (a), because we know that 
+
+$$| f \ast g| = \left| \int_{\mathbb{R}} f(y)g(x-y) dy \right| \leq \int_{\mathbb{R}} |f(y)g(x-y)| dy \leq \int_{\mathbb{R}} \Vert g \Vert_\infty|f(y)| dy \leq \Vert g \Vert_\infty \Vert f \Vert_1 < \infty$$
 
 
 \end{proof}
@@ -122,6 +177,9 @@ By 4.6.27 (b), since $\chi_{-E}$ is an indicator function, it is bounded on $\ma
 
 (b)
 
+First, consider $\chi_E \ast \chi_{-E}(0)$. By definition, this is exactly $\int_{\mathbb{R}} \chi_E(y)\chi_{-E}(-y) dy$, which we notice is exactly $1$ on $y \in E$, and $0$ otherwise. Then, this integral evaluates to $|E| > 0$. Now, consider the interval $(|E|/2, 3|E|/2)$. This is an open set, and from part (a), we know that the inverse image of this interval is open by continuity. Further, we just showed that $\chi_E \ast \chi_{-E}(0) = |E| \in (|E|/2, 3|E|/2)$, so $0 \in (\chi_E \ast \chi_{-E})^{-1}(|E|/2, 3|E|/2)$. Then, because this is open, there exists an open ball, i.e. an open interval around 0.
+
+(c)
 
 
 \end{proof}
