@@ -154,6 +154,31 @@ Conclude that $C_c(\mathbb{R})$ is closed under convolution.
 
 \begin{proof}[Solution]
 
+(a)
+
+Suppose $f,g \in C_c(\mathbb{R})$. Then, since compact sets are closed and bounded on $\mathbb{R}$, we can say that $\supp(f) \subseteq [-m,m], \supp(g) \subseteq [-n,n]$ for $m,n \geq 0$. Consider the shape of $f \ast g(x) = \int_\mathbb{R} f(y)  g(x-y) dy$. Suppose $y \in \supp(f)$. Then, by necessity, $y \in [-m,m]$. Then, for $y-x \in \supp(g)$, we must have that $y-x \in [-n,n]$. This implies then that $x \in [-m-n, m+n]$ since we can see if $y = m$, then $x \in [m+n, m-n]$ and if $y = -m$, $x\in [-m+n, -m-n]$, so we can take these to be the max and min of the allowable $x$. But, by definition, since $\supp(f \ast g)$ is defined as the closure, it is a closed set. Further, we can see that for any $x : (f \ast g)(x) \not = 0$ we have that $|x| \leq m+n$, then so too must be the closure, since no sequence of points that satisfy those bounds can have limit above $m+n$ or below $-m-n$. Then, we have that $\supp(f\ast g)$ as a bounded, closed set, and therefore, it must be compact as well.
+
+Now, let $\{ z_n \}$ be any sequence of points, such that $(f \ast g)(z_n) \not = 0$ for each $n$. We notice, a necessary condition for an integral to not be 0 is that it must be non-0 at least somewhere, since of course the integral of 0 everywhere is 0. Then, looking at $ \int_\mathbb{R} f(y)  g(z_n-y) dy$, we must have that $y \in \supp(f), z_n - y \in \supp(g)$. Then, suppose $z_n - y = x \in \supp(g)$, we then have that $z_n = x + y \implies z_n \in \supp(f) + \supp(g)$. Then, we have that $\lim_n z_n \in \supp(f) + \supp(g)$, since we see that this extends to families of sequences of points $z_n = x_n + y_n$, and taking the limit of both sides, and using the fact that $\supp(f),\supp(g)$ are closures, we find that $z = x + y$, where $z_n \to z, x_n \to x, y_n \to y$, where $x \in \supp(g), y \in \supp(f)$. Therefore, $\supp(f \ast g) \subseteq \supp(f) + \supp(g)$.
+
+(b)
+
+Let $f,g \in C_c^1(\mathbb{R})$. Firstly, by part (a), $f \ast g \in C_c(\mathbb{R})$. Then, we need only make sure that this has bounded derivative. Consider, for any $x \in \mathbb{R}$, :
+
+$$ \lim_{h \to 0} \frac{1}{h} \left[ \int_{\mathbb{R}} f(y) g(x - y)  - \int_{ \mathbb{R} } f(y) g(x+h -y) \right ] = \lim_{h \to 0} \int_{\mathbb{R}} \frac{f(y)(g(x-y) - g(x- y + h))}{h}$$
+
+Define $f_n(y)  = f(y)(g(x-y) - g(x- y + h_n))/h_n$, as $h_n \to 0$. By the differentiability of $g$, we see that $\lim_{n \to \infty}  f(y)(g(x-y) - g(x- y + h_n))/h_n = f(y) \lim_n (g(x-y) - g(x- y + h_n))/h_n = f(y) g'(x-y)$, so these must converge pointwise. Further, because $f,g \in C_c^1$, we notice that $f,g$ must be bounded on its support. Then, if $|g| \leq M$, $|f| \leq N$, $|g(x-y) - g(x- y + h_n)| \leq 2M$. Then, we have that $| f(y)(g(x-y) - g(x- y + h_n))/h_n | \leq 2MN/h_n$, which, since we're on compact support, is integrable over the compact set.
+
+Then, we may apply the DCT, and we get that:
+
+$$  \lim_{n \to 0} \int_{\mathbb{R}} \frac{f(y)(g(x-y) - g(x- y + h_n))}{h_n} = \int_{\mathbb{R}} f(y) g'(x-y) $$
+
+But here, we use the fact that $g'$ is bounded, to bound this by $\Vert f \Vert_1 \Vert g' \Vert_\infty$, where we use $\Vert f \Vert_1$ because $f \in C_c \implies f \in L^1$. Explicitly:
+
+$$ \left| \int_{\mathbb{R}} f(y) g'(x-y) \right| \leq \int_{\mathbb{R}} |f(y)g'(x-y)| \leq \int_{\mathbb{R}} |f(y)| \Vert g \Vert_\infty = \Vert f \Vert_1 \Vert g \Vert_\infty$$
+
+Since the choice of sequence of $h_n \to 0$ was arbitrary, this works for all such $h_n \to 0$, so it holds for the limit as $h \to 0$ more generally.
+
+Thus, $f \ast g \in C_c$, and its derivative exists, and is bounded. Therefore, $f \ast g \in C_c^1(\mathbb{R})$.
 
 \end{proof}
 
@@ -181,6 +206,18 @@ First, consider $\chi_E \ast \chi_{-E}(0)$. By definition, this is exactly $\int
 
 (c)
 
+Let $\{ t_n \}$ be any sequence with $t_n \to 0$. Consider $\chi_E \ast \chi_{-E}(t_n)$. In integral form, this looks like $\int_{\mathbb{R}} \chi_E(y) \chi_{-E}(t_n - y)$. For the integrand to be non-0, we notice that $y \in E$, and $t_n - y \in -E \implies y - t_n \in E \implies y \in E + t_n$. In reverse, we see that if $y \in E \cap E + t_n$, then $y \in E$, and by definition, $y- t_n \in E$, so $ t_n -y \in -E$. Thus, we have that $\chi_E(y) \chi_{-E}(t_n - y) = \chi_{E \cap E + t_n} y$. Now, we apply this to our sequence, using the fact that the convolution is contininuous. We have that:
+
+$$ \chi_E \ast \chi_{-E}(t_n) = \int_{\mathbb{R}} \chi_{E \cap E + t_n} y dy = |E \cap E + t_n| $$
+
+But also, we know that:
+
+$$  \chi_E \ast \chi_{-E}(0) = \int_{\mathbb{R}} \chi_E(y) \chi_{-E}(-y) = |E|$$
+
+Since continuous functions preserve convergence, and that the choice of $t_n$ was arbitrary, we have that $\lim_{t \to 0} | E \cap (E + t)| = |E|$.
+
+Let $\epsilon > 0$ be given. Since $0 < |E| < \infty$, we have that $\chi_E, \chi_{-E} \in L^1(\mathbb{R})$. Since we know the convolution is closed with respect to integrable functions, $\chi_E \ast \chi_{-E} \in L^1$. Then, there exists a function $f \in C_c(\mathbb{R})$ such that $\Vert f - \chi_E \ast \chi_{-E} \Vert_1 < \epsilon$. In particular, since $f$ has compact support, take its support to be contained within $[-M,M]$ and look at $\int_{\mathbb{R} \setminus [-M,M]} |f(x) - \chi_E \ast \chi_{-E}(x)|dx$. In particular, here, $f = 0$, so we have that $\int_{\mathbb{R} \setminus [-M,M]} \chi_E \ast \chi_{-E}(x)dx < \epsilon$. Since indicator functions are non-negative, their integral is non-negative, so we have that for $\int_{\mathbb{R} \setminus [-M,M]} \chi_E \ast \chi_{-E}(x)dx < \epsilon$, then there exists a $K$ such that for almost every $x \geq K$, $\chi_E \ast \chi_{-E}(x) < \epsilon$. But, earlier, we found that $\chi_E \ast \chi_{-E}(x)$ can be viewed as $ |E \cap E + x|$, which we've bounded by $\epsilon$. Since we can always find a continuous function with compact support small enough, we can find a lower bound for $x$ such that  $ |E \cap E + x| < \epsilon$
+%But also, since $ y \in E \implies y + t_n \in E + t_n$. Thus, $ y + t_n \in E \cap E + t_n$. 
 
 \end{proof}
 
@@ -192,6 +229,31 @@ Prove that the Cantor-Lebesgue function is H\"older continuous for $0 < \alpha \
 
 \end{problem}
 \begin{proof}[Solution]
+
+First, we notice that for $\phi_k$ in the construction of the Cantor Lebesgue function, that the iteration of the Cantor set, $C_k$ at that point has measure $(2/3)^k$, and therefore, has only sections of slope $(3/2)^k$ and constants, where we get $(3/2)^k$ because the function must traverse from $\phi_k(0) = 0$ to $\phi_k(1) = 1$. Then, we have that $|\phi_k(x) - \phi_k(y)| \leq (3/2)^k | x - y|$, because wlog, suppose $x < y$. Because $\phi_k$ is composed of sections of slope $(3/2)^k$ and slope 0, the line joining $x,y$ must have slope between $0 < m < (3/2)^k$.
+
+Now, consider $\Vert \phi - \phi_k \Vert_u$. This can differ at most on $C_k$, since the agree and are equal on the complement of $C_k$. In particular, we have that $\Vert \phi - \phi_k \Vert_u \leq 2^{-k}$, since the distance between constant lines on the complement of $C_k$ is $2^{-k}$. Then, we look at:
+
+$$| \phi(x) - \phi(y) | \leq | \phi(x) - \phi_k(x) + \phi_k(x) - \phi_k(y) + \phi_k(y) - \phi(y) | \leq  | \phi(x) - \phi_k(x)| + | \phi_k(x) - \phi_k(y)| + |\phi_k(y) - \phi(y) | \leq $$
+$$ 2 * 2^{-k} +  | \phi_k(x) - \phi_k(y)| \leq 2 * 2^{-k} + \left(\frac{3}{2}\right)^k |x-y| = 2^{-k} (2 + 3^k |x - y|)$$
+
+However, the choice of $k$ was arbitrary. In particular, we may choose $k, \phi_k$ dependent on $|x-y|$ such that $3^{k-1} \leq |x-y| < 3^k$. Then, we notice that  $2 + 3^k |x - y| \leq 7/3$, and that $2^{-k} = 3^{-k \log_3{2}} = (3^{-k})^{\log_3{2}}$ so $|x - y| \geq 3^{-k}, \log_3{2} > 0  \implies |x-y|^{\log_3{2}} \geq  (3^{-k})^{\log_3{2}} = 2^{-k}$. Then:
+
+$$ 2^{-k} (2 + 3^k |x - y|) \leq 2^{-k} \frac{7}{3} \leq \frac{7}{3}  |x-y|^{\log_3{2}} \implies | \phi(x) - \phi(y)| \leq \frac{7}{3} |x-y|^{\log_3{2}}$$
+
+Further, since $|x-y| \leq 1$, and for any $0 < x \leq 1$, $a < b \implies x^a \geq x^b$, for any $0 < \alpha \leq \log_3 2$, $$  | \phi(x) - \phi(y)| \leq \frac{7}{3} |x-y|^{\log_3{2}} \leq \frac{7}{3} |x-y|^\alpha$$
+
+Thus, $\phi$ is H\"older continuous for $0 < \alpha \leq \log_3 2$.
+
+However, we see that $\phi$ cannot be Lipschitz. In partiular, take, on the construction of $\phi_k$, the first interval in $C_k$ of the form $(1/3)^k$. We look at points that look like $\phi(0),\phi((1/3)^k)$. We notice that although $(1/3)^k$ belongs to the Cantor set, because we construct $\phi_k$ by making it continuous, the value of $\phi((1/3)^k)$ aligns with that of the middle third removed on $((1/3)^k,2(1/3)^k)$. Then, we have that $\phi(0) = 0, \phi((1/3)^k) = 2^{-k}$. Then, we notice that:
+
+$$ \frac{\phi((1/3)^k) - \phi(0)}{(1/3)^k} = \frac{2^{-k}}{3^{-k}} = \frac{3^k}{2^k} = \left( \frac{3}{2} \right)^k $$.
+
+That is, since $3/2 > 1$, unbounded with respect to $k$. Then, suppose we claimed that $K$ were a Lipschitz constant such that $| \phi(x) - \phi(y) | \leq K |x - y|$ for all $x,y \in [0,1]$. Then, for $x \not = y$, we could look at $| \phi(x) - \phi(y) |/ |x-y| \leq K$, and simply choose $k_0$ such that $(3/2)^{k_0} > K$. Then, we would have:
+
+$$ \frac{\phi((1/3)^{k_0})}{(1/3)^{k_0}} =  \left( \frac{3}{2} \right)^{k_0} > K$$
+
+a contradiction. Thus, no such constant $K$ may exist.
 
 \end{proof}
 
@@ -210,6 +272,23 @@ Let $C$ be the Cantor set, let $\phi$ be the Cantor-Lebesgue function, and defin
 \end{problem}
 \begin{proof}[Solution]
 
+(a)
+
+Firstly, we already have that $\phi$ is continuous, and $f = x$ is continuous, therefore $g$ is a sum of continuous functions, thus continuous. Further, it must be strictly increasing, since $\phi$ is monotone increasing, and $f = x$ is strictly increasing, so for $x' > x$, we have that $\phi(x') \geq \phi(x)$, so $\phi(x') + x' > \phi(x) + x$. Because it is strictly increasing, it must be injective, as otherwise, suppose $x \not = x'$, but $g(x) = g(x')$. Well, wlog, $x > x'$, which then implies $g(x) > g(x')$, a contradiction. Lastly, we see that since $g(0) = \phi(0) + 0 = 0$, and $ g(1) = \phi(1) + 1 = 2$, that we may apply the intermediate value theorem to see that $g$ is surjective.
+
+Now, we look at $h = g^{-1}$. Firstly, $h$ must be a bijection because $g$ is a bijection. We see that because for every $y \in [0,1]$, we just take the unique $g(y)$ to be the element that maps via $h(g(y)) = y$. Now, because $[0,1]$ is compact, we notice that every closed subset $F \subseteq [0,1]$ is compact as well. Consider $h^{-1}(F)$. Because $g$ is injective, we can say that this is exactly the set $g(F)$, since we see that $h \circ g (F) = F$, where we have set equality due to the bijection. But, because $g$ is continous, and $F$ is compact, $g(F)$ is compact in $[0,2]$, and closed. Then, $h$ is continous. Moreover, $h$ must be strictly increasing, since take $x, y \in [0,2] : x > y$, and consider $g(h(x)), g(h(y))$. Since this acts via identity due to being inverse functions, we see that $g(h(x)) = x > y = g(h(y))$. But, because $g$ is strictly increasing, this implies that $h(x) > h(y)$.
+
+(b)
+
+Because the Cantor set is closed, and $[0,1]$ bounded, the Cantor set is in fact compact. Then, since $g$ continous, $g(C)$ must be compact, and thus closed. Now, we look at the complement of the Cantor set in $[0,1]$. Without writing it explicitly, we notice that this looks like intervals $(1/3,2/3)$, etc. Consider $g((1/3,2/3))$. Breaking this up into the identity part and the $\phi$ part, we notice that since $\phi$ is constant on the complement of the Cantor set, we can fix a $\phi(1/2)$, and say that $g((1/3,2/3)) = (1/3,2/3) + \phi(1/2)$. However, we notice then that $|g((1/3,2/3))| = |(1/3,2/3) + \phi(1/2)| = |(1/3,2/3)|$, by the translation invariance of the measure. Since this is actually true for each interval in the complement of $C$ in $[0,1]$, we find that $|g([0,1] \setminus C)| = |[0,1] \setminus C| = 1$, and further, being open intervals, it is a measurable subset. Then, since $C, [0,1] \setminus C$ partition $[0,1]$, and because $g$ is a bijection, then $g(C), g([0,1] \setminus C)$ partition $[0,2]$, so we have that $2 = |[0,2]| = |g(C)| + |g([0,1] \setminus C)| = |g(C)| + 1$. Thus, $|g(C)| = 1$.
+
+(c)
+
+This should be clear. Because $g,h$ bijective inverses, since $N \subseteq g(C)$, then we notice that $g(h(N)) = \subseteq g(C)$. Due to the injectivity of $g$ then, $h(N) \subseteq C$. But, $|C| = 0$, so by the monotonicity of the outer measure, $|h(N)| \leq |C| = 0 \implies |h(N)| = 0$. Then, since $h(N)$ has outer measure 0, it is Lebesgue measurable.
+
+(d)
+
+Consider $\{ f \circ h \geq 1/2 \}$, or really, any real value in $(0,1]$. Because of the shape of $f = \chi_{A}$, this takes on non-0 values only when $h(x) \in A$. But, due to the definition of $A = h(N)$, and $h$ being injective, $h(x) \implies x \in N$. Then, we have that $\{ f \circ h \geq 1/2 \} = N$. But $N$ is not measurable, therefore $f \circ h$ is not a measurable function.
 
 \end{proof}
 
