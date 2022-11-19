@@ -1,0 +1,195 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Assignment}
+\author{Eric Tao\\
+Math 240: Homework \#9}
+\maketitle
+ 
+\begin{problem}{9.1}
+
+Let $X$ be an irreducible abstract variety. We then have an atlas:
+
+$$ X = \cup_i U_i, \phi_i: Y_i \to U_i, \phi_j^{-1} \phi_i: \phi_i^{-1}(U_j \cap U_i) \to \phi^{-1}_j (U_j \cap U_i) $$
+
+with $Y_i$ being affine varieties, $\phi_i$ homeomorphisms, and $\phi_j^{-1}\phi_i$ regular isomorphisms of varieties.
+
+(a) Show that $\dim Y_i = \dim Y_j$ for all pairs $i,j$, and therefore, we may define $\dim X = \dim Y_i$.
+
+(b) Let $\alpha: X \to X’$ be a morphism of pre-varieties such that $\alpha(X)$ is dense in $X’$. Show that $\dim X’ \leq \dim X$. 
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+First, fix a $Y_i$, fix a $U$ as an open set in $Y_i$, and let $V$ be any other open set in $Y_i$. Consider their image in $U_i$ under $\phi_i$, that is, $\phi_i(U), \phi_i(V)$. In particular, by the subspace topology, they come from the intersection of $\phi_i(U)  = U_i \cap \overline{U}, \phi_i(V)  = U_i \cap \overline{V}$, for some open sets $\overline{U}, \overline{V}$. However, since $U_i, \overline{U}, \overline{V}$ are open sets, $\phi_i(U), \phi_i(V)$ are open sets in $X$. In particular, they have non-trivial intersection, since $X$ is irreducible, each of these open sets are dense. That is, we can look at $\phi_i(U) \cap \phi_i(V)$. This is another open set, being a finite intersection of open sets, and pulling this back via the homeomorphism $\phi_i$, since this is a bijective continuous function, we see that $\phi_i^{-1}(\phi_i(U) \cap \phi_i(V))$ is non-empty, and must be exactly $U \cap V$. Since the choice of the other open set $V$ was arbitrary, this implies that $U$ is dense. Since the choice of $U$ was arbitrary, we can do this procedure with any open set $U$, and thus every open set in $Y_i$ is dense. Then, we have that every $Y_i$ is irreducible.
+
+Now, take any $i,j$ and consider the map: $\phi_j^{-1} \circ \phi_i: Y_i \supset \phi_i^{-1}(U_i \cap U_j) \to Y_j$. This is a map from a subset of $Y_i$ into a dense subset of $Y_j$ due to the fact that $U_i \cap U_j$ is open, and $Y_j$ is irreducible, therefore, the pullback is an open set, and therefore dense. Then, we have that since the closure of the dense set is the full set, we have that $\dim(Y_j) =  \dim(\phi_i^{-1}(U_i \cap U_j)) \leq \dim(Y_i)$. However, because we can run this exact same argument swapping the labels $i,j$, we also have that $\dim(Y_i) \leq \dim(Y_j)$, which together implies that $\dim(Y_i) = \dim(Y_j)$. Since the choice of $i,j$ is arbitrary, this is true for every pair $i,j$. Then, because $X$ irreducible, $\phi_i$ a homeomorphism, $\phi_i(Y_i)$ is an open, dense set in $X$, and so it follows that $\dim(X) = \dim(Y_i)$ and this is well defined regardless of $i$.
+
+(b)
+
+Let $X’$ have an atlas
+
+$$X’ = \cup_j V_j, \varphi_j: Z_j \to V_i, \varphi_j^{-1}\varphi_i: \varphi^{-1}(V_j \cap V_i) \to \varphi^{-1}_j(V_j \cap V_i)$$
+
+By 5.2.13 in Osserman, we have that for $\alpha$ to be a morphism, it induces morphisms on our quasiaffine sets that look like:
+
+$$ \phi_i^{-1}(\alpha^{-1}(V_j)) \xrightarrow[]{\phi_i} \alpha^{-1}(V_j) \cap U_i \xrightarrow[]{\alpha} V_j \xrightarrow[]{\varphi_j^{-1}} Z_j$$
+
+for pair $i,j$. In particular, we know a few properties. Because $\alpha(X’)$ is dense, we know that this is a non-trivial morphism, as the pullback to $X$, $\phi^{-1}(V_j) \cap U_i $ is a non-empty, and moreover, open set due to the continuity of $\alpha$. Then, the pullback into $Y_i$ is also a non-empty open set due to the homeomorphism.
+
+From the work done in part (a) then, we have a subset of $Y_i$ that maps into an open, dense set in $Z_j$, which implies that $\dim(Z_j) \leq \dim(Y_i)$. Then, we have that $\dim(X’) \leq \dim(X)$, since we identify $\dim(X’) = \dim(Z_j), \dim(X) = \dim(Y_i)$.
+
+\end{proof}
+
+\begin{problem}{8.2}
+
+Let $C_1 = \mathbb{P}^1, C_2 = V(X_0 X_1^2 - X_2^3) \subseteq \mathbb{P}^2, C_3 = V(X_0X_1^2  - X_0X_2^2 + X_2^3) \subseteq \mathbb{P}^2$. 
+
+(a) Find a birational map $\alpha_1: C_1 \to C_2$ and its birational inverse.
+
+(b) Find a birational map $\alpha_2: C_1 \to C_3$ and its birational inverse.
+
+(c) Show that $C_1$ is not isomorphic to either $C_2, C_3$.
+
+(d) Show that $C_2$ is not isomorphic to $C_3$.
+
+(e) Explain how (c),(d) do not contradict the statement that we proved in class that projective, non-singular curves are birational to each other if and only if the curves are isomorphic.
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+Consider the map from $\phi: C_1 \to C_2$ that sends $[X_0,X_1] \to [X_0^3, X_1^3, X_0X_1^2]$, and the map $\psi: C_2 \to C_1$ that takes $[X_0,X_1,X_2] \to [1, X_1/X_2]$, where we exclude $X_0 = 0$ from $C_1$, as well as $X_0X_2 = 0$ from $C_2$. 
+
+Consider $\phi \circ \psi(X_0,X_1)$ and $\psi \circ \phi(X_0,X_1, X_2)$. We have that:
+
+$$\psi \circ \phi(X_0,X_1) = \psi([X_0^3, X_1^3, X_0X_1^2]) = [(1, X_1^3/X_0X_1^2] = [1,X_1/X_0] = [X_0,X_1]$$
+
+where we multiply by a factor of $X_0$ since it is non-0
+
+$$\phi \circ \psi(X_0,X_1, X_2) = \phi([1,X_1/X_2]) = \phi([X_2,X_1]) = [X_2^3, X_1^3, X_2X_1^2] = [X_0X_1^2, X_1^3, X_2X_1^2] = [X_0,X_1,X_2]$$
+
+where we use the fact that we are on the curve and apply $X_0X_1^2 = X_2^3$ and pulling out a scale factor of $X_1^2$.
+
+We see that $\psi \circ \phi$ acts as identity on $C_1 \setminus V(X_0)$, and $\phi \circ \psi$ acts as identity on $C_2 \setminus V(X_0X_2)$, so we have a pair of rational maps from open sets on $C_1, C_2$ that are inverses of each other, thus, birational.
+
+(b)
+
+Consider the map from $\phi: C_1 \to C_2$ that sends $[X_0,X_1] \to [X_0^3, X_1(X_1^2 - X_0^2), -X_0(X_1^2 - X_0^2)]$, and the map $\psi: C_2 \to C_1$ that takes $[X_0,X_1,X_2] \to [1,-X_1/X_2]$, where we exclude $X_0 = 0$ from $C_1$, as well as $X_0X_2 = 0$ from $C_2$. 
+
+First, we validate that $\phi$ actually sends us into the variety. Well, substituting into the curve:
+
+$$ X_0^3(X_1^2(X_1^2 - X_0^2)^2) - X_0^3(X_0^2(X_1^2 - X_0^2)^2   - X_0^3(X_1^2 - X_0^2)^3 = $$
+$$ X_0^3[ (X_1^6 - 2X_1^4X_0^2 + X_1^2X_0^4) - (X_1^4X_0^2 - 2X_1^2X_0^4 + X_0^6)   - (X_1^6 - 3X_1^4X_0^2 + 3X_1^4 X_0^2 - X_0^6)] = $$
+$$ X_0^3[ (X_1^6 - 3X_1^4X_0^2 + 3X_1^2X_0^4 - X_0^6) -  (X_1^6 - 3X_1^4X_0^2 + 3X_1^4 X_0^2 - X_0^6)] = 0$$
+
+So, great. 
+
+Now, we do the same check on $\phi \circ \psi(X_0,X_1)$ and $\psi \circ \phi(X_0,X_1, X_2)$. We have that:
+
+$$\psi \circ \phi(X_0,X_1) = \psi([X_0^3, X_1(X_1^2 - X_0^2), -X_0(X_1^2 - X_0^2]) = [(1, -[X_1(X_1^2 - X_0^2)/-X_0(X_1^2 - X_0^2]] = [1,X_1/X_0] = [X_0,X_1]$$
+
+where we multiply by a factor of $X_0$ since it is non-0
+
+$$\phi \circ \psi(X_0,X_1, X_2) = \phi([1,-X_1/X_2]) = \phi([X_2,-X_1]) = [X_2^3, -X_1(X_1^2-X_2^2), -X_2(X_1^2 - X_2^2)]$$
+
+Substituting for the curve with $-X_0X_1^2  + X_0X_2^2 = X_2^3$, we get:
+
+$$ [-X_0X_1^2  + X_0X_2^2, X_1(X_1^2-X_2^2), -X_2(X_1^2 - X_2^2)] =  [-X_0(X_1^2  - X_2^2), -X_1(X_1^2-X_2^2), -X_2(X_1^2 - X_2^2)]$$
+
+Factoring out $-(X_1^2 - X_2^2)$ because we live in a projective space, we find:
+
+$$[-X_0(X_1^2  - X_2^2), -X_1(X_1^2-X_2^2), -X_2(X_1^2 - X_2^2)] = [X_0,X_1,X_2]$$
+
+Then, in the same vein as part (a), we have found regular functions on open sets such that we go from an open set $\mathbb{P}^1 \setminus V(X_0)$ to and from the open set $C_2 \setminus V(X_0X_2)$.
+
+(c)
+
+Consider the Jacobian of $C_2$. This has form:
+
+$$\mathcal{J}(C_2) = [ X_1^2 , 2X_0X_1, 3X_2^2 ]$$
+
+In particular, we notice that this vanishes whenever $X_1, X_2 = 0$, but $X_0$ may be kept free, that is, the point of form $(1,0,0)$. We also quickly see that this is a point on the curve, as $X_0 X_1^2 - X_2^3$ vanishes as well, thus, $(1,0,0)$ is a singular point on $C_1$
+
+Similarly, we may look at the Jacobian of $C_3$, in a similar fashion. This has form:
+
+$$\mathcal{J}(C_3) = [ X_1^2 - X_2^2 , 2X_0X_1, 3X_2 - 2X_0X_2 ]$$
+
+In the same way, we notice that we may again take $X_1, X_2$ to vanish, and $X_0$ free, and both the Jacobian and polynomial defining the curve vanish at $(1,0,0)$, and thus, it is a singular point for $C_3$.
+
+Then, we may not permit an isomorphism from $C_1$ to either $C_2, C_3$, as a morphism of varieties must send singular points to singular points, but $\mathbb{P}^1$ is not singular. 
+
+(d)
+
+Consider the tangent cones for $C_2,C_3$ on the copy of the affine planes, where we delete $X_0 = 0$. In that case, we may take our copy to be of the form $(1,X_1,X_2)$, and we notice that this copy contains our singular point in both cases.
+
+In the case for $C_2$, we see that the polynomial in this copy has form $X_1^2 - X_2^3$, which, if we take the lowest term, we find that $X_1 = 0$ is a tangent line with multiplicity 2.
+
+However, in the case of $C_3$, we notice that in the version of the affine plane, we have $X_1^2  -X_2^2 + X_2^3$, which, if we take the lowest term again, this time of degree 2, we see that we have two tangent lines in the cone, with multiplicity 1: $X_1 - X_2 = 0, X_1 + X_2 = 0$. Since the tangent cone is a local invariant of our point, we see that the characterization of $C_2$ having a line with multiplicity 2, and $C_3$ having no double points. Thus, there cannot be an isomorphism between $C_2, C_3$.
+
+
+(e)
+
+This is fine because $C_1, C_2$, as seen in part (c) are both singular. Thus, they do not fulfill the condition of the statement we proved in class. We also notice that the birational maps cut out the bad point, so that we have isomorphisms between quasiprojective varieties that do not contain singularities. As such, those isomorphisms on the open sets are allowable.
+
+\end{proof}
+
+\begin{problem}{8.3}
+
+Let $C_1 = \mathbb{P}^1, C_2 = V(X_0X_2^2 - X_1(X_1 - X_0)(X_1 - aX_0)) \subseteq \mathbb{P}^2$ for $a$ in our base field such that $a \not = 0, a \not = 1$.
+
+(a) Show that $C_2$ is non-singular. 
+
+(b) Show that there does not exist a birational map $\alpha: C_1 \to C_2$. Hint: if a rational map were to exist, it would be an isomorphism that gives rise to an isomorphism $C_2 \setminus \{ p \} \to \mathbb{A}^1$ for $p$ some point, defined on some open set of $\mathbb{A}^1 \subseteq \mathbb{P}^1$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+We look again at the Jacobian criterion. The Jacobian here has form:
+
+$$\mathcal{J}(C_2) = [ X_2^2 - 2aX_0X_1 + (a+1)X_1^2, -3X_1^2 + 2(a+1)X_0X_1 - aX_0^2, 2X_0X_2 ]$$
+
+First, we look at $2X_0X_2$. This implies either $X_0 = 0$ or $X_2 = 0$. 
+
+If $X_0 = 0$, then we have from $3X_1^2 + 2(a+1)X_0X_1 - aX_0^2$, that $3X_1^2 = 0 \implies X_1 = 0$. Then, from the first equation, we have that $X_2^2 - 2aX_0X_1 + (a+1)X_1^2 \implies X_2^2 = 0 \implies X_2 = 0$, and $(0,0,0) \not \in \mathbb{P}^2$
+
+Now, suppose $X_2 = 0$. Then, we have that $-2aX_0X_1 + (a+1)X_1^2 = 0 \implies X_1[(a+1)X_1 - 2aX_0)] = 0 \implies X_1 = 0$ or $(a+1)X_1 - 2aX_0) = 0$. If $X_1 = 0$, then $X_0 = 0$ follows easily, so we assume the latter. Substituting $X_1 = 2a(a+1)^{-1}X_0$ into $-3X_1^2 + 2(a+1)X_0X_1 - aX_0^2$, we find that 
+
+$$ -3(2a(a+1)^{-1}X_0 )^2 + 2X_0(2a(a+1)^{-1}X_0 ) + (a+1)(2a(a+1)^{-1}X_0 )^2- aX_0^2 =$$
+
+$$ (a+1)^{-1} [ -6a X_0^2 + 4aX_0^2 + 4a^2 X_0^2 - (a^2 + 1)X_0^2] = (a+1)^{-1} X_0^2 (-3a^2 + 4a -1)=  $$
+
+$$  -(a+1)^{-1} X_0^2 (3a - 1)(a-1)$$
+
+Since $a \not = 1$, we see that the choices are $X_0 = 0$ or $a = 1/3$. If $X_0 = 0$, then $X_1 = 0$, and the point does not exist, so we assume $a = 1/3$. Then, we have that $4/3X_1 - 2/3X_0 = 0 \implies 2X_1 = X_0$. However, let’s look at points of the form $(2X_1,X_1, 0)$, and when they lie on the curve. Indeed, if we let $f(X_0,X_1,X_2) = X_0X_2^2 - X_1(X_1 - X_0)(X_1 - 1/3X_0)$:
+
+$$ f(2X_1,X_1,0) = 0 - X_1(X_1 - 2X_1)\left(X_1 - \frac{1}{3} 2X_1\right) = -X_1(-X_1)\left(\frac{1}{3} X_1\right) = \frac{X_1^3}{3} $$
+
+And this vanishes only if $X_1 = 0$, which, again, via $2X_1= X_0$, implies that $X_0 = 0$, which is still not a point in $\mathbb{P}^2$. Thus, regardless of the choice of $a$ as long as $a \not = 1$, $C_2$ may not be singular.
+
+(b)
+
+Suppose a birational map exists. Then, we have an isomorphism between open sets in $\mathbb{P}^1, C_2$. Since this is a curve, we notice that the form of an open set in $C_2$ is $U = C_2 \setminus \{p \}$, that is, the curve missing a finite number of points. Similarly, we an argue the same for $\mathbb{P}^1$, but, in particular, we enforce that it is the point at infinity, that is, $\mathbb{P}^1 \setminus \{ (1,0) \}$, which we can do, since we can take a linear transformation as a rotation of the form $X_0’ = \cos(\theta)X_0 + \sin(\theta) X_1, X_1’ =  -\sin(\theta)X_0+ \cos(\theta) X_1$ and/or switch the labels on $X_0,X_1$ such that we delete this specific point, $(1,0)$. Well, we recall that this is a copy of $\mathbb{A}^1$ sitting inside $\mathbb{P}^1$, so this is an isomorphism between $U \to \mathbb{A}^1$.
+
+However, this would induce an isomorphism between the coordinate rings. However, the coordinate ring of $\mathbb{A}$ is all of $k[x]$, whereas the coordinate ring of $U$ is the same as the coordinate ring of $C_2$, being $k[X_0,X_1, X_2]/(X_0X_2^2 - X_1(X_1 - X_0)(X_1 - aX_0))$. In particular, we notice that since the ideal is of degree 3, irreducible, then we would need element from $k[x]$ that map to $X_0,X_1,X_2$ individually. Further, by a degree argument, this may only be satisfied by elements of degree 1. However, this is impossible in an isomorphism, as we would then have relations between elements in $k[x]$. Thus, these curves may not be birational.
+
+\end{proof}
+
+
+
+\end{document}
