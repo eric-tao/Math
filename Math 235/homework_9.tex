@@ -1,0 +1,192 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#8}
+\author{Eric Tao\\
+Math 235: Homework \#8}
+\maketitle
+ 
+\section*{2.1}
+
+\begin{problem}{5.2.18}
+
+Suppose that $f: [a,b] \to \mathbb{C}$. Show that there exists partitions $\Gamma_k$ of $[a,b]$ such that $\Gamma_{k+1}$ is a refinement of $\Gamma_k$ for each $k$, and $S_{\Gamma_k} \nearrow V[f; a,b]$ as $k \to \infty$.
+\end{problem}
+\begin{proof}[Solution]
+
+First, we wish to show that for any partition $\Gamma_k$ and refinement $\Gamma_{k+1}$, that $S_{\Gamma_k} \leq S_{\Gamma_{k+1}}$. 
+
+Let $ S_{\Gamma_k} = \{ a = x_0 < ... < x_i = b \}$ and $S_{\Gamma_{k+1}} = \{ a = y_0 < ... < y_j = b \}$ be a refinement, where $i < j$ and for every $0 \leq i' \leq i$, there exists a $j'$ such that $x_{i'} = y_{j'}$.
+
+Look at one pair of $x_{i'}, x_{i' + 1}$. If, in the refinement, we have that $x_{i'} = y_{j'}$ and $x_{i'+1} = y_{j'+1}$, then we have that $|f(x_{i'+1}) - f(x_{i'})| = |f(y_{j'+1}) - f(y_{j'})|$. Else, suppose not. Then, we have that $x_{i'} = y_{j'}$ and $x_{i'+1} = y_{j'+n}$ for some n. Then, by liberal usage of the triangle inequality, we have that:
+
+$$ |f(x_{i'+1}) - f(x_{i'})| = |f(y_{j'+n}) - f(y_{j'})| = \left|f(y_{j'+n}) - f(y_{j'}) + \Sigma_{k =1}^{n-1} (f(y_{j'+k}) - f(y_{j' +k}) \right| = $$
+$$ \left|\Sigma_{k =1}^{n} (f(y_{j'+k}) - f(y_{j' + (k-1)}) \right| \leq \Sigma_{k=1}^n \left| f(y_{j'+k}) - f(y_{j' + (k-1)}) \right| $$
+
+Since we may do this for every $0 \leq i' \leq i$, that means that $S_{\Gamma_k} \leq S_{\Gamma_{k+1}}$.
+
+First, assume $V[f;a,b] < \infty$. Now, since $V[f; a,b]$ is the supremum of $S_\Gamma$ over every partition $\Gamma$, we may construct a sequence $\Gamma_k$ of partitions such that $V[f; a,b] - S_{\Gamma_k} < 1/k$.
+
+In particular now, define a new sequence of partitions as such. Let $\Gamma_1' = \Gamma_1$. Then, take $\Gamma_i' = \Gamma_{i-1}' \cup \Gamma_{i}$, where we understand the union operation as meaning to take every point in $\Gamma_{i-1}', \Gamma_i$ and create a partition with all points. We notice that for each $i$, $\Gamma_i'$ is a refinement of both $\Gamma_{i-1}', \Gamma_{i}$. Then, we have that $\Gamma_{i-1}' \leq \Gamma_i'$ from the work we did above, and further, we know that $V[f;a,b] - 1/k \leq S_{\Gamma_i'} \leq V[f;a,b]$ by the choice of the $\Gamma_i$'s. Thus, we have an increasing sequence of refinements that converges to $V[f;a,b]$.
+
+The unbounded case is clear, instead of taking  $V[f; a,b] - S_{\Gamma_k} < 1/k$, we simply take $S_{\Gamma_k} > k$ for each $k \geq 1$, and proceed in the same way.
+
+%Now, assume there does not exist any sequence of refinements such that $S_{\Gamma_k} \nearrow V[f; a,b]$. Since we've proved that refinements are monotone increasing, we can drop the $\nearrow$ and just assume $\to$. First, assume $V[f; a,b] = \infty$. Then, for every sequence of 
+ 
+
+
+\end{proof}
+
+\begin{problem}{5.2.21}
+
+Assume that $E \subseteq \mathbb{R}$ is measurable, and suppose that $f: E \to \mathbb{R}$ is Lipschitz on the set $E$, that is, there exists a $K \geq 0$ such that:
+
+$$ | f(x) - f(y) | \leq K|x- y|  \text{ for all } x,y \in E$$
+
+Prove that $|f(A)|_e \leq K|A|_e$, for any $A \subseteq E$.
+
+\end{problem}
+\begin{proof}[Solution]
+
+Let $\{ Q_k \}_k$ be a collection of boxes such that $A \subseteq \cup_k Q_k$. Let's look at one specific box, $Q_i$. Since $A \subseteq E$, we can take $d_i = \sup(\{ x-y : x,y \in E \cap Q_i \})$, where we notice $d_i \leq \text{Vol}(Q_i)$ Consider the image of $f(E \cap Q_i)$. Since $f$ is Lipschitz, and $Q_i \cap E$ an intersection of measurable sets, the image is measurable. In particular, we notice that, for $x,y \in E \cap Q_i$, we have:
+
+$$ |f(x) - f(y)| \leq K|x-y| \leq K d_i $$ 
+
+Then, if we fix an $x$, that means $f(E \cap Q_i)$ can be contained within an interval of length $K d_i$. We may repeat this process for each $Q_i$. We notice, since $Q_k$ covers $A$, then so must $E \cap Q_k$. So, we have that 
+
+$$|\cup_k f(E \cap Q_k)|_e \leq \Sigma_k (K d_k) \leq K \Sigma_k (d_k) \leq K \Sigma_k \text{Vol}(Q_k)$$
+
+Since we can do this for any cover by boxes $Q_k$ of $A$, $f(A) \subseteq \cup_k f(E \cap Q_k)$ for every collection of boxes, and via the properties of the infimum, we have that:
+
+$$|f(A)|_e \leq K |A|_e$$
+
+\end{proof}
+
+\begin{problem}{5.2.22}
+Fix $a,b > 0$ and define:
+
+$$ f(x) = \begin{cases} |x|^a \sin (|x|^{-b}), & x \not = 0 \\ 0, & x = 0\\ \end{cases} $$
+
+Prove the following:
+
+(a) $f \in \bv[-1,1] \iff a > b$
+
+(b) If $a = b$ then $f \in C^\alpha[-1,1]$ with exponent $\alpha = \frac{b}{b+1}$.
+
+(c) $ C^\alpha[-1,1]$ is not contained in $\bv[-1,1]$ for any $0 < \alpha < 1$.
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+First, we notice that $f$ is symmetric across $x = 0$, and so we restrict ourselves to looking on $[0,1]$, and we may drop the absolute values. Computing $f'$ on $(0,1]$, we find that 
+
+$$f' = ax^{a-1} \sin(x^{-b}) + x^{a} \cos(x^{-b}) -b x^{-b -1} =  a x^{a-1}\sin(x^{-b}) - b  x^{a- b-1}\cos(x^{-b}) $$
+
+\end{proof}
+
+\begin{problem}{5.2.23}
+
+(a) Suppose that $\{ f_n \}_{n \in \mathbb{N}}$ is a sequence of complex-valued functions $f_n: [a,b] \to \mathbb{C}$ and that $f_n \to f$ pointwise on $[a,b]$. Prove that:
+
+$$ V[f;a,b] \leq \liminf_{n \to \infty} V[f_n; a,b]$$
+
+(b) Exhibit functions $f_n, f$ such that $f_n \in \bv[a,b]$ for each $n \in \mathbb{N}$ and $f_n \to f$ pointwise, but $f \not \in \bv[a,b]$.
+\end{problem}
+
+\begin{proof}[Solution]
+
+
+\end{proof}
+
+\begin{problem}{5.2.26}
+Prove the following:
+
+(a) $\Vert f \Vert = V[f;a,b]$ defines a seminorm on $\bv[a,b]$ and
+
+$$ \Vert f \Vert_{\bv} = V[f;a,b] + \Vert f \Vert_u : f \in \bv[a,b]$$
+
+is a norm on $\bv[a,b]$.
+
+(b) $\bv[a,b]$ is a Banach space with respect to $\Vert \cdot \Vert_{\bv}$.
+
+(c) $ \Vert f \Vert_{\bv'}  = V[f;a,b] + |f(a)|$ defines an equivalent norm for $\bv[a,b]$. That is, it is a norm, and there exists $C_1,C_2 > 0$ such that:
+
+$$ C_1 \Vert f \Vert_{\bv} \leq \Vert f \Vert_{\bv'} \leq C_2 \Vert f \Vert_{\bv} : f \in \bv[a,b]$$
+
+\end{problem}
+\begin{proof}[Solution]
+
+(a)
+
+Clearly, we have that $V[f;a,b] \geq 0$ for any $f \in \bv[a,b]$, because it is the supremum of non-negative numbers. Then, we need only check for the triangle inequality, and factoring scalars.
+
+Let $f,g \in \bv[a,b]$, and fix a partition $\Gamma = \{ a  = x_0 < ... < x_n = b \}$. We notice, by the triangle inequality on the complex numbers, we have that, for each $(x_i, x_{i+1})$:
+
+$$ |f+g(x_{i+1}) - f+g(x_i)| = |f(x_{i+1}) + g(x_{i+1}) - f(x_i) - g(x_0)| \leq |f(x_{i+1}) - f(x_i)| +  |g(x_{i+1}) - g(x_i)| $$
+
+Since this is true for every interval in the partition, this implies then that $S_{\Gamma}^{f+g} \leq S_{\Gamma}^f + S_{\Gamma}^g$, where we use $S_{\Gamma}^f$ to denote the sum for the function $f$. Then, since the variation is simply the supremum over all partitions, and this holds for every partition, we have that:
+
+$$ \Vert f + g \Vert = V[f+g; a,b] \leq V[f; a,b] + V[g;a,b] = \Vert f \Vert + \Vert g \Vert$$.
+
+Now, let $k \in \mathbb{R}$. Consider now $\Vert kf \Vert$. Again, looking at any partition $\Gamma$, we see that:
+
+$$|kf(x_{i+1}) - kf(x_i)| = |k||f(x_{i+1}) - f(x_i)|$$
+
+Since this is true for each interval in our partition, it implies that $S_{\Gamma}^{kf} = |k| S_{\Gamma}^f$. Again, via the properties of the supremum, this implies then that $\Vert kf \Vert = |k| \Vert f \Vert$.
+
+Now, we look at $ \Vert f \Vert_{\bv} = V[f;a,b] + \Vert f \Vert_u : f \in \bv[a,b]$. Because of the fact that we have shown that $V[f;a,b]$ is a seminorm on $\bv[a,b]$ and that we already know that $\Vert f \Vert_u$ is a norm, we know that this is already a seminorm. Then, it suffices to show that $\Vert f \Vert_{\bv} = 0 \implies f = 0$. Since both portions are non-negative, this implies, in particular, $\Vert f \Vert_u = 0$. But, because this is a norm, this implies that $f = 0$, and we are done. Thus, this is a norm.
+
+(b)
+
+(c)
+
+First, we look at the case $f(a) \geq 0$. Then, using the Jordan decomposition on $f = g - h$ for $g,h$ monotone increasing, and the seminorm properties to see that $V[f;a,b] \leq V[g;a,b] + V[h;a,b]$, we conclude that $f(a) \leq \Vert f \Vert_u \leq f(a) + V[f;a,b]$, since to maximize $|f|$, we would need $V[h;a,b] = 0$. We can actually see that this argument works for $f(a) < 0$, where instead of taking the positive distance, we take $V[g;a,b] = 0$ to maximize $|f|$. So, we actually have that $|f(a)| \leq \Vert f \Vert_u \leq |f(a)| + V[f;a,b]$.
+
+Then, we take $C_1 = 1, C_2 = 2$. 
+
+From $|f(a)| \leq \Vert f \Vert_u$, we can add $V[f;a,b]$ to both sides to obtain:
+
+$$ \Vert f \Vert_{\bv'} =  V[f;a,b] + |f(a)| \leq V[f;a,b] +   \Vert f \Vert_u  =  \Vert f \Vert_{\bv}$$, so we have that $C_1 \Vert f \Vert_{\bv'} = \Vert f \Vert_{\bv'} \leq \Vert f \Vert_{\bv}$
+
+Further, we have that from the other side, we obtain:
+
+$$ \Vert f \Vert_u \leq |f(a)| + V[f;a,b] \implies  V[f;a,b] + \Vert f \Vert_u \leq |f(a)| + 2V[f;a,b] $$
+
+so we can see that:
+
+$$C_2 \Vert f \Vert_{\bv'} =  2|f(a)| + 2V[f;a,b] \geq  |f(a)| + 2V[f;a,b] \geq  V[f;a,b] + \Vert f \Vert_u = \Vert f \Vert_{\bv} $$.
+
+Thus, these norms are equivalent. If you really want the other inclusion, we can reverse the inclusions by dividing via the constants.
+\end{proof}
+
+\section*{2.2}
+
+
+
+\begin{problem}{5.3.5}
+Assume that $E \subseteq \mathbb{R}^d$ satisfies that $0 < |E|_e < \infty$, and let $\mathcal{B}$ be a Vitali covering of $E$. Given an $\epsilon > 0$, prove that there exist a countable collection of balls $B_k \in \mathcal{B}$ such that
+
+$$\left| E \setminus \cup_k B_k \right|_e = 0 \text{ and } \Sigma_k |B_k| < |E|_e + \epsilon $$
+
+\end{problem}
+\begin{proof}[Solution]
+
+
+\end{proof}
+
+ 
+
+\end{document}
