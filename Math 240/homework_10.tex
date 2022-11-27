@@ -1,0 +1,104 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Assignment}
+\author{Eric Tao\\
+Math 240: Homework \#10}
+\maketitle
+ 
+\begin{problem}{10.1}
+
+Let $C$ be a projective, non-singular curve, $D$ a divisor on $C$ with degree $d > 0$ such that $\mathcal{L}(D)$ is base point-free, of dimension $r$. Let $\phi: C \to \mathbb{P}^r$ be the morphism associated to $D$.
+
+(a) Projecting from a point $P \not \in C$ induces a morphism $\phi_P : C \to \mathbb{P}^{r-1}$. Show that this morphism is associated to subseries of $\mathcal{L}(D)$.
+
+(b)  Projecting from a point $P \in C$ induces a rational map $\phi_P : C \setminus \{ P \} \to \mathbb{P}^{r-1}$. Show that it extends to a morphism $\overline{\phi}_P: C \to= \mathbb{P}^{r-1}$. Identify a linear series that this morphism is associated to.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+
+\end{proof}
+
+\begin{problem}{10.2}
+
+(a) Show that any two effective divisors of degree $d$ in $\mathbb{P}^1$ are linearly equivalent.
+
+(b) Let $C$ be a projective non-singular curve, $D$ a divisor on $C$ of degree $d > 0$, and such that $l(D) = \dim \mathcal{L}(D) = d + 1$. Show that $C = \mathbb{P}^1$. 
+
+(c) Show that if $C$ is a projective non-singular curve that is not isomorphic to $\mathbb{P}^1$, then for any $d > 1$, there are effective divisors of degree $d$ that are not linearly equivalent.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+Fix a $d > 0$. Let $D = \Sigma_i^n c_i [P_i], D' = \Sigma_j^m d_j [Q_j]$ be effective divisors of $\mathbb{P}^1$. Consider $f = \Pi_k^{m} (x-Q_k)^{d_k}, g = \Pi_l^n (x-P_l)^{c_l}$, where, for my sanity, we take (x - y) to mean $X_0 - y_0$ if $y_0 = 0$ and otherwise, to mean $X_1 - y_1$ if $y_0 \not = 0$ where $X_0,X_1$ are the formal variables for the 0th and 1st coordinates and $y_0,y_1$ are the coordinates of the point $y$. We notice that since $D, D'$ have the same degree $d$, then $f,g$ are homogenous polynomials of degree $d$. Then, we may look at $g/f$ as a rational function. Since $f$ has finitely many zeros, exactly $\{ Q_1,...,Q_m \}$, we can look at this quotient on the open set $\mathbb{P}^1 \setminus \{ Q_1,...,Q_m \}$, open because individual points are closed. Then, we notice that:
+
+$$D(g/f) = \Sigma_l^n c_l [P_l ] + \Sigma_k^m -d_m [Q_k] = D - D'$$
+
+Thus, $D, D'$ are linearly equivalent.
+
+(b)
+
+(c)
+
+%Suppose $C \not \cong \mathbb{P}^1$. Then, by part (b), we know that for any degree $d > 0$, we have that $\dim \mathcal{L}(D) \not = d + 1$. Then, since we know that $\dim \mathcal{L}(D) \leq d + 1$ in generality, this implies that $\dim \mathcal{L}(D) < d+1$.
+
+\end{proof}
+
+\begin{problem}{10.3}
+
+Let $C$ be the twisted cubic parametrized by $(s^3, s^2t, st^2, t^3)$.
+
+(a) Show that the projection of the curve from the point $(1,0,0,0)$ to the plane $X_0 = 0$ is a conic.
+
+(b) Show that the projection from the point $(0,1,0,0)$ onto the plane $X_1 = 0$ is a cuspidal cubic.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a) 
+
+We consider first the image in the plane $X_0 = 0$. Let $A = (s^3, s^2t, st^2, t^3), B = (1,0,0,0)$. In a projective space, a line is exactly $xA + yB$ for $x,y \in k$, our base field. Then, to be in our plane $X_0 = 0$, we solve for $x,y$. In particular, we look at the first coordinate, and extract the condition:
+
+$$ xs^3 + y = 0 $$
+
+If $x = 0$, then we have $y = 0$, so our point is identically $0$, which is not allowed. Then, suppose $y = 0$. Then, this is only reasonable if $s = 0$, so that we are coming from the point $(0,0,0,t^3) = (0,0,0,1)$, which we notice is already in our plane, which is fine. Then, assume $x,y \not = 0$. Then, we look at $y = -xs^3$. Substituting into the equation of our line, we find the point in the plane as being:
+
+$$ x(s^3, s^2t, st^2, t^3) + (-xs^3)(1,0,0,0) = (0,xs^2t, xst^2, xt^3) = (0,s^2t,st^2, t^3) $$
+
+Since we know that from our original curve that $s,t$ cannot be both $0$, as that would not be a valid point in $\mathbb{P}^3$, we are guaranteed that the last 3 coordinates never become identically $0$. Then, we can project down into a $\mathbb{P}^2$ copy and retrieve the coordinates $(s^2t, st^2, t^3)$. Looking at the parametrization, we notice that we can realize this as the zero locus of the polynomial: $V(Y_1^2 - Y_0 Y_2)$, where we name the coordinates $Y_0,Y_1,Y_2$, which we identify as a conic, as it is a the zero locus of a degree 2 homogeneous polynomial.
+
+(b)
+
+In the same vein, we do the same procedure, and look at the condition from the second coordinate: $xs^2t + y = 0$. First, we see if $s = 0$, we're looking at the point $(0,0,0,t^3) = (0,0,0,1)$ which is already in the hyperplane. Similarly, if $t = 0$, we're looking at $(s^3,0,0,0) = (1,0,0,0)$, also in the hyperplane. And, we see that if $x = 0$, then $y = 0$, and vice versa, so we may not allow either of those, if we assume $s,t \not = 0$. Then, in that case, we take $y = -xs^2t$. Substituting, we find:
+
+$$ x(s^3, s^2t, st^2, t^3) + (-xs^2t)(0,1,0,0) = (xs^3,0, xst^2, xt^3) = (s^3,0,st^2, t^3) $$
+
+Again, since we know $s,t$ cannot be identically 0, we may look at this as a point in a $\mathbb{P}^2$, $(s^3, st^2, t^3)$, and, by the shape of the parametrization, we notice that we may realize this as the zero locus of the polynomial $Y_1^3 - Y_0 Y_2^2$. Analyzing this polynomial for singular points, we compute the Jacobian as:
+
+$$\mathcal{J} = [ -Y_2^2, 3Y_1^2, -2Y_0Y_2 ]$$
+
+Looking for actual points, we notice by the first two entries that that forces $Y_2 = 0, Y_1 = 0$, but $Y_0$ remains free, so we expect $(1,0,0)$ to be a singular point.
+
+Now, analyzing the singular point, we look at the tangent cone here. In particular, we look at the affine version where we delete $Y_0 = 0$. Then, we can take $Y_0 = 1$, since we can always scale to achieve this, and then this implies in this affine plane, we are looking at the polynomial $Y_1^3 - Y_2^2$. Looking at the tangent cone, this has form $-Y_2^2$, which has multiplicity 2, which is a cusp. Thus, this is a cuspidal cubic.
+
+
+
+\end{proof}
+
+
+
+\end{document}

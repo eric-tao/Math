@@ -95,6 +95,76 @@ First, we notice that $f$ is symmetric across $x = 0$, and so we restrict oursel
 
 $$f' = ax^{a-1} \sin(x^{-b}) + x^{a} \cos(x^{-b}) -b x^{-b -1} =  a x^{a-1}\sin(x^{-b}) - b  x^{a- b-1}\cos(x^{-b}) $$
 
+Now, we wish to check if this function is in $L^1[0,1]$. We see that, via the triangle inequality, and the fact that $|\sin(y)|, |\cos(y)| \leq 1$ for all $y$:
+
+$$\int_0^1 |a x^{a-1}\sin(x^{-b}) - b  x^{a- b-1}\cos(x^{-b})| \leq \int_0^1 |a x^{a-1}\sin(x^{-b})| + \int_0^1 | b  x^{a- b-1}\cos(x^{-b})| \leq $$
+$$ \int_0^1 |a x^{a-1}| + \int_0^1 | b  x^{a- b-1}| = \int_0^1 a x^{a-1} + \int_0^1 b  x^{a- b-1} = $$
+
+We notice that if $a = b$, then the integral on the right diverges, since the integral becomes $\int_0^1 b x^{-1} = b \ln(x)\bigg\rvert_0^1$ which diverges. So, here, we take the case $a \not = b$:
+
+$$ x^a \bigg\rvert_0^1 + \frac{b}{a-b}x^{a-b} \bigg\rvert_0^1 = 1 + \frac{b}{a-b}x^{a-b} \bigg\rvert_0^1 $$ % = \frac{a}{a-b}$$
+
+Here, we notice that if $a < b$, that the remaining integrand goes to infinity at 0, but if we have that $a > b$, then:
+
+$$ 1 + \frac{b}{a-b}x^{a-b} = 1 + \frac{b}{a-b} = \frac{a}{a-b}  < \infty $$.
+
+So, we have then that if $a> b$, then $\Vert f' \Vert_1 < \infty$, and thus, by 5.2.9, $f \in \bv[0,1]$.
+
+Now, we consider a partition with form $\Gamma_k = \{ 1 > (2/\pi)^{1/b} > ... > (2/k\pi)^{1/b} > 0 \}$, where we take $k \geq 4$. Let's compute $S_{\Gamma_k}$. 
+
+$$ S_{\Gamma_k} = |\sin(1) - (2/\pi)^{a/b}\sin(\pi/2)| + | (2/\pi)^{a/b}\sin(\pi/2) -  (2/2\pi)^{a/b}\sin(2\pi/2)| + ... + | (2/k\pi)^{a/b}\sin(k\pi/2) - 0| \leq$$
+$$ \Sigma_{i=1}^{k-1}  | (2/i\pi)^{a/b}\sin(i\pi/2) -  (2/(i+1)\pi)^{a/b}\sin((i+1)\pi/2)|$$
+
+where we've omitted the first and last term. We notice, that $\sin(i\pi/2)$ is 0 whenever $i$ is even. Then, we can rewrite this as:
+
+$$ \Sigma_{i=1}^{k-1}  | (2/i\pi)^{a/b}\sin(i\pi/2) -  (2/(i+1)\pi)^{a/b}\sin((i+1)\pi/2)| = 2 \Sigma_{i=1}^{\lfloor k/2 \rfloor -1} (2/(2i+1)\pi)^{a/b}$$
+
+Because we count each odd $ (2/i\pi)$ twice, once with $i-1$, and once with $i + 1$, and we drop the $\sin$ and absolute values, because $\sin$ takes on $\pm 1$. We also ignore $2i - 1 = 1$, because it's only counted once, due to the $\sin(1)$ term.
+
+Here, we consider the sum $2\Sigma_{i=1}^{\lfloor k/2 \rfloor -1} (2/(2i+1)\pi)^{a/b} = 2(2/\pi)^{a/b} \Sigma_{i=1}^{\lfloor k/2 \rfloor -1} (1/(2i + 1))^{a/b}$. We recognize this as some constant times the sum of odd reciprocals. In particular, we know that as $k \to \infty$, this sum diverges so long as $a/b \leq 1$. Thus, since we have found a partition that diverges, $V[f;a,b]$ must diverge as well, since we can always union this sequence of partitions into any other partition. Therefore, for $f \in bv[a,b]$, $a/b > 1$, and thus, $a > b$.
+
+Therefore, we have a biconditional.
+
+(b)
+
+Suppose $a = b$, then $f = x^b sin(x^{-b})$ on $(0,1]$. Again, we restrict ourselves to looking on $(0,1]$ due to symmetry, as if it is true here, then it is true on all of $[0,1]$
+
+First, suppose $0 < x < y \leq 1$, define $h = y - x$, and then consider the case where $h \leq x^b+1$.
+
+We have, via the Mean Value Theorem, that because $f$ is differentiable on $(0,1]$, that $|f(x) - f(y)| = |f'(t)|h$ for some $x < t < b$. From part (a), we computed the derivative as:
+
+$$ f'(x) = bx^{b-1} \sin(x^{-b}) - b x^{-1} \cos(x^{-b}) = bx^{-1}(  x^{b}\sin(x^{-b}) - \cos(x^{-b})) $$.
+
+We notice, that because $\sin,\cos$ are bounded by $\pm1$, and since $ t \in [0,1]$, we have that $t^b \in (0,1)$, we may take the estimate:
+
+$$ |f'(t)| =   |bt^{-1}|| t^{b}\sin(t^{-b}) - \cos(t^{-b})| \leq |b/t|(| t^b \sin(t^{-b}) | + | \cos(t^{-b})|) \leq 2b/t $$.
+
+Then, we have that $|f(x) - f(y)| = |f'(t)|h \leq 2bh/t$. Now, we have that $x < t < y$, so therefore, since $b+1 > 0$, we have that $x^{b+1} \geq t^{b+1}$, and by our case, this implies that $t^{b+1} > h \implies  t> h^{1/(b+1)}$. Since this is a lower bound for $t$, this is an upper bound for the fraction $2b/t$, so we have that:
+
+$$ |f(x) - f(y)| \leq 2bh/t \leq   2bh/h^{1/(b+1)} = 2b h^{1 - 1/(b+1)}= 2b h^{b /b+1} $$
+
+Since $2b$ is a constant, we have $b/b+1$ as a H\"older exponent in this case.
+
+Now, suppose $h > x^{b+1}$.
+
+If we look at $|f(y) - f(x)|$, we have that:
+
+$$ |f(y) - f(x)| \leq |f(y)| + |f(x)| \leq | y^b \sin (y^{-b})|  +  |x^b \sin (x^{-b})| \leq y^b + x^b$$
+
+Now, from our case, we already have that because $x^{b+1} < h$, since $b > 0 \implies b/b+1 > 0$, we may take both sides to the $b/b+1$-th power, and obtain that $(x^{b+1})^{b/b+1} < h^{b/b+1} \implies x^b < h^\alpha$.
+
+On the other hand, we look at $y^b/h^\alpha$. In particular, since $0 < b/b+1 < 1, 0 < h < 1$, we have that $y^b/h^\alpha \leq y^b/h^b = (y/y-x)^b$. We notice here that because $h > x^{b+1}$, that instead, if we view this as fixing a $y$, $h$ can be no less than some constant multiple of $y$, $Cy$, as otherwise, $x$ cannot get too close to $y$ without making $h \leq x^{b+1}$. Then, we have that:
+
+$$ |f(y) - f(x)| \leq  y^b + x^b \leq h^\alpha + C^b h^\alpha = (1 + C^b) h^\alpha$$
+
+Now, to finish, we just take our H\"older constant to be the max of $(1 + C^b), 2b$ and we are done.
+
+(c)
+
+Fix an $0 < \alpha < 1$. Then, since $\alpha = b/b+1 = 1 - 1/b+1$, we have that $1/(1 + b) = 1 - \alpha \implies b+1 = 1/(1-\alpha) \implies b = \alpha/(1-\alpha)$. By our choice of $\alpha$, $b > 0$. Then, from part (a), (b), we may find a function $f_b$ defined as above with this choice of $b$ such that it belongs to $C^\alpha[-1,1]$ but does not belong to $\bv[-1,1]$.
+
+
+
 \end{proof}
 
 \begin{problem}{5.2.23}
@@ -108,6 +178,25 @@ $$ V[f;a,b] \leq \liminf_{n \to \infty} V[f_n; a,b]$$
 
 \begin{proof}[Solution]
 
+(a)
+
+Let $\Gamma$ be a partition on $[a,b]$. Then, by 4.2.18, Fatou's lemma for series, we can say that 
+
+$$S_\Gamma = \Sigma_{j=1}^n | f(x_j) - f(x_{j-1}) | =  \Sigma_{j=1}^n \liminf_{n \to \infty} | f_n(x_j) - f_n(x_{j-1}) | \leq $$
+
+$$ \liminf_{n \to \infty}\Sigma_{j=1}^n | f_n(x_j) - f_n(x_{j-1}) | = \liminf_{n \to \infty} S_\Gamma[f_n; a,b]$$
+
+Since this is true for an arbitrary partition, this is true for every partition. Then, since $V$ is the sup over all $\Gamma$ of $S_\Gamma$, this implies that:
+
+$$ V[f;a,b] \leq \liminf_{n \to \infty} V[f_n; a,b]$$
+
+(b)
+
+Consider the sequence of functions 
+
+$$f_n = \begin{cases} 0, & \text{ if } x \in [a,a+1/n) \\ 1/(x-a), & \text{ if  } x \in [a+1/n,b] \end{cases}$$
+
+It is clear that this function has bounded variation, because for any $f_n$, it is monotone increasing on $[a,a+1/n]$ and monotone decreasing on $[a+1/n,b]$, so it has total variation exactly equal to $n + (n-1/(b-a)) = 2n-1/(b-a)$, thus $f_n \in \bv[a,b]$ for all $n \geq 1$. However, this converges to $1/(x-a)$, which is not bounded, and thus is not in $\bv[a,b]$.
 
 \end{proof}
 
@@ -151,6 +240,16 @@ Now, we look at $ \Vert f \Vert_{\bv} = V[f;a,b] + \Vert f \Vert_u : f \in \bv[a
 
 (b)
 
+Suppose we have a Cauchy sequence of functions $f_n \in \bv[a,b]$, that is, such that $\Vert f_m - f_n \Vert_{\bv} \to 0$ as $m,n \to \infty$. By the definition of $\Vert \cdot \Vert_u$, for this to go to $0$, we must have that $\Vert f_m - f_n \Vert_u \to 0$ as well, that is, it must be Cauchy with respect to the uniform norm.  Then, fix any $x \in [a,b]$, and look at $|f_m(x) - f_n(x)|$. In particular, we have that, for an $\epsilon > 0$ given, there must be $N$ such that for all $m,n > N$, $|f_m(x) - f_n(x)| \leq \Vert f_m - f_n \Vert_u < \epsilon$, by the properties of the supremum. Then, this means that $f_n(x)$ is a sequence of Cauchy real numbers, and thus convergent. Then, define $f(x) = \lim_{n \to \infty} f_n(x)$, that is, the point-wise convergence of the sequence.
+
+Now, we claim that if $f_n$ is Cauchy, then it is convergent to $f$, and that $f \in \bv[a,b]$. Firstly, we see that $f$ must be bounded, because from the fact that $f_n \to f$ in the uniform norm, let $\epsilon > 0$, we can see that $\Vert f - f_n \Vert_u < \epsilon $ for at least some $n$. Then,  by the reverse triangle inequality, we have that $|\Vert f \Vert_u  - \Vert f_n \Vert_u|< \epsilon  \implies   -\epsilon < \Vert f \Vert_u  - \Vert f_n \Vert_u < \epsilon  \implies  -\epsilon < \Vert f_n \Vert_u - \epsilon < \Vert f \Vert_u < \Vert f_n \Vert_u + \epsilon \implies \Vert f \Vert_u < \Vert f_n \Vert_u + \epsilon < \infty$.
+
+Now, we wish that $f$ to be of bounded variation. Because the $f_n$ are Cauchy in $\Vert \cdot \Vert_{\bv}$, we have that they must be Cauchy as well in $\Vert \cdot \Vert$, that is, in their variation, since both the uniform norm and the seminorm must go to 0. But, this then implies that the sequence of $\Vert f_n \Vert$ under the seminorm is bounded. Then, if that's bounded, we have from problem 5.2.23 part (a), that:
+
+$$ V[f;a,b] \leq \liminf_{n \to \infty} V[f_n; a,b] < \infty$$
+
+Thus, $f  \in \bv[a,b]$. Then, it is clear from the triangle inequality and from the seminorm properties that $f_n \to f$ in the seminorm as well, and thus $f_n \to f$ in the full norm.
+
 (c)
 
 First, we look at the case $f(a) \geq 0$. Then, using the Jordan decomposition on $f = g - h$ for $g,h$ monotone increasing, and the seminorm properties to see that $V[f;a,b] \leq V[g;a,b] + V[h;a,b]$, we conclude that $f(a) \leq \Vert f \Vert_u \leq f(a) + V[f;a,b]$, since to maximize $|f|$, we would need $V[h;a,b] = 0$. We can actually see that this argument works for $f(a) < 0$, where instead of taking the positive distance, we take $V[g;a,b] = 0$ to maximize $|f|$. So, we actually have that $|f(a)| \leq \Vert f \Vert_u \leq |f(a)| + V[f;a,b]$.
@@ -159,7 +258,7 @@ Then, we take $C_1 = 1, C_2 = 2$.
 
 From $|f(a)| \leq \Vert f \Vert_u$, we can add $V[f;a,b]$ to both sides to obtain:
 
-$$ \Vert f \Vert_{\bv'} =  V[f;a,b] + |f(a)| \leq V[f;a,b] +   \Vert f \Vert_u  =  \Vert f \Vert_{\bv}$$, so we have that $C_1 \Vert f \Vert_{\bv'} = \Vert f \Vert_{\bv'} \leq \Vert f \Vert_{\bv}$
+$$ \Vert f \Vert_{\bv'} =  V[f;a,b] + |f(a)| \leq V[f;a,b] +   \Vert f \Vert_u  =  \Vert f \Vert_{\bv}$$ so we have that $C_1 \Vert f \Vert_{\bv'} = \Vert f \Vert_{\bv'} \leq \Vert f \Vert_{\bv}$
 
 Further, we have that from the other side, we obtain:
 
@@ -175,7 +274,6 @@ Thus, these norms are equivalent. If you really want the other inclusion, we can
 \section*{2.2}
 
 
-
 \begin{problem}{5.3.5}
 Assume that $E \subseteq \mathbb{R}^d$ satisfies that $0 < |E|_e < \infty$, and let $\mathcal{B}$ be a Vitali covering of $E$. Given an $\epsilon > 0$, prove that there exist a countable collection of balls $B_k \in \mathcal{B}$ such that
 
@@ -184,6 +282,27 @@ $$\left| E \setminus \cup_k B_k \right|_e = 0 \text{ and } \Sigma_k |B_k| < |E|_
 \end{problem}
 \begin{proof}[Solution]
 
+We first proceed in the same way as the proof of 5.3.3.
+
+Let $U \supseteq E$ be an open set such that $|U| < |E|_e + \epsilon$. Call $\mathcal{B}'$ the restriction of $\mathcal{B}$ such that for all $B \in \mathcal{B}'$, $B \subseteq U$. Since these were closed sets, and we live in an open set surrounding $U$, we must still have a Vitali cover, as we just shrink ourselves to the case where the ball has radius less than the open ball around each point.
+
+Fix any $B_1 \in \mathcal{B}$ and proceed inductively, picking disjoint balls as follows. Suppose we have picked $n$ balls. Then, if $|E \setminus B_1 \cup ... \cup B_n|_e = 0$ we are done. Otherwise, pick a point in $E \setminus B_1 \cup ... \cup B_n$. Since this has positive measure, we can find an open set around it $U' \setminus B_1 \cup ... \cup B_n$, with set difference of measure less than $\epsilon$. Then, we pick $B_{n+1}$ such that it contains $x$, disjoint from the other $B_1,...B_n$, and, defining
+
+$$s_n = \sup\{ \text{radius}(B) : B \in \mathcal{B}, B \cap B_i, 1 \leq i < n \}$$
+
+such that $\text{radius}(B_{n+1})$. We continue this process, stopping only if $E \setminus B_1 \cup ... \cup B_N|_e = 0$, otherwise obtaining a countable collection of disjoint balls. From the argument of 5.3.3, we have that:
+
+$$ \Sigma_{k=1}^\infty |B_k| = | \cup_k B_k | \leq |U| < |E|_e + \epsilon $$
+
+Now, take a point $x \in E \setminus \cup_k^\infty B_k$. Fix a $m$. By necessity, $x$ must also be in $x \in E \setminus \cup_{k=1}^m B_k$. Then, by the argument in 5.3.3, for some $i > m$, it belongs to some $B_i^*$, where this is a closed ball with the same center as $B_i$ but $\text{radius}(B_i^*)  = 5 \text{radius}(B_i)$. Then, we have that:
+
+$$ \left| E \setminus \cup_k^\infty B_k \right|_e \leq \left| E \setminus \cup_k^m B_k \right|_e \leq \Sigma_{k=m+1}^\infty|B_k^*|  = 5^d \Sigma_{k=m+1}^\infty |B_k|$$
+
+However, since $\Sigma_{k=1}^\infty |B_k| < \infty$, we must have that $ \Sigma_{k=m+1}^\infty |B_k|$ can be picked arbitrarily small, i.e. we can find $m_n$ such that $ \Sigma_{k=m_k+1}^\infty |B_k| < 1/k$. Since the choice of $m$ was arbitrary, we can pick this sequence of $m_n$'s which implies then that:
+
+$$ \left| E \setminus \cup_k^\infty B_k \right|_e \leq  \Sigma_{k=m_k+1}^\infty |B_k| < 1/k $$
+
+for every $k$. Then, we must have that $\left| E \setminus \cup_k B_k \right|_e = 0$.
 
 \end{proof}
 
