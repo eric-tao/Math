@@ -26,6 +26,14 @@ Let $C$ be a projective, non-singular curve, $D$ a divisor on $C$ with degree $d
 
 \begin{proof}[Solution]
 
+(a)
+
+%We may assume that $C$ is immersed in a projective space $\mathbb{P}^n$. 
+%Since $D$ has degree more than 0, if we view $D = \Sigma_{i}^n c_i [Q_i]$, we may identify a $Q_j$ such that $c_j > 0$. % Then, we may find a linear change of coordinates such that we may pick the point $P = (1,0...,0)$
+%Let $P$ be a point on $\mathbb{P}^n \setminus C$, and project through onto a hyperplane containing $Q_j$. %In this view, if a point $q = (x_0,...,x_n)$ lies on $C$, then we look at the projected point $\pi_P(q) = (0,x_1,...,x_n)$, where we guarantee that $x_1,...,x_n$ do not simultaneously vanish by working on the open set where they do not.
+%Now, pick a choice of morphism $\phi: C \to \mathbb{P}^r$ as acting via $(f_0,...,f_r)$ for $f_i$ a basis of $\mathcal{L}(D)$. %We consider the action of $\phi \circ \pi_P(C)$. 
+%Since $f_0,...f_r$ span $\mathcal{L(D)}$, which includes functions that vanish up to order $c_j > 0$ at $Q_j$, then at least some $f_i$ vanishes on $\pi_P(C)$. Then, we may look at the map $\overline{\phi}(f_0,...,f_{i-1},f_{i+1},...,f_r)$ that sends a point in $\pi_P(C)$ into $\mathbb{P}^{r-1}$. Further, because of the construction of this map, this admits an injection into $i: \mathbb{P}^n$, such that $i \cdot \overline{\phi} \cdot \pi_P(C) \subseteq \phi(C)$, which implies that idk.
+
 
 \end{proof}
 
@@ -43,7 +51,7 @@ Let $C$ be a projective, non-singular curve, $D$ a divisor on $C$ with degree $d
 
 (a)
 
-Fix a $d > 0$. Let $D = \Sigma_i^n c_i [P_i], D' = \Sigma_j^m d_j [Q_j]$ be effective divisors of $\mathbb{P}^1$. Consider $f = \Pi_k^{m} (x-Q_k)^{d_k}, g = \Pi_l^n (x-P_l)^{c_l}$, where, for my sanity, we take (x - y) to mean $X_0 - y_0$ if $y_0 = 0$ and otherwise, to mean $X_1 - y_1$ if $y_0 \not = 0$ where $X_0,X_1$ are the formal variables for the 0th and 1st coordinates and $y_0,y_1$ are the coordinates of the point $y$. We notice that since $D, D'$ have the same degree $d$, then $f,g$ are homogenous polynomials of degree $d$. Then, we may look at $g/f$ as a rational function. Since $f$ has finitely many zeros, exactly $\{ Q_1,...,Q_m \}$, we can look at this quotient on the open set $\mathbb{P}^1 \setminus \{ Q_1,...,Q_m \}$, open because individual points are closed. Then, we notice that:
+Fix a $d > 0$. Let $D = \Sigma_i^n c_i [P_i], D' = \Sigma_j^m d_j [Q_j]$ be effective divisors of $\mathbb{P}^1$. Consider $f = \Pi_k^{m} (x-Q_k)^{d_k}, g = \Pi_l^n (x-P_l)^{c_l}$, where, for my sanity, we take (x - y) to mean $X_0$ if $y_0 = 0$, and otherwise, $y_1/y_0X_1 - X_0$ where $X_0,X_1$ are the formal variables for the 0th and 1st coordinates and $y_0,y_1$ are the coordinates of the point $y$. We notice that since $D, D'$ have the same degree $d$, then $f,g$ are homogenous polynomials of degree $d$. Then, we may look at $g/f$ as a rational function. Since $f$ has finitely many zeros, exactly $\{ Q_1,...,Q_m \}$, we can look at this quotient on the open set $\mathbb{P}^1 \setminus \{ Q_1,...,Q_m \}$, open because individual points are closed. Then, we notice that:
 
 $$D(g/f) = \Sigma_l^n c_l [P_l ] + \Sigma_k^m -d_m [Q_k] = D - D'$$
 
