@@ -1,0 +1,219 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#10}
+\author{Eric Tao\\
+Math 235: Homework \#10}
+\maketitle
+ 
+\section*{2.1}
+
+\begin{problem}{5.4.6}
+
+Assume that $f: [a,b] to \mathbb{R}$ is continuous, and $D^+ f \geq 0$ on $(a,b)$. Prove that $f$ is monotone increasing on $[a,b]$.
+
+\end{problem}
+\begin{proof}[Solution]
+
+First, suppose $D^+f \geq \delta > 0$, and we have $x, y \in (a,b)$ such that $x < y$. Then, since $f$ is a continuous function on a closed and bounded interval $[x,y]$ it attains a maximum on that interval. Suppose $x_0$ be a point on $(x,y)$ such that $f(x_0)$ is a maximum. Then, we have, for $t > x_0$:
+
+$$ \frac{f(t) - f(x_0)}{t - x_0} \leq 0 $$
+
+due to being a maximum. Then, since this is true for any $t > x_0$, this implies that:
+
+$$ D^+f(x_0) =\limsup_{h \to 0^+} \frac{f(x_0 + h) - f(x_0)}{h} \leq 0 $$
+
+But, by hypothesis, $D^+ f \geq \delta$ on $(a,b) \supset [x,y]$, and we have a contradiction. Thus, this means that $x_0 \not \in (x,y)$, and therefore, we may only have a maximum at $x$ or $y$ itself. But, because of the rightwards limit on $D^+$, we may make the same argument for $x$. Therefore, $f(y)$ is a maximum on $[x,y]$, and thus $f(x) \leq f(y)$. Since the choice of $x,y \in (a,b)$ was arbitrary, this means that we are monotone increasing on all of $(a,b)$, and due to continuity, this remains true on $[a,b]$.
+
+Now, suppose we have  $D^+f \geq 0$. Fix some $\delta < 0$, and define the function $g(x) = f(x) + \delta x$. This is a continuous function on $[a,b]$, being the sum of two continuous functions, and further, we have that:
+
+$$ D^+ g(x) = \limsup_{h \to 0^+} \frac{ g(x + h) - g(x)}{h} =   \limsup_{h \to 0^+} \frac{ f(x + h) + \delta(x + h)- f(x) - \delta x}{h} = \limsup_{h \to 0^+} \frac{ f(x + h) - f(x)}{h} + \delta = D^+f + \delta $$
+
+Since we have that $D^+f \geq 0, \delta > 0$, we have that $D^+g > 0$. Then, we have that $g$ is monotone increasing, by above. Then, take $x, y \in [a,b]$ such that $x < y$. We have that:
+
+$$ g(x) \leq g(y) \implies f(x) + \delta x \leq f(y)  + \delta y \implies f(y) - f(x) \geq \delta (x -y) $$
+
+However, the choice of $\delta > 0$ was arbitrary. So, we take a sequence of $\delta \to 0$ and retrive that $f(y) - f(x) \geq 0$. Thus, $f$ is monotone increasing on $[a,b]$.
+
+\end{proof}
+
+\begin{problem}{5.4.8}
+
+Let $\phi$ be the Cantor-Lebesgue function on $[0,1]$. Extend $\phi$ onto all of $\mathbb{R}$ by setting $\phi(x) = \phi(0) = 0$ for $x < 0$ and $\phi(x) = \phi(1) = 1$ for $x > 1$. Let $\{ [a_n,b_n] \}_n$ be an enumeration of all subintervals of $[0,1]$ such that $a_n,b_n$ are rational endpoints in $[0,1]$ with $a_n < b_n$. For each $n \in \mathbb{N}$, set:
+
+$$ f_n(x) = 2^{-n} \phi\left( \frac{x - a_n}{b_n - a_n} \right)$$
+
+Observe that $f_n$ is monotone increasing on $\mathbb{R}$ and has uniform norm $\Vert f_n \Vert_u = 2^{-n}$. Prove the following:
+
+(a) The series $f = \Sigma f_n$ converges uniformly on $[0,1]$.
+
+(b) $f$ is continuous and monotone increasing on $[0,1]$.
+
+(c) $f$ is strictly increasing on $[0,1]$.
+
+(d) $f$ is singular on $[0,1]$, that is, $f'(x)$ exists for almost every $x \in [0,1]$ and $f' = 0$ almost everywhere.
+
+\end{problem}
+\begin{proof}[Solution]
+
+(a)
+
+Let $\epsilon > 0$ be given. We notice, by the shape of the $f_n$, that because $\phi$ is bounded between 0 and 1, that $f_n$ is bounded between $0$ and $2^{-n}$. Then, take any point $x \in [0,1]$, and choose $k$ such that $2^{-k} < \epsilon$. If we look at partial sums, then we notice:
+
+$$ f(x) - \Sigma_{i=1}^M f_i(x) = \Sigma_{i=M+1}^\infty f_i(x) \leq \Sigma_{i=M+1}^\infty 2^{-i} = 2^{-M} $$
+
+Thus, if we choose $M = k$, then we have that the difference from $f$ to the partial sum $\Sigma_i^k f_i$ can be no more than $2^{-k} < \epsilon$. Since this is true regardless of the point $x$, this implies that this is uniform convergence.
+
+(b)
+
+We recall that $\phi$ is continuous, therefore, since $f_n$ merely multiplies it by a constant, and shifts the window on where $f_n$ is increasing, $f_n$ is continuous as well. Then, since we've proved in part (a) that the convergence to $f$ is uniform, we must have that $f$ is continuous, since the uniform convergence of continuous functions is continuous. Further, because each $f_n$ is monotone increasing, the sum of monotone increasing, non-negative functions must also be monotone.
+
+(c)
+
+Let $0 \leq x < y \leq 1$. We may find two rational points $p,q$ such that $0 \leq x < p < q < y \leq 1$. Since these are rational numbers, it has some enumeration in the subintervals with rational endpoints $\{ [a_i, b_i ] \}$ and corresponds with a $f_i = 2^{-i} \phi\left( \frac{x - a_i}{b_i - a_i} \right)$. In particular, we notice that $f_i(p) = f_i(a_i) = 0, f_i(q) = f_i(b_i) = 2^{-i}$. Then, if we consider the series $\Sigma f_n(y), \Sigma f_n(x)$, looking term by term, because each of the $f_n$ are monotone, non-negative, and because at least $f_i(y) = f_i(q) > f_i(p) > f_i(x)$, we have that $\Sigma f_n(y) > \Sigma f_n(x)$. Since this can be done with any choice of $x,y$, we have then that $f$ is actually strictly increasing.
+
+(d)
+
+Fixing an $x \in [0,1]$, due to the fact that we are bounded above on each $f_n$ by $\Vert f_n \Vert_u = 2^{-n}$, we are actually bounded above on $f$ by $\Sigma_{n=1}^\infty 2^{-n} = 1$. Further, because of the fact that the $f_n$ are non-negative, we have that the partial sums are monotone increasing. Thus, by the monotone convergence theorem, we have that the series $f = \Sigma f_n$ converges for every $x \in [0,1]$. Then, by lemma 5.4.4, we have that $f$ is differentiable almost everywhere, and:
+
+$$ f'(x) = \Sigma f_n'(x) $$
+
+almost everywhere. However, we know from working with the Cantor-Lebesgue function, that this function has 0 derviative almost everywhere on $[0,1]$, and on the extension to the full real line, it still has 0 derivative almost everywhere. Then, we can see that, for each $f_n$, there is a $Z_n$ such that $|Z_n| = 0$, and that $f_n$ has non-0 derivative. Then, if we look at $[0,1] \setminus \cup_n Z_n$, on this set, by definition, $f_n' = 0$ for all $n$. Then, on that set, we have that:
+
+$$f'(x) = \Sigma f_n'(x) = \Sigma 0 = 0$$
+
+and because $|\cup_n Z_n| = 0$, this is almost everywhere.
+
+\end{proof}
+
+\section*{2.2}
+
+\begin{problem}{5.5.17}
+
+Given a locally integrable function $f$ on $\mathbb{R}^d$, define a non-centered maximal function by:
+
+$$M^*f(x) = \sup \left\{ \frac{1}{|B|} \int_B |f| : B \text{ is any open ball that contains } x \right\} $$
+
+Prove that $Mf \leq M^*f \leq 2^d Mf$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+Clearly, since $Mf$ is defined as
+
+$$Mf(x) =  \sup_{ h > 0} \frac{1}{|B_h(x)|} \int_{B_h(x)} |f(t)| dt $$
+
+that is, the supremum over only balls centered on $x$ and we are defining $M^*f$ over every ball containing $x$, which includes balls centered on $x$, this implies, by the properties of the supremum, that $Mf \leq M^*f$. So, we need only prove that $M^*f \leq 2^dMf$
+
+Suppose we have a ball $B$ with center $c$, radius $r$, such that $x \in B$. Let $z \in B$. We claim that $| z - x| < 2r$. We can see this via the triangle inequality:
+
+$$ | z- x| \leq |z - c| + | c - x| \leq r + r = 2r $$
+
+Therefore, $z$ is contained within a ball of radius $2r$ around $x$. Since the choice of $z$ was arbitrary, this implies that all of $B$ is contained within this ball, which we will call $B'$. We also recall, that from 2.3.15, about linear changes of variable, since this is merely a translation composed with a dilation by 2 of $B$, that we have that $|B'| = |L(B)| = |2I \cdot T (B) | = |\det(2I \cdot T)| |B|$, where we use the trick about looking at the ball in a $\mathbb{R}^{d+1}$ space to view a translation as a linear transformation.
+
+Here, we notice that the determinant of a translation is $1$, and the determinant of a dilation by 2 in every coordinate is $2^d$. Thus, we have that $|B'| = 2^d|B|$.
+
+Then, looking at the integrand of the maximal functions, we have that:
+
+$$ \frac{1}{|B|} \int_B |f| \leq \frac{2^d}{|B'|} \int_{B'} |f| dt $$
+
+because the fractions are equal, but $B \subseteq B'$ and $|f|$ is non-negative, so $\int_B |f| \leq \int_{B'} |f|$.
+
+But, then we have that, by the definition of $Mf$, that since $B'$ is a ball centered on $x$:
+
+$$ \frac{2^d}{|B'|} \int_{B'} |f| dt = 2^d \frac{1}{|B'|} \int_{B'} |f| dt \leq 2^d Mf $$
+
+Since we may do this for every ball $B$ that contains $x$, this extends to the supremum. Thus, we have that $M^*f \leq 2^d Mf$
+\end{proof}
+
+\begin{problem}{5.5.19}
+
+Let $A$ be any subset of $\mathbb{R}^d$ with $|A|_e > 0$. Define the density of $A$ at a point $x \in \mathbb{R}^d$ to be:
+
+$$ D_A(x) = \lim_{r \to 0} \frac{|A \cap B_r(x)|_e}{|B_r(x)|} $$
+
+whenever this limits exists. Prove the following:
+
+(a) $D_A(x) = 1$ for almost every $x \in A$.
+
+(b) $A$ is measurable if and only if $D_A(x) = 0$ for almost every $x \in A$.
+
+Additionally, exhibit a measurable set $E$ and a point $x$ such that $D_E(x)$ does not exist, and given $0 < \alpha < 1$, exhibit a measurable set $E$ and a point $X$ such that $D_E(x) = \alpha$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+\end{proof}
+
+\section*{2.3}
+
+\begin{problem}{6.1.9}
+
+Prove that $f \in \text{AC}[a,b]$ if and only if, for every $\epsilon > 0$, there exists a $\delta > 0$ such that for every finite collection of nonoverlapping subintervals $\{ [a_j,b_j] \}_j$ of $[a,b]$, we have that:
+
+$$ \Sigma_{j=1}^N (b_j - a_j) < \delta \implies \Sigma_{j=1}^N |f(b_j) - f(a_j)| < \epsilon $$
+
+
+\end{problem}
+\begin{proof}[Solution]
+
+It is clear that if $f \in \ac[a,b]$, then the statement holds, because we recall that we define absolutely continuous as, for every $\epsilon > 0$, there exists $\delta > 0$ such that for either finite or countably infinite non overlapping collections of subintervals,
+
+$$ \Sigma_{j=1}^N (b_j - a_j) < \delta \implies \Sigma_{j=1}^N |f(b_j) - f(a_j)| < \epsilon $$
+
+So, it is already true by definition.
+
+Now, instead, suppose we only know that the $\epsilon-\delta$ criteria holds for finitely many collections of subintervals. Then, we wish that this holds for countably infinite collections of subintervals.
+
+Let $\epsilon > 0$ be given. Choose $\delta > 0$ such that, for every finite collection of intervals, we have that
+
+$$ \Sigma_{j=1}^N (b_j - a_j) < \delta \implies \Sigma_{j=1}^N |f(b_j) - f(a_j)| < \epsilon/2 $$
+
+Let $\{ [x_j,y_j] \}_j$ be a countably infinite collection of nonoverlapping subintervals such that $[a_j,b_j] \subseteq [a,b]$ for all $j$, and such that
+
+$$ \Sigma_{j=1}^\infty (y_j - x_j) < \delta $$
+
+Then, we look at a sequence of finite collection of subintervals, that is, $\{ x_j,y_j \}_j^M$. In particular, we have that:
+
+$$ \Sigma_{k=1}^M (y_j - x_j) \leq \Sigma_{j=1}^\infty (y_j - x_j) < \delta $$
+
+because of the fact $y_j - x_j \geq 0$. Then, we have that, by hypothesis:
+
+$$  \Sigma_{j=1}^M |f(y_j) - f(x_j)| < \epsilon/2 $$
+
+But, this is true for every $N$, since they are all finite. Then, taking the limit as $N \to \infty$, we have that:
+
+$$ \Sigma_{j=1}^\infty = \lim_{M \to \infty} \Sigma_{j=1}^M  |f(y_j) - f(x_j)| < \epsilon/2 < \epsilon $$
+
+Thus, $f \in \ac[a,b]$. 
+
+\end{proof}
+
+\begin{problem}{6.1.10}
+
+(a) Prove that $\ac[a,b]$ is a closed subspace of $\bv[a,b]$ with respect to the norm $\Vert f \Vert_\bv$ defined by 5.2.26. That is, show that if $f_n \in \ac[a,b]$ then $f \in \bv[a,b]$, and if $\Vert f - f_n \Vert_\bv \to 0$, then $f \in \ac[a,b]$.
+
+(b) Exhibit functions $f_n, f$ such that $f_n \in \ac[a,b]$ and $f_n$ converges uniformly to $f \in \bv[a,b]$, but $f \not \in \ac[a,b]$. Thus the uniform limit of absolutely continuous fucntions need not be absolutely continuous.
+
+\end{problem}
+\begin{proof}[Solution]
+
+\end{proof}
+
+ 
+
+\end{document}
