@@ -1,0 +1,136 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Bezout’s Theorem for Plane Curves, First Consequences, and into Multiprojective Spaces}
+\author{Eric Tao\\
+Math 240}
+\maketitle
+ 
+\section{Preliminaries}
+
+Here are a few preliminaries we will start with while talking about Bezout’s Theorem for a projective plane curve. 
+
+First, we will want to talk about the intersection number of two affine plane curves. Let $F, G \in \mathbb{A}^2$ be plane curves. We wish to define a quantity known as the intersection number at $P$, that is, $I(P, F \cap G)$, which, intuitively, we want to encode the degree to which two curves intersect.
+
+We start by talking about the properties that we wish this quantity to have. They are:
+
+(1) $I(P, F \cap G) \geq 0$, and if $F, G$ share an irreducible component that passes through $P$, that $I(P, F \cap G) = \infty$
+
+(2) $I(P, F \cap G) = 0 \iff P \not \in F \cap G$, that is, it is a local quantity that depends only on the components of $F,G$ that pass through $P$, and that for empty plane curves $F, G$ non-0 constants, that $I(P, F \cap G) = 0$.
+
+(3) If $T$ is an linear change of variables, and $T(P) = Q$, then $I(P, F \cap G) = I(Q, T(F) \cap T(G))$.
+
+(4) $I(P, F \cap G) = I(P, G \cap F)$
+
+(5) For the multiplicities $m_p(F), m_p(G)$, that is, the multiplicity of $F,G$ at $p$, we have that $I(P, F \cap G) \geq m_p(F)m_p(G)$, with equality holding if and only if $F,G$ do not have common tangent lines at $P$
+
+(6) If $F = \Pi F_i^{r_i}$ and $G = \Pi G_j^{s_j}$, then $I(P, F \cap G) = \Sigma_{i,j} r_is_j I(P,F_i \cap G_j)$, that is, the intersection number should sum over the union of curves.
+
+(7) $I(P, F \cap G) = I(P, F \cap (G + fF))$ for any $f \in k[x,y]$, that is, sums of $G$ with multiples of our original curve do not affect the intersection number.
+
+(8) If $P$ is a non-singular point on $F$, then $I(P, F \cap G) = \text{ord}_P^F(G)$, that is, it is the order of the local parameter for $F$, of the image of $G$ in the coordinate ring
+
+(9) If $F,G$ have no common components, then:
+
+$$ \Sigma_P  I(P,F \cap G) = \dim_k(k[X,Y]/(F,G)) $$
+
+Then, we define the intersection number as:
+
+$$ I(P,F \cap G) = \dim_k(\mathcal{O}_P/(F,G)) $$
+
+where we have $\mathcal{O}_P$ as our familiar local ring at the point $P$.
+
+We will not go into detail on the proof of how this number is unique and satisfies the above conditions, but a reference would be Fulton’s Algebraic Curves, 3.3.
+
+Additionally, we will need the following Proposition:
+
+(1) Let 
+
+$$ 0 \to V’ \xrightarrow[]{\psi} V  \xrightarrow[]{\phi} V’ \to 0 $$
+
+be an exact sequence of finite-dimensional vector spaces over a field $k$. Then $\dim V’ + \dim V’= \dim V$.
+
+(2) Let:
+
+$$ 0 \to V_1 \xrightarrow[]{\phi_1} V_2 \xrightarrow[]{\phi_2} V_3 \xrightarrow[]{\phi_3} V_4 \to 0 $$
+
+be an exact sequence of finite-dimensional vector spaces. Then we have that $\dim V_4 = \dim V_3 - \dim V_2 + \dim V_1$.
+
+(1) We notice, by the application of the rank-nullity theorem, that we have that $\dim V = \dim V’ + \dim \ker(\phi)$. But, the $\ker(\phi)$ is exactly the image of $V_1$ in $V_2$. But, since $\phi_1$ is injective, that is exactly the dimensionality of $V’$, so we are done.
+
+(2) Define $W = \text{Im}(\phi_2) = \ker(\phi_3)$. Then, we may split this into short sequences:
+
+$$ 0 \to  V_1 \xrightarrow[]{\phi_1} V_2 \xrightarrow[]{\phi_2} W \to 0 $$
+$$ 0 \to W \xrightarrow[]{\psi} V_3  \xrightarrow[]{\phi_3} V_4 \to 0 $$
+
+where $\psi$ is simply inclusion, naturally injective. Then, from (1), we have that:
+
+$$\dim V_2 = \dim W + \dim V_1$$
+$$ \dim V_3 = \dim W + \dim V_4$$
+
+So, solving for $\dim W$, we get that
+
+$$ \dim V_3 = \dim V_2 - \dim V_1 + \dim V_4 \implies \dim V_4 = \dim V_3 - \dim V_2 + \dim V_1$$
+
+as desired.
+
+\section{Bezout’s Theorem for Plane Curves}
+
+Now, we are in a good place to state and prove Bezout’s Theorem:
+
+We will be taking a projective plane curve to mean a hypersurface in $\mathbb{P}^2$, that is, a surface cut out by a single polynomial. Note that in the projective setting, we define the intersection number to be an affine copy of $F,G$ in our projective space.
+
+Bezout’s Theorem states the following:
+
+Let $F, G$ be projective plane curves of degree $m,n$ respectively, such that they do not share any irreducible component. Then, we have that:
+
+$$\Sigma_P I(P,F \cap G) = mn $$
+
+Proof:
+
+Firstly, since $F \cap G$ is finite, because the intersection of two closed sets are closed, and since they share no common component, they may only intersect in a finite number of discrete points, we may take a change of coordinates such that $F \cap G$  contains no points such that $X_2 = 0$.
+
+Then, we may consider the affine version of these curves $F_* = F(X_0,X_1, 1), G_*= G(X_0,X_1, 1)$, where we look at the affine copy on $\mathbb{P}^2 \setminus V(X_2)$. 
+
+Using property (9) as stated above, we have that:
+
+$$\Sigma_P I(P,F \cap G) \equiv \Sigma_P I(P,F_* \cap G_*) = \dim_k k[X_0,X_1]/(F,G) $$
+
+Define $\Gamma_* = k[X_0,X_1]/(F_*, G_*), \Gamma = k[X_0,X_1,X_2]/(F,G), R = k[X_0,X_1,X_2$, and $\Gamma_d$ to be the vector space of homogeneous polynomials of degree $d$ in $\Gamma$. We notice then that it is sufficient to show that $\dim \Gamma_* = \dim \Gamma_d$, and that for some $d$, $\dim \Gamma_d = mn$.
+
+First, we will show that $\dim \Gamma_d = mn$ for every $d \geq m+ n$. Define $\pi: R \to \Gamma$ be the natural projection into the quotient space, $\phi: R \times R \to R$ via $\phi(r,r’) = rF + r’G$, and $\psi: R \to R \times R$ via $\psi(r) = (Gr, -Fr)$. We claim that the following sequence is exact:
+
+$$ 0 \xrightarrow[]{} R \xrightarrow[]{\psi} R \times R \xrightarrow[]{\phi} R \xrightarrow[]{\pi} \Gamma \to 0 $$
+
+$\psi$ we see as injective because it is a ring hom with trivial kernel, since for $F, G$ non-0, they are both 0 only if $r =0$. We see that $\psi \circ \phi(r) = \phi(Gr, -Fr) = rGF - rFG = 0$, and that if $\phi = 0$, then $rF + r’G = 0$, so $rF = -r’G$. Then, $F | r’G$, but since $F,G$ share no factors, this implies that $F| r’$. In a similar fashion, $G | r$. Then, if we say that $r = \overline{r}G, r’ = \overline{r}’F$, then we have that $\overline{r}GF + \overline{r}’FG = 0 \implies FG(\overline{r} + \overline{r}’) =0 \implies \overline{r} = - \overline{r}’$. So, the kernel is composed of objects that look like $(\overline{r}G, -\overline{r}F)$, which is exactly objects that come from the image of $\psi$. 
+
+The exactness of the other side is trivial, as everything in the image of $\phi$ is a multiple $rF + r’G$, and since $\Gamma$ is exactly $R$ modulo $(F,G)$, that is exactly what goes to 0 in the quotient, and that’s surjective due to being a projection.
+
+Now, if we look in particular on the action of these maps on the homogenous polynomials of degree $d$ on $R$, denoted as $R_d$, we can see these as exact sequences of form:
+
+$$ 0 \xrightarrow[]{} R_d \xrightarrow[]{\psi} R_{d-m} \times R_{d-n} \xrightarrow[]{\phi} R_d \xrightarrow[]{\pi} \Gamma_d \to 0 $$
+
+However, we notice here that because we live in the space of polynomials with 2 variables, as a vector space, we have have that $\dim R_d = (d+1)(d+2)/2$, so then by our proposition earlier, we have that 
+$$\dim \Gamma_d = \dim R_d - \dim(R_{d-m} \times R_{d-n}) + \dim R_d = d - (d-m + d-n) + d = m +n$$
+
+for at least $d \geq m + n$
+
+
+
+
+
+
+
+\end{document}
