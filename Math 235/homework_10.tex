@@ -151,11 +151,32 @@ whenever this limits exists. Prove the following:
 
 (b) $A$ is measurable if and only if $D_A(x) = 0$ for almost every $x \in A$.
 
-Additionally, exhibit a measurable set $E$ and a point $x$ such that $D_E(x)$ does not exist, and given $0 < \alpha < 1$, exhibit a measurable set $E$ and a point $X$ such that $D_E(x) = \alpha$.
+Additionally, exhibit a measurable set $E$ and a point $x$ such that $D_E(x)$ does not exist, and given $0 < \alpha < 1$, exhibit a measurable set $E$ and a point $x$ such that $D_E(x) = \alpha$.
 
 \end{problem}
 
 \begin{proof}[Solution]
+
+(a)
+
+I'm really not quite sure how to prove this in the general case. This is clear for a measurable set $E$, since then we may take $f = \chi_E$, locally integrable, so by applying the Lebesgue Differentiation Theorem, we find that:
+
+$$\lim_{h \to 0} \frac{1}{|B_h(x)|} \int_{B_h(x)} f(t) dt = f(x) $$
+
+However, we notice that $ \int_{B_h(x)} f(t) dt =  \int_{B_h(x)} \chi_E(t) dt = |B_h(x) \cap \chi_E|$, so we get that:
+
+$$  \lim_{h \to 0} \frac{ |B_h(x) \cap \chi_E|}{|B_h(x)|} = \chi_E(x) $$
+
+for almost every $x \in \mathbb{R}^d$. In particular then, this means that restricting to $A$, this is 1 for almost every $x \in A$.
+
+(b)
+
+The forward direction is clear, from another application of the LDT, and noticing that $\chi_A(x) = 0$ for $x \not \in A$. I'm not sure how to attack the reverse direction.
+
+An easy example for $\alpha \in (0,1)$ in $\mathbb{R}^2$. Take a point $x = (0,0)$, and take $E$ to be defined in radial coordinates, as $E = \{ (r,\theta) : 0 \leq \theta < 2\pi\alpha \}$. Clearly, for any ball centered on the origin, we cut out exactly $2 \pi\alpha/2\pi$ of the ball.
+
+I do not see an easy example for when $D_E(x)$ does not exist.
+
 
 \end{proof}
 
@@ -205,12 +226,53 @@ Thus, $f \in \ac[a,b]$.
 
 \begin{problem}{6.1.10}
 
-(a) Prove that $\ac[a,b]$ is a closed subspace of $\bv[a,b]$ with respect to the norm $\Vert f \Vert_\bv$ defined by 5.2.26. That is, show that if $f_n \in \ac[a,b]$ then $f \in \bv[a,b]$, and if $\Vert f - f_n \Vert_\bv \to 0$, then $f \in \ac[a,b]$.
+(a) Prove that $\ac[a,b]$ is a closed subspace of $\bv[a,b]$ with respect to the norm $\Vert f \Vert_\bv$ defined by 5.2.26. That is, show that if $f_n \in \ac[a,b]$, $f \in \bv[a,b]$, and $\Vert f - f_n \Vert_\bv \to 0$, then $f \in \ac[a,b]$.
 
-(b) Exhibit functions $f_n, f$ such that $f_n \in \ac[a,b]$ and $f_n$ converges uniformly to $f \in \bv[a,b]$, but $f \not \in \ac[a,b]$. Thus the uniform limit of absolutely continuous fucntions need not be absolutely continuous.
+(b) Exhibit functions $f_n, f$ such that $f_n \in \ac[a,b]$ and $f_n$ converges uniformly to $f \in \bv[a,b]$, but $f \not \in \ac[a,b]$. Thus the uniform limit of absolutely continuous functions need not be absolutely continuous.
 
 \end{problem}
 \begin{proof}[Solution]
+
+(a)
+
+Let $\epsilon  > 0$ be given. First, since $\Vert f_n - f \Vert_{\bv} \to 0$, we may pick $N$ such that $\Vert f_m - f \Vert_{\bv} < \epsilon/2$ for every $m > N$. Choose $n$ such that $n$ is the smallest such $m$ that works. Since $f_n \in \ac[a,b]$, we may choose $\delta$ such that for $\{ [a_j, b_j] \}_{j=1}^M$:
+
+$$ \Sigma_j^M b_j - a_j < \delta \implies \Sigma_j^M | f_n(b_j) - f_n(a_j) | < \epsilon/2 $$
+
+ Then, consider the sum:
+
+$$ \Sigma_j^M | f(b_j) - f(a_j) | = \Sigma_j^M | f(b_j) - f_n(b_j) + f_n(b_j) - f_n(a_j) + f_n(a_j) - f(a_j)| \leq $$
+$$\Sigma_j^M | [f(b_j) - f_n(b_j)] - [ f(a_j) - f_n(a_j)]| + \Sigma^M | f_n(b_j) - f_n(a_j)| =\Sigma_j^M | (f- f_n)(b_j) - (f - f_n)(a_j)]| + \Sigma_j^M | f_n(b_j) - f_n(a_j)|  $$
+
+Now, since $\Vert f - f_n \Vert_\bv < \epsilon/2$, we have that, in particular, $V[f - f_n; a,b] < \epsilon/2$. Then, since  $\{ [a_j, b_j] \}_{j=1}^M$ are non-overlapping, we may extend this to a partition on $[a,b]$ by including every $a_j, b_j$ with $a,b$, that is, if we have that $a_1 < b_1 < a_2 < b_2 < ... < a_M < b_M $, then we can take the partition:
+
+$$ \Gamma = \{ a = x_0 < a_1 = x_1 < b_1 = x_2 < ... < b_M = x_{2M}  < b = x_{2M + 1} \}$$
+
+This is a proper partition on $[a,b]$, and we have that:
+
+$$ \Sigma_j^M |(f-f_n)(b_j) - (f-f_n)(a_j) | \leq \Sigma_{i=0}^{2M} | (f - f_n)(x_{i+1}) - (f - f_n)(x_{i})| \leq \Vert f - f_n \Vert_\bv < \epsilon/2$$
+
+because every subinterval $\{ [a_j, b_j] \}_{j=1}^M$ is contained within the parition, and because $\Vert f - f_n \Vert_\bv = V[f - f_n;a,b] + \Vert f - f_n \Vert_u$, then since they are all non-negative, we have that $ \Sigma_{i=0}^{2M} | (f - f_n)(x_{i+1}) - (f - f_n)(x_{i})| \leq  V[f - f_n;a,b] \leq \Vert f - f_n \Vert_\bv < \epsilon /2$.
+
+Further, by the choice of $\delta$, we have that $ \Sigma_j^M | f_n(b_j) - f_n(a_j)|  < \epsilon/2$
+
+Thus, we have that with this choice of $\delta$, that:
+
+$$  \Sigma_j^M | f(b_j) - f(a_j) | \leq \Sigma_j^M | (f- f_n)(b_j) - (f - f_n)(a_j)]| + \Sigma_j^M | f_n(b_j) - f_n(a_j)|  < \epsilon/2 + \epsilon/2 = \epsilon $$
+
+By the last problem, 6.1.9, we have that showing this works for finite subintervals is enough to show that $f \in \ac[a,b]$.
+
+(b)
+
+Consier the functions that iterate to the Cantor-Lebesgue function, $\phi$. That is, suppose $C_1 = [0,1] \setminus (1/3,2/3)$, and $C_n$ defined iteratively by removing middle thirds, and $\phi_1$ being linear on $C_1$ and constantly $2^{-1}$ on $(1/3,2/3)$, and defining $\phi_n$ iteratively.
+
+From the book, we know that $\phi_n \to \phi$ uniformly, since it can only differ at most by $2^{-n}$ regardless of the choice of $x$. Further, we see that $f_n \in \ac[a,b]$ for all $n$. This is because fix an $n$. Then, the measure of the construction of the Cantor set on which $\phi_n$ is linear is exactly $(2/3)^n$. Then, we know that the slope on those segments is exactly $(3/2)^n$, since it must range from $0$ to $1$. Then, let $\epsilon > 0$ be given. Choose $\delta$ such that $\delta < (2/3)^n \epsilon$. Then, consider any set of countable non-overlapping intervals  $\{ [a_j, b_j] \}_{j=1}$ such that $[a_j,b_j] \subseteq [a,b]$ and $\Sigma_j b_j - a_j < \delta$. Then, since $\phi_n$ is linear only on the complement of the iterations of the Cantor set, we have that:
+
+$$ \Sigma f(b_j) - f(a_j) \leq \Sigma (3/2)^n (b_j - a_j) \leq (3/2)^n \delta  < \epsilon $$
+
+Thus, for each $n$, $\phi_n \in \ac[a,b]$. Further, since $\phi$ is monotone, we know that $V[\phi;a,b] = 1$ and thus $\phi \in \bv[a,b]$. However, from example 6.1.2 in the book, $\phi$ is not in $\ac[a,b]$. Thus, the uniform limit of absolutely continuous functions need not be absolutely continuous.
+
+
 
 \end{proof}
 

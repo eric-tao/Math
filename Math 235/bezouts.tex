@@ -13,14 +13,14 @@
 
 \begin{document}
  
-\title{Bezout’s Theorem for Plane Curves, First Consequences, and into Multiprojective Spaces}
+\title{B\'ezout’s Theorem for Plane Curves, First Consequences, and into Multiprojective Spaces}
 \author{Eric Tao\\
 Math 240}
 \maketitle
  
 \section{Preliminaries}
 
-Here are a few preliminaries we will start with while talking about Bezout’s Theorem for a projective plane curve. 
+Here are a few preliminaries we will start with while talking about B\'ezout’s Theorem for a projective plane curve. 
 
 First, we will want to talk about the intersection number of two affine plane curves. Let $F, G \in \mathbb{A}^2$ be plane curves. We wish to define a quantity known as the intersection number at $P$, that is, $I(P, F \cap G)$, which, intuitively, we want to encode the degree to which two curves intersect.
 
@@ -34,11 +34,11 @@ We start by talking about the properties that we wish this quantity to have. The
 
 (4) $I(P, F \cap G) = I(P, G \cap F)$
 
-(5) For the multiplicities $m_p(F), m_p(G)$, that is, the multiplicity of $F,G$ at $p$, we have that $I(P, F \cap G) \geq m_p(F)m_p(G)$, with equality holding if and only if $F,G$ do not have common tangent lines at $P$
+(5) For the multiplicities $m_p(F), m_p(G)$, that is, the multiplicity of $F,G$ at $p$, we have that $I(P, F \cap G) \geq m_p(F)m_p(G)$, with equality holding if and only if $F,G$ do not have common tangent lines at $P$.
 
 (6) If $F = \Pi F_i^{r_i}$ and $G = \Pi G_j^{s_j}$, then $I(P, F \cap G) = \Sigma_{i,j} r_is_j I(P,F_i \cap G_j)$, that is, the intersection number should sum over the union of curves.
 
-(7) $I(P, F \cap G) = I(P, F \cap (G + fF))$ for any $f \in k[x,y]$, that is, sums of $G$ with multiples of our original curve do not affect the intersection number.
+(7) $I(P, F \cap G) = I(P, F \cap (G + fF))$ for any $f \in k[X,Y]$, that is, sums of $G$ with multiples of our original curve do not affect the intersection number.
 
 (8) If $P$ is a non-singular point on $F$, then $I(P, F \cap G) = \text{ord}_P^F(G)$, that is, it is the order of the local parameter for $F$, of the image of $G$ in the coordinate ring
 
@@ -58,9 +58,9 @@ Additionally, we will need the following Proposition:
 
 (1) Let 
 
-$$ 0 \to V’ \xrightarrow[]{\psi} V  \xrightarrow[]{\phi} V’ \to 0 $$
+$$ 0 \to V' \xrightarrow[]{\psi} V  \xrightarrow[]{\phi} V'' \to 0 $$
 
-be an exact sequence of finite-dimensional vector spaces over a field $k$. Then $\dim V’ + \dim V’= \dim V$.
+be an exact sequence of finite-dimensional vector spaces over a field $k$. Then $\dim V’ + \dim V''= \dim V$.
 
 (2) Let:
 
@@ -68,7 +68,7 @@ $$ 0 \to V_1 \xrightarrow[]{\phi_1} V_2 \xrightarrow[]{\phi_2} V_3 \xrightarrow[
 
 be an exact sequence of finite-dimensional vector spaces. Then we have that $\dim V_4 = \dim V_3 - \dim V_2 + \dim V_1$.
 
-(1) We notice, by the application of the rank-nullity theorem, that we have that $\dim V = \dim V’ + \dim \ker(\phi)$. But, the $\ker(\phi)$ is exactly the image of $V_1$ in $V_2$. But, since $\phi_1$ is injective, that is exactly the dimensionality of $V’$, so we are done.
+(1) We notice, by the application of the rank-nullity theorem, that we have that $\dim V = \dim V'' + \dim \ker(\phi)$. But, the $\ker(\phi)$ is exactly the image of $V_1$ in $V_2$. But, since $\phi_1$ is injective, that is exactly the dimensionality of $V'$, so we are done.
 
 (2) Define $W = \text{Im}(\phi_2) = \ker(\phi_3)$. Then, we may split this into short sequences:
 
@@ -86,13 +86,13 @@ $$ \dim V_3 = \dim V_2 - \dim V_1 + \dim V_4 \implies \dim V_4 = \dim V_3 - \dim
 
 as desired.
 
-\section{Bezout’s Theorem for Plane Curves}
+\section{B\'ezout’s Theorem for Plane Curves}
 
-Now, we are in a good place to state and prove Bezout’s Theorem:
+Now, we are in a good place to state and prove B\'ezout’s Theorem for curves:
 
 We will be taking a projective plane curve to mean a hypersurface in $\mathbb{P}^2$, that is, a surface cut out by a single polynomial. Note that in the projective setting, we define the intersection number to be an affine copy of $F,G$ in our projective space.
 
-Bezout’s Theorem states the following:
+B\'ezout’s Theorem states the following:
 
 Let $F, G$ be projective plane curves of degree $m,n$ respectively, such that they do not share any irreducible component. Then, we have that:
 
@@ -108,7 +108,7 @@ Using property (9) as stated above, we have that:
 
 $$\Sigma_P I(P,F \cap G) \equiv \Sigma_P I(P,F_* \cap G_*) = \dim_k k[X_0,X_1]/(F,G) $$
 
-Define $\Gamma_* = k[X_0,X_1]/(F_*, G_*), \Gamma = k[X_0,X_1,X_2]/(F,G), R = k[X_0,X_1,X_2$, and $\Gamma_d$ to be the vector space of homogeneous polynomials of degree $d$ in $\Gamma$. We notice then that it is sufficient to show that $\dim \Gamma_* = \dim \Gamma_d$, and that for some $d$, $\dim \Gamma_d = mn$.
+Define $\Gamma_* = k[X_0,X_1]/(F_*, G_*), \Gamma = k[X_0,X_1,X_2]/(F,G), R = k[X_0,X_1,X_2]$, and $\Gamma_d$ to be the vector space of homogeneous polynomials of degree $d$ in $\Gamma$. We notice then that it is sufficient to show that $\dim \Gamma_* = \dim \Gamma_d$, and that for some $d$, $\dim \Gamma_d = mn$.
 
 First, we will show that $\dim \Gamma_d = mn$ for every $d \geq m+ n$. Define $\pi: R \to \Gamma$ be the natural projection into the quotient space, $\phi: R \times R \to R$ via $\phi(r,r’) = rF + r’G$, and $\psi: R \to R \times R$ via $\psi(r) = (Gr, -Fr)$. We claim that the following sequence is exact:
 
@@ -120,12 +120,129 @@ The exactness of the other side is trivial, as everything in the image of $\phi$
 
 Now, if we look in particular on the action of these maps on the homogenous polynomials of degree $d$ on $R$, denoted as $R_d$, we can see these as exact sequences of form:
 
-$$ 0 \xrightarrow[]{} R_d \xrightarrow[]{\psi} R_{d-m} \times R_{d-n} \xrightarrow[]{\phi} R_d \xrightarrow[]{\pi} \Gamma_d \to 0 $$
+$$ 0 \xrightarrow[]{} R_{d-m-n} \xrightarrow[]{\psi} R_{d-m} \times R_{d-n} \xrightarrow[]{\phi} R_d \xrightarrow[]{\pi} \Gamma_d \to 0 $$
 
-However, we notice here that because we live in the space of polynomials with 2 variables, as a vector space, we have have that $\dim R_d = (d+1)(d+2)/2$, so then by our proposition earlier, we have that 
-$$\dim \Gamma_d = \dim R_d - \dim(R_{d-m} \times R_{d-n}) + \dim R_d = d - (d-m + d-n) + d = m +n$$
+However, we notice here that because we live in the space of polynomials with 2 variables, as a vector space, we have have that $\dim R_d = (d+1)(d+2)/2 = {d+2 \choose 2}$, so then by our proposition earlier, we have that
 
-for at least $d \geq m + n$
+$$\dim \Gamma_d = \dim R_{d-m-n} - \dim(R_{d-m} \times R_{d-n}) + \dim R_d = \frac{(d-m-n+1)(d-m-n+2)}{2} - \frac{(d-m+1)(d-m +2)}{2} - $$
+$$ \frac{(d-n+1)(d-n+2)}{2} + \frac{(d+1)(d+2)}{2} =  \frac{1}{2}[ -n(d-m+1) -n (d-m+2) + n^2 - (d^2 + 3d - 2nd + n^2 -  3n + 2) + d^2 + 3d + 2]=$$
+$$ \frac{1}{2}[ -2dn + 2mn -3n + n^2 - d^2 - 3d + 2nd -n^2 +3n -2 + d^2 + 3d + 2 = \frac{1}{2}(2mn) = mn$$
+
+for at least $d \geq m + n$, for the dimensions to be non-0.
+
+Next, we wish to show that the map $\alpha: \Gamma \to \Gamma$ acting via $\alpha([H]) = [X_2H]$, where we recall these are residues modulo $(F,G)$, is injective.
+
+We want that if $X_2 H = aF + bG$, then $H = a'F + b'G$, for some $a,a',b,b' \in R$. For notational purposes, we will denote, for $J \in R$, $J_0 = J(X_0, X_1, X_2)$. Since $F,G, X_2$ have no common zeroes by our choice of components, it stands to reason that $F_0, G_0$ are relatively prime in $k[X_0,X_1]$.
+
+Now, suppose $X_2 H = aF + bG$. Then, on the slice $X_2 = 0$, we have that $a_0F_0 = - b_0 G_0$, so then $b_0 = F_0c, a_0 = -G_0c$ for some $c \in k[X_0,X_1]$, due to the lack of common 0s, since $F_0 | b_0 G_0 \implies F_0 | b_0$ and same for $a_0$. Define $a' = a  +cG, b' = b - cF$. Since we have that $(a')_0 = (b')_0 = 0$ by definition, $X_2$ must divide these, so we have that $a' = X_2 a'', b' = X_2 b''$ as desired. Since $X_2 H = aF + bG = (a'+cG)F + (b'-cF)G = a'F + b'G = X_2 a''F + X_2 b''G$, by the action of the map $\alpha$, $H = a''F + b''G$. Thus, since the map has trivial kernel, it must be injective.
+
+Finally, we want to take $d \geq m + n$, and choose $A_1,...,A_{mn} \in R_d$ such that when we take them to $\Gamma_d$, they form a basis. Let $A_{i*} = A_i(X_0,X_1,1) \in k[X_0,X_1]$, and let $a_i$ be the resiude of $A_{i*}$ in $\Gamma_*$. Then, we wish these to form a basis for $\Gamma_*$.
+
+First, we notice that if we restrict the map $\alpha$ from step 2 to a map $\overline{\alpha}: \Gamma_d \to \Gamma_{d+1}$, that this acts via an isomorphism, because we have a one-to-one linear map of vector spaces of the same dimension by step 1. Since we had shown the dimension to be identically $mn$ for $d \geq m +n$, this implies then that we may repeat this process as have that $X_2^r A_1,...,X_2^r A_{mn}$ as a basis for  $\Gamma_{d+r}$ for all $r \geq 0$.
+
+Next, we show that the $a_i$ generate $\Gamma_*$: Let $[H]$ be a residue in $\Gamma_*$, that comes from some $H \in k[X_0,X_1]$. We may homogenize $H$ into a polynomial $H^* \in k[X_0,X_1,X_2]$ by multiplying each term with a sufficient power of $X_2$. We go further, and consider $X_2^m H^*$ for some $m \geq 0$ such that $X_2^m H^*$ is a homogenous polynomial of degree $d + r$. Then, because $A_1,... ,A_{mn}$ was a basis for $\Gamma_d$, and really, a basis for $\Gamma_{r + d}$ via the isomorphisms, we have that $X_2^m H^* = \Sigma_{i=1}^{mn} c_i X_2^m A_i + bF + cG$, for some $c_i \in k, b,c \in k[X_0,X_1,X_2]$. Now, looking at this back into the affine slice where we set $X_2 = 1$, we see that $H = (X_2^m H^*)_* = \Sigma c_i A_{i*} + b_* F_* + c_* G_*$, so $[H] = \Sigma c_i a_i$ as desired. 
+
+Lastly, we want to show that the $a_i$ are linearly independent. Suppose $\Sigma c_i a_i = 0$. Then, in $k[X_0,X_1]$, we have that $\Sigma c_i A_{i*} = b F_* + c G_*$. Then, we may rehomogenize back into $x[X_0,X_1,X_2]$, where we take $X_2^r \Sigma c_i A_{i*}$. However, using our equality, this extends to: $X_2^r \Sigma c_i A_{i*} = X_2^s b^* F + X_2^ t c^* G$, for some $r,s,t$. Now, projecting back down into the quotient space, we have that $\Sigma c_i [ X_2^rA_{i*}] = 0$. But, by hypothesis, these came from residues that are a basis for $\Gamma_d$. So $c_i = 0$ for all $i$. Then, we have a basis for $\Gamma_*$, and thus the dimensionality of $\Sigma_P I(P,F \cap G) = \Gamma_* = \Gamma_d = mn$.
+
+\section{Corollaries and Applications}
+
+Fast consequences of B\'ezout's Theorem:
+
+Corollary 1:
+
+If $F,G$ do not share a common component, then:
+
+$$ \Sigma_p m_p(F) m_p(G) \leq mn = \deg(F) \deg(G) $$
+
+Corollary 2:
+
+If $F,G$ meet in exactly $mn$ distinct points, where $m = \deg(F), n = \deg(G)$, then these points are all non-singular on $F,G$.
+
+Corollary 3:
+
+If two curves of degree $m,n$ respectively have more than $mn$ points in common, then they have a common component.
+
+This also has uses in projective geometry. In particular, we may use this to give a quick proof of Pascal's Theorem:
+
+Let $C$ be a conic, and inscribe an arbitrary hexagon in the conic. Then, the 3 points of intersection of pairs of opposite points are collinear. Let $l_1, l_2, l_3, m_1, m_2, m_3$ be linear forms such that they correspond to the opposite sides of a hexagon. Consider the cubic $f_\lambda = l_1 l_2 l_3 + \lambda m_1 m_2 m_3$, for arbitrary parameter $\lambda$. By construction, this is a cubic, that has 6 points of intersection with the conic. We may choose $\lambda$ such that $f_\lambda$ has a 7th point of intersection, disctinct from the hexagon. Then, we have a cubic, with degree 3, and a conic, with degree 2, with 7 points of intersection. Then, they must share a common component, and since a conic has degree 2, this must be a line. Further, this line must contain the points of intersection of these opposite sides.
+
+\section{Extension to Projective and Multiprojective Spaces}
+
+A natural question is if there is an analogue to Bezout's theorem for projective varieties, not just for curves, and if it extends into varieties in an ambient multiprojective space, that is, $\mathbb{P}^{n_1} \times \mathbb{P}^{n_2} \times ... \times \mathbb{P}^{n_m}$. It turns out, via a result by Igor Shafarevich, that it does, but we need a bit more structure to talk about this. We will not prove every result in detail here, but will provide references to the proofs.
+
+We may recast the idea of an intersection number in terms of the divisors of a non-singular variety.
+
+For what follows, we take $X$ to be an irreducible variety. Take $C_1,...,C_r$ to be irreducible, closed subvarieties of codimension 1 in $X$. We define a divisor on $X$ to be formal sums:
+
+$$ D = k_1C_1 + ... + k_r C_r $$
+
+for $k_i \in \mathbb{Z}$.
+
+For a given divisor $D$, we call $\text{Supp}(D) = \{ \cup_i C_i : k_i \not = 0 \}$
+
+For an $x \in X$, and divisors $D_1,...,D_n$, we say that the $D_i$ are in general position at $x$ if $x \in \cap \text{Supp} D_i$ and $\dim_x \cap \text{Supp}D_i = 0$, where we think of this as the divisors as being independent from each other, and cutting the dimension down properly at $x$.
+
+Then, in this general setting, not restricting ourselves to curves, we define the intersection number as follows:
+
+First, in a local setting, if $D_1,...,D_n$ are effective divisors on an non-singular variety $X$ with $\dim(X)= n$, and the divisors are in general position, having local equations $f_1,...,f_n$ in a neighborhood of $x$, then we call:
+
+$$l(\mathcal{O}_x / (f_1,...,f_n) $$
+
+that is, the dimension of the local ring at $x$ modulo the local functions as a vector space over $k$ the local intersection number of $D_1...D_n$ at $x$, which we will denote by $(D_1...D_n)_x$.
+
+Define the intersection number of the divisors as:
+
+$$ D_1...D_n = \Sigma_{x \in \cap \text{Supp}(D_i)} (D_1...D_n)_x$$
+
+that is, the sum of all of the local intersection numbers over the support of our divisors.
+
+Example:
+
+Let $X$ be an non-singular variety $X$, with $\dim(X) = 1$, and suppose $t$ is a local parameter at a point $x \in X$. Let $f$ be a local equation of a divisor such that the degree of the local equation with respect to the local parameter is $k$. Then, we have that $(D)_x = l(\mathcal{O}_x/(f)) = l(\mathcal{O}_x/(t^k)) = k$. So, in this case, we have that the local multiplicity $(D)_x$ is just the multiplicity of $x$ in $D$.
+
+Theorem:
+
+If $D_1...D_n$ and $D_1....D_n'$ are in general position at $x$, then:
+
+$$ (D_1...D_{n-1}(D_n + D_n'))_x = (D_1...D_{n-1}D_n)_x + (D_1...D_{n-1}D_n')_x $$
+
+Theorem:
+
+Let $X$ be a nonsingular projective variety, and $D_1,...,D_n,D_n'$ divisors such that $D_1,...,D_{n_1},D_n$ and $D_1,...,D_{n-1},D_n'$ are in general position, and suppose that $D_n \sim D_n'$. Then:
+
+$$ D_1....D_{n-1}D_n = D_1....D_{n-1}D'_n$$
+
+Equivalently, since $D_n - D_n' = \text{div}f$, we can express this as,
+
+$$D_1...D_{n-1}\text{div} f = 0$$
+
+Let $X$ be an irreducible variety. Define the divisor class group of $X$, $\text{Cl}(X)$ as the quotient group of the divisors of $X$ by the principal divisors of $X$.
+
+It turns out, that if we understands the divisor class group, then due to the previous theorems with additivity and linear equivalent, we can compute the intersection number.
+
+Example:
+
+Take $X = \mathbb{P}^n$. Without proof, we claim that $\text{Cl}(X) \cong \mathbb{Z}$, and we can take a hyperplane divisor $E$ as a generator. If $D$ is an effective divisor, it is the divisor of a homogeneous polynomial $F$. Further, if $\deg(F) = m$, then $D \sim mE$. Then, if we repeat this argument for $D_1,...D_n$, we have that:
+
+$D_1....D_n = m_1...m_nE^n = m_1....m_n$
+
+since we have that $E^n = 1$.
+
+Further, if these divisors are effective, then the points of $\cap \text{Supp}(D_i)$ are exactly the solutions of $F_1(X_0,...,X_n) = ... = F_n(X_0,...,X_n) = 0$.
+
+Then, for such a solution $x = (X_0,...,X_n)$, we consider $(D_1...D_n)_x$ the multiplicity of the solution. Thus, combining these two, we have that the number of solutions of a system of $n$ homogeneous equations in $n+1$ unknowns is either infinite, or is the product of the degrees of the equutions counted with the multiplicity of the solutions.
+
+This result can be further extended to the multiprojective case, found in Shafarevich.
+
+\section{Bibliography}
+
+\begin{itemize}
+
+\item[] William Fulton, Algebraic curves: an introduction to algebraic geometry, third ed., 2008, freely available online at http://www.math.lsa.umich.edu/~wfulton/CurveBook.pdf.\\
+\item[] Igor R. Shafarevich, Basic algebraic geometry. 1: Varieties in projective space, 2nd ed., Springer-Verlag, Berlin, 1994. Translated from the 1988 Russian edition by Miles Reid.
+
+\end{itemize}
+
 
 
 
