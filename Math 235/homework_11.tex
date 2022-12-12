@@ -1,0 +1,189 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#11}
+\author{Eric Tao\\
+Math 235: Homework \#11}
+\maketitle
+ 
+\section*{2.1}
+
+\begin{problem}{6.3.6}
+
+Assume that $g: [a,b] \to [c,d]$ and $f: [c,d] \to \mathbb{C}$ are continuous. Prove the following statements:
+
+(a) If $f$ is Lipschitz and $g \in \ac[a,b]$, then $f \circ g \in \ac[a,b]$
+
+(b) If $f \in \ac[c,d], g \in \ac[a,b]$ and $g$ monotone increasing on $[a,b]$, then $f \circ g \in \ac[a,b]$
+
+(c) If $f \in \ac[c,d], g \in \ac[a,b]$, then
+
+$$ f \circ g \in \ac[a,b] \iff f \circ g \in \bv[a,b] $$
+
+\end{problem}
+\begin{proof}[Solution]
+
+(a)
+
+Let $\epsilon > 0$ be given. 
+
+Since $f$ is Lipschitz, we may find $K > 0$ such that $| f(x) - f(y) | \leq K | x - y | $.
+
+Since $g$ is absolutely continuous, we may find a $\delta > 0$ such that for collections of nonoverlapping subintervals of $[a,b]$, that
+
+$$ \Sigma_j (b_j - a_j) < \delta \implies \Sigma_j |g(b_j) - g(a_j)| < \frac{\epsilon}{K} $$
+
+Well, take $[a_j,b_j]_j$ as a collection of countable, nonoverlapping subintervals of $[a,b]$ such that $\Sigma_j (b_j - a_j) < \delta$, and consider
+
+$$ \Sigma | f \circ g (b_j) - f \circ g (a_j) | \leq \Sigma K |g(b_j) - g(a_j)  = K \Sigma | g(b_j) - g(a_j)| < K \frac{\epsilon}{K}  = \epsilon $$
+
+Thus, $f \circ g \in \ac[a,b]$.
+
+(b)
+
+Let $\epsilon > 0$ be given.
+
+Because $f$ is absolutely continuous, we may find $ \delta > 0$ such that, for $\{ [c_j,d_j] \}_j$ intervals in $[c,d]$, we have that
+
+$$ \Sigma_j (d_j - c_j) < \delta \implies \Sigma_j |f(d_j) - f(c_j)| < \epsilon $$
+
+Further, since $g$ is absolutely continuous, we may find a $\delta' > 0$ such that for $\{ [a_i, b_i] \}_i$ intervals in $[a,b]$, we have that
+
+$$ \Sigma_i (b_i - a_i) < \delta' \implies \Sigma_i |g(b_i) - g(a_i)| < \delta $$
+
+Now, take $\{ [a_i, b_i] \}_i$ intervals in $[a,b]$ such that $ \Sigma_i (b_i - a_i) < \delta'$. Since $g$ is monotone increasing, we notice that $\{ [g(a_i), g(b_i)] \}_i$ are actually intervals, non-overlapping since, due to the monotone increasing nature of $g$, they may only overlap on their endpoints. Further, from the $\delta'$ condition, we have that $\Sigma_i |g(b_i) - g(a_i)| < \delta$, which implies then that $\Sigma_i |f(g(b_i)) - f(g(a_i)) | < \epsilon$.
+
+(c)
+
+By Lemma 6.1.3, we know already that $h \in \ac[a,b] \implies h \in \bv[a,b]$. So, we need only prove that $f \circ g \in \bv[a,b] \implies f \circ g \in \ac[a,b]$. However, this is easy.
+
+Let $Z \subseteq [a,b]$ be a set of measure 0. By corollary 6.3.2, $g(Z) \subseteq [c,d]$ is a set of measure 0. However, now we use the absolute continuity of $f$ as well, to see that $f(g(Z))$ is also a set of measure 0. Since the choice of $Z$ was arbitrary, we have that $|Z| = 0 \implies |f \circ g(Z)| = |f(g(Z))| = 0$. Then, by Banach-Zaretsky again, we have that $f \circ g \in \ac[a,b]$.
+
+
+\end{proof}
+
+\begin{problem}{6.3.10}
+
+Suppose that $f: [a,b] \to \mathbb{C}$ is differentiable everywhere on $[a,b]$. Prove the following:
+
+(a) $f \in \ac[a,b]$ if and only if $f \in \bv[a,b]$
+
+(b) $f' = 0$ a.e. if and only if $f$ is constant on $[a,b]$.
+
+\end{problem}
+\begin{proof}[Solution]
+
+(a)
+
+We already have that $f \in \ac[a,b] \implies f \in \bv[a,b]$ by Lemma 6.1.3. So, now assume $f \in \bv[a,b]$.
+
+By Corollary 5.4.3, since $f \in \bv[a,b]$, we have that $f' \in L^1[a,b]$. Then, by Corollary 6.3.3, since $f$ differentiable everywhere by hypothesis, we have that $f \in \ac[a,b]$.
+
+(b)
+
+Clearly, if $f$ is constant on $[a,b]$, then $f' = 0$ everywhere, stronger than almost everywhere.
+
+Now, suppose $f' = 0$ almost everywhere. Clearly then, $f' \in L^1[a,b]$, because in particular, $\int_{[a,b]} f' = 0$. Therefore, we have that $f \in \ac[a,b]$ by 6.3.3 again. Further, by definition, since $f' = 0$ almost everywhere, $f$ is singular. Then, by 6.3.4, since $f$ is both singular and absolutely continuous, $f$ must actually be constant.
+
+\end{proof}
+
+\section*{2.2}
+
+\begin{problem}{6.4.10}
+
+Show that $f: [a,b] \to \mathbb{C}$ is Lipschitz if and only if $f \in \ac[a,b]$ and $f' \in L^\infty[a,b]$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+Firstly, suppose $f$ is Lipschitz. We have already that Lipschitz implies absolutely continuous by 6.1.3, which implies that $f'$ exists almost everywhere, by 6.1.5. Now, let $x$ be somewhere the dervative exists at. Then, we have that, for any $y \in [a,b], y \not = x$, by the definition of Lipschitz, there exists an $M > 0$ such that:
+
+$$ | f(y) - f(x) | \leq M | x - y| \implies \frac{|f(y)- f(x)|}{|y-x|} \leq M $$
+
+Now, if we view $y = x+h$, and then take the limit as $h \to 0$, this implies that $|f'(x)| \leq M$ as well. Since the existence of $M$ is independent of the point $x$, coming from the Lipschitz condition, we have then that on the $[a,b] \setminus Z, |Z|= 0$ where $f'$ is defined, that $|f' | \leq M \implies f' \in L^\infty[a,b]$.
+
+Now, instead, suppose $f \in \ac[a,b]$ with $f' \in L^\infty[a,b]$. By the fundamental theorem of calculus (6.4.2), we have that $f' \in L^1$, and:
+
+$$ f(x) - f(a) = \int_a^x f'(t) dt  \implies f(x) = f(a) + \int_a^x f'(t)dt$$
+
+Now, consider the difference $| f(y) - f(x) |$ for $x,y \in [a,b]$. We have that:
+
+$$ | f(y) - f(x) |  = | f(a) + \int_a^y f'(t) dt - f(a) - \int_a^x f'(t) dt | = | \int_x^y f'(t) dt |$$
+
+Now, since we have that $f'$ is essentially bounded, suppose that $f' \leq \Vert f' \Vert_\infty$ almost everywhere. Then, we can say that on $[x,y]$, $f' \leq \Vert f' \Vert_\infty$ almost everywhere, so we have that:
+
+$$ |f(y) - f(x)| =  | \int_x^y f'(t) dt | \leq | \int_x^y \Vert f' \Vert_\infty dt | = |x - y| \Vert f' \Vert_\infty $$
+
+Thus, $f$ is Lipschitz, as we just take the Lipschitz constant as the uniform norm of $f'$.
+
+\end{proof}
+
+\begin{problem}{6.4.13}
+
+Suppose that $f \in L^1(\mathbb{R})$ is such that $f'\in L^1(\mathbb{R})$ and $ f \in \ac[a,b]$ for every finite interval $[a,b]$. Show that $\lim_{|x| \to \infty} f(x) = 0 = \int_{-\infty}^\infty f'$. 
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+
+\end{proof}
+
+\section*{2.3}
+
+\begin{problem}{7.3.22}
+
+Let $E$ be a measurable subset of $\mathbb{R}^d$, and fix a $1 \leq p < \infty$
+
+(a) Suppose that $\Sigma f_n$ is absolutely convergent in $L^p(E)$, that is, $f_n \in L^p(E)$ for all $n$ and $\Sigma \Vert f_n \Vert_p < \infty$. Prove the following:
+
+\begin{itemize}
+\item the series $f(x) = \Sigma_{n=1}^\infty f_n(x)$ converges for almost every $x \in E$ \\
+\item $f \in L^p(E)$\\
+\item the series $f = \Sigma f_n$ converges in the $L^p$ norm, that is, $\lim_{N \to \infty} \Vert f - \Sigma_n^N f_n \Vert_p = 0$
+\end{itemize}
+
+(b) Use part (a) and theorem 1.2.8 to give another proof that $L^P(E)$ is complete with respect to $\Vert \cdot \Vert_p$.
+
+(c) Show that if $\Sigma f_n$ is an absolutely convergent series in $L^1(E)$, then
+
+$$\int_E \Sigma_{n=1}^\infty f_n = \Sigma_{n=1}^\infty \int_E f_n $$
+
+
+\end{problem}
+\begin{proof}[Solution]
+
+\end{proof}
+
+
+\begin{problem}{7.3.23}
+
+Fix a $1 \leq p < \infty$. Given $f_n \in L^p(\mathbb{R}^d)$, prove that $f_n \to f$ in $L^p(\mathbb{R}^d$ if and only if the following three conditions hold.
+
+(a) $f_n \xrightarrow[]{m} f$
+
+(b) For each $\epsilon > 0$, there exists a $\delta > 0$ such that for every measurable set $E \subseteq \mathbb{R}^d$ with $|E| < \delta$, we have that $\int_E |f_n|^p < \epsilon$ for every $n$.
+
+(c) For each $\epsilon > 0$, there exists a measurable set $E \subseteq \mathbb{R}^d$ such that $|E| < \infty$ and $ \int_{E^c} |f_n|^p < \epsilon$ for every $n$.
+
+\end{problem}
+\begin{proof}[Solution]
+
+\end{proof}
+
+ 
+
+\end{document}
