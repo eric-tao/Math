@@ -121,11 +121,11 @@ $$ f(x) - f(a) = \int_a^x f'(t) dt  \implies f(x) = f(a) + \int_a^x f'(t)dt$$
 
 Now, consider the difference $| f(y) - f(x) |$ for $x,y \in [a,b]$. We have that:
 
-$$ | f(y) - f(x) |  = | f(a) + \int_a^y f'(t) dt - f(a) - \int_a^x f'(t) dt | = | \int_x^y f'(t) dt |$$
+$$ | f(y) - f(x) |  = \left| f(a) + \int_a^y f'(t) dt - f(a) - \int_a^x f'(t) dt \right| = \left| \int_x^y f'(t) dt \right|$$
 
 Now, since we have that $f'$ is essentially bounded, suppose that $f' \leq \Vert f' \Vert_\infty$ almost everywhere. Then, we can say that on $[x,y]$, $f' \leq \Vert f' \Vert_\infty$ almost everywhere, so we have that:
 
-$$ |f(y) - f(x)| =  | \int_x^y f'(t) dt | \leq | \int_x^y \Vert f' \Vert_\infty dt | = |x - y| \Vert f' \Vert_\infty $$
+$$ |f(y) - f(x)| =  \left| \int_x^y f'(t) dt \right| \leq \left| \int_x^y \Vert f' \Vert_\infty dt \right| = |x - y| \Vert f' \Vert_\infty $$
 
 Thus, $f$ is Lipschitz, as we just take the Lipschitz constant as the uniform norm of $f'$.
 
@@ -171,7 +171,7 @@ $$\int_E \Sigma_{n=1}^\infty f_n = \Sigma_{n=1}^\infty \int_E f_n $$
 
 \begin{problem}{7.3.23}
 
-Fix a $1 \leq p < \infty$. Given $f_n \in L^p(\mathbb{R}^d)$, prove that $f_n \to f$ in $L^p(\mathbb{R}^d$ if and only if the following three conditions hold.
+Fix a $1 \leq p < \infty$. Given $f_n \in L^p(\mathbb{R}^d)$, prove that $f_n \to f$ in $L^p(\mathbb{R}^d)$ if and only if the following three conditions hold.
 
 (a) $f_n \xrightarrow[]{m} f$
 
