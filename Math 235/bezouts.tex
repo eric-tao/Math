@@ -24,7 +24,13 @@ Here are a few preliminaries we will start with while talking about B\'ezout’s
 
 First, we will want to talk about the intersection number of two affine plane curves. Let $F, G \in \mathbb{A}^2$ be plane curves. We wish to define a quantity known as the intersection number at $P$, that is, $I(P, F \cap G)$, which, intuitively, we want to encode the degree to which two curves intersect.
 
-We start by talking about the properties that we wish this quantity to have. They are:
+Then, we define the intersection number as:
+
+$$ I(P,F \cap G) = \dim_k(\mathcal{O}_P/(F,G)) $$
+
+where we have $\mathcal{O}_P$ as our familiar local ring at the point $P$.
+
+We start by talking about the properties that this quantity has. They are:
 
 (1) $I(P, F \cap G) \geq 0$, and if $F, G$ share an irreducible component that passes through $P$, that $I(P, F \cap G) = \infty$
 
@@ -45,12 +51,6 @@ We start by talking about the properties that we wish this quantity to have. The
 (9) If $F,G$ have no common components, then:
 
 $$ \Sigma_P  I(P,F \cap G) = \dim_k(k[X,Y]/(F,G)) $$
-
-Then, we define the intersection number as:
-
-$$ I(P,F \cap G) = \dim_k(\mathcal{O}_P/(F,G)) $$
-
-where we have $\mathcal{O}_P$ as our familiar local ring at the point $P$.
 
 We will not go into detail on the proof of how this number is unique and satisfies the above conditions, but a reference would be Fulton’s Algebraic Curves, 3.3.
 
