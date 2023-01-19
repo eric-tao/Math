@@ -1,0 +1,1342 @@
+\documentclass[10pt]{article}
+\usepackage{graphicx}
+\usepackage{pst-node,pst-tree,pstricks}
+\usepackage{amssymb,amsmath}
+\usepackage{hyperref}
+\usepackage{pst-node}
+\usepackage{mathtools}
+
+% environments shortcuts
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\beqa}{\begin{eqnarray}}
+\newcommand{\eeqa}{\end{eqnarray}}
+\newcommand{\beqas}{\begin{eqnarray*}}
+\newcommand{\eeqas}{\end{eqnarray*}}
+\newcommand{\codim}{\text{codim}}
+
+\newcommand{\bit}{\begin{itemize}}
+\newcommand{\eit}{\end{itemize}}
+\newcommand{\bits}{\begin{itemize*}}
+\newcommand{\eits}{\end{itemize*}}
+\newenvironment{enumerate*}{\begin{enumerate}
+    \setlength{\topsep}{0ex}
+    \setlength{\parskip}{0ex}
+    \setlength{\partopsep}{-1ex}
+    \setlength{\itemsep}{0pt}
+    \setlength{\parsep}{0ex}}
+{\end{enumerate}}
+
+\newcommand{\benum}{\begin{enumerate*}}
+\newcommand{\eenum}{\end{enumerate*}}
+%\newcommand{\benums}{\begin{enumerate*}}
+%\newcommand{\eenums}{\end{enumerate*}}
+\newcommand{\mybullet}{$\bullet$}
+
+% math mode commands
+
+\newcommand{\fracpartial}[2]{\frac{\partial #1}{\partial  #2}}
+\newcommand{\rrr}{{\mathbb R}}
+\newcommand{\bigOO}{{\cal O}}
+\newcommand{\dataset}{{\cal D}}
+
+\newcommand{\X}{\mathbf{X}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calN}{\mathcal{N}}
+\newcommand{\calT}{\mathcal{T}}
+\newcommand{\calH}{\mathcal{H}}
+
+\newcommand{\trace}{\operatorname{trace}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\sign}{\operatorname{sgn}}
+\newcommand{\onevector}{{\mathbf 1}}
+\newcommand{\bbone}[1]{{\mathbf 1}_{[#1]}}
+
+\newcommand {\argmax}[2]{\mbox{\raisebox{-1.7ex}{$\stackrel{\textstyle{\rm #1}}{\scriptstyle #2}$}}\,}  % to replace with the amsmath construction
+
+\newlength{\picwi}
+\newcommand{\backskip}{\hspace{-2.5em}} % how much to skip back for an empty item?
+
+% Set up some colors
+\definecolor{myblue}{rgb}{0.14,0.11,0.49}
+\definecolor{myred}{rgb}{0.74,0.1,0.05}
+\definecolor{mygreen}{rgb}{0.,0.52,0.32}
+\definecolor{myyellow}{rgb}{0.96,0.92,0.13}
+\definecolor{myorange}{rgb}{0.7,0.41,0.1}
+\definecolor{mypurple}{rgb}{0.51,0.02,.8}
+\definecolor{mygray}{rgb}{0.6,0.6,0.6}
+
+\newcommand{\myblue}[1]{\textcolor{myblue}{#1}}
+\newcommand{\myred}[1]{\textcolor{myred}{#1}}
+\newcommand{\mygreen}[1]{\textcolor{mygreen}{#1}}
+\newcommand{\myorange}[1]{\textcolor{myorange}{#1}}
+\newcommand{\myyellow}[1]{\textcolor{myellow}{#1}}
+\newcommand{\mypurple}[1]{\textcolor{mypurple}{#1}}
+\newcommand{\mygray}[1]{\textcolor{mygray}{#1}}
+
+
+% Stlyle stuff
+% notes are for students , \notes with \mmp{} are for me
+
+\newcommand{\comment}[1]{}
+\newcommand{\mmp}[1]{\emph MMP: {#1}}
+\newcommand{\mydef}[1]{\myred{\bf {#1}}}
+\newcommand{\myemph}[1]{\mygreen{ {#1}}}
+\newcommand{\mycode}[1]{\myblue{\tt {#1}}}
+\newcommand{\myexe}[1]{{\small \mypurple{Exercise} {#1}}}
+
+\newcommand{\reading}[2]{{\small \myemph{{\bf Reading} CRLS:} {#1}, \myemph{Python APPB4AWD} {#2}}}
+
+
+\begin{document}
+\begin{Large}
+\centerline{Math 240}
+\centerline{Lecture Notes}  % lecture number here
+\centerline{\bf }       % lecture title here
+\centerline{}      %date here
+\end{Large}
+
+
+\vspace{2em}
+\section*{Sept 7th}
+One good text: Brian Osserman, otherwise, check syllabus.
+
+Note: Robert does number theory with algebraic geometry tools.
+
+What is algebraic geometry?
+
+Review: recall that a field $\mathbb{F}$ is a set equipped with 2 operations: $+, \cdot$ where $\{ \mathbb{F}, +\}$ is a group, $\{\mathbb{F}\symbol{92} \{0\}, \cdot\}$ is a group, and $\cdot$ distributes over $+$..
+
+We look at lines,planes, and 3-d spaces as $\mathbb{F}^n$  and call these affine spaces.
+
+We call a field $\mathbb{F}$ a algebraically closed field if, for any polynomial $\Sigma_{k=0}^n a_k x^k = 0$ there exists a solution in $F$.
+
+For later, recall that parallel lines do not intersect - we don’t like this, so sometimes, we want to look at the projective spaces.
+
+We note that in a 2-d setting, you can project a circle onto the real line, but a quadric will project at least 2 points to the same point in a plane, given a fixed point.
+
+We can draw a diagram with normal maps:
+
+$S_1 \rightarrow S_3$
+
+$x \rightarrow f(x)$
+
+And rational functions: $S_1 \rightarrow S_2$ where the domain is most, but not necessarily all of $S_1$. Example: the matrices and the inverse function, where we exclude the matrices such that their determinant is $0$.
+
+We want to talk about the Zariski Topology in $\mathbb{A}^n$.
+
+Normally, we talk about our open sets.
+
+i) $\emptyset, \mathbb{A}^n$ are open.
+
+ii) $U_1, U_2$ open $\rightarrow$ $U_1 \cap U_2$ is open.
+
+iii) $U_i$ open $\rightarrow$ $\cup_i U_i$ is open.
+
+In the Zariski topology, we talk about the closed sets.
+
+i) $\emptyset, \mathbb{A}^n$ are closed.
+
+ii) $V_1, V_2$ open $\rightarrow$ $V_1 \cup V_2$ is closed.
+
+iii) $V_i$ open $\rightarrow$ $\cap_i U_i$ is closed.
+
+Now, let’s fix a field $\mathbb{F}$, and consider the polynomial ring in n variables, $R = \mathbb{F}[x_i,...,x_n]$. Recall that rings here are commutative rings.
+
+For every collection $\{ f_1,...,f_k\}$ of polynomials in $R = \mathbb{F}[x_i,...,x_n]$, $\{ f_1,...,f_k\} \subset \mathbb{A}^n$, where $\{ f_1,...,f_k\} = \{(a_1, a_2,..a_n) \in \mathbb{A}^n | f_j = 0 \forall j$.
+
+Doing some work, we see that this satisfies the Zariski topology.
+
+For f = 1, this set is satisfiable by no values, therefore the empty set is closed.
+
+For f = 0, this set is satisfiable by all values, therefore the full space is closed.
+
+We may take, if $V_i = V(f_1^i,...f_{k_i}^i)$, $V( f_j^i | j = 1...k_i, i\in I) = \cap V_i$.
+
+We also can see if $V = V(f_1...f_k)$ and $V’ = V(f_1’...f_{k’}’)$, then we can take $V \cup V’ = V(f_1f_1’...f_1f_{k’}’,..f_kf_1’...f_kf_{k’}’)$
+
+This is true because: suppose a vector $\overline{a}$ is not in $V$, but in $V \cup V’$. Then, there exists a $f_j \in V$ such that $f_j(\overline{a}) \not = 0$. However, by construction then, because $f_jf_i’(\overline{a}) = 0$ for all $i$, then $f_i’(\overline{a}) = 0$ for all $i$. Thus, $\overline{a}$ is in $V’$.
+
+Let’s now check that being closed under the Zariski topology is equivalent of being closed under our normal topology in $\mathbb{R}^n$.
+
+Consider the compliment of $V$, $V^c$. In particular, consider the map $f: \mathbb{R}^n \rightarrow \mathbb{R}$. Since $f$ is continuous, we can create a open ball around the image of any point in $\mathbb{R}$, since it can be far enough away from a zero, if we are in a small enough neighborhood. Since $f$ is continous, then the preimage of an open set is an open set.
+
+Example, in $\mathbb{A}^1$: closed sets iff finite sets.
+
+Suppose $a_1,...a_n \in \mathbb{A}^1$, then $V((x-a_1),...(x-a_n))$.
+
+Suppose we have $V(f_1, f_2, f_3,...f_k)$. Then, we can have at most $\Sigma_{n=1}^k deg(f_n)$
+
+Define an irreducible set $X \subset \mathbb{A}^n$ where if $X = X_1 \cup X_2 \rightarrow X = X_1 \text{ or } X = X_2$ for $X_1, X_2$ closed. We call an irreducible closed set an affine variety.
+
+Claim: $\mathbb{A}^n$ is irreducible.
+
+Assume $\mathbb{A}^n = V_1 \cup V_2$, and $V_1, V_2 \not= \mathbb{A}^n$.
+
+Assume $a \in V_1 - V_2, b\in V_2 - V_1$.
+
+Since a closed set intersect any subset is closed, we can take a line in $\mathbb{A}^n$.
+
+Then consider the line joined by $a$ and $b$, and we call it $L$. Then, we have that $(L \cap V_1) \cup (L \cap V_2)$ is finite, from what we proved on $\mathbb{A}^1$. But this cannot be $\mathbb{A}^1$ which is infinite.
+
+Now, take some elements $ a_1, a_2, ...a_k \in R[\overline{x}]$.
+
+Consider the ideal $\{ f_1 a_1 + ... + f_ka_k | f_i \in R [\overline{x}] \}$. 
+
+\section*{Sept 12th}
+
+What is a Noetherian ring?
+
+Call a ring $R$ Noetherian if every ideal is finitely generated.
+
+Alternatively call a ring Noetherian if every increasing chain of ideals terminates.
+
+That is, suppose we have $I_1 \subset I_2 \subset I_3 .... \subset I_n \subset ...$ then $I_{m+1} = I_m$ for some $m$.
+
+Define $I = \cup_{k=I} I_k$. It should be clear that this is an ideal because for any $x,y \in I$, there exists some $x \in I_{i_x}$ and $y \in I_{i_y}$. Then, pick $m = max(i_x,i_y)$, and we have that $x,y \in I_m$ so $x-y \in I$. Absorption from the same idea.
+
+But, because every ideal is finitely generated, then, in partcular, $I$ is finitely generated. Therefore, the chain teminates.
+
+Going the other way around, suppose we have an ideal $I \subset R$ and that every ascending chain terminates. Suppose $I$ is not finitely generated. Then, we may fix a $f_1 \in I$ such that $<f_1> \not = I_1$. Then, choose an $f_2 \in I$ such that $f_2 \not \in <f_1>$. iteratively doing this we may construct a non-terminating ascending chain, a contradiction.
+
+Some facts:
+
+Every field is Noetherian.
+
+The ring of polynomials over a Noetherian ring is Noetherian.
+
+Two equivalent definitions.:
+
+1) An algebraic variety is the zero set of.a finite number of polynomials in $n$ variables.
+
+2) $I$ is the zero set of an ideal in $K[x_1,...x_n]$.
+
+Note, this is not yet one-to-one! We do have a correspondence from subsets of $K[z_2,...x_n]$ into zero sets, and from zero sets into ideals generated from the polynomials, however, not necessarily 1:1. For example, $V(x^2) = V(x)$, but $\{x\} \subset K[x], \{x\} != \{x^2\}$
+
+Note that this will result in a reverse inclusion. That is, if $S \subset S’$, $V(S’) \subset V(S)$ and vice versa.
+
+We notice that $T_1 \subset V(I(T_1))$  and similarly, $S \subset I(V(S))$.
+
+This tells us something about the Zariski topology, but we need some topology background first.
+
+Let $X$ be a topological space, $Y \subset X$. We define $\overline{Y}$ the closure of $Y$ such as the smallest closed set $C$ such that $Y \subset C$. Equivalently, this implies that $\overline{Y} = \cap C$ where $C$ is any closed set that contains $Y$.
+
+Then, let $T$ be a set in $\mathbb{A}^n$. We wish to prove that $\overline{T} = V(I(S))$.
+
+From above, we see that $V(I(T)) \supseteq T$, so $V(I(T)) \supseteq \overline{T}$.
+
+Now, we wish to show that for any closed set such that $T \subset C$, that $V(I(T)) \subset C$ as well. By our reverse inclusion, we have that, for any $V(J)$ such that $T \subset V(J)$, we have that $J \subset I(V(J)) \subset I(S)$. Then, reverse inclusion wise, we have that 
+$V(I(J)) \supseteq V(I(S))$
+
+Let $I$ be an ideal. Define the radical of $I$ as  $\text{rad}(I) = \{ r \in R | \exists n \in N, r^n \in I \}$ Note that, by definition, $I \subset \text{rad}(I)$.
+
+Claim: $\text{rad}(\text{rad}(I)) = \text{rad}(I)$
+
+Let $x \in \text{rad}(\text{rad}(I)) $. Then, this is an $f$ in $\text{rad}(I)$ s.t. there exists $m$ where $f^m \in \text{rad}(I)$, but to be in rad, we need to have $n$ such that $f^n \in I$. 
+
+Every prime ideal is radical.
+
+$P$ prime iff $\forall x,y \in R$, if $xy \in P$ then either $x\in P$ or $y \in P$ iff $R/p$ integral domain iff for any $[x],[y] \in R/p$, $[xy] = [0] \implies [x] = [0[$ or $[y] = [0]$
+
+Call I a radical ideal if $\text{rad}(I) = I$.
+
+But not every radical is prime. Consider $<xy> \subset K[x,y]$.
+
+Why do we care? It turns out that $V(I) = V(\text{rad}(I))$.
+
+Clearly, we have $\text{rad}(I) \supseteq I$, so by reverse inclusion $V(rad(I)) \subseteq V(I)$. But now, let’s consider some $\overline{a} = (a_1,...a_n) \in V(I)$. So, for all $f \in I$ with $f(\overline{a} = 0$. Let $g \in \text{rad}(I)$. Then, we have some $n$ such that $g^n \in I$. Then. we have that $g^n(\overline{a}) = 0$, and thus $g(\overline{a}) = 0$. Since this is true for any $g$, then we have that $V(I) \subset V(\text{rad}(I))$
+
+Now, if we have $I, J \subseteq K[x_1....x_n]$ and $\text{rad}(I) = \text{rad}(J)$, then we have that $V(I) = V(\text{rad}(I)) = V(\text{rad}(J)) = V(J)$.
+
+So now, we have a one to one correspondence between radical ideals of $K[x_n]$ to zero sets of $\mathbb{A}^n$ so long as $K$ is algebraically closed. i.e. Hilbert’s nullenstatz: $I(V(I) = \text{rad}(I)$
+
+Example for R not algebrically closed. Take $R[x,y]$, and take the ideal generated by $I = <x^2 + y^2 + 1>$. So, $V(I) = \emptyset$. But $I(\emptyset) = R[x,y] \not = rad(I)$. 
+
+So, we have that $V = V(I)$ irreducible iff $I(V)$ prime. 
+
+Suppose V is reducible. Then we have we can find two elements that multiply into I(V).
+
+Now suppose V is irreducible. Assume $f*g \in I(V)$ and $f \not \in I(V)$. Then, for all $\overline{a} \in V$, s.t. $fg(\overline{a}) = 0$, then it’s a 0 of f or g. That is, $V \subset V(f) \cup V(g)$. Because $f \not \in I(V)$, then $V \not\subseteq V(f)$. Thus, $V \subseteq V(g)$ and $g \in I(V).$
+
+We have the idea that minimal irreducible algebraic sets should be single points. 
+
+Then, from the correspondence of algebraic sets to radical ideals, we should have a correspondence between minimal algebraic sets and maximal ideals. 
+
+That is, let $K$ be algebraically closed. Then, there is a 1:1 correspondence between maximal ideals of $K[x_n]$ and points in $\mathbb{A}^n$. Consider a point $\overline{a} = (a_1,...,a_n)$. The ideal it corresponds to should be $<(x_1-a_1),....(x_n-a_n)>$. Take the map $g: K[x-n] \rightarrow K$ such that $g(f(x)) = f(a_1,...,a_n)$. Clearly, this is surjective, due to taking any constant polynomial. Then, its kernel is a maximal ideal, due to being a kernel of a function. We can show that by considering $f(x_1,...x_n) = f((x_1-a_1) +a_1,...) = 0$. To be clear, then, we can rewrite f as a polynomial of $(x_i - a_i)^{n_i}$, that is, $f(x_1,....,x_n) = F(x_1-a_1,...x_n-a_n)$ and $f(a_1,...a_n) = F(0,...,0) = 0$. Now, because $F(0,...,0) =0$, we that the constant term vanishes, and rescaling back into $f$, we have that for each term, one of $(x_i-a_i)$ divides that term, so $ker(g) \subseteq <(x_1-a_1),....(x_n-a_n)>$.
+
+\section{Sept 14}
+Review:
+
+Let $k$ be an algebraically closed field. Then, $\mathbb{A}^n = k^n$, that is, sets of points $\{ (a_1,...a_n) : a_i \in k$.
+
+Recall we have $R = k[x_1,...,x_n]$, that is, the polynomial ring in n variables with coefficients in $k$.
+
+And then we define algebraic sets as subsets of $\mathbb{A}^n$ such that there exists $f_1,...f_k$ such that they vanish the subset.
+
+Recall that we call a ring $R$ Noetherian if every ideal is finitely generated, or, equivalently, every increasing chain of ideals terminates.
+
+Then, we showed that we can instead use ideals of polynomials, specifically, the ideal generated by the $f_k$ for algebraic sets:
+
+$V(I) = \{ \overline{a} = (a_1,...a_n) : f(\overline{a}) = 0 \forall f \in I \}$
+
+Now, recall that we have a galois correspondence (1:1, reverse inclusion) between algebraic sets and radical ideals. This correspondence exists, but need not be 1:1 if $k$ is not a field, or if we are working with non-radical ideals.
+
+That is, if $V$ is an algebraic set, we can associate with it $I(V) = \{ f \in R : \text{ f vanishes on V } \}$, a radical ideal.
+
+And if $J$ is an radical ideal, then we can associate with it $V(J)$, the zero set of $J$ in $\mathbb{A}^n$.
+
+If the 1:1 is satisfied, we have that $I(V(J)) = J$ and $V(I(V)) = V$.
+
+Recall further that prime ideal $\implies$ radical ideal. Then, since maximal ideals are prime, then maximal ideals are radical.
+
+Then, consider the reverse inclusion for maximal ideals. Since these are as big as possible, then the correspondence is to a single point in $\mathbb{A}^n$.
+
+Then, we have that $\frac{K[x_1,...x_n]}{m} = K$ for m a maximal ideal. Call this the weak nullstellensatz.
+
+Now, turn our attention to irreducible algebraic sets. Due to our correspondence, these are exactly the prime ideals in R.
+
+Recall we call a set irreducible if, when $V = V_1 \cup V_2$, then either $V = V_1$ or $V= V_2$.
+
+Equivalently, $V$ is reducible iff there exists $V_1,V_2$ closed, such that $V \subseteq V_1 \cup V_2$, $V \not = V_2,V_1$
+
+Check: V reducible iff I(V) not prime
+
+Suppose V is reducible. Then there exists $V_1,V_2$ such that $V\subseteq V_1 \cup V_2$, $V\not=V_1,V_2$. Then, since $V \not =V_1$, there exists $f_1 \in I_1 = I(V_1)$ such that $f_1$ does not vanish on some point on $V$, and same for a $f_2$.  However, $I(V_1 \cup V_2) = V(I_1) \cup V(I_2) \subseteq V(f_1) \cup V(f_2) = V(f_1f_2)$. Then, we have $f_1, f_2 \not \in I(V)$ and $f_1,f_2 \in I(V)$.
+
+Now, suppose $I(V)$ is not prime. Then, there exists $f_1,f_2 \not \in I(V)$ such that $f_1f_2 \in I(V)$. Then we have $V \subseteq V(f1,f2) = V(f_1) \cup V(f_2)$ with $V \not \subseteq V(f_1),V(f_2)$.
+
+Suppose we have $V \subseteq \mathbb{A}^n$. Define $A(V)$ be the ring corresponding to $V$ in the following way:
+
+$$ A(V) = \frac{k[x_1,....,x_n]}{I(V)} $$
+
+In particular, this is a finitely-generated k-algebra.
+
+Let $k$ be a field. Call $B$ a $k$-algebra if:
+
+i) $B$ is a ring.
+
+ii) There exists a ring hom $f: k \rightarrow B$ (recall, ring hom sends 1 -> 1)
+
+Consequently from ii), if we have a non-trivial hom, then this hom is 1:1.
+
+What does finitely-generated mean as a k-algebra? 
+
+For any $b \in B$, then, we can express $b = \Sigma_{k=1}^n k b_k^{n_k}$, that is, finitely many $b_k$. 
+
+Equivalently, we use the fact that this is a free k-algebra. Then, we have a onto map from $\phi K[x_1,...,x_n] \rightarrow B$ for some number of variables $n$. But then we can then use the 1st isomorphism. 
+
+So, what does it mean about $B$ when $\text{ker}(\phi)$ is a radical ideal? Well, we see that by definition, if $f^n \in \text{ ker }$, then $f \in \text{ ker }$. Consider the coset $[f] \subset B / \text{ker}(\phi)$. Then, we have that $[f] = 0$ iff $[f^n] = [0]$. Then $B$ is nilpotent free.
+
+Definition: Call $r \in R$ nilpotent if there exists $n \in N\mathbb{N}$ such that $r^n = 0$ and $r \not = 0$. Note that the nilpotent elements of $R$ form a ring assuming commutative.
+
+so $A(V)$ is a finitely-generated k-algebra that is nilpotent free.
+
+$[g] \in A(V)$, where $g: V \rightarrow K$, via the evaluation map.
+
+Now, let’s check for well-defined. 
+
+Suppose we have $[g_1] = [g_2]$. Then we have that $g_1 - g_2 \in I(V)$. But that means that $g_1 - g_2  = 0$ on V, so then they match on every point. 
+
+Example:
+
+Take $\mathbb{A}^1$, and take the x-axis in $\mathbb{A}^2$. In the former case, we have that as $k[X]$, in the latter, we have it as $k[X,Y]/<y>$. Although we’re isomorphic, we’re generated slightly differently.
+
+Let’s talk about the dimension of an irreducible algebraic set.
+
+Remember that algebraic sets correspond to radical ideals.
+
+Then, because we’re noetherian, since ascending chains of radical ideals terminate, then decreasing chains of algebraic sets terminate.
+
+Claim: Given an algebraic set $V$, there exists a unique decomposition $V = V_1 \cup V_2 \cup ... \cup V_m$ such that each $V_i$ is closed and irreducible, and there are no inclusions among them. Once we prove this, call the $V_i$ the components of $V$.
+
+Assume there exists some $V$ that you cannot write a decomposition for, which is minimal. Then, $V$ not irreducible implies that there exists a decomposition $V = V_1 \cup V_2$ and $V \not \subseteq V_1, V_2$. But we do have that $V_1, V_2 \subset V$ a minimal such that you cannot write a decomposition for, and that $V_1, V_2$ we may write as finite unions, by hypothesis. But then, that is a decomposition for $V$.
+
+Then, $V_1 = W_1 \cup...\cup W_k$ and $V_2 = W’_1 \cup ... \cup W’_{k’}$.
+
+Then, we can take the union of these, which is a finite union. Further, we can just throw away any inclusions, i.e. if $W’_i \subset W_j$, we throw out $W’_i$ in the full union.
+
+Now, we check for uniqueness. Suppose we have
+
+$$ V = V_1 \cup ... \cup V_k = W_1 \cup ... \cup W_l$$. 
+
+Because $V_i$ is irreducible, and there are no inclusions, there must exists a $W_j$ such that $V_i \subseteq W_j$. But by the same argument, we have that $W_j \subseteq V_i$ so we ahve $W_j = V_i$. Since we can repeat this for every member of our decomposition, it must be unique.
+
+Now, let $V$ be an algebraic set.
+
+Then $dim(V)$ is the length of the longest chain of irreducible closed sets that end in $V$.
+
+That is:
+
+$$ \emptyset \subset V_0 \subset V_1 \subset ... \subset V$$.
+
+We know for sure that the dimension of a point is 0.
+
+We would want the dimension of $\mathbb{A}^n$ to be $n$. We try this by reducing by dimension by one at each point.
+
+That is a chain with $V(x_1,...,x_n) \rightarrow V(x_1,...,x_{n-1}) \rightarrow... \rightarrow V(0)$.
+
+But this isn’t good enough, all we know is that $dim(\mathbb{A}^n) \geq n$.
+
+We resort to algebraic techniques.
+
+Let $R$ be a ring. Let’s define something called the Krull dimension of $R$ as the length of the longest chain of prime ideals.
+
+Further, define the height of an ideal as the length of the maximal chain of prime ideals between $I$ and $0$.
+
+That is:
+
+$$ <0> \subset I_1 \subset I_2 ... \subset I_n = I$$.
+
+Note that $I$ need not be prime, just the chain needs to be prime.
+
+Theorem: Let $k$ be a field, $R$ a finitely generated $k$-algebra s.t. $R$ is an integral domain. The following statements hold.
+
+i) if $P$ is a prime ideal in $R$, then the height of $P$ + dim $R/P$ = dim $R$
+
+How do we look at dim R/P? Well, prime ideals in R/P are just ideals in R that contain P.
+
+
+ii) dim R = transcendental degree of R over K.
+
+what. Look in a commutative algebra book.
+
+\section{Sept 19th}
+
+Let $V$ be an irreducible algebraic set. (note that for reducible, we just say it’s the dim of the largest irreducible component)
+
+Concept: Form a descending proper chain of irreducible sets, and look at the longest such chain possible. That is, if our chain looks like:
+
+$$ V = V_0 \supset V_1 \supset ... \supset V_m \supset \emptyset$$
+
+Then $\dim(V) = m$. For example, $\{x \}$, that is, a singleton, has dimension 0.
+
+In our correspondence, we can then look at prime ideals of our polynomial rings:
+
+$$ I(V) = I_0 \subset I_1 \subset ... \subset I_m \subset k[x_1,...,x_n]$$
+
+Further, we want to look at our coordinate rings that look like, for $V$ an algebraic set:
+
+$$A(V) = \frac{k[x_1,...,x_n]}{I(V)} = \frac{k[x_1,...,x_n]}{p} $$.
+
+Here, we recall from homework 1, where we recall there’s a correspondence between prime ideals of $A(x)$ and the prime ideals of $I \subset k[x_1,...x_n]$ such that $I(V) \subset I$.
+
+Then, we have that $\dim(V)$ is the Krull dimension of $A(V)$.
+
+It turns out, if we have finitely generated, domains, things are pretty.
+
+If $k$ is a field, $A$ a finitely-generated $k$-algebra. Then every maximal chain of prime ideals in $A$ have the same length.
+
+Since we live with algebraic varieties, we can take $A$ as a domain, and finitely generated $k$-algebra. In particular, there exists an inclusion $i: k \rightarrow A$, that sends k to its copy in $A$.
+
+Define the field of fractions $K(A) = \{ [\frac{a}{b} ] | a,b \in A, b \not = 0, \frac{a}{b} \sim \frac{a’}{b’} \iff ab’ = a’b \}$.
+
+We see that our algebra $A$ is contained within here. But also, we have that this is a field - for any element $[\frac{a}{b} ]$ we may find $[\frac{b}{a} ]$, and by the relations, this must be related to $[\frac{1}{1}]$.
+
+Suppose we have an inclusion $A \rightarrow B$.
+
+Let $b \in B$. Then we say $b$ is algebraic over $A$ if it is the $0$ of a polynomial with coefficients in $A$.
+
+Easy example. $\sqrt{2} \in \mathbb{R}$ is algebraic over $\mathbb{Q}$ because it is the zero of the polynomial $x^2 - 2 \in \mathbb{Q}[x]$.
+
+We call $b \in B$ transcendental over $A$ if it is not the $0$ of any polynomial with coefficients in $A$, that is, the polynomial does not belong to $A[x]$.
+
+Since we have an inclusion we can define a morphism from $j: A[x] \to B$ such that we send $x \to b$. If $b$ is transcendental, then $j$ is one to one. In particular, we say that $B$ has transcendental degree $n$ over $A$ if there exists an injective morphism from $A[x_1,...,x_n] \to B$ and $B$ algebraic over $A[x_1,...,x_n]$.
+
+If $V$ is a variety $K$, $\dim(V) = \text{trasc}_K K(A(V))$, where $\text{trasc}_K$ is the transcendental dimension over $K$.
+
+Geometric meaning of the transcendental degree:
+
+We recall that $A(V) = \frac{k[x_1,...x_n]}{I(V)}$. We want a map from $V \to \mathbb{A}^n$.
+
+Recall that we can take $k[x_1,....,x_n]  \to A(V)$ via $x_1 \to [x_1]$, that is $\eta_i(x_i) = [x_i]$
+
+What does this mean geometrically? we have that $[f] = [f’]$ means that $f$ agrees on $V$.
+
+Now, we define the map from $V \to \mathbb{A}^n$ via the inclusion above. That is, $(a_1,...,a_n) \to (\eta_1(a_1,...,a_n), \eta_2....)$.
+
+We now need to show that we have finite fibres. Let $x$ be an element in $\mathbb{A}^n$. These must come from the same things up in $\eta$. In particular, there are finitely many there, so the fibres of our induced map are also finite.
+
+So, then another way we can say this is that the dimension of $V$ is $n$ iff there exists a finite map $V \to \mathbb{A}^n$.
+
+Note that we do not need all of the fibres to be finite, merely most of them (?). Example: hyperboloid of one sheet, taken to be the projection from a point - but since the hyperboloid contains lines, we could theoretically have non-finite fibres.
+
+What is a codimension? Well, suppose $X_1 \subseteq X_2$. We define the codimension of $X_1$ inside $X_2$ as the longest possible chain of irreducible varieties that starts with $X_1$ and ends in $X_2$, that is, $X_1 = V_0 \subset V_1 \subset .. \subset 
+V_n = X_2$.
+
+Example, a surface in $\mathbb{A}^3$ has codimension 1, and a line has codimension 2.
+
+Let $X$ be an algebraic set, irreducible. Call $X’ \subset X$ a hypersurface if it is the 0 set of a single non-constant equation, that is, $X’ = Z(f), f \in A(X)$. $V(f)$ always has codimension 1.
+
+Is the reverse true? That is, if we have codimension 1, is $I(X’) = V(f)$ for a single polynomial $f$? Yes, but only if $X = \mathbb{A}^n$.
+
+Example: Consider the curve $y^3 = x^2$. Well, $A(V) = \frac{k[x,y]}{x^2 - y^3}$. Now, consider $I((0,0)) = <x,y>$. And you can’t ever generate this with just one polynomial. 
+
+In contrast, when we have the curve $y = x^2$, we identify $y$ with $x$, so the variable $x$ is sufficient, and we may generate $I(0,0)$ as $<x>$.
+
+Given $Y \subseteq \mathbb{A}^n$ with codimension $t < n$, can we find $f_1,...f_t \in k[x_1,...,x_n]$ such that $I(Y) = < f_1,...,f_t > $. In generality, no, this is not possible. But when it is true, we call $Y$ a complete intersection.
+
+Example of a non complete intersection:
+
+Take 3 points in $\mathbb{A}^3$. Suppose they are not collinear. 
+
+Given 2 curves in the plane of degrees $d_1, d_2$. $\frac{k[x,y]}{f_1,f_2}$ should be $d_1 * d_2$ points. But then, one has to be a line. 
+
+But in 4 points, you can always find 2 conics that intersect in those 4 points. Linear algebra results?
+
+\section*{Sept 21st}
+Review: Let $Y \subseteq \mathbb{A}^n$ be an algebraic set. Let $U \subseteq Y$ be an open set in $Y$.
+
+We wish to define a regular function on $U$.
+
+We want a map from $\eta: U \to \mathbb{A}^1$
+
+We want for any $p \in U$, that there exists $f,g \in f[x_1,…,x_n]$ such that $\eta = f/g$ at $p$ and in a neighborhood around $p$ and $g(p) \not = 0$.
+
+Example: Let $f \in k[x_1,…,x_n]$. We can obviously take for an open set $U$, the map that sends $p \in U \to f(p)$ and this is a regular function.
+
+Another example, we can take $Y = \mathbb{A}^m$, and $U = \mathbb{A}^m \setminus {0}$. Then we can send $p \to 1/p$.
+
+In general, can we write $ \frac{1}{x_1} = \frac{f}{g}$ for $f,g$ polynomials?
+
+Well, since $\mathbb{A}^n$ is irreducible, then $U = \mathbb{A}^n \setminus {0}$ is open, thus dense.
+
+Then $U \subseteq V(x_1 f-g)$, but this is $\mathbb{A}^n$, and then $x_1 f-g = 0$. So $x_1 | g$. Then, we must have they are identical, that is, we have $x_1 f = g$.
+
+Define $O(U)$ as the regular functions from $U \to \mathbb{A}^1$.
+
+We wish to show that this is a ring (and, actually, also a k-algebra). Let $\phi_1, \phi_2$ be regular functions on $U$. Then, for these, we have open neighborhoods $U_1, U_2$ such that, for each $p \in U$.
+
+$$ \phi_{1|{U_1}}= \frac{f_1}{g_1} $$
+
+$$ \phi_{2|{U_2}} = \frac{f_2}{g_2} $$
+
+Since they both contain $p$, we may take $U’ = U_1 \cap U_2$, which is an open neighborhood contained in $U_1,U_2$. 
+
+Within $U’$, we have that $\phi_1 + \phi_2 = f_1/g_1 + f_2/g_2 = f_1g_2 + f_2g_1/g_1g_2$. Since $g_1$ not 0 on $U_1$, and $g_2$ not 0 on $U_2$ then $g_1,g_2$ not 0 on $U_1 \cap U_2$, so neither is $g_1g_2$.
+
+Similarly, we can multiply elements $f_1/g_1 * f_2/g_2 = f_1f_2/g_1g_2$.
+
+Take $U \setminus V(x_3,x_2) \subseteq V(x_1x_2 - x_3x_4) \subseteq \mathbb{A}^4$.
+
+Then, we take $p \to x_1/x_3$ if $p_3 \not = 0$ and $p \to x_4/x_2$ if $p_2 \not = 0$, and we can take open sets such that $U = U_1 \cup U_2$. So we may not be able to define a regular function in the same way on all of $U$, but so long as we can patch it together, we’re fine.
+
+We wish to show that if $\phi: U \to \mathbb{A}^1$ is regular, then $\phi$ is continuous. 
+
+We can take as a basis for the Zariski topology $\{ h \not = 0\} = U_1$.
+
+Well, is $\phi^{-1}(U_1)$ open in $Y$?
+
+We can rewrite $U = \cup_i O_i$ such that $\phi_{|O_i} = f_i/g_i$ such that $g_i \not = 0$ on $O_i$.
+
+So we want the points in $O_i$ such that $f_i/g_i$ is non-0.
+
+Well, $f_i,g_i \in k[x_1,…,x_n]$, and $h \in k[t]$.
+
+Note that we can clear the denominator in $h$ such that we can get $\overline{h}(f_i,g_i)/g_i^k$ for some power $k$. We notice that $\overline{h}$ is a polynomial in $x_1,…x_n$, and when that is non-0, it defines an open set in the Zariski topology. Thus, we have that $\phi$ is continuous.
+
+If $V \subseteq \mathbb{A}^m$ is irreducible, $f,g: U \to \mathbb{A}^1$ with $U \subseteq V$.and $f_{U} = g_{U}$, restricted on $U$. Then we have that $f-g = 0$ on $U$. But $U$ is dense. So it must be 0 on all of $V$, because $\{ f - g\}$ is a closed set.
+
+Assume that $\phi: \mathbb{A}^n \to \mathbb{A}$, potentially in pieces, that is, if $\mathbb{A}^n = \cup U_i$, for open sets, then we can find $g_i$ non-0 on $U_i$, and $\phi_i = f_i/g_i$ on $U_i$. Now, on the intersection of $U_i \cap U_j$, we can get that $f_1/g_1 = f_2/g_2$ so $f_1g_2 = f_2g_1$ on the intersection. But $\mathbb{A}^n$ is irreducible, so $U_i \cap U_j$ dense. Then, it must be true that $f_1g_2 - f_2g_1 = 0$ on all of $\mathbb{A}^n$ which implies that the $f_1g_2 - f_2g_1 = 0 \in k[x_1,…,x_n]$
+
+$k[x_1,…,x_n]$ is factorial, and we can assume that $(f_1,g_1) = 1$, and $(f_2,g_2) = 1$. Therefore, $f_1 | f_2, f_2 | f_1$, so $f_1 = kf_2$. Then, we have that $kf_2g_2 = f_2g_1 \implies kg_2 = g_1$. This isn’t helpful.
+
+Instead looking at sending the point $p \to f/g$. Therefore, $g$ cannot be 0 at any point, therefore $g$ must be constant.
+
+This begs the question, if $Y = V(I) \subseteq \mathbb{A}^n$ and $\phi: Y \to \mathbb{A}^1$ is a regular function, we can simply find an $f \in k[x_1,…,x_n]$ where $\phi = f$. 
+
+We will eventually see that $O(Y) = A(Y)$.
+
+Recall the concept of a local ring.
+
+Let $R$ be a ring. We call $R$ local if there is a unique maximal ideal.
+
+One way to check: $R$ is local $\iff$ there exists $m \subseteq R$ maximal and for every $r \in R \setminus m$ $r$ is a unit.
+
+Let’s look at this proof. We note that for any non-unit $r \in R$, we can find a maximal ideal with $r$. 
+
+Assume first that $R$ is local. Let $r \in R \setminus m$. Then there is no maximal ideal that contains $r$ Then $r$ is a unit.
+
+Now, suppose we have a ideal $m$ such that for every $x \in R \setminus m$, x is a unit. Well, $m$ must be maximal, because suppose we have $m \subset J \subset R$. Take a $j \in J \setminus m$. This is a unit, by hypothesis. But then, $J = R$. Therefore $m$ is maximal. Now, suppose $J$ is any ideal such that $J \not \subseteq I$. Then, J has a unit, and is trivial. 
+
+Let’s try to find an example. Take $p \in Y \subseteq \mathbb{A}^n$. Define $O_{Y,p}$ as the local ring of $p$ in $Y$ as follows: $O_{Y,p} = \frac{< (U,\phi) : \phi: U \to \mathbb{A}^1>}{\sim}$ Where we identify two functions if for a small open neighborhood around our point $p$ they coincide. Where we will define $[(U_1, \phi_1)] + [(U_2,\phi_2)].= [(U_1\cap U_2, \phi_1+\phi_2)]$. Or, if we multiple, we take the union, and multiply the functions.
+
+We claim this is a local ring.
+
+Well, what does it mean for $(U,\phi)$ to not be invertible? Then, it must be true that $f$ attains 0 somewhere. But we can usually just shrink it, unless $f(p) = 0$. 
+
+So well, what about the set $(U,\phi)$ where $\phi(p) = 0$.
+
+Firstly, is this even well-defined? Yes, because $p$ is in every $U_i$, so this works on the equivalence relation.
+
+Is it an ideal? Well, yeah, since the multiplication guarantees we’re 0 for the product. Sum is 0. So we have an ideal, and it is indeed maximal. Due to construction and invertibility.
+
+\section{Sept 26th}
+
+Localization of a ring:
+
+Let $R$ be a commutative ring with identity. Let $S \subseteq R$ be a multiplicatively closed $S$. That is, $1 \in S, s_1, s_2 \in S \implies s_1 s_2 \in S$.
+
+Define $S^{-1}R = \{ \frac{r}{s} : r \in R, s \in S \}/ \sim $ where we identify $\frac{ r_1}{s_1} = \frac{r_2}{s_2}$ if there exists $ s_3 \in S : s_3(a_1s_2 - a_2s_1) = 0$. This is fairly easy to check that it is an equivalence relation. We can confirm that the normal addition and multiplication endow this set with a ring structure.
+
+Is this a bigger ring? Take an example $ R= \mathbb{Z}, S = \mathbb{Z} \setminus \{ 0 \}$, then $S^{-1}R = \mathbb{Q}$.
+
+More generally, $ R= D, S = D \setminus \{ 0 \}$, then $S^{-1}R = K(D)$. for D a domain, $K(D)$ its field of fractions.
+
+Most important example: Let $R$ be a ring. Take $S = R \setminus P$ for $P$ a prime ideal. In these cases, we denote this as $R_P$.
+
+Let’s try to look at some morphisms here. Consider $\phi: R \to S^{-1} R$ via $r \to [\frac{r}{1}] $. This can be shown easily to be a ring morphism, but we do not actually even have that this is injective, in general.
+
+However, we recognize that $\phi(S) \subseteq (S^{-1}R)^x$, that is, they are invertible.
+
+Given a ring $R$ with a multiplicatively closed set $S$ and a morphism of rings such that $\phi_1: R \to R_1$ and $\phi_1(S)$ is invertible, then there exists a unique morphism of rings $\overline{\phi}: S^{-1} R \to R_1$. Such that the diagram that has $\phi_1 = \overline{\phi} \cdot \phi$.
+
+We define $\overline{\phi}[\frac{a}{s}] = \phi_1(a) * [\phi_1(s)]^{-1}$.
+
+Suppose $R’$ is a ring with a morphism from $R \to R’$ such that $\Phi(S)$ is invertible and for every morhism in which $\phi(S)$ is invertible, there exists a $\overline{\Phi}$ such that the following commutes: $\phi_1 = \overline{\Phi} \cdot \Phi$, that is, we don’t even need $\phi$ to be an inclusion.
+
+Fun (nasty) example: Consider $R = Z/6Z$ $S = \{ [1], [3] \}$. Claim: $S^{-1}R = Z/2Z$.
+
+Well, first we find a map $Z_6 \to Z_2$ via $a \text{ mod }  6 \to a \text{ mod } 2$. Suppose we have a map from $\phi_1: Z_6 \to R$ such that $\phi_1([1])$ and $\phi_1([3])$ is invertible. Then, consider $\phi_1([3]^2) = \phi_1([3])$ which is true because $[3] = [9]$ mod 6. But this implies that $\phi_1([3]) -1 = 0$, but since 3 = 1 + 2, this implies that $\phi_1(2) = 0$. So this map factors. 
+
+Recall that if $\phi: R \to R_2$, then for $J$ an ideal in $R_2$, then $\phi^{-1}(J)$ is an ideal in $R$. 
+
+The other way is not guaranteed, however, we may look at the ideal spanned by the image. 
+
+So let’s look at this specifically for $R \to S^{-1}R$. Denote the smallest ideal in $S^{-1}R$ that contains $\phi(I)$ as $S^{-1}I$.
+
+Claim: $S^{-1}I = \{ [\frac{a}{b} ] : a \in I, b \in S \}$ works. 
+
+(a) show ideal
+
+(b) show that it contains the image
+
+(c) show that the image spans it
+
+(a) is easy, follow the definition. 
+
+(b) is also easy, image in form
+
+(c) just consider that any $a/s = a/1 * (s/1)$
+
+$R \to S^{-1}R$
+
+We want that $S^{-1}(\phi^{-1}(J) = J$
+
+Clearly, we have that $S^{-1}(\phi^{-1}(J) \subseteq J$.
+
+So now, we take $j  = \frac{x}{s} \in J$. We know that since $sx \in J$, then $ \frac{x}{1} \in J$, which does have an inverse image. So now we have something in the image of $\phi^{-1}(J)$ we can use to get to any element. We claim that there exists an injective map from the ideals of $S^{-1}R \to R$ by taking $J \to \phi^{-1}(J)$. Note that this will preserve inclusions bcause of how $\phi$ works.
+
+The takeaway - if $R$ is a noetherian ring, then $S^{-1}R$ is also Noetherian.
+
+Claim: prime ideals of $S^{-1}R$ are one to one with prime ideals of $R$ such that they do not intersect $S$.
+
+Suppose $P \cap S$ is empty, and $P$ is prime in $R$. We want to see what $\phi^{-1}(S^{-1}(P))$.Well $S^{-1}(P) = \{ [p/s] \}$. Well, we have then that $[x/1] = [b/s]$, so then we have that $s’(sx - b) = 0$ So $sx = b$. But, since $s \not \in P$, $x \in P$. 
+
+Consider $P_0$ a prime ideal, and take $S = R \setminus P_0$. 
+
+Well, consider the prime ideals of $R_{P_0}$. These must be the prime ideals that don’t intersect $S$, hence, the prime ideals within $P_0$.
+
+Then, we can talk about the dimension of $R_P$ as the longest chain of prime ideals that are contained within $P$.
+
+Something different: Assume that we have an integral domain $D$. We know that the localization of $D$ for non-zero $d$ is the field of fractions $K(D)$. But now, what if we pick $m$ a maximal ideal, and $S = D \setminus m$. We can actually induce an injection from $D_m \to K(D)$.
+
+We also want to see that $\cap_{m \text{ maximal }} D_m = D$. Assume we have $[a/b]$ in every $D_m$. Then, for every $m$, there exists $x_m, y_m \in D$ such that $[a/b] = [x_m/y_m]$. Define the related set $I = \{ t \in R : ta \in (b) \}$. Claim: $I$ is an ideal. But $I \not \subset D_m$. Then $I = D$.
+
+\section{Sept 28th}
+
+Reminder: If we have $U$ an open set, we may define a regular function $\phi: U \to \mathbb{A}^1$ if for every $p \in U$, there exists an open set $U’ \subseteq U$ and $\phi = \frac{f}{g}$ on $U’$, where $g$ not zero on $U’$. We call the ring of regular functions on $U$, $\mathcal{O}(U)$. We have that if $U$ is irreducible, then it is an integral domain. Well, if $\phi_1, \phi_2 \in \mathcal{O}(U)$, and suppose $U \subseteq V(\phi_1) \cup V(\phi_2)$. Then, $\phi_i$ is continuous, we may continous the inverse image of $\{ 0 \}$, which is closed. Then, we have that either $\phi_1$ or $\phi_2$ is identically $0$.
+
+If $U$ not irreducible, we can potentially have zero divisors. Take $V(xy) \subseteq \mathbb{A}^2$, and take the regular functions that look like $k[x,y]/xy$ away from $0,0$.
+
+For $p \in U$, we can define $\mathcal{O}_{U,p}$ as the ring of germs of functions near $\mathcal{O}_{U,p} = \{ (U’, \phi)  \} / \sim$ where $(U, \phi) \sim (U’, \phi’)$ if we have $V \subset U \cap U’$ and $\phi = \phi’$ on $V$. This was a local ring with maximal ideal $\{ u \in \mathcal{O}_{U,p} : \phi(p) = 0 \}$.
+
+Now, suppose $Y$ is irreducible. Define $K(Y)$ as the field of rational functions $K(Y) = \{ (U,\phi) : U \text { open }, \phi \in \mathcal{O}(U) \} / \sim$. Where $(U, \phi) \sim (U’, \phi’)$ if they agree on some smaller set $V\subseteq U, U’$. This is a field. We may take $\phi$ not identically $0$, so the zero set is closed. So instead, we can restrict down to an open, non-empty set. So then we have a small enough open set such that $\frac{1}{\phi} \in K(Y)$ and $\frac{1}{\phi}  * \phi = 1$.
+
+Now, take $Y$ be a closed irreducible set in $\mathbb{A}^n$.
+
+Then, we have the following: $A(Y) \xhookrightarrow{} \mathcal{O}(Y) \xhookrightarrow{} \mathcal{O}_{Y, p} \xhookrightarrow{} K(Y)$. That is, we have cosets that go to regular functions, that go to germs, and finally fields.
+
+In particular, we will try to show that $\mathcal{O}_{Y, p}$ is a localization of $A(Y)$. 
+
+Theorem:
+
+1) $\mathcal{O}_{Y,p} \cong (A(Y))_{m_p}$ where $m_p$ are polynomials vanishing at $p$. Recall $(A(Y))_{m_p} = S^{-1}A(Y)$ where $S = A(Y) \setminus m_p$
+
+2) $K(Y)$ is the field of quotients of $A(Y)$.
+
+3) $\mathcal{O}(Y) = A(Y)$.
+
+Proof:
+
+$\mathcal{O}_{U,p} = \{ (U’, \phi)  \} / \sim$. We already know that we have an inclusion from $A(Y) \xhookrightarrow{} \mathcal{O}(Y)$, and we have a map from $A(Y) \to (A(Y))_{m_p}$. Well, we notice that things in $(A(Y))_{m_p}$ are functions that are non 0 on $p$, which means they’re non zero on a open set around $p$. Therefore, they must be invertible in  $\mathcal{O}(Y)$. Then, we have an induced map from $(A(Y))_{m_p} \to  \mathcal{O}(Y)$. Claim: this is onto. Well, an object in $\mathcal{O}_{Y,p}$ looks like $(U, \phi)$, for $\phi = f/g$ g non-zero on $U$ But then $g \not \in m_p$, so $f/g \in A(Y)_{m_p}$.
+
+2)
+
+Same diagram, but $A(Y) \xhookrightarrow{} K(Y)$, $A(Y) \to K(A(Y))$, inducing a map from $K(A(Y)) \to K(Y)$, injective from being a morphism of fields. 
+
+So is this onto? Take a $(U,\phi) \in K(Y)$. $\phi = f/g$ g-non - anywhere on $Y$, so $f/g \in K(A(Y))$.
+
+3)
+
+We proved that if $A$ is an integral domain, that $\cap_m A_m = A$ where the intersection is over every $m$ maximal ideal in the field of fractions. So consider $\cap (A(Y))_m$. We recall maximal ideals are simply points, so there are just every point, so we have that $A(Y) = \cap (A(Y))_m \supseteq \mathcal{O}(Y) \supseteq A(Y)$
+
+Now, let’s take a look at dimensions. 
+
+Recall, if $Y$ is an irreducible, then dim$Y$ is the longest chain of prime ideals in $A(Y)$. Further, any maximal chain has the same length, so our construction doesn’t matter as long as we’re maximal. 
+
+If we look at localization at a maximal ideal, we can look at $A(Y)_{m_p}$, then we may take $S$ to be the polynomials that do not vanish at $p$. Then, this would be the prime ideals of $A(Y)$ that are contained in $m_p$. So we can say that the dimension of $A(Y)$ is the dimension of $A(Y)_{m_p}$.
+
+Alternatively, we can look at dimY as being the trascendental degree of $A(Y)$ over $k$. But now we can say $A(Y) \subseteq K(Y) = K(A(Y))$. We can write $x = f/g \in K(A(Y))$ for $f,g \in A(Y)$. claim: x is algebraic over $A(Y)$. (take $h(t) =  gt - f$) So then, we can compute it as the degree of $K(Y)$ over $k$.
+
+Now, let’s talk about quasiaffine varieties, which will correspond to the open sets. 
+
+Def: Call an open set $X$ of a closed algebraic set of $\mathbb{A}^n$ a quasi-affine variety.
+
+We want to directly compare varieties, so let’s define a notion of a morphism of varieties.
+
+Call a $\alpha: X \to Y$ a morphism of varieties if for every $\phi \in \mathcal(Y)$, $\phi \cdot \alpha \in \mathcal(X)$.
+
+Example: projection from $\mathbb{A}^{n+1} \to \mathbb{A}^n$ by sending $(x_1,...,x_{n+k}) \to (x_1,...,x_n)$. Then, you can send a point from the upper dimension to the lower dimension, thne travel along a regular function, which is a regular funciton on the upper dimension. When we have a morphism of (quasi affine) varieties $\alpha: X \to Y$, we induce a morphism of rings from $\alpha^*: A(Y) \to A(X)$ via composition. 
+
+Assume that $Y$ is an algebraic closed set of $\mathbb{A}^n$. Then, there is a one-to-one correspondence from morphisms from $X \to Y$ with k-algebra morphisms $\mathcal{O}(Y) \to \mathcal{O}(X)$.
+
+Let’s look at the other direction. We may take $Y\subseteq \mathbb{A}^n$, with $Y = V(f_1,...,f_k)$. We can look at $\alpha^*: A(Y) = k[x]/<f_1,...,f_n> \to \mathcal{O}(Y)$. 
+
+Consider the action on each point $p \to (\alpha^*(x_1), \alpha^*(x_2),...)$. Well, we can take then $f_i \to f_i(\alpha^*(x_i)) = 0$. But this commutes with the action of polynomials, so we say that this is equl to $\alpha^*(f_1)$ Then, the image is in $Y$. 
+
+If this is actually an isomorphism, then we have a 1-1 correspondence between affine varieties and finitely generated k-algebra morphisms up to iso.
+
+Suppose you have $Y$ an affine variety, a closed set of $\mathbb{A}^n$. Take a polynomial $f$, take the open set in $Y$ such that $f$ is non-0. But, we can express this as a closed set in a higher equation. Take, a new variety in $\mathbb{A}^{n+1}$. that looks like $Z = (f_1,...,x_{n+1}f - 1)$.
+
+Then, we can take a map from $U_f \to Z$ where we send a point $(x_1,...,x_n) \to (x_1,...,x_n, 1/f)$. In the other way, we can take just a projection down from $Z$ to $U_f$.
+
+\section{Oct 3rd}
+
+The idea here is that if we have a morphism $\phi: A(Y) \to A(X)$, then we take the basis $y_i$ and send it to some $\alpha_i (x_1,...,x_n)$. So $g \to g(\alpha_1,\alpha_2,...\alpha_n)$. This gives rise to a map from $X$ to $Y$ by sending each point $x_1,...,x_n$ to $(\alpha_1,...,\alpha_m)$.
+
+We wish to define the projective space $\mathbb{P}^n$. To do so, we construct $\mathbb{A}^n \setminus (0,...,0) / \sim$, where $(a_0,...,a_{n+1}) \sim (b_0,...,b_{n+1})$ if there is a $t \in k$ such that $tb_i = a_i$. We have a natural invertible association: $\mathbb{A}^n \to \mathbb{P}^n$ via $(x_1,...,x_n) \to (1,(x_1,...,x_n))$ and vice versa, we may send a point $(x_0,...,x_n) \to (x_1/x_0,...,x_n/x_0)$. In particular, this implies that we can rewrite $\mathbb{P}^n = \cup U_i$ where $U_i = \{ x_i \not = 0 \}$. a copy of $\mathbb{A}^n$.
+
+This doesn’t necessarily translate to polynomials directly because of how our coordinates interact with the projective space. However, we are fine if they are homogeneous. Call a polynomial $f(X_1,..,X_n)$ homogeneous if all terms have the same degree. Then, we can look at $V(F) = \{ (a_0,...,a_n) : F(a_0...,a_n) = 0 \} \subseteq \mathbb{P}^n$. So, this is well defined on same points in the projective space, since the $t$ scaling comes out and we retain $0$ regardless of the choice of representative element.
+
+If you have a ring of polynomials  $k[X_1,...,X_n] = k \bigoplus kX_0 .... \bigoplus kX_0^2 \bigoplus.... = \bigoplus_{d=0}^\infty \text{ degree d homogeneous polynomials }$. Call the homogenous polynomials of degree $d$, $R_d$. We call an ideal homogeneous if $I = \bigoplus_{d=0}^\infty (I \cap R_d)$. Equivalently, $I$ has to have a set of homogeneous generators.
+
+Consider the ideal $I = <X_0,...,X_n>$. $V(I) = \emptyset \subseteq \mathbb{P}^n$. But also, $V(k[x_1,...,x_n]) = \emptyset$. that is, we have two radical ideals with the same zero set. 
+
+Then, a characterization is that $I$ is a homogeneous radical ideal where $V(I) = \emptyset$ if and only if $I \supseteq <X_0,...,X_n >$. We call this the projective nullstellensatz. From $I$, we can recover an ideal $I_0 \subseteq k[x_1...,x_n]$ such that $\{ F(1,(x_1,...,x_n)) F \in I \}$. But this has to be empty, due to how the projective space works. Then, $I_0 = k[x_1,...,x_n]$. We can see since the ideal is the full ring we can write $1 = F_1(1,x_1,....,x_n)G_1(x_1,...,x_n) + ... + F_kG_k$. Here, we can rewrite as $x_i = x_i/x_0$. And we can find that $x_0 \in I$. Further, we can say that this is generally true, and so that $<x_0,...,x_n> \subseteq I$.  
+
+Looking at the topology of $\mathbb{P}^n$, we will take the closed sets to be the zero sets of homogeneous ideals. We have inclusions from $\mathbb{A}^n_i \subseteq \mathbb{P}^n$ which are continuous, and if the inverse exists, continous as well. (example: $i_0^{-1} (F = 0) = \{ F(1,(x_1,..,x_n)) \}$.
+
+Examples: $\mathbb{P}^1 = \mathbb{A}^1 \cup \{ \text{ point } \} $ because we notice if $x_0$ is $0$, then $(0,a) \sim (0,b)$ for all $a,b$. 
+
+Example: $\mathbb{P}^2$. We see the copy of $\mathbb{A}^2$ via $(x_1,x_2) \to (1,x_1,x_2)$. so we miss $(0,x_1,x_2)$, which is just a copy of $\mathbb{P}^1$. So generally speaking, we have that $\mathbb{P}^n \supseteq \mathbb{A}^n$ with also an extra copy of $\mathbb{P}^{n-1}$.
+
+Let’s now look at functions.
+
+Let $U \subseteq \mathbb{P}^n$. Let $\phi: U \to \mathbb{A}^1$. We call $\phi$ a regular function if, for every point in $U$, we can find homogeneous functions $F,G$ of the same degree, $G \not = 0$, $\phi(P) = F(P) /G(P)$.
+
+Now, if we have 2 projective varieties, that is, closed subsets of projective spaces. We may also have quasi-projective varieties, that is, the open sets of a projective variety. But anyway, what is a morphism of these varieties?
+
+Let $X,Y$ be projective varieties. We can call $\phi: X \to Y$ morphism that, if locally, it is given in coordinates by regular functions. So, the same way as affine spaces.
+
+So for example, suppose we have $y = x^2$ in affine space. Then, to get the projective equation, take $X_1 \to X_i/X_0$ and clear denominators. So we get that the projective equation should look like $X_1 X_0 = X_2^2$. So first of all, the projective axes look like a triangle (????). And our parabola looks like something that intersects two of the axis intersections. But what if we want to project? Let’s say we project from apoint in the conic. Naturally, we can project every other point to an axis, but what about the last point? For example, for $X_0 X_1 = X_2^2$, we send $(a,b,c) \to (b,c)$ if $b$ or $c$ is non 0 and $(a,c)$ if one of $a,c$ is non-zero. This is well-defined because if they are non-0, we relate them via $X_0X_1 = X_2^2$, and otherwise, when at least one is $0$, then there is only one representation.
+
+Now, another example: we can send curves from $\mathbb{P}^1 \to \mathbb{P}^3$ via $(x_0,x_1) \to (x_0^3, x_0^2x_1, x_0x_1^2,x_1^3)$. We also notice that if we intersect it back into the affine 3 space, we can reclaim the curve $(t,t^2,t^3)$. More generally, we can do this: For any $\mathbb{P}^n$ for any $d$, we can take a map $\mathbb{P}^n \to \mathbb{P}^{{d+n \choose n} -1}$. This is the Vernese embedding. So, for example, we can take $\mathbb{P}^2 \to \mathbb{P}^5$ via degree 2 polynomials, $(x_0,x_1,x_2) \to (x_0^2,x_0 x_1,x_0 x_2,x_1^2,x_1x_2,x_2^2)$, and then we have that hyperplanes in $\mathbb{P}^5$ are conics in $\mathbb{P}^2$. In general, hyperplanes of $\mathbb{P}^n$ correspond to equations $a_0x_0 + ...+ a_nx_n = 0$ up to multiplication by a constant, which is a copy of a $\mathbb{P}^m$. We call that the dual $\mathbb{P}^m$.
+
+\section{Oct 5th}
+
+We wish to show that two lines in $\mathbb{P}^2$ intersect. 
+
+We may have that equations of lines look like $a X_0 + b X_1 + c X_2 = 0$ and that $a’ X_0 + b’X_1 + c’X_2 = 0$. We may take the determinants to find the intersection: $(bc’ - b’c, ac’ - a’c, ab’ - a’b)$ and if we enforce that they are not multiples of each other, one of these must be non-0, so it is a proper point in $\mathbb{P}^2$. Now, if they are proportional instead, we have $X_0 = 0$, so lines look like $a + bX_1 + cX_2 = 0$, $b/b’ = c/c’$ and intersect somewhere on the line at infinity.
+
+We can do the same idea with planes in $\mathbb{P}^3$, just with 3x3 determinants, and we have that if the planes are not parallel, then at least one is non-0.
+
+What about lines in $\mathbb{P}^3$? We need to realize them either as the intersection of planes, or you parametrize. $(t a_0 + s a_1)$, with two free variables.
+
+In general, a Grassmanian is a way of parametrizing all linear subspaces of a fixed dimension $k$ of a projective space $\mathbb{P}^n$. Special case: $n = 3, k = 1$. Well, we just saw these are parametrized by two points and linear combinations of such, so if we know two points $a = (a_0,a_1,a_2,a_3), b = (b_0,b_1, b_2,b_3)$, then the line is of the form $sa + tb$ where $s,t$ are scalars. Assign to the line the following point in $\mathbb{P}^5$, $p_{ij} = a_ib_j - a_jb_i$ We can see that if we replace the point $b$ with some $sa + tb$, that the det just pulls out a factor of $t$.
+
+In any case, we are thinking we should get an object of codimension 4 that can parametrize every line in $\mathbb{P}^3$. We can look at the determinant of the 4x4 matrix with two copies of $a,b$ as rows, and we can get an object like $2(p_{01}p_{23} - p_{02}p_{13} + p_{01}p_{12})$. So the Grassmanian of lines in $\mathbb{P}^3$ is a quadric in $\mathbb{P}^5$
+
+So what is a product space of projective spaces? It is not like $\mathbb{P}^{m+n}$. Instead, we have to put it into another projective space with a suitable map. We call this a Segre embedding.
+
+We can take $\mathbb{P}^m \times \mathbb{P}^n \to \mathbb{P}^{(n+1)(m+1) - 1}$. We can take a point in $(x_0,x_1,....,x_n)(y_1,...,y_m) \to (x_0y_0,...,x_ny_m)$. We call components $z_{ij}$, where $i$ is the component from the first place, $j$ from the other space. We notice, that $z_{ij} * z_{kl} = z_{il} z_{kj}$ by mixing the x,y portions. So, then this image is contained within the zero set of $V(z_{ij} z_{kl}- z_{il} z_{kj})$. But how does it play with the affine space copies?
+
+Well, recall we have a copy of $\mathbb{A}^n \to \mathbb{P}^n$ by sending $(x_1,...,x_n) \to (1,x_1,...,x_n)$. and same with $\mathbb{A}^m \to \mathbb{P}^m$. So what about in the product space?
+
+Well, we send $(1,x_1,...,x_n)(1,y_1,....,y_m) \to (1,y_1,...,y_m,x_1y_1,....,x_n x_m)$ and we notice we recover the affine space as the 2nd to m+1 coordinates. So we can recover the affine space by setting $x_i’s$ to 0. or vice versa. Let’s now take a point in the Segre image with $z_{ij} \not = 0$. 
+
+Then $(z_{\alpha\beta}) \to (z_{1j}....z_{mj})(z_{i1}...z_{im})$. which is an element in $\mathbb{A}^{m+n}$. Multiplying back, we recover the point $z_{rj} z_{is} = z_{ij} z_{rs}$. We can always do this because in a projective space, there is a non 0 component.
+
+Goal: we wish to show that regular morphisms of projective varieties are closed maps. This is false for affine varieties. Example: Take the hyperbola $xy - 1 = 0$. Consider then the map that sends $(x,y) \to x$. This is a nice regular map, but its image is $\mathbb{A}^1 \setminus \{ 0 \}$, which is not closed. So we brought the hyperbola, an algebraic set, to an open set.
+
+However, doing this in $\mathbb{P}^2$, we send $(X_1,X_2,X_3) \to X_0,X_1$ or $(X_2,X_0)$, so we make sure that it’s not both $0$. So the image of the hyperbola under that map gets the missing points at infinity filled, in a sense.
+
+So, then if $X$ is a projective thing, we want to show that $X \times Y \to Y$ is a closed map. We argue that since closed is a local property, we need only do this for $Y$ being an affine space to make our lives easier.
+
+So, a closed set is the set of zeros $V(f_k(x_i,..y_j,....)$ such that each $f_k$ is homogeneous in the degrees of the $x_i$. Now we’re looking for points $b_1,...,b_m$ in the image such that there exists $x_0,...,x_n$ and $f_k(x_0,...,x_n, b_1,...,b_m) = 0$ for all $k$.
+
+Then, points not in the image are $b_1,...,b_m$ such that $f_k(x_0,...,x_n, b_1,...,b_m) = \emptyset$. So, the bad points are the ones such that the radical of $f_k$ contains $(x_0,...,x_n)$. So we have that $< f_k > \supset <x_0,...,x_n>^s$ for some power $s$. Then, we must have that $x_0^s = \Sigma f_k g_k$ by being in the span. Then, choose them all, and write it as the product of each $g_k$ with every $f_k$ of degree $s-k$. This will become a polynomial of homogeneous degree $s$.
+
+Again, looking for good points that do not span.  So, we want $(b_1,...,b_n)$ such that the vector of coefficients of $f_k$ of degree $s - deg_k$. do not span the vector space of monomials of deg s. Not spanning is a closed conditions. To get this more generally, we can just smush for $X \to Y$ the graph of map in $X \times Y$ and project back into $Y$. (Proof in Shafarevich) Theorem 1-11 p58.
+
+\section{Oct 12th}
+
+Suppose we have a morphism $\phi: X \to Y$, and we assume that $X,Y$ irreducible, $X$ projective. We look at the fibers. Define the fiber over $\b in Y$ as $\phi^{-1}(b)$. We claim that the fibers are algebraic subsets of $X$. We say this because we look at the regular functions that lead to $b$, this creates a new polynomial, after clearing denominators. Note that we need to look at open sets that intersect these, since our regular functions on a projective space may not be globally defined. But anyway, the claim is that the dimension of any fiber of $\phi \geq \dim(X) - \dim(Y)$. There is an open set on $Y$ in which we have equality.
+
+Let $b \in Y \subseteq \mathbb{A}^m$. If $\{ b \} = Y$, then dim fiber $= \dim(X)$. Otherwise, there exists polynomials that vanish on $b$ but not all of $Y$. Call such a function $h$. Then, we can look at the locu of zeros of $V(I(Y),h) \subset Y$. This must have dimension of at most $\dim Y - 1$. In particular, we may perform this iterative process to generate $h_1,...,h_k$ up to $k$ the dimension of $Y$, such that $V(h_1,...,h_k) \cap U = \{ p \}$, where $U \subseteq Y$ is an open set. Now, pull these back via $\phi$. Well, we have that $h_1,...h_k$ define the point $p$ inside $U \subseteq Y$. But $\phi^{-1}(p)$ is the inverse image of these equations. Well, locally, we look at this, we know that the image of X in Y at $p$ need to satisfy all of the regular functions locally. That is, if $\phi$ is realized as $f_1/g_1$, then we have that $h_i(f_1/g_1,...,f_k/g_k) = 0$. Here, we invoke that part that adding a constraint can only decrease the dimension by at most 1. Then, we have that the dimn of the fiber is at least dim X - k = dim X - dim Y.
+
+Now, we take open subsets of $X,Y$ afffine, and $\phi: U \to V$ given by regular functions on $U$. Looking at the morphism of rings, it must be injective. Now, write $k = \dim Y$, and $\overline{k} = \dim X$. We can take the ring of polynomials to look like $k[x_1,...,x_m]$ and $k[y_1,...,y_n]$. By the definition of the dimension, we can find $b_1,...,b_k$ algebraically independent polynomials such that $A(X)$ is algebraic over $b_1,...,b_k$. So, now we want to look at $k[b_1,...,b_k,a_{k+1},...,a_{k+\overline{k}}$, algebraically independent. Since this is algebraic, we should be able to find polynomials such that it vanishes on $X$. We look at the locu where the highest coefficient of the polynomials does not vanish. This keeps $a_{k+1}$ algebraic, and fiber at a minimum.
+
+Example, $xy = zw$. Let’s look at the point (1,0,0,0), and take the projection $x,y,z,w \to y,z,w$. Then, since the fibers fix $y,z,w$, it must come from points that look like $zw/y,y,z,w$ when $y \not = 0$. When $y$ is $0$, then either $z,w = 0$, so we either have things that came from $(0,1,0)$ or $(0,0,1)$. Then, the fiber over $(0,0,1)$ is $\{ (x,0,0,t) \}$. and same for (0,1,0), (x,0,t,0).
+
+Now, suppose $X$ is a projective variety, we have an onto morphism $\phi: X \to Y$, $Y$ irreducible, and all fibers are irreducible of dimension, then $X$ is irreducible. So, suppose $X = X_1 \cup X_2$. Since $X$ projective, the morphism is a closed map, so at least one of the images covers. wlog, suppose $\phi(X_1) = Y$. So now, look at the fibers of $\phi_1: X_1 \to Y$. Clearly, for each point in Y, the fiber of $\phi_1$ is contained within the fiber in $\phi$. Let’s also look at $\phi_2: X_2 \to Y$. Clearly, the fiber structure looks like $\phi^{-1}(y) = \phi_1^{-1}(y) \cup \phi_2^{-1}(y) $. Due to irreducibility, either $F = F_1$, or $F_2$. Let’s look at generic fibers. This should have dimension $\dim(X) - \dim(Y)$. Looking at the one over $X_2$, it should have $\dim(X) - \dim(\pi(Y))$ Then, we have that $\dim(X) = \dim(X_1) + \dim(X_2)$.
+
+Look at Grassmanian in $\mathbb{P}^3$. If you look at the map of lines into $\mathbb{P}^3$, we find that the fibers look like $\mathbb{P}^2$. So then the lines must have dimension $5$. Further it is irreducible. If we look specifically at a single line, the fiber is just a line with dimension $1$. So then the Grassmanian has dimension $4$ altogether.
+
+\section{Oct 17th}
+
+Redo proof from last time:
+
+Let $X$ be a projective variety, $\phi: X \to Y$ an onto morphism. Suppose $Y$ is irreducible, and the fibers of $Y$ are irreducible, of the same dimension. Then, we want to show that $X$ is irreducible.
+
+Assume $X = X_1 \cup X_2 \cup ... \cup X_N$, $X_i$ closed. Since $\phi$ is an onto map, and a closed map, we can say $Y = \cup_i \phi(X_i)$.Since $Y$ is irreducible, then we must have an $i$ such that $Y = \phi(X_i)$. Suppose that we renumber such that for $X_{k+1},...,X_N$, $\phi(X_{k+1}) \subset Y$ is a strict subset. Then, consider $U_1 = Y \setminus (\cup \phi(X_j))$ for $k+1 \leq j \leq N$. So, there exists a $U \subseteq U_1$, with $\phi_1 X_i \to Y$. Set the dimension of the fibers as $m_i$ Let $y \in U$. Consider $\phi^{-1}(y) \cap X_1) \cup... \phi^{-1}(y) \cap X_N)$. Since the fibers are irreducible, suppose $\phi^{-1}(y) = \phi^{-1}(y) \cap X_1$. But, since $m_i = m$, the remaining $m_i \leq m$. So we have that $\phi^{-1}(y) = \phi^{-1}_1 (y)$. Since this is true for every $y$, due to the structure of the fibers, we have that $X = X_1$.
+
+Suppose $X,Y \subseteq \mathbb{A}^n$, with $X \cap Y \not = \emptyset$. Call $Z$ a component of $X \cap Y$. We have that $\dim Z \geq \dim X + \dim Y - \dim (X \cap Y)$, and $\codim Z \leq \codim X + \codim Y$. Example. Take the diagonal, as a subset of $\mathbb{A}^n \times \mathbb{A}^n$. This is a closed set since we can take it as the zero set of $V(x_i - y_i)$. If we take $X,Y$ varieties, and we include this as well, we can look at the intersection with the diagonal as well. But, then we can identify $X \cap Y \cong (X \times Y) \cap \Delta$. Note that we know that $X \supseteq V(f)$ for some $f$, then we must have codimension as most 1, that is the dimension can only go down by at most 1 per variable. Then, here, we know that from the construction of $\Delta$, $\dim (X \cap Y) \geq \dim(X \times Y) - n = \dim X + \dim Y - n$.
+
+Now, if $X,Y \subseteq \mathbb{P}^n$, we get the same bound, that is, $\dim (X \cap Y) \geq \dim X + \dim Y - n$, but further, if $\dim X + \dim Y - n \geq 0$, then $X \cap Y$ is non-empty.
+
+Given $X,Y \subseteq \mathbb{P}^n$, we can look at $\overline{X} \subseteq \mathbb{A}^{n+1}$, that is, the cone of $X$, that is, $(x_0,...,x_n) \in \mathbb{A}^{n+1}$ then $(\lambda x_0,....,\lambda x_n) \in \mathbb{P}^n$ or it’s the origin. Clearly, this is algebraic since we can take the homogeneous equations for the variety in $\mathbb{P}^n$, and further, we have that $\dim \overline{X} = \dim X$ and same for $Y$. Further, by construction, their intersection is non-empty, having the origin. Then, by our upper bound, we have that $\dim \overline{X} \cap \overline{Y} \geq \dim \overline{X} + \dim \overline{Y} - \dim \mathbb{A}^{n+1} = \dim X + \dim Y + 1 + 1 - (n+1) = \dim X + \dim Y + 1 - n \geq 1$. But that means our intersection of the overlines cannot be just the origin, as that has dimension 0. Then, the intersection of the projective spaces must be non-empty.
+
+Now, consider the variety in $\mathbb{P}^3$, $Q = V(X_0X_1 - X_2 X_3)$, of dimension 2. We see that we want $ax_0 = b_2, ax_3 = bx_1$. Then, we have at least two families of lines $X: x_0 = 0, x_3 = 0$ and $Y: x_1 = 0, x_2 = 0$, which do not intersect since otherwise, they are all $0$. So, we have that $\dim X + \dim Y - \dim Q = 0$, but the intersection is empty. This is because $Q$ is merely a subvariety, not the entire projective space.
+
+Local properties: 
+
+Suppose $ X = V(f)$ in an affine space. Let’s look at the tangent line through a point $p \in X$, that is, $f(p) = 0$. Well, we can say that the point is at $p = (a_1,...,a_n)$, and define the line as having form $(a_1,...,a_n) + t(v_1,...,v_n)$. We want to consider $f(a_1 + tv_1,...,a_n + t v_n))$, which since it vanishes at $a_1,...,a_n$, $t$ will divide. But if this quantity is divible by $t^2$, then we say that the line is tangent. 
+
+Example: $y^2 - x^3$. Lines at the origin look like $(t,mt)$, viewing as $y = mx$. Then, $f(t,mt) = m^2t^2 - t^3$, since $t^2$ always divides thta, this means that every line is tangent, regardless of $m$.
+
+This is what we want for a single polynomial, and more generally, we would just want this to be true for every polynomial in the ideal for the variety. To be precise, if $X = V(< f_1,...,f_n > )$. Then, we say the line is tangent to $X$ at an $p = (a_1,...,a_n) \in X$ if for every $f_i$, the line is tangent to $V(f_i)$. We also say that the vector is tangent, that is, if the line is of form $(a_1,...,a_n) + t (v_1,...,v_n)$, then $(v_1,...,v_n)$ tangent at $(a_1,...,a_n)$. We call the set of tangent vectors $T_p(X)$.
+
+We note that we can do a Taylor series type formulation, with $f(x_1,...,x_n) = f(a_1,...,a_n) + \Sigma \partial f/\partial x_i (x_i - a_i) + ...$ Since we live in a variety, the constant term is $0$. Then, we have that $(v_1,...,v_n)$ is tangent if the linear terms collectively vanish, that is $\Sigma \partial f / \partial x_i \times v_i  = 0$. This is like a dot product $< \partial f / \partial x_i,...,> < v_1,...,v_n > = 0$. But this is itself a polynomial, which tells us the tangent space is a linear subvariety of $\mathbb{A}^n$. We hope that the tangent space has the same dimension of the variety, unless we have a singularity.
+
+Now, we want to talk about the cotangent space, which we want to realize as the dual. Let $V$ be a vector space, over a field $k$, then define $V^*$ as the set of linera maps from $V \to k$. This also has the structure of a vector space. Now, let $X$ be a variety, and $p$ a point on the variety. Recall we defined the germs of functions of $X$ at $p$, $\mathcal{O}_{X,p}$. This is a local ring, with maximal ideal the functions that vanish at $p$, and we notice that $\mathcal{O}_{X,p} / m \cong k$. We say that the cotangent space is $m / m^2$, which admits a well-defined multiplication against the elements in $\mathcal{O}/m$. So, why does this correspond to the dual of the cotangent space? Let $f \in \mathcal{O}_{X,p}$, and take $v$ a vector. We can define the directional derivactive $d_v f = \partial f / \partial x_1, ... \partial f / \partial x_n)$ evluated at the point $p$. In particular, this is actually the same as  $ d_v f  = d_v (f - f(p))$, which we can identify as a member of $m$,  since the new function vanishes at $p$. Further, we see that if we live in $m^2$, the directional derivative vanishes, so we get a linear map in $m/m^2$.
+
+\section{Oct 19th}
+
+Recall that we defined the tangent space space as looking like $f \in I(X)$, the vector that looks like $<\partial f/\partial x_i>$ evaluated at a point $p$, and $T_{X,p}$ as vectors that vanish by dot producting.
+
+Recall that we loook at the cotangent space as germs of functions at $p$, as form $m/m^2$. We claim that this is a vector space, dual to $T_p$. We can realize this as a $\mathcal{O}/m$ module, isomorphic to $k$ vector space. To show that this is a dual, we need to define a non-degenerate bilinear form. We define it by taking an element of the dual $[f]$ and a vector orthogonal to the partials, and send it to $<\partial f / \partial x_i> \cdot v$. Then, this is fine so long as we are non-degenerate, that is there is no $v$ such that for all $[f]$, $<[f],v> = 0$, or any $[f]$, unless they are $0$ already.
+
+Let’s look at this in a general setting quickly:
+
+Suppose $V_1,V_2$ are vector spaces, and we have a bilinear form to $k$ such that we are non-degenerate, that is, there are no $v_1, v_2$ such that $<v_1,v_2> = 0$ is identically 0 across all other $v_2, v_1$. Then, we can realize $v_1$ as an element of Hom($v_2,k$), by sending $v_1 \to (v_2 \to <v_1,v_2>)$ This must be linear because we started from a bilinear form. We can also see that this realization is one to one. Then, we have that if such forms exists, we have that $\dim V_1 \leq \dim V_2^*  = \dim V_2 \leq \dim V_1^* = \dim V_1$, thus $V_1 \cong V_2$. 
+
+Back to cotangent spaces:
+
+Suppose $v \in T_p$ such that for all $[f]$, $<[f],v> = 0$. Let’s look at the most obvious maximal elements, $x_i - a_i$. Well, then $\partial f = < 0,...,1,...0 >$ 0 other than the i-th component. Then, we have that the i-th component of $v$ must be $0$. We may repeat this argument for each $x_i$ to find $v = 0$. Now, suppose we have a $[f] \in T_p^*$ such that $<[f],v> = 0$ for any $v$. We recall the definition of $T_p$. This is actually orthogonal to the set of vectors of the form $\partial g/ \partial x_i$ for $g \in I(x)$. If this would be potentially degenerate, this would be $f \in m_p$ such that it annihilates all $v$. But by deifnition, this must be in $T_p$, in its span. Then, we should be able to find $g \in I(x)$ such that $\partial f / \partial x_i = \partial g /\partial x_i$ for all $i$. Then, their difference cannot be linear, but must be at least quadratic, so $f - g \in m^2$. Then, $[f - g] = [0] \in m / m^2$. But, since $g \in I(x)$, $[f] = [f-g] = [0]$.
+
+We are going to defiine singular and non-singular points. We call a point $p$ non-singular of $X$ if $\mathcal{O}_{X,p}$ is a regular local ring. If $R$ is a local ring, we call it regular if there exists $n$ elements, $f_1,...,f_n$ in the maximal ideal such that $f_i$ spans $m$ and $n = \dim R$, where we understand dimension here to be the length of the longest chain of ideals. We do know that if $R$ is a local ring, then $\dim R \leq $ the smallest number of generators to make $m$. we actually also have that the smallest number of generators of $m$ is the dimension of $m/m^2$, where we get equality via Nakayama’s Lemma (trust monserrat) (we get dim < generators automatically from the projection). So, then, since this is the dim of the cotangent space, and thus the tangent space, we need then that the $\dim T_{X,p} = \dim X$. Note that we term $f_1,...,f_n$ spanning $m$ as local parameters. We can think of this is identifying a copy of affine space near our point.
+
+Example, look at $y = x^2$ at (0,0). Well, the coordinate ring is $k[x,y]/(y-x^2) \cong k[x]$, and looking at the localization, we get $k[x]/(x)$, spanned by single element, which matches the dim of the parabola, a curve dim 1.
+
+Now, let’s look at what we think should be a singular point. Let’s look at $ y^2 - x^3$. Coordinate ring should look like $k[x,y]/(y^2 - x^3) \cong k[x]  \bigoplus y k[x]$. At the origin, we look like $<x,y>$, which we cannot span by a single element, but we have a curve. so, singular. However, for example, if we’re at $1,1$, We can look at $y^2 = x^3 \implies (y+1)(y-1) = (x-1) (x^2 + x + 1)$. But we see that $y + 1$ must be invertible, so we can express the other generator in terms of the other, so we only need one generator.
+
+Now, recall in affine space we say that we’re tangent if we vanish on all the partials of the generators of our ideal. Then, looking at this as a matrix of partials, we can see that $T_{X,p}$ is the null space of the Jacobian. Then the singular points are if the dimension o fhte tangent space is too big, or equivalently, the rank of our matrix is too small. Then we have that the singular locus of vanishing of minors of a certain dimension, but the elements themselves are polynomials, being a matrix of partials, so the minors are polynomials. Therefore, these should be closed. But non-empty?
+
+Assume we have a field of characteristic 0, $X \subseteq \mathbb{A}^n$ is a hypersurface. By being a hypersurface, we can talk about $X = V(f)$, a single polynomial, and we can say that it breaks into $f = f_1f_k$ where $f_i$ is irreducible, and we can view $X = V(f_1) \cup ... \cup V(f_k)$. Now, take $p \in V(f_i$ and not in any others. Since this is a local condition, we may take $X$ to be irreducible actually, defined by a single irreducible. 
+
+Using the machinery, we have singular points as being the zero set of $< f, \partial f / \partial x_i >$. We note that for each $i$, $\partial f / \partial x_i$ has degree one smaller than $f$, so $f \not | \partial f / \partial x_i$, for any $i$. So, we have that for each $i$, each define a closed proper subset of $f = 0$.Then, the non-singular locus is the relative complement of the intersection of such sets.
+
+Now, what if we are in the general cases? So we want to show that every affine variety over a field of characteristic 0 is birationally isomorphic to a hypersurface. We wish to look at the field of functions of an irreducible variety. We wish this to be isomorohic to the field of functions of a hypersurface. Suppose $X$ has dimension $m$ in the ambient space $\mathbb{A}^n$. We can look at the ring of functions for $X$, this is an algebraic extension of dim $m$, so in the full ring, we have that $k[x_1,...,x_m,...,x_n]$ with the first m being algebraically independent, and the rest dependent. When we move to the field of functions, we can look at this as $k[(x_1,..,x_m)(x_{m+1},...,x_n)$ but by the primitive element theorem, we can look at this as $k[(x_1,..,x_m)(y) \cong k[(x_1,..,x_m)[y]/f(x_1,...,x_n,y)$. Then, we can view this in $\mathbb{A}^{n+1}$, the hypersurface defined by $f(x_1,...,x_n,y) = 0$ So, we can find a birational map, that is, a map that is a isomorphism on quasiaffine varieties and we are done.
+
+\section{Oct 24th}
+
+Let $X$ be an algebraic variety, $p \in X$. We want to show that $\mathcal{O}_{X,p}$ is an integral domain $\iff$ $p$ is in only one component of $X$.
+
+Suppose $X = \cup X_i$, and $p \in X_1$ and not in every other $X_i$. We may replace $X$ with $X \setminus \cup_{i \not = 1} X_i  = X’$. And we have that $\mathcal{O}_{X’,p} = \mathcal{O}_{X,p}$. We may take $X \subseteq \mathbb{A}^n$, which is irreducible. So $I(X)$ is prime. So we’d be looking at $(k[x_1,...,x_n]/I(X))_p$, localized at the maximal ideal of $p$. But that interior is an integral domain, since because $I(X)$ is prime we can view it as a subset of the field of fractions.
+
+Now, suppose $P \in X_1 \cap X_2$, and $X_1 \not \subseteq X_2$ and $X_2 \not \subseteq X_1$. We can look specifically at $I(X_1), I(X_2)$. By our inclusion, we have that $I(X) \subset I(X_1), I(X_2)$, a proper subset, so let’s take $f_1 \in I(X_1) \setminus I(X)$ and same for $f_2$. However, we notice that $f_1 f_2 \in I(X)$. Then, in $\mathcal{O}_{X,p}$, we have $[f_1][f_2] = [0]$ but neither of them are $[0]$, so we cannot have an integral domain.
+
+Recall that we have $p$ as a non-singular point if the local ring is a local regular ring. An algebraic result is local regular rings are integral domains. So, if $p$ is a non-singular point, then $\mathcal{O}_{X,p}$ is also an integral domain, and by the last result, we have that $p$ lives in at most one component of $X$.
+
+Example, since the intersection of the axes in $\mathbb{A}^2$ lives in multiple irreducible spaces, then the origin must be singular. 
+
+Let $X \subset \mathbb{A}^n$, and suppose $\dim(X) = d$. We call $X$ a complete intersections if there exists $f_1,...,f_{n-d}$ such that $X = V(f_1,...,f_{n-d})$. Even better, we take $I(X) = < f_1,...,f_{n-d} >$. Now, we want to show that if $p \in X$ is non-singular, and the dimension of $X$ at $p$, that is $\dim_p X = d$, that is, the dimension of the components that contain $p$, that locally near $p$, $X$ is a complete intersection.
+
+Since $X$ is a variety, we can take $X = V(x_1,...,x_m) \subseteq \mathbb{A}^n$. We can look at the tangent space by looking at the Jacobian again. Evaluating at $p$, since $p$ is non-singular, we should get dimension $d$ in vectors that satisfy $\{ v : J(p) \cdot v = 0 \}$, but this implies that the rank of $J(p)$ is exactly $n-d$. Then, there exists $f_{i_1},...,f_{i_{n-d}}$ such that when you look at these, the remaining Jacobian has rank $n-d$.
+
+So, now let’s look at $X’ = V(f_{i_1},...,f_{i_{n-d}})$. Since of course, $X \subseteq X’$, we have that $T_{X,p} \subseteq T_{X’,p}$, so $\dim T_{X,p} = d \leq \dim T_{X’,p}$. But looking at the Jacobian for just the $i_{n-d}$ euqations, that has rank exactly $n-d$, so we have that $\dim T_{X’,p} \leq d$, so it is exactly equal to $d$.
+
+So we have that $ n - (n-d) \leq \dim X’ \leq \dim T_{X’,p}  = d$, since the dimension of a subspace can be at most $n-d$ less, due to being cut out by that many equations. Then, we have that locally at $p$, $X$ can be defined by $f_{i_1},...,f_{i_{n-d}}$, and so at $p$, $X$ is a local complete intersection.
+
+Classical way of distinguishing types of singular points - use the tangent cone.
+
+Let’s assume we have $X \subseteq \mathbb{A}^n$, with equations $f_1,...,f_k$. We notice that for $p \in X$, if we make a change of coordinates so that this is the origin, when we look at the tangent space, we are looking at the linear part of the $f \in I(X)$. But, we notice that if the degree is high enough, $f$ may not have a linear part, so we can be looking at the first piece instead which is non-0.
+
+For example, when we look at $y^2 - x^3$, we look at the $y^2$ component. These give us ideas on what are the interesting lines near our singular point. 
+
+This is fine in $\mathbb{A}^n$, but otherwise, we have to be a bit more general, and look at the completion of a local ring. Inverse limit: Take $A_n$ rings parametrized by $\mathbb{N}$, and assume they come with morphism of rings $\phi_n: A_n \to A_{n-1}$. Then, we define the inverse limit $\lim_{\leftarrow} A_n = \{ (a_n )_{n \in \mathbb{N}} : a_n \in A_n, \phi_n (a_n)  = a_{n-1} \}$. The claim is $A$ is a ring, where we take the addition to be sums of sequences, and products to be products of sequences, which works well because of the fact that we take morphisms.
+
+So, let’s just define $\mathcal{O} = \mathcal{O}_{X,p}$, and let $m$ be the maximal ideal. Recall that we have $m^n \subset ... \subset m^2 \subset m$. So we can construct it as $A / m^n \to A / m^{n-1}$ because we know that $m^{n-1} / m^n$ is an ideal in $A / m^n$. So using this, we define $\hat{\mathcal{O}} = \lim_{\leftarrow} A / m^n$. So long as the rings are nice enough, i.e. Noetherian, etc, these morphisms are injective. This is iff $f,g$ agree to order $n$ for every $n$, then $f = g$.
+
+Example, take $X = \mathbb{A}^n, p = (0,...,0)$, and we can say $\mathcal{O}_{X,p} = k[x_1,...,x_n]_{(x_1,...,x_n)}$.
+
+Then, we look at $A / (x_1,...,x_n)^n$. Since we view this as modding out by polynomials of degree greater than $n$, we can see this completion as power series.
+
+Now, if we consider $p$ to be non-singular, in a variety X, then if $\dim_p X = d$, then the maximal ideal in $\mathcal{O}_{X,p}$ is spanned by d polys.
+Then, we can construct a morphism from $k[x_1,...,x_d] \to \mathcal{O}_{X,p}$ via $f(x_1,..,x_n) = f(f_1,....,f_n)$. This map factors through the localization, and gives rise to a morphism of local rings. In particular, when we take the completion, this is an isomorphism. That is, $k[[x_1,...,x_d]] \cong \hat{\mathcal{O}}_{X,p}$. If $\hat{\mathcal{O}}_{X,p} \cong \hat{\mathcal{O}}_{V(xy),(0,0}$, then we call $p$ a node of $X$, as a singular point. 
+
+This brings up one of the harder problems in algebraic geometry, how to find a variety that is very similar to another, but not singular. This process is called desingularization.
+
+That is, let $X$ be possibly singular, we want to find $X’$ non-singular, and a birational map $\phi: X’ \to X$. (that is, there exists an open dense set $U \in X$ and $U’  \in X’$ such that $\phi: U’ \to U$ is an iso. This can be done classically for curves and surfaces (dim 1, 2), but extremely hard above that.
+
+One approach is to find normal varieties. Ignoring geometry for a second, looking at the rings. We call a ring $R$ normal if it is an integral domain and it is integrally closed inside $K(R)$. That is, if we have an inclusion of rings $R_1 \subset R_2$, we say that $x \in R_2$ is integral over $R_2$ if there exists $f(t)  \in R_1[t]$ with leading coefficient $1$, and $f(x) = 0$. For example, what rational numbers are integral over $Z$. This can only be the integers. So, the integers are integrally closed over the rationals. 
+
+So, we say that a variety is normal if the local rings are also integrally closed. To be precise, for $X$ an algebraic variety, we call it normal if $\mathcal{O}_{X,p}$ is integrally closed for all $p \in X$. Non-singular varieties are normal. Normal varieties are potentially singular only in codimension 2 and above.
+
+\section{Oct 26th}
+
+Try to talk about pre-varieties:
+
+First, start with $X$ as a irreducible topological space. We call $X$ a pre-variety if we can cover with a finite number of open sets, $X = \cup_i^n U_n$, such that there exist affine varieties $X_i$ that admit $\varphi_i: X_i \to U_i$ a homeomorphism such that we are compatible on the intersections, that is, if we have a non-empty intersection $\phi_i(U_i) \cap \phi_j(U_j) \subseteq X$, we can pull back into $X_i, X_j$  - precisely, we say that we wish $\phi_j^{-1} \phi_i$ to be an isomorphism of affine varieties.
+
+Then, we say that the $X_i \to U_i$ are charts, and the collection of these charts, we call an atlas for $X$.
+
+But now, we also want to be able to construct our big space if we only have data about the $\phi_i$ and $X_i$. So supose we have $X_i$ affine, and we have $X_{ij} \subseteq X_i$ and $X_{ji} \subseteq X_j$ such that we admit an iso between $\varphi_ij: X_{ij} \to  X_{ji}$, then, we need to go into open sets that admit isomorpisms. And we need these to satisfy $\varphi{jk}\varphi_{ij} = \varphi{ik}$. and we define $\varphi_{ii}$ acting as identity. Then, we build the target space $X$ as being $X = \cup X_i / \sim$ where we identify $x_i \sim \phi_{ij} x_i$, that is, we identify objects that live in the gluing spaces.  
+
+If we have $X$ as a topological space, remind ourselves that $X$ is Hausdorff if for any two distinct points, we can always find two disjoint neighborhoods that contain them separately. That is, we can find $U_x, U_y : x \in U_x, y \in U_y, U_x \cap U_y = \emptyset$. We recall this fails terribly for the Zariski topology, because most open sets end up being dense at least in irreducible components.
+
+However, we do something similar: Take $x \not = y \in \mathbb{A}^n$, in particular, suppose $x_i \not = y_i$, that is, the i-th component. Look at $U = \mathbb{A}^n \setminus V(x_i - a_i)$, so we can find an open set that contains $y$ but not $x$.
+
+Look at the diagonal $\Delta = \{ (x,x) \} \subseteq X \times X$. If $X$ is a topological space, and we work under the Zariski topology, then we have that $X$ is Hausdorff $\iff \Delta$ is closed in the product topology. Well, $\Delta$ closed $\iff$ $X \times X \setminus \Delta$ is open. So, then, for $(x,y) \in \Delta$, then we can find an open set $U$ such that $(x,y) \subseteq U$ and $U \cap \Delta = \emptyset$. Then, we may find $U_x \subseteq X, U_y \subseteq Y$ such that $U_x \times U_y \subseteq U$ which gives us what we want. These are all biconditional, so we are done.
+
+Now, we want to look at $X$ an affine variety, and show that $\Delta$ closed in $X \times X$ with the Zarisky topology of $\mathbb{A}^n \times \mathbb{A}^n$. This is pretty easy, just look at $\Delta = \Delta_{\mathbb{A}^n} \cap (X \times X)$, so we just take these as the polynomials $x_i - y_i$. 
+
+But note that if you take the lines glued at $\mathbb{A}^1$ where we identify everything but the origin via identity, its diagonal is really fucked up.
+
+Another fun gluing: consider gluing $\mathbb{A}^1$ copies again, but now instead identify everything but the origin via $t  \to 1/t$ and vice versa. That clearly is an iso. And this we can identify as a projective line. (????). Where we send $t$ on one of the copies of $\mathbb{A}^1$ to $(1,t)$ and the other one to $(t,1)$. I can validate that this is a proper gluing with a real chart/atlas.
+
+Recall that $X$ is a quasiaffine variety if it is an open set of an affine variety. To motivate the next section, we recall in the atlas construction, we only want a finite number of affine sets to cover quasiaffine varieties. So, we wish to show that every quasiaffine variety admits an atlas with every piece of the cover an affine set. Well, suppose $X \subseteq \overline{X}$, an affine variety. Then, we can express $X = \overline{X} \setminus V(f_1,...,f_k)$. Well, recall that $V(f)1,...,f_k) = \cap_i^k V(f_i)$. Then, we may reexpress $X = \cup_i \overline{X} \setminus V(f_i)$. But, $\overline{X} \setminus V(f_i)$ is affine, so those are affine. So for example, we look at $\mathbb{A}^2$ minus origin like $\mathbb{A}^2 \setminus \{ x = 0 \} \cup \mathbb{A}^2 \setminus \{ y = 0 \}$.  We recall we can identify these as hypersurfaces one dim higher, so we can identify a point in $\mathbb{A}^2 \setminus \{ x =0 \}$ in $\mathbb{A}^3$ via $(x,y) \to (x,y,1/x)$. 
+
+Now, let’s look at functions on these pre-varieties. So, suppose $f: X \to k$, k the underlying field. Then, we say that $f$ is regular if $f \cdot \phi_i$ is regular on each $X_i$. So, now we wish to compute the regular functions on $\mathbb{P}^1$. Well, look at our identifications. We know that the regular functions on $\mathbb{A}^1$ are simply the polynomials. So then, we must have that $f(t,1)$ is a polynomial in $t$ and $f(1,s)$ is a polynomial in $s$. Now, if we write out a generic regular function $a_n x_0^n + a_{n-1} x_0^{n-1} x_1 + ... + a_0 x_1^n/b_n x_0^n + b_{n-1} x_0^{n-1} x_1 + ... + b_0 x_1^n$, and evauluate at $(t,1), (1,s)$, the only way we end up with a polynomial in $t,s$ in the end is if the thing is constant.
+
+Now, given two different atlases of one single $X$, when are they equivalent. Since we have a map to the affine varieties now for the regular functions, then that means we can say that they are equivalent when they induce isomorphisms. 
+
+That is, suppose we have $X = \cup U_i, \phi_i: X_i \to U_i, X = \cup V_j, \phi_j: X_j\to V_j$, we say these atlases are equivalent if they give rise to the same regular functions on $X$.
+
+Example, we can identify $\mathbb{A}^2 \setminus (0,0)$ either as deleting the coordinate axes, or maybe$ x+y = 0, x-y = 0$. In the first case, the regular functions look like $f(x,y)/x^m$ or $f(x,y)/y^n$ respectively. In particular, since they have to align on the intersection, we must have that $f/x^m = g/y^n$, cross multiplying we see that $y^n f = x^m g$, Assuming that the regular function was reduced, we have that $y^n | x^m$. But that implies $n = m = 0$, so regular polynomials are exactly $k[x]$. Now we can do the same thing, by transferring a polynomial $f(x,y)/x^m \to f(x,y)/(x-y)^m$ and same idea for $g$. But then, we can make a similar argument.
+
+\section{Oct 31st}
+
+Recall, take $X$ as a topological space, and for now, take it as irreducible. We call it quasi-affine if it admits an atlas, that is $X = \cup U_i$, where each $U_i$ is open, and admits a map from affine spaces $\varphi_i: X_i \to U_i$, cts, bijection, and intersections play well. 
+
+Recall also that we want to talk about when atlas are equivalent structurally. We say that this happens when they are compatible, that is, when we can identify the $U_i \cap U_j’$ with an isomorphism from the inverse maps. That is, the gluings line up in a way.
+
+We recall, we just take regular functions as functions from $X \to k$, and we call them regular when it is compatible with the atlas, that is, if $X = \cup_i U_i$, then we call $f$ a regular function if $f \cdot \varphi_i$ is regular on $X_i$. We would want this to play well with a change of atlas too, that is, if $\phi^{-1}_j(U_j’ \cap U_i)$ as we vary over $i$ covers $X_j’$, so we can use the isomorphism from $X_i \to X_j$ from the change of atlas to maintain a regular function.
+
+Equivalently, we say that $f: X \to k$ is regular if for every affine open set in $X$, $U \to X \to k$ is a regular map of affine varieties.
+
+Now, let $X,Y$ be quasivarieties, and we call $\phi: X \to Y$ a morphism of quasiaffine varieties if, when we look at the atlas of $X,Y$, it induces a regular map of affine varieties in every chart.
+
+That is, suppose $X = \cup U_i, Y = \cup V_i$, and let $\alpha: X \to Y$. Fix a $V_j$, we can look at $\cup_i (\alpha^{-1}V_j \cap U_i)$. This should come from maps $\phi^{-1}$ in $X_i$. These can also travel via $\alpha$ to $V_j$, which have their own charts. Then, we want the induced map from $\phi_i^{-1}\alpha^{-1}V_j \to Y$ to be a regular map of affine varieties.
+
+Equivalently, we call $\alpha: X \to Y$ a morphism of quasiaffine varieties if, for every regular function $f: Y \to k$, the composition $f \cdot \alpha: X \to k$ is a regular function on $X$. (this is a good exercise to show equivalence)
+
+As we expect, if $\alpha: X \to Y, \beta: Y \to Z$ as morphisms of quasi-affine varieties, then $\beta \cdot \alpha: X \to Z$ is as well. We can look at this by compositions of affine morphisms by using our atlas. 
+
+We recall that in affine varieties, these corresponded to finitely generated $k$-algebras, which preserved morphisms of varieties as morphisms of k-algebras.
+
+That is, assume $X \subseteq \mathbb{A}^m, Y \subseteq \mathbb{A}^n$ then we have an association to $k[x_1,..,x_m]/I(X), k[x_1,..,x_n]/I(Y)$, then a morphism from $X \to Y$ gives rise to a morphism from $k[x_1,..,x_n]/I(Y) \to k[x_1,..,x_m]/I(X)$. This looks like it can still work if $Y$ is affine and $X$ is quasivariety. In particular, if $X$ is quasiaffine, we call $A(X)$ th ering of functions such that it is made up of regular functions from $X \to k$, which forms a $k$-algebra.
+
+Claim: Let $X$ be a quasiaffine variety, $Y \subseteq \mathbb{A}^m$ an affine variety. Then, we have a correspondence from $\{ $ morphisms $X \to Y \} \iff \{ m$-ples of functions $\phi_1,...,\phi_m \in A(X) : $ for $f \in I(Y), f(\phi_1,...,\phi_m) = 0$. 
+
+How? Suppose we have $\alpha: X \to Y$, and we can see the coordinate functions $y_m: Y \to k$ that extracts the $k$-th coordinate. Then, we just look to see that $y_m \cdot \alpha$ are regular, which they must be, as compositions of such. Further, since the image of $\alpha$ is a subset of $Y$, they must vanish on $I(Y)$.
+
+Conversely, suppose we have an $m$-tuple of functions on $X$ such that $f(\phi_1,...,\phi_m) = 0$ for all $f \in I(Y)$. First, define $\overline{\alpha}: X \to \mathbb{A}^m$ via $p \to (\phi_1(p),...,\phi_m(p))$. So, we need to look at the charts that go like $X_i \to X \to \mathbb{A}^m$. But, since $X_i, \mathbb{A}^m$ are affine, we just need to look at coordinates. But, since we vanish on polynomials in the ideal, our point in $\mathbb{A}^m$ must be in $Y$. 
+
+First, let $X,Y$ be pre-varieties. What is the object $X \times Y$ first? Well, we can say $X = \cup_i U_i, Y = \cup_j V_j$ equipped with maps $\phi_i, \psi_j$, so then we say $X \times Y = \cup_{i,j} U_i \times Y_j$ with maps of the form $\phi_i \times \psi_j: X_i \times Y_j \to U_i \times V_j$.
+
+Now, we want to look at the diagonal for $x \in X$, $\Delta = \{ (x,x) \} \subseteq X \times X$. We want $X \to X times X$ to be a morphism of quasiaffine varieties. Well, we send a point $x \to (x,x)$, which takes a point from an underlying $U_i \to U_i \times U_i$. Pulling back, this comes from an $X_i \times X_i \to X_i$, and we should be good from the morphism of affine varieties. In particular, $X$ quasivariety is a variety if the diagonal is closed in $X \times X$.
+
+For example, if $X$ is an affine variety, then the diagonal is closed in $X \times X$.  You just take them as $V(x_i,y_i)$.
+
+A criterion that helps us: we have that a quasivariety X is a variety $\iff$ for every $p,q$, there exists an open set such that $p,q \in U$, $\Delta \cap U \times U$ closed in $U \times U$. 
+
+Rightwards is easy, since if $X$ is a variety, we take $U$ to be itself, and we’re done.
+
+Leftwards, need some work. Let $p,q \in X$, and suppose there’s always a $U$ such that $\Delta \cap U \times U$ is closed. Well, let’s consider $X \times X \setminus \Delta$ and take a $(p,q)$ in here. In particular, look at $U \times U \setminus \Delta$. This is an open set because $U \times U \cap \Delta$ is closed. So, $(p,q) \in U \times U \setminus \Delta$, so we’ve found an open neighborhood. So we have that $X \times X \setminus \Delta$ is open, thus $\Delta$ is closed, and $X$ is closed. 
+
+Example of a non-variety - the gluing we talked about in class, $\mathbb{A}^1 \cup \{$ point $\}$. In particular, look at the cartesian product. This has form like $\mathbb{A}^2 \setminus (0,0) \cup \{ $ 4 points $ \}$. Well, we look at the diagonal, which only has two of those 4 origin points. We look at the charts with these product, which all look like a copy of $\mathbb{A}^1 \times \mathbb{A}^1$. In the charts, the one with the missing points will not have the full diagonal, and therefore the diagonal cannot be closed. 
+
+For $X$ an abstract variety, we defined regular functions and defined the germ of functions at a point, which ends up being a local ring. This has a maximal ideal, wiht a cotangetn space $m_p / m_p^2$.
+
+\section{Nov 2nd}
+
+Talk about curves today.
+
+Let $C$ be a curve, $p$ a non-singular point on $C$. We want to show that there exists an open set $p \in U \subseteq C$ and a $t \in \mathcal{O}_U$ such that $t(p) = 0, t(q) \not = 0$ for any $q \in U \setminus \{ p \}$. We want that for all $p \in V \subseteq U$ open, for all $f \in \mathcal{O}_V$, $f = t^\nu g$ for some $g \in \mathcal{O}_V, g(p) \not = 0, \nu \in \mathbb{N}$. such that for all $f \in \mathcal{O}_{V - \{ p \}}$, there exists a $\nu$. In particular, $\nu$ is invariant for the choice of $f$, although $g$ may change.
+
+We have to choose $t \in \mathcal{O}_{X,p}$ such that $t$ spans the maximal ideal. Then, for $t$, we have some $U’, t$ such that $(U’,t) \in \mathcal{O}_{X,p}$ is a representation of $t$. In particular, we take $U = U’ \setminus \{ p’ : t(p) = 0, p \not = p’ \}$. Let’s make sure this works. Let $V \subset U$, and $f$ is regular in $V$. We want that $t | f \iff f(p) = 0$. Clearly, since $t(p) = 0$, if $t | f \implies f = 0$. Now, suppose $f(p) = 0$ for f a regular function on $V$. We recall we can take $f \in \mathcal{O}_V \to \mathcal{O}_{X,p}$, that lands in the maximal ideal. So, we can say that $f$ has a $p \in V_1 \subseteq V$ such that $f = tg$ on $V_1$, because the maximal ideal looks like $<t>$. Now, if we look at $V \setminus \{ p \}$, since $t$ is only 0 at $p$, $1/t$ is regular here. Now, take $V = V’ \cup V \setminus \{ p \}$. So, we have a function that is regular on two pieces of an open covering of the bigger set, thus $f/t$ is regular on all of $V$. So we can say that $f/t = f_1 \in \mathcal{O}_V$, that is, $f = f_1t \in \mathcal{O}_V$. Now, if $f_1(p) \not = 0$, we are done, and $\nu = 1$. If not, we repeat this process with $f = f_1$. This must terminate, because $\cap m^{\nu} = \{ 0 \}$, that is, the powers of the maximal ideal terminate(Noetherian).
+
+Now, suppose $f \in \mathcal{O}_{V \setminus \{ p \}}$. Then, we may view this as a subring of $K(\mathcal{O}_V)$, thus we can view it as $f = f_1/f_2$, where $f_1,f_2$ regular on $V$. But $f_1,f_2$ regular, so they have forms $f_1 = t^{\nu_1} g_1, f_2 = t^{\nu_2} g_2$, so $f = f_1/f_2 = t^{\nu_1 - \nu_2} g_1/g_2$.
+
+Now, we want to check the invariantness of $\nu$. Suppose we have $t^{\nu_1} g_1 = t^{\nu_2} g_2$. wlog, suppose $\nu_1 \geq \nu_2$. Then, we have that $t^{\nu_1 - \nu_2} g_1 = g_2$. But, since $g_2(p) \not = 0$, $t(p) = 0$, this can only be true if $\nu_1 = \nu_2$.
+
+Now, recall that $t$ was chosen that it vanishes only at $p \in U$, and it spans $m$ in the localization. If we have another $t’$ that satisfies this condition, in the localization $<t> = <t’>$. Therefore, they can only differ by a unit because we’re in a domain. Then, since we have $t = gt’$ for $g$ invertible at p, then we have that $t_1/t_2$ regular at $P$ because $\iff$ regular on $p  \in U’ \subseteq U$. We pick $U’ = U \setminus \{ p \}$, regular since obviously $t_1/t_2$ regular on $U’, U \setminus \{ p \}$. But since we can do this for $t_2/t_1$, we can claim that $t_1/t_2$ is a unit. So then, when we look at $f = t^\nu g$, we can replace $t^\nu = (t/t’)^\nu t’^\nu$, and find $g’$ via $(t/t’)^\nu g$.
+
+Example:
+
+Let our space be $\mathbb{A}^1$. Take some point $c$, and we can take our $t = x - c$. This is regular on $\mathbb{A}^1$, and vanishes only at c. If we look at open sets around $c$, we can take $f_1,f_2$ polynomials, with $f_2(c) \not = 0$. Then, we rewrite $f_1 = f_1(x-c) = (x-c)^k \overline{f_1}$, since we know $f_1$ vanishes at $c$, it cannot have a constant term, etc, etc, so we can reexpress $f_1/f_2 = (x-c)^k \overline{f_1}/f_2$.
+
+Example:
+
+Take $V(x - x^3 + y^2) \subseteq \mathbb{A}^2$. This is not singular at (0,0), since $\partial f / \partial x = 1 - 3x^2$ which does not vanish at (0,0). Then, we look at $k[x,y]/(x-x^3 + y^2)$, it’s harder since neither $x,y$ span. So, we look at $x^3 - x = y^2 \implies x(x^2-1) = y^2$. Looking at $U = V \setminus \{ (\pm 1, 0 ) \}$. In this $U$, $(x^2 - 1)$ is invertible, since non-0, we we can take $x  = y^2/x^2-1 \in (y)$ here. So we take the maximal ideal in the local ring as spanned by $y$ here. We want to check that this vanishes only at $(0,0)$, but this is fine, we already deleted the other two points where $y$ vanishes in $U$. Now, let $V \subset U$, and take a function $f \in \mathcal{O}_V$, such that $f(0,0) = 0$. Well, since regular somewhere, we can view as $f = g_1/g_2$. Since $f$ vanishes at the origin, we can rewrite $g_1 = x \overline{g_1} + y \tilde{g_1}$. But, in these open sets, we know that $x = y^2/(x^2-1)$, so we can rewrite $g_1 = y^2/(x^2-1) \overline{g_1} + y \tilde{g_1}$, so $y | g_1$, and we are good.
+
+Projective varieties do not have missing points.
+
+Let $C$ be a curve, $p \in C$ a non-singular point, and let $Y$ be a projective variety, and suppose we have a map $\alpha: C \setminus \{ p \} \to Y$. in a projective variety, we should be able to uniquely determine the missing point, and extend this map to all of $C$, that is, we can find an $\overline{\alpha}: C \to Y$ that agrees with $\alpha$. 
+
+Non-example, if we take $\mathbb{P} \setminus \{ \infty \} \to \mathbb{A}^1$, via $(x_0,x_1) \to x_1/x_0$ since $x_0 \not = 0$, we can never extend this to all of $\mathbb{P}^1$. 
+
+So, well, we can say that a map $\alpha: C \setminus \{ p \} \to Y \subseteq \mathbb{P}^n$ is given by $f_0,...,f_n$ regular on $C \setminus p$ such that not all of them are 0 at any point. But, we can rewrite each $f_i$ as $f_i = t^{\nu_i} g_i$. such that $g_i$ is regular on $C$ and $g_i(p)\not = 0$. Define $\nu = \min \{ \nu_i \}$. Since we live in a projective space, we can factor this out and assume that this smallest factor is the i-th component. Then, we look at $t^{v_j - v_i} g_i$. So this gives an extension of the map, such that we don’t vanish at $p$, and the original map was already well-defined, so we are ok. Further, if $\alpha_1, \alpha_2$ are both extensions of the same $\alpha$, we notice that since the graph of $\alpha$ is open, dense, contained within the closed sets graph of $\alpha_1,\alpha_2$, then the closure of the graph is equal to each of the graphs of $\alpha_1,\alpha_2$ which means the othersare closed, and $\alpha_1 = \alpha_2$. And lastly if image $\alpha \subseteq Y$, then the image of the completion $\subseteq$ closure of Image $\alpha$ $\subseteq$ closure $Y = Y$.
+
+If $C_1,C_2$ are projective, non-singular curves, and $C_1$ birational to $C_2$, then $C_1 \sim C_2$. Recall that birational is that there exist open sets $U_1 \subseteq C_1, U_2 \subseteq C_2$ such that $U_1 \sim U_2$. That is, we can take $U_1 = C_1 \setminus \{ p_1,...,p_k\}$, going along $\alpha$ to $U_2$, this extends to a unique map to all of $C_2$, and then we can do the same back from $U_2$ to $C_1$. But because of the isomorphism, this must act on the open sets via identity, so because the open sets are dense in the irreducible space, this must act via identity on $C_1,C_2$.
+
+Non-example: take a quadric in $\mathbb{P}^3$, and project down into a $\mathbb{P}^2$, by fixing a point $p$, removing the two lines through the point, and then projecting to the plane via lines through that point. This gives a map from the quadric minus the two points through $p$, to the plane minus2 points, but these cannot be isomoprhic, since there are lines in the quadric that don’t intersect, but everything intersects in projections.
+
+\section{Nov 7th}
+
+General things:
+
+If $\phi: X \to Y$ is a regular map of varieties, and acts as a homemorphism, we can check if it is an isomorphism of varieties by looking strictly locally. That is, if for every $p \in X$, we have that $\mathcal{O}_{Y, \phi(p)} \to \mathcal{O}_{X,p}$ is an isomorphism, then $\phi$ is an iso.
+
+Well, if it is an homemorphism, it is a topological iso, so we admit a $\psi: Y \to X$ that is a continuous bijection with $\phi$.
+
+Well, $\psi$ is regular $\iff$ for every $f: X \to k$ a regular function, $f \circ \psi$ is regular $Y \to X \to k$. 
+
+We rewrite $X = \cup U_i$, and we notice $f$ can be realized as $(U_i, f_i)$. To check the regularity then, we look strictly locally. So we take $q \in Y$, such that $\psi(q) = p$, and then we just need to check that $\psi^*$ that takes $\mathcal{O}_{X,p} \to \mathcal{O}_{Y,\phi(p)}$ works as an iso.
+
+Recall if we have a map $f: X \to Y$, we call it rational if it is defined as such on an open set, not necessarily everywhere. We call it birational if it admits a rational inverse.
+
+Suppose $\phi: X \to Y$, $\psi: Y \to Z$, and suppose the image of $\phi$ is a dominant (dense) set. If $\psi \circ \phi$ is birational, then $\phi, \psi$ are birational. 
+
+We see this because the composition is birational, there’s an open set in $Z$ that we can take back to an open set in $X$ via $\alpha$. So we can look at $\psi \circ \phi \circ \alpha = Id$ that acts via identity on an open set in $Z$ and $\alpha \circ \psi \circ \phi = Id$ acting on $X$. We can see that $\psi$ must be onto the open set, 1:1. We can also see $\phi$ also must be one to one. And finally, we know that $\phi$ must be onto as well. So $\phi, \psi$ must be isos.
+
+Lastly, suppose $\overline{\phi}: X \to Y$ is regular, and suppose we have an isomorphism from $\phi: U \subset X \to Y$ for $U$ an open dense set of $X$. Then, we have that $U = X$.
+
+We may look at $\Gamma_{\phi} \subseteq U \times Y$. But we notice because $\phi$ an iso, we can identify $U \times Y \to Y \times Y$ via $(\phi, id)$. But, by that same map, we may identify the graph as isomorphic to the diagonal of $Y \times Y$. $\Delta$. 
+
+Now, looking at $\overline{\phi}$: we have that $\Delta \subset \Gamma_\phi \subset \Gamma_{\overline{\phi}} \subseteq \overline{\Delta}$, the closure. But, delta is closed, so all of these coincide. Since the graph of $\phi$ is the graph of $\overline{\phi}$, then $U = X$.
+
+Now what we actually want to show:
+
+If $C$ is a non-singular curve, then $C$ is quasiprojective.
+
+and, if $C$ a projective curve, then there exists $\tilde{C} \to C$ projective and non-singular birational map.
+
+So, let’s start with letting $C$ be a non-singular curve. Show quasiprojective.
+
+We do not assume it is affine, but just that we have an atlas into $C$. Then, we can have $C = \cup_i U_i$ for $U_i \subseteq \mathbb{A}^{n_i}$ affine. So, we just look at the inclusion of $\mathbb{A}^{n_i} \to \mathbb{P}^{n_i}$ and specifically, we take the closure of the image of $U_i$ in the projective space. Call this $Y_i$.
+
+We recall from the Segre embedding, that we can always bring products of projective spaces into a big one. So we can work in products for now and lift later.
+
+So we look at the map $\alpha_i: C \to Y_i$ such that it is an extension of the map from $U_i \to Y$, since on a curve, we only are missing a few points. Then, we define $Y$ as the closure of the image of $C \to \Pi_i Y_i$ under each $\alpha_i$, and take the map $\alpha: C \to Y$. We want this to 1:!. If $p_1,p_2 \in U_i$, then $\alpha$ factors through $\alpha_i$ which were inclusions, so $\alpha_1(p_1) = \alpha_1(p_2)$ if $p_1 = p_2$ since inclusions are injective. But now suppose they do not live in the same projective space.
+
+Now suppose $p_1 \in U_i$, $p_2 \not \in U_i$. And consider the diagram with $U_i \subseteq U_i \cup \{ p \}$, and with the map from $U_i \to Y_i$ in projective space. So, we notice that the inclusion into projective space is an iso onto its image, and we notice that we can lift the map from $U_i$ to $U_i \cup p_2$. by matching what it does on $U_i$ and sending $p_2$ anywhere. Then, by before, $U_i \sim U_i \cup p_2$ so $p_2 \in U_i$ contradiction.
+
+Now, need to show that $\alpha$ is an isomorphism with the image. We can prove this locally, over each $U_i$, which are isos by hypothesis on being charts.
+
+Review of normalization:
+
+Normal: If $X$ is an affine variety, irreducible, we have $A(X) \subseteq K(X)$. We call $X$ normal if $A(X)$ is integrally closed in $K(X)$. If $X$ has dim 1, then normality $\iff$ non-singular $\iff$ local rings are discrete valuation rings. So, there exists a function from $\nu: A \to Z$ such that if $f = t^k g$ such that $t$ does not divide $g$, then $\nu(f) = k$. So we can take the maximal ideal such that $f \in A$ such that $\nu(f) \geq 1$. We can also extend this on the field of fractions, and allow for negative values of $\nu$. 
+
+So something we may want to do is start with something non-normal/singular, and normalize to something non-singular/normal.
+
+Let $X$  be a variety. We call $Y$ a normalization of $X$ if there exists $\phi: Y\to X$ such that $Y$ is normal, and $\phi$ birational. Example, blowups in projective space $\mathbb{P}^2$ that normalize singular curves in $\mathbb{A}^2$. 
+
+A fact: if $X$ is a variety, then the normalization is a variety. 
+
+Fact: all fibers of the normalization map are finite. 
+
+Fact: There is some sort of a universal property with respect to normal varieties: That is, suppose $\tilde{X} \to X$ is a normalization, and suppose you have $Z \to X$ where $Z$ is also normal, then you should be able to factor through to $\tilde{X}$.
+
+Another view is that if $X$ not normal, then $A(X)$ not integrally closed, so we can take the integral closure of $A(X)$ in its larger field $L$. That is, we take $l \in L : \exists f(t) \in A(X), f(l) = 0$.
+
+Since we have an inclusion of rings, we can view $\tilde{X}$ as the affine variety associated to the closure of $A(X)$.
+
+Now, if $X$ is quasiaffine or a quasivariety, we need to break up $X = \cup U_i$, in the atlas, and $\tilde{U_i} \to U_i$, which since this is a canonical constructions, they glue well on the intersections. 
+
+So, for $C$ a projective curve, we can take $\tilde{C} \to C$ normalization $\to$ desingularization. 
+
+But, is $\tilde{C}$ projective? Turns out to be true, but why? Just follow the procedure earlier, split into atlases, individually projectivize them, and here instead, we want to show that $\tilde{C}$ is exactly equal to $Y$.
+
+Let $p \in Y$. Take $p \in U \subseteq Y$ such that $U$ is open. Since $V \subseteq U$ should lead to an open set in $\tilde{C}$ after potentially removing some points, we say $U$ is birational to $C$ for C projective. So this may not be defined at $p$, but since we’re projective, we can always extend the map to work at $p$. But then, from the universal property, this is a normal variety, so it factors through $\tilde{C}$. 
+
+\section{Nov 9th}
+
+Review:
+
+Let $C$ be a curve, and let $p \in C$ be a non-singular point. We know that there exists a local parameter in $\mathcal{O}_{C,p}$ such that $<t> = m$ and for everything in the field of fractions, we can express $f = t^k g$. 
+
+Further, if we take $C \setminus \{ p \} \to Y$ for $Y$ projective, we can extend to all of $C$, that is, projective spaces do not admit holes.
+
+For any $C$, we can normalize to a non-singular $\tilde{C}$, and if $C$ is projective, $\tilde{C}$ may be chosen as projective.
+
+If we have a birational map of projective curves, that is $\phi: C_1 \to C_2$, defined on an open set of $C_1$  that admits an inverse on an open set of $C_2$. We would like to see that these are actually isomorphic.
+
+We see this because if it is defined on an open set, it looks like a map $\phi: C_1 \setminus \{ p_1,...,p_i \}$ since closed sets are sets of points on a curve. But, since this is projective, this extends to a map $\tilde{\phi}$ on all of $C_1$. This procedure can be done for its inverse from $C_2 \to C_1$.  Further, if we look at the compositions, they end up as open sets in the diagonal. So, the closure must be the whole thing.
+
+Recall that for $X$ an irreducible variety, we define the field of functions $K(X)$ as $\{ (U,f) U \text{ open } f: U \to \mathbb{A}^1 / (U,f)\sim (U’, f’)$ if they agree on their intersection.
+
+Then, if we have $X \to Y$ as a dominant map that contains an open set of $Y$, then this gives rise to a map from $K(Y) \to K(X)$. Note that we define a dominant map if the image is a dense subset of the codomain. 
+
+So, we get a bijective correspondence between varieties up to rational equivalence equipped with dominant morphisms and fields with morphisms of fields.
+
+Start by fixing a base field $k$ and enforce that it is algebraically closed.
+
+Look at objects and morphisms:
+
+$$\begin{tabular}{ l | r }
+  Objects & Morphisms \\
+  \hline
+  Projective non-singular curves up to isomorphism & Regular maps of projective varieties  \\
+  Curves up to birational iso & Rational maps \\
+  Field extensions of k of transcendent degree 1 up to field iso & morphisms of fields. \\
+\end{tabular}
+$$
+
+What we have been showing is that these 3 categories are equivalent to each other.
+
+In general, suppose $\phi: X \to Y$ is a morphism. We recall that if $X$ is projective, then we know $\phi$ is a closed map.
+
+If $\phi$ is such that $\dim X = \dim \phi(X) = \dim Y$, then when we look at $K(Y) \to K(X)$, it cannot be the 0 map, injective. And in particular, we would get that $K(X)$ is an algebraic extension of $K(Y)$. 
+
+We also have that $K(X),K(Y)$ are finitely generated over $k$ as $k$ algebras, but combining this, it means that it’s finitely generated as a module.
+
+Example: 
+
+Suppose $A$ is a k-algebra spanned by $a$ over $k$ and $a$ is algebraic over $k$. 
+
+Then, if we’re finitely generated, then we can look at something like $a^n + k_{n-1} a^{n-1} + ... + k_0 = 0$ and so $a_1,...,a_{n-1},1$ span as a vector space.
+
+So then, back to the start, if $X,Y$ are projective, then for all $U$ affine in $Y$, $\phi^{-1}(U)$ is also affine and $A(U) \to A(\phi^{-1}(U))$ is a finite module over $A(U)$, that is, it is integral. 
+
+So again, let’s take $X,Y$ to be projective varieties, and a morphism $\phi: X \to Y$ such that $\dim Y = \dim \phi(X) = \dim X$. Then, we have maps from $K(Y) \to K(X)$ an injection of rings, and $K(X)$ finite over $K(Y)$ as a vector space. We call $[ K(X) : K(Y) ]$ the degree of the extension, which is the dimension of $K(X)$ over $K(Y)$ as a vector space. We taks this as the degree of $\phi$. 
+
+We already saw that $\dim \phi(X) + \dim$ generic fiber $= \dim(X)$. So here, since we have $\dim Y = \dim \phi(X) = \dim X$, we conclude the degree of the generic fiber is 0, so the generic fiber is a finite set of points. In particular, we expect that the degree of a map is the number of points. 
+
+How should we count the point so that this is true (for a [projective] curve)?
+
+Assume that $X,Y$ are projective, non-singular curves and we have $\phi: X \to Y$ that sends $p \in X \to \phi(p) \in Y$. Then, we have a map from $\mathcal{O}_{Y,\phi(p)} \to \mathcal{O}_{X,p}$. Then, we can take the generator $t_y$ of the maximal ideal in the first to something in the second, which cannot vanish. Then, $t_y \to g t_x^e$. Call $e$ the ramification index of $\phi$ at $p$. Then, the idea is that we should count $p$ $e$ times in the fiber over $\phi(P)$.
+
+Example:
+
+Take $V(x_0^2. -x_1x_2) \to \mathbb{P}^1$ by sending $(x_0,x_1,x_2) \to (x_1,x_2)$. First, we assume $x_0 \not = 0$. Then, we can rewrite this in coordinates $X_1 = x_1/x_0, X_2 = x_2/x_0$ with the polynomial $1 - X_1X_2 = 0$. So, then, it looks like $k[x,y]/(1-xy)$ localized at $(x - a_1, y - a_2$ for $a_1,a_2$ a point in the conic in terms of $X_1,X_2$.  We can see that since $1 - a_1a_2$ is a equation, that we can then take $x - a_1$ as the local parameter, since we can sub in for $y - a_2$ to get $-1/xa_1 (x_1 - a_1)$. Now, take this conic to the line by sending $X_1,X_2 \to X_1$. This gives rise to a map $k[x_1]_(x_1 - a_1) \to (k[x,y]/(1-xy)_{(x_1 - a_1), x_2 - a_2}$ but this just includes, so we are done here. 
+
+Now, how about $x_0 = 0$, that is, the points $(0,1,0), (0,0,1)$. Pick $(0,0,1)$. Since we can only divide by $x_2$, the local parameters look like $x_0 /x_2, x_1/x_2$, so the defining equations becomes $x_0^2 = x_1$ (from $X_0^2 - X_1 X_2$). So here, we look like $k[x_0,x_1]/(x_0^2 - x_1)$ localized at the origin. Since we can write $x_1 = x_0^2$, we can write $x_1$ in terms of $x_0$ but not the reverse, so we take $x_0$ as the local parameter. Now, looking at the projection down again, we send the variety to $\mathbb{A}^1$ (in the $P^2$ that we sent to) by keeping $x_1$ again. But now, at the rings, we take $(k[x_1])_{x_1} \to (k[x_0,x_1]/(x_0^2 - x_1))_{(x_0,x_1)}$, where we take $x_1 \to x_0^2$, so this has index 2.
+
+Now, suppose $(a,b) \in \mathbb{P}^2$, then look at its preimage. By definition, this is the solution of $x_0^2 = ab$ if ab is 0, we have a single point. But otherwise, we have two solutions. But this matches with our ramification index, so we get a constant index across the map. 
+
+Theorem: If $\phi: X \to Y$ is a morphism of projective curves, non-constant (i.e. fibres 0 dimension, covers Y), $d = [ K(X) : K(Y) ]$, then for every $q \in Y$, $\Sigma_{p \in \phi^{-1}(q)} e_p = d$.
+
+Now, talk about divisors:
+
+Let $C$ be a curve. A divisor on $C$ is $\Sigma_{p \in C} c_p P$ such that $c_p \in Z$ all $c_p$ except for a finite number all 0.
+
+The degree of a divisor is $\Sigma c_p$. We say that the divisor is positive if $c_p \geq 0$ for all $p$.
+
+Why do we care? We want to take projective curves to projective spaces, but we actually need poles. 
+
+So, let $X$ be a projective curve. Take $f \in K(X)$, and define the divisors of $f$ as $\Sigma_{p \in C} k_p p$, where $k_p$ comes from choosing $t_p$ as the local parameter at $p$, so that $f = t_p^{k_p} g$ such that $g$ is regular. Are finitely many of these non-0?
+
+\section{Nov 21st}
+
+When $\phi: X \to Y$, where $X$ is a projective space. When is this a closed immersion? We would need that 
+
+(a) $\phi$ is injective
+
+(b) $\phi^*: T_{X,p} \to T_{Y,\phi(p)}$ is injective
+
+(c) we would need that we may cover $Y = \cup_i Y_I$ by affine open sets such that $A(Y_i) \to A(\phi^{-1}(Y_i))$ has a finite module structure. This happens to always be true if $X$ is a projective curve.
+
+How do we translate this into conditions on the linear series? Well, recall that $C \to \mathbb{P}^n$ is equivalent to a linear series of divisors, $V \subseteq \mathcal{L}(D)$ where $\dim(V) = n+1$. Further, we would want that $V$ has no base points.
+
+Well, in the linear series, suppose we have $p,q \in X$, then we need to look at $V \cap \mathcal{L}(D \setminus p)$ and same with $q$. 
+
+Since $p$ not a base point, we have that $\dim(V) \cap  \mathcal{L}(D \setminus p) \leq \dim V - 1$ and same with $q$. But, we notice we need this to be injective, so we want that $\dim( \mathcal{L}(D  - p - q)) \cap V = \dim(V) - 2$. Further, we also want that $\dim( \mathcal{L}(D  - 2p)) \cap V = \dim(V) - 2$ so that tangent lines do not collapse. Summarizing:
+
+If $\phi: C \to \mathbb{P}^n$ is given by a subset of $\mathcal{L}(D)$, then we have that $\phi$ is a closed immersion $\iff \dim(\mathcal{L}(D-p-q)) \cap V = \dim V - 2$ where $p$ may be the same point as $q$.
+
+Now, we want to show that every projective curve can be immersed in $\mathbb{P}^3$, and can be mapped birationally to $\mathbb{P}^2$.
+
+Let’s prove this in generality. We will show that every $X$ quasiprojective variety can be immersed in $\mathbb{P}^{2n + 1}$.
+
+Suppose we have $X \subseteq \mathbb{P}^N$ as an inclusion, how do we get from $\mathbb{P}^N \to \mathbb{P}^n$?
+
+We need a center of projection $p$ not on the line containing our two points $(p_1,p_2) \in X$ to be injective. 
+
+We also need that $p \not \in T_{p_1}$ since that would collapse the tangent space.
+
+So, we are looking at $X \to \mathbb{P}^N$, and we are looking at $\{ p \in \mathbb{P}^N : $ there exists $ p_1, p_2 \in X, p \in \overline{p_1p_2} \}$. 
+
+We view this in $(X \times X \setminus \Delta) \times \mathbb{P}^N$, and we look at $\{ (p_1, p_2, p) : p \in \overline{p_1p_2} \}$.
+
+Well, we can take things in $X$ and write equations, same with the other copy, so we look at something like:
+
+$p_1 = (x_0,....,x_n), p_2 = (y_0,...,y_n), p = (z_0,...,z_n)$. and to be on the line,we need that $p$ is a linear combination of $p_1, p_2$ so we enforce that the 3x3 determinants vanish. well, this is clearly a closed condition, so we have that this is a closed set. Since we subtracted out a diagonal, we need to take the closure of this set in $X \times X \times \mathbb{P}^N$. 
+
+To compute the dimension, we look at the projection into $X \times X$. This is clearly an onto map, fibers have dimension 1, irreducible, and the space in the product is irreducible, with dimension $2 \dim(X) + 1$.
+
+Now, looking at the projection back into $\mathbb{P}^n$, thisshould land in a closed set because projective. We know very little about the fibres, but we know that the projection has dimension at most $2 \dim(X) +1$ since a projection cannot increase the dimension. Now, if $N > 2 \dim(X) +1$, we can find a $p \in \mathbb{P}^N$ such that $p$ is not in the projection. So then, we can project from this point off of the variety can guarantee that we have an injective map to $X \to \mathbb{P}^{N-1}$ that is a closed immersion. Then, we iterate downwards from $N$ until $2 \dim(X) +1$.
+
+Now, let $X \to \mathbb{P}^N$, fix a $q \in X$, and we want to get $\phi’: X \to \mathbb{P}^k$ for a $k$ as small as possible such that $\phi’^{-1}(\phi(q)) = q$. In this case, we still want this to not hit the curve again, and not hit the tangent line. Then, we need only consider $X \times \mathbb{P}^N$ and in particular, the subset $B = \{ (p_2, p) : p \in \overline{p_2q} \}$. Computing $\dim(B)$ again, we project back to $X$, and fibres are still lines, this is onto, irreducible, so we have that the dimension above is of $\dim(B) = \dim(X)+1$. So, the inclusion into $\mathbb{P}^N$ is the same, and so long as $N > \dim(X) + 1$, we can always project down into $\mathbb{P}^{N-1}$. This may identify points in $X$ together, but it will keep $q$ identified. That is, it will be birational. Then, we can eventually go to $X \to \mathbb{P}^{\dim(X) + 1}$.
+
+In summary, since curves have dimension 1, that means every curve can be immersed in $\mathbb{P}^3$, and birationally mapped to $\mathbb{P}^2$. We notice that this does not mean no curves can be immersed in $\mathbb{P}^2$ or $\mathbb{P}^1$. $\mathbb{P}^1$ can be taken to both. 
+
+So what about projecting down? Well, let’s look at $\mathbb{P}^1 \to \mathbb{P}^3$ via $(x_0,x_1) \to (x_0^3, x_0^2x_1, x_0x_1^2, x_1^3)$ that is, $V(x_1x_3 - x_2^2, x_0x_2 - x_3^2, x_0x_1 - x_2x_3)$. We look at secants to $X$, that is, linees that intersect $X$ in at least $2$ points.
+
+We see that the secant variety to $C$ is all of $\mathbb{P}^3$.
+
+So, look at the projection from $X \times X \times \mathbb{P}^3 \to \mathbb{P}^3$. So, we expect that the dimension doesn’t go down, so we need finitely many $p_1,p_2$ that map to $p$. So, suppose it’s in two lines. Then we have 4 points in our lines in a plane. Which is not possible, since we would have too many roots.
+
+New topic: Let’s look at differentials. The motivation is to help us compute $\mathcal{L}(D)$ for any $D$, at least on a curve. In particular, we will see that the dimension of the linear series is equal to the topological genus of the curve.
+
+We also will be able to get information of $\dim(\mathcal{L}(D))$ in terms of the series of differentials.
+
+How do we define a differential (in general) on $X$?
+
+We associate to every $ x \in X$, we take an element of the cotangent space $m/m^2$. 
+
+Example: Take $f$ to be a regular function on an open set $U$, and take $p \in U$. We can look at $f - f(p) \in m_{X,p}$, and look at its coset in $m^2$. Call this object $df$. We say that a differential $\omega$ is regular at $p$, if there is a neighborhood of $p$ such that $\omega = \Sigma g_i df_i$ for $g_i, f_i$ is regular on the neighborhood. As we’d hope, $d(fg) = df g + f dg$.
+
+\section{Nov 28th}
+
+Recall we define $\mathcal{L}(D) = \{ f: \text{div}(f) + D \geq 0 \}$. This is finite dimensional as a $k$ vector space. 
+
+Then, we haev a correspondence to effective divisors $\text{div} + D$.
+
+Assume further that it has no base points. Then, there is no single point in the support of every divisor, for any subspace of $\mathcal{D}$. Then, we take a basis $f_0,...,f_r$, and this admits a map from $C \to \mathbb{P}^r$. And we notice here, that every hyperplane corresponds to an effective divisor, that is, the correspondence claimed earlier.
+
+Conversely, we look at $C \to \mathbb{P}^r$, then $\{C \cap H \}$ for $H$ hyperplanes is a collection of effective divisors. Choose some $H_0$ hyperplane that does not contain our curve. Consider the collection of rational functions $H/H_0$ for $H$ the equation of a hyperplane. This is regular on $C$, since we can take an open set that dodges the issues, and as $H$ varies, this is a vector space of functions, and this we notice that $\{ f_H + D_{H_0} \} \geq 0$ so it is a subspace of $\mathbb{L}(D)$, since we look at the idea that every hyperplane corresponds to the effective divisors.
+
+ok, back to class notes
+
+Differential forms:
+
+Let $X$ be a variety, irreducible, non-singular. Look at the cotangent space that looks like $m/m^2$. Then, we said that a differential form is an assignment for every $p$ to an element in the contangent space. 
+
+Example: Let $f$ be a function on an open set $U$, and we want to assign it an $df$. $df$ can send $p \to [ f - f(p) ]$ which is an object in the cotangent space.
+
+We say that a differential form is regular if, for every $p \in X$, there exists an open set $U$ with functions $f_1,...,f_k$ regular on $U$, $g_1,...,g_k$ regular on $U$ such that $\omega = \Sigma g_i df_i$.
+
+We notice that if we have $g: \mathbb{A}^n \to k$, and $f_1,...,f_n$ regular on $U$, if we made a map that sends $p \in U$ to $g((f_1(p),...,f_k(p)))$, then we have that  $dg = \Sigma \partial g/\partial x_i df_i$.
+
+So we notice by the definition of $df$ it’s annoying, since we subtract a different point from $f$ depending on $p$. so instead, we want to move towards a basis for $m/m^2$
+
+Fix a point $p \in X$, where $X$ non-singular, dimension n, and, given a local system of parameters represented by functions, $f_1,...,f_n$, we may show that in a neighborhood of $p$, every regular differential can be written uniquely as a regular differential, that is, $\omega = \Sigma_i^n g_i df_i$. That is, specifically, with the local parameters and up to $n$ of them.
+
+We start by taking an open, affine neighborhood of $p$, $U$, such that $f_i$ is regular on $U$. We may look at the coordinate ring $A(U)$, a finitely generated k-algebra, in general, something like a quotient of $f_1,...f_n,,...f_m$. Where the last $n+1,m$ functions are the ones specific for the open set.
+
+Now, we can look at this as a map from $U \to \mathbb{A}^m$, that sends $p \to (f_i(p))$. Now, we have that $I(U) \supset \{ h_i \}$ for $i \in (m-n, m)$, then we can look at the invertible Jacobian $\mathcal{J}  = (\partial h_1/\partial x_1, ..., \partial h_1/\partial x_m; h_2, $ up to $h_{m-n}$. Looking at $dh = \Sigma_i^m \partial h/\partial x_i dx_i$. But, since $dx_1,...,dx_n$ was a basis for $m/m^2$, the last $m-n$ coordinates must be linearly independent as columns. That is, $ det(\partial h_1/\partial x_{m-n},...,\partial h_1/\partial x_m .. ) \not = 0$. So this is an open set. Call $V$ the open st where $\det \not = 0$, $df_i$ linearly independent at each $q \in V$.
+
+Thus, every differential can be writeen locally in a unique way as $\Sigma g_i df_i$, and the $df_i \in V$ form a basis for the free module of differentials, where we notice module is over the ring of functions. ($g_i$’s)
+
+We notice that it makes sense to talk about the zero set of a differential, and that it is a closed set. It makes sense also to talk about differentials that agree being a closed condition, and if they agree on a non-trivial open set, they are equal everywhere.
+
+We may also define rational differentials. These have form (locally) as $\Sigma g_i df_i$ where $g_i$ are now ratioanl functions, not regular. Of course, we see that this is a vector space where the field is the field of fractions of the variety (i.e. again, $g_i$. 
+
+Alternatively, we can look at the in the same way as regular functions, that is, $(U, \omega_i)$ and mod out by differentails that agree on contained sets. And here, this is another way to get at our rational differentials.
+
+If we look at $f$ a rational function on $U_1$, $\omega$ a rational differential on $U_2$, then we can look at $f \omega$ as regular on $U_1 \cap U_2$, non-empty, since we wokr in a irreducible. 
+
+Then, we can say that $\Omega(X)$, the space of rational differentials is a vector space over $K(X)$, n-dimensional (recall $X$ has dimension $n$.) 
+
+Now, let’s look on a curve. Then, we’re 1-dimensional, and life is good. Let $\omega$ be a rational differential form,and we look at $D(\omega) = \Sigma_{p \in C} c_p [p]$. Locally, $\omega = g dt$ for some local parameter $t$, so the order of $\omega$ at the point $p$ is just the order of $g$ at $p$, i.e. $c_p = \text{ord}_p g$, and well defined with the choice of local parameter, since we can look at $t/t’$ and change from $gdt \to g’ dt’$, but since $t/t’$ must be invertible, this cannto change $c_p$. but, since $\omega$ is defined like this not on a point, but on some open set, we can look then at other points such that $c_p \not = 0$ on the union of zeros of g, poles of g, and the complement of $U$, this open set.
+
+Now, what happens if we multiply the differential form with a rational function? What happens to the divisor?
+
+$D(f\omega)$. Well, locally at a point $P$, we have that $\omega = gdt$, and that $f\omega = fg dt$. so the order of $f\omega = ord_p(fg) = ord_p (f) = ord_p(g)$. So, the divisor of $D(f\omega) = D(f) + D(\omega)$, so we notice $D(f\omega$ is linearly equivalent to $D(\omega)$.
+
+Define $\Omega(D)$ as the set of differential forms such that either $\omega = 0$ or $D(\omega) + D \geq 0$. That is, the poles of $\omega $ are not worse than $D_1$ and zeroes are at least $D_2$, when we think of $D = D_1 - D_2$, for $D_1,D_2$ effective.
+
+So, fix a $D$, and suppose we have $\omega \in \Omega(D)$. Then, we have that there’s a correspondence:
+
+$\mathcal{L}(D(\omega) + D) \iff \Omega(D)$ where we associate  $f \to f\omega$ and $f\omega = \omega’  \to f$.
+
+Well, we recall $\mathcal{L}(D(\omega) + D) = \{ f : D(f) + D(\omega) + D \geq 0 \} = \{ f : D(f\omega) + D \geq 0 \}$. But, $f \omega \in \Omega(D)$ by definition. And, we can run this backwards.
+
+Now, suppose $\omega’ \in \Omega(D)$. Well, if it’s non-0, then we can look at the basis of the differential forms, which on a curve, looks like $\omega$.. So, we can look at $\omega’ = f\omega$. So, we look at $D(\omega’) + D \geq 0$, and we run this back, showing that $f \in \mathcal{L}(D + D(\omega))$.
+
+Here, we can say that we define the genus of a curve as $\Omega(C) = \Omega(0)$. A canonical series is $\mathcal{L}(D(\omega))$ for some differential form.
+
+\section{Nov 30th}
+
+Riemann-Roch Theorem
+
+Let $D$ be a divisor, then we have that $\dim \mathcal{L}(D) =\dim( \Omega(-D)) + \text{deg}(D)  + 1 - g$, where $g = \dim \Omega(0) = \dim \mathcal{L}(D(\omega))$. Note, that we may rewrite $ \dim( \Omega(-D))  = \dim(\mathcal{L}(D(\omega) - D))$. Notationally, we will write $\dim \mathcal{L}(D) = l(D)$.
+
+We will want to see that $\text{deg}(D(w)) = 2g - 2$.
+
+Well, if we plug into that equation up there, we have that $g = l(D(w)) = l(D(w) - D(w)) + \deg D(\omega) + 1 - g$. Then, $\text{deg}(D(w)) = 2g - 2$. We notice that if $\deg(D) > 2g - 2$, then we have that $l(D) = \deg(D) + 1 - g$ since $l(D(\omega) - D)$ has to be 0.
+
+Let’s explore what $\mathcal(D(\omega))$ looks like, called the canonical linear series. It should be an invariant of a curve, since all are linearly equivalent, so we can talk about this as a classification of curves. In particular, either:
+
+(a) the curve has a 2:1 rational map to $\mathbb{P}^1$, hyperelliptic, and admits a map that factors like $C \to \mathbb{P}^1 \to \mathbb{P}^{g-1}$
+
+(b) The curve is not hyperelliptic, and we have a map $C \to \mathbb{P}^{g-1}$ with an isomorphism from $C$ onto its image.
+
+Firstly, $D(\omega)$ has not fixed points. Recall this means that there are not points in every divisor. Assume $p$ is a fixed point. Then, if we compute $\mathcal{L}(D(\omega) - P) = \mathcal(D(\omega))$, since removing the point removes it everywhere. Well, then by Riemann-Roch, we have that:
+
+$$ g = l(D(\omega) - P) = 2g - 2 - 1 + 1 - g + l(D(\omega) - D(\omega) + P) \implies l(P)  = 2$$
+
+But, the dimension of a divisor must be at most the degree of the divisor, so this is impossible.
+
+Linear series gives a closed immersion $C \to \mathbb{P}^1 \iff \mathcal{L} $ separates points and tangents $\iff$ for every $P,Q, l(D - P - Q) = l(D)- 2$.
+
+What would happen if $l(D(\omega) - P - Q) = l(D(\omega)) -1 = g- 1$.
+
+Well, Riemann-Roch again:
+
+$$ g - 1 = l(D(\omega) - P - Q) = 2g - 2 - 2 + 1 - g + l(D(\omega) - (D(\omega) - P - Q))  \implies l(P+Q) = 2$$ 
+
+So, we define $C \to \mathbb{P}^1$ of degree 2 as calling $C$ hyperelliptic, corresponding to the linear series $l(P+Q)$.
+
+In particular, we say that for all $R \in C$, there exists $R’ \in C$ such that $R + R’$ is a divisor of the linear series corresponding to $P + Q$ where we take that from the computation above. That is, $R + R’$ is linearly equivalent to $P + Q$ has dimension 1, $L(R + R’) = L(P + Q) = 2$.
+
+Now, suppose it’s not hyperelliptic. Here, we go via genus. In genus 1, we notice $2g - 2 = 0$, so the canonical series is just 0. Now, suppose $g = 2$. Then, $2g - 2 = 2$, so $l(D(\omega)) = 2$, so every curve of genus 2 is hyperelliptic. Now, genus 3, so $l(D(\omega)) = 4$. So we have two cases, it is hyperelliptic or not. Suppose not, then $C \to \mathbb{P}^2$ by a degree 4. Since it’s codimension 1, it must be cut by a quartic hypersurface in $\mathbb{P}^2$, non-singular. 
+
+Now, we look at $g = 4$ in the case of non-hyperelliptic. So, from our nice equation, we have that $\deg (D(\omega) = 6$ so we have $C \to \mathbb{P}^3$ a curve of degree 6. The annoying thing is that we have codimension 2, so we can’t claim a hypersurface. But, we can actually prove that this is a complete intersection of a quadric and a cubic.
+
+Firstly, why is there a quadric that contains the curve? Well, if it intersects, then a quadric intersect in 12 points, since degree 6, and degree 2. Then, these quadrics should cut a linear series on the curve, of degree 12 - we just look at the 12 points of intersection with multiplicity. Then, back to Riemann-Roch, we have that $l(D_{12}) = 12 + 1 - g = 9$. Let’s see if this matches the space of quadrics in $\mathbb{P}^3$. If we view this as a counting problem, this should be $5C2$, which is 10, which does not match - therefore, we have more quadrics than can cut out linear series, so some quadric must contain the curve.
+
+In a similar way, we can look at cubics. Cubics should hit in 18 points, so we have $l(D_{18}) = 18 + 1 - g = 15$. Counting problem for how many cubics, we have that there should be $6C3$ or 20. So that’s a lot more, and if we tried to intersect, we’d have nothing. So we notice, sometimes we have cubics that are made up of quadric times the hyperplanes, so modding out by the 4 distinct hyperplanes, we have 20 - 4 = 16 good cubics, so there’s still an extra cubic that is the cubic we want. So, we have that $C = Q \cup Cu$, that is, a quadric intersect a cubic, with codimension 2, therefore a curve, with degree 6. 
+
+If we view a quadric as family of lines, $\mathbb{P}^1 \times \mathbb{P}^1$, it can only intersect the curve in 3 points, since it has to hit the cubic. So, we get two distinct linear series on the curve with degree 3 and dim 1, so $D(\omega) = D_3 + \overline{D}_3$, where the two are not linearly equivalent. This is unless it’s a cone, which doesn’t look like $\mathbb{P}^1 \times \mathbb{P}^1$, just one linear series, and we have that the canonical looks like $2D_3$.
+
+Last, for now, we do genus 5. So, $l(D(\omega)) = 5$, so the degree is 8, and in a $\mathbb{P}^4$ in the non-hyperelliptic case. So, we do literally the same thing again, trying to figure out what the intersections should be. Trying out quadrics: it should be in 16 points, so we should have $l(D_{16}) = 16 +1 - 5 = 12$. And in a $\mathbb{P}^4$,  we have $6C2 = 15$. Which implies that we have 3 independent quadrics that contain the curve. Which should be enough, if they always bring the dim down by 1. So a generic genus 5 curve is 3 quadrics. The point is Riemann-Roch turns geometry into a counting argument.
+
+\section{Dec 5th}
+
+Let’s convince ourselves that the genus made sense. First, recall what the genus means from a topological point view, and we’ll denote them as $\overline{g}$. Recall that we tend to work over the complex numbers, so even though we have curves, these should be 2 dimensional compact Riemann surfaces. In general, we denote the genus as the number of holes in the space. I.e. a sphere has genus 0, a torus has genus 1, etc. We wish to use invariants to compute the genus, so the idea is to use some sort of polygons to divide up the surface, i.e. triangles. Then, if we call. the number of faces $f$, edges $e$, and vertices $r$, then we can look at the Euler Poincare characteristic $-f + e - v = 2 \overline{g} - 2$. Note that we can generalize this to higher dimensions, but we would take not polygons, but 3-d gons. If we play around, we should be convinced that if we subdivide, this is truly an invariant.
+
+So recall that for us, $\mathbb{P}^1$ is $g = 0$, so is this a sphere? Well, $\mathbb{P}^1 \cup \infty$. We may view this as the Riemann sphere, and we can see that we truly get a sphere, topologically at least.
+
+So now, we want to see more generally, how the topological genus lines up with what we claimed to be the genus. Let’s look at a donut, $\overline{g} = 1$. We can use the identification of a rectangle, and compute the same thing, so a torus has genus 1. We can then generalize this. If we have $x$ holes, we notice we would have 1 big face, $2a$ edges, and 1 vertex, since we can view a big torus as a big 2n gon.
+
+Now, what about a $C \to \mathbb{P}^{N}$? Well, we recall if we have $X \to \mathbb{P}^{N}$ as an inclusion, where $X$ has dimension $n$, we recall the space of secants has dimension 2n + 1, so if $N \geq 2n + 1$, we can always project down, which is why we can take curves in $\mathbb{P}^3$. If we allow for singularities, we can take a tangent projection down into $\mathbb{P}^2$, and even come down to $\mathbb{P}^1$ with the issue that we are probably not injective.
+
+Well, what about the ramification points? If we have a $C_1 \to C_2$, then we can take an induced map on the $\mathcal{L}(D(\omega))$ $f^*(\omega_{c_2}) + R = \omega_{c_1}$ where $R$ is the ramification divider. Re recall that the degree goes as $2g_1 - 2 = k (2g_2 - 2) + \#R$. We notice if $C_2 = \mathbb{P}^1$, that we have $2g_1 - 2 = -2k + \#R$. So now, we have an idea as long as we can shove our curve into $\mathbb{P}^1$. But does this line up with the topological genus when we take this covering of degree $k$ ramified over $r$ points? If we view the target space as having $f, e, v$ wiht respect to a covering, if there are no ramification points, since we just lift into $k$ different copies, we have things that look like $kf, kv, ke$ since they act as pure copies. But at a ramfification point, we have that it looks like $kf, kv -r, ke$ since we view it as joined, and sharing vertices.So in the codomain, we have that $- kf + ke - kv + r$. If we actually send down into $\mathbb{P}^1$, then this looks exactly like $-2k + r$, since we know what $f, v, e$ are in $\mathbb{P}^1$. But now, relating this back to Riemann-Roch, this exactly lines up. 
+
+Now, we look at $m_g$, the moduli space of curves, which parametrizes the iso classes of algebraic curves of genus $g$. We end up having $\dim m_g = 3g -3$ if $g \geq 2$, $0$ if $g = 0$, $1$ if $g = 1$., which differs from the topological standpoint of one idea per genus. But why do we have a different number for $g = 0, 1$? Well, it’s still reasonable for $g = 0$ to be $-3$, because the idea is that we have a $3d$family of automorphisms in $\mathbb{P}^1$ via 2x2 matrices. So we think of this as a point minus 3 dim so -3. What about $g= 1$? Well, we should have a divisor of degree $3$ on curves of genus 1, and we have that $\dim \mathcal{L}(D_3) = 3 + 1 - 1 + \dim \mathcal{L}(-D_2) (0) = 3$, so we admit a degree 3 map to $\mathbb{P}^2$. Then we should have that $\dim \mathcal{L}(D_3 - P - Q) = \deg (D_3 - P - Q) + 1 - 1 + 0 = 1 + 1 - 1 = 1$ via Riemann Roch, so since we went down by 2 dimensions, we’re good, so we separate points and tangetns.
+
+So we recall the number of cubics in $\mathbb{P}^2$. This should be $5C3 = 10$. So we look at the automorphisms again, since $\mathbb{P}^2$ has 3 coordinates, we should have a 9 dimensional space of matrices as affine spaces, so we get 10 - 9 = 1, which matches. But this doesn’t match $3g - 3$, why? Well, we start with elliptic curve has a 1-d family of autos. Since we know there’s a group law, so we have at least a 1-d family via left multiplication.
+
+So now look at $g \geq 2$, specifically $g = 2$. Looking at the canonical linear series, with degree $2g - 2 = 2$ and dimension $2$. Then, we admit a map from $C \to \mathbb{P}^1$ of degree 2. If we look at the ramification points $r$, that should satisfy that $4 - 2 = 2( -2) + r$, that is, we should have $r = 6$. But then, we have 6 points of ramification, against the 3d autos, so 3, which is $2 * 3 - 3 = 3$, matching $\dim m_g$.
+
+Now, if $g = 3$, then the canonical has degree $4$, and dimension $3$, into a $\mathbb{P}^2$. Again, quartics as $6C2 = 15$, and $\mathbb{P}^2$ has 9 dimensions, so we have 6 which is what we wanted. We have nothing to worry about because no autos from our generic curves. 
+
+In $g=3$, although we can have 2:1 covers of $\mathbb{P}^1$, we exhaust the number of them. Thus, the generic curve of $g = 3$ being non-hyperelliptics implies that there are fewer than $6$ dimensional families of double covers of $\mathbb{P}^1$ ramified at some number of points. If we compute the number points, we should need $2g - 2 = 2(-2) + r \implies r = 8$ and if we subtract the autos, we have only 5 families. 
+
+
+\end{document}

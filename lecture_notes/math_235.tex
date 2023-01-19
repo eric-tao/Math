@@ -1,0 +1,2068 @@
+\documentclass[10pt]{article}
+\usepackage{graphicx}
+\usepackage{pst-node,pst-tree,pstricks}
+\usepackage{amssymb,amsmath}
+\usepackage{hyperref}
+
+% environments shortcuts
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\beqa}{\begin{eqnarray}}
+\newcommand{\eeqa}{\end{eqnarray}}
+\newcommand{\beqas}{\begin{eqnarray*}}
+\newcommand{\eeqas}{\end{eqnarray*}}
+
+\newcommand{\bit}{\begin{itemize}}
+\newcommand{\eit}{\end{itemize}}
+\newcommand{\bits}{\begin{itemize*}}
+\newcommand{\eits}{\end{itemize*}}
+\newenvironment{enumerate*}{\begin{enumerate}
+    \setlength{\topsep}{0ex}
+    \setlength{\parskip}{0ex}
+    \setlength{\partopsep}{-1ex}
+    \setlength{\itemsep}{0pt}
+    \setlength{\parsep}{0ex}}
+{\end{enumerate}}
+
+\newcommand{\benum}{\begin{enumerate*}}
+\newcommand{\eenum}{\end{enumerate*}}
+%\newcommand{\benums}{\begin{enumerate*}}
+%\newcommand{\eenums}{\end{enumerate*}}
+\newcommand{\mybullet}{$\bullet$}
+
+% math mode commands
+
+\newcommand{\fracpartial}[2]{\frac{\partial #1}{\partial  #2}}
+\newcommand{\rrr}{{\mathbb R}}
+\newcommand{\bigOO}{{\cal O}}
+\newcommand{\dataset}{{\cal D}}
+\newcommand{\bv}{{\text{BV}}}
+
+\newcommand{\X}{\mathbf{X}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calN}{\mathcal{N}}
+\newcommand{\calT}{\mathcal{T}}
+\newcommand{\calH}{\mathcal{H}}
+\newcommand{\vol}{\text{Vol}}
+\newcommand{\ac}{\text{AC}}
+
+\newcommand{\trace}{\operatorname{trace}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\sign}{\operatorname{sgn}}
+\newcommand{\onevector}{{\mathbf 1}}
+\newcommand{\bbone}[1]{{\mathbf 1}_{[#1]}}
+
+\newcommand {\argmax}[2]{\mbox{\raisebox{-1.7ex}{$\stackrel{\textstyle{\rm #1}}{\scriptstyle #2}$}}\,}  % to replace with the amsmath construction
+
+\newlength{\picwi}
+\newcommand{\backskip}{\hspace{-2.5em}} % how much to skip back for an empty item?
+
+% Set up some colors
+\definecolor{myblue}{rgb}{0.14,0.11,0.49}
+\definecolor{myred}{rgb}{0.74,0.1,0.05}
+\definecolor{mygreen}{rgb}{0.,0.52,0.32}
+\definecolor{myyellow}{rgb}{0.96,0.92,0.13}
+\definecolor{myorange}{rgb}{0.7,0.41,0.1}
+\definecolor{mypurple}{rgb}{0.51,0.02,.8}
+\definecolor{mygray}{rgb}{0.6,0.6,0.6}
+
+\newcommand{\myblue}[1]{\textcolor{myblue}{#1}}
+\newcommand{\myred}[1]{\textcolor{myred}{#1}}
+\newcommand{\mygreen}[1]{\textcolor{mygreen}{#1}}
+\newcommand{\myorange}[1]{\textcolor{myorange}{#1}}
+\newcommand{\myyellow}[1]{\textcolor{myellow}{#1}}
+\newcommand{\mypurple}[1]{\textcolor{mypurple}{#1}}
+\newcommand{\mygray}[1]{\textcolor{mygray}{#1}}
+
+
+% Stlyle stuff
+% notes are for students , \notes with \mmp{} are for me
+
+\newcommand{\comment}[1]{}
+\newcommand{\mmp}[1]{\emph MMP: {#1}}
+\newcommand{\mydef}[1]{\myred{\bf {#1}}}
+\newcommand{\myemph}[1]{\mygreen{ {#1}}}
+\newcommand{\mycode}[1]{\myblue{\tt {#1}}}
+\newcommand{\myexe}[1]{{\small \mypurple{Exercise} {#1}}}
+
+\newcommand{\reading}[2]{{\small \myemph{{\bf Reading} CRLS:} {#1}, \myemph{Python APPB4AWD} {#2}}}
+
+
+\begin{document}
+\begin{Large}
+\centerline{Math 235}
+\centerline{Lecture Notes}  % lecture number here
+\centerline{\bf }       % lecture title here
+\centerline{}      %date here
+\end{Large}
+
+
+\vspace{2em}
+\section*{Sept 7th}
+(Tues9:30-11:30 office hours 573) (zoom next week due to travel)
+
+TA: 1-2 office hours Thurs
+
+Group work? 4-5 people
+
+We'll take $\overline{\mathbb{R}} = [-\infty,\infty]$.
+
+$]infty$ arithmetic:
+
+i) For all $a \in \mathbb{R}$, $a\pm \infty = \pm \infty$
+
+ii) $\infty + \infty = \infty$
+
+iii) $-\infty - \infty = -\infty$
+
+iv) For all $a > 0$, $a* \pm \infty = \pm \infty$
+
+v) $0* \infty = 0$
+
+vi) $1/\pm\infty = 0$
+
+For $f: X \rightarrow Y$, define $\text{range}(f) = \{ f(x) , x \in X \} $
+
+If we have a subset $A \subset X$, define the characteristic function as followings:
+
+$$\chi_A: X \rightarrow \mathbb{R} | \chi_A(x) = 1 \text{ if } x \in A, 0 \text{ else}$$
+
+If the codomain of $f$ is $\overline{\mathbb{R}}$, then we call it an extended real-valued function.
+
+Shorthand:
+
+Call $\{ f\geq a\} = \{ x \in X | f(x) \geq a\}$ and equivalent for $=, \leq, >, <$
+
+Review:
+
+Let $\{ x_n\}_{n=1}^{\infty}$ be a sequence in $\mathbb{R}$.
+
+Then $\lim_{n \rightarrow\infty}\sup x_n = \inf_n \sup_{k \geq n} x_k$
+
+And $\lim_{n \rightarrow\infty}\inf x_n = \sup_n \inf_{k \geq n} x_k$
+
+Exercise: if $\{ x_n \}$ and $\{ y_n \}$ are two sequences, then $\lim\inf x_n + \lim \inf y_n \leq \lim \inf (x_n + y_n) \leq \lim \sup x_n + \lim\inf y_n \leq \lim\sup (x_n + y_n) \leq \lim\sup x_n + \lim\sup y_n$
+
+Lebesgue Measure:
+
+We wish to define a a function $|\cdot|: \mathbb{R}^d \rightarrow [0,\infty]$ such that:
+
+i) $\forall E \in \mathbb{R}^d, 0 \leq |E| \leq \infty$
+
+ii)) $|[0,1]^d| = 1$
+
+iii) If $\{ E_k\}$ is a countable collection of pairwise disjoint sets, then we hope that $\Sigma_{k}^{\infty} |E_k| = |\cup_{k=1}^{\infty} E_k |$
+
+iv) $\forall h \in \mathbb{R}^d, \forall E \subset \mathbb{R}^d$, we have $|E+h| = |E|$ 
+
+This is not possible! However, we will develop our intuition with the outer Lebesgue measure.
+
+Exterior (Outer) Lebesgue Measure:
+
+Initial definitions:
+
+i) A box in $\mathbb{R}^d$ is $Q = \Pi_{i=1}^{d} [a_i,b_i]$ where $a_i < b_i$ for all $i$.
+
+ii) $\text{Vol}(Q) = \Pi_{i=1}^{d} (b_i - a_i)$ i.e. the volume.
+
+iii) $Q^0 = \Pi_{i=1}^{d} (a_i,b_i)$ i.e. the interior.
+
+iv) $\delta Q = Q \symbol{92} Q^0$ i.e. the boundary.
+
+v) If $b_i - a_i$ is equal for all $i$, call Q a cube.
+
+vi) A collection $\{Q_k\}$ of boxes is non-overlapping if for all $i,j$, $Q_i^0 \cap Q_j^0 = \empty$, that is, the interiors are disjoint.
+
+vii) Let $E \subset \mathbb{R{^d}}$. We say that $E$ is covered by a collection of boxes $\{ Q_k \}_{k \in I}$ if $E \subset \cup_{k \in I} Q_k$. 
+
+Remark, if not stated, we assume a collection of boxes is at least countable.
+
+Lemma:
+
+Let $U \subset \mathbb{R}^d$ be a non-empty open set. Then there exists countably many non-overlapping boxes $\{Q_k\}_{k=1}^{\infty}$ such that $U = \cup_k Q_k$
+
+Proof:
+
+Let $Q = [0,1]^d$, and, for all $n \in \mathbb{Z}, k \in \mathbb{Z}^d$, define $Q_{n,k} = 2^{-n} Q = 2^{-n} k$.
+
+Let $I_0 = \{ k\in \mathbb{Z}^d | Q_{0,k} \subset U\}$, $I_n = \{ k \in \mathbb{Z}^d | Q_{n,k} \subset U \text{ and } Q_{n,k} \not\subset Q_{m,k} \text{ for any } m < k$
+
+Claim: $ U = \cup_{n=0}^{\infty} \cup_{k \in I_n} Q_{n,k} $.
+
+Sketch: by construction, the union is within $U$. The other way, since you always have a neighborhood around any $u \in U$, you can always squeeze in a cube that contains your point.
+
+Lemma: 
+
+Let $Q = \Pi_{i=1}^d [a_j,b_j]$ be a box in $\mathbb{R}^d$. If $Q_1, Q_2, ..., Q_n$ are non overlapping boxes such that $Q= \cup_{j=1}^n Q_j$, then $\text{Vol}(Q) = \Sigma_{j=1}^n \text{Vol}(Q_j)$.
+
+\section*{Sept 12th}
+
+Definition: Let $E \subset \mathbb{R}^d$. Define the exterior Lebesgue measure of $E$ as:
+
+$$ |E|_e = \inf_k \{ \Sigma_k \text{ Vol }( Q_k ) : E \subset \cup_k Q_k $$
+
+Where $\{ Q_k \}$ is a countable collection of boxes.
+
+Note that $\forall E \subset \mathbb{R}^d$, $0 \leq |E|_e \leq \infty$.
+
+Lemma: For any $E \subset \mathbb{R}^d$:
+
+(a) If $\{ Q_k \}$ is a countable cover of $R$ by boxes:
+$$ |E|_e \leq \Sigma_k \text{Vol}(Q_k)$$
+
+(b) For any $\epsilon > 0$, there exists a countable cover of $E$ by boxes $\{ Q_k \}$ such that:
+
+$$\Sigma_k \text{Vol}(Q_k) \leq |E|_e + \epsilon$$.
+
+Lemma: The following statements hold.
+
+(a) For any $E \subset \mathbb{R}^d$, and any vector $h \in \mathbb{R}^d$, $|E+h|_e = |E|_e$ (translation invariance)
+
+(b) For any $A,B \subset \mathbb{R}^d$ such that $A \subset B$, then $|A|_e \leq |B|_e$. (monotonicity)
+
+(c) $|\emptyset|_e = 0$
+
+(d) If $E$ is a countable subset of $\mathbb{R}^d$, then $|E|_e = 0$.
+
+Proof: (a) Let $E \subset \mathbb{R}^d$ and $h \in \mathbb{R}^d$. Let $\{ Q_k \}$ be a countable cover of $E$. Then $\{ Q_k + h \}_k$ is a countable cover of $E+h$.
+Then $|E+h|_e \leq \Sigma_k \text{Vol}(Q_k + h) = \Sigma_k \text{Vol}(Q_k)$ and $|E+h|_e \leq |E|_e$.
+
+Since $h$ is arbitrary, potentially $h = 0$, this implies that $|E+h| = |E|$.
+
+(b) Let $A \subset B$ and $\{ Q_k \}$ be a countable cover of $B$. Then, $\{ Q_k \}$ is a countable cover of $A$. Then, $|A|_e \leq \Sigma_k \text{Vol}(Q_k)$, and thus $|A|_e \leq |B|_e$.
+
+(c) $\emptyset \subset Q$, for $Q$ a box with any arbitrary volume. Then, $|\emptyset| \leq \vol(Q) \rightarrow 0$.
+
+(d) Let $E = \{ x_k \}_{k=1}^{\infty}$. Pick $Q_k$ to be a box such that $x_k \in Q_k$ and $\vol(Q_k) < \epsilon/2^k$ for $\epsilon > 0$.
+Then, $\{ Q_k \}$ is a countable cover of $E$ and:
+
+$$ |E|_e \leq \Sigma_k \vol(Q_k) = \Sigma_k \frac{\epsilon}{2^k} = \epsilon$$
+
+Since $\epsilon$ can be arbitrarily small, then $|E|_e = 0$.
+
+Theorem (countable additivity):
+
+If $E_1,E_2,...E_n,...$ are countably many sets in $\mathbb{R}^d$, then we have that:
+
+$$ |\cup_{k=1}^{\infty} E_k|_e \leq \Sigma_{k=1}^{\infty} |E_k|_e $$
+
+Proof: Let $\epsilon > 0$. For each $k$, there exists a countable cover $\{ Q_j^k\}_{j=1}^\infty$ of $E_k$ such that $ \Sigma_{j=1}^\infty \vol(Q_j^k) \leq |E_k| + \epsilon/2^{k+1}$.
+
+Since $E_k \subset \cup_{j=1}^\infty Q_j^k$, $\cup_{k=1}^\infty \subset \cup_{k=1}^\infty\cup_{j=1}^\infty Q_j^k$
+
+That is, $\{ Q_j^k \}_{j,k=1}^\infty$ is a countable cover of $\cup_{k=1}^{\infty} E_k$.
+
+Thus, $|\cup_{k=1}^{\infty} E_k|_e \leq  \Sigma_k \Sigma_j \vol(Q_j^k) \leq \Sigma_k |E_k|_e + \frac{\epsilon}{2^{k+1}} = \Sigma_k |E_k|_e + \epsilon$
+
+Since $\epsilon$ is arbitrarily small, then $|\cup_{k=1}^{\infty} E_k|_e \leq \Sigma_k |E_k|_e$.
+
+Exercise: Let $\{ E_k \}_{k=1}^\infty$ be a countable collection of sets in $\mathbb{R}^d$. Define:
+
+$$\lim_k \sup E_k = \cap_{j=1}^\infty [ \cup_{k=j}^\infty E_k ]$$
+
+$$\lim_k \inf E_k = \cup_{j=1}^\infty [ \cap_{k=j}^\infty E_k ]$$
+
+(a) Show that $\lim_k \sup E_k$ is the collection of all points that belong to infinitely many $E_k$ and $\lim_k \inf E_k$ is the collection of points that belong to all but finitely many $E_k$.
+
+(b) If $\Sigma_k |E_k|_e < \infty$, show that $|\lim \sup E_k | _e = 0$ and $|\lim \inf E_k | _e = 0$
+
+Proof of (b)
+
+$\lim_k \sup E_k = \cap_{j=1}^\infty [ \cup_{k=j}^\infty E_k ] \subset \cup_{k=j}^\infty E_k$
+
+So, $| \lim_k \sup E_k|_e \subset |\cup_{k=j}^\infty E_k|_e \leq \Sigma_{k=j}^\infty |E_k|_e \rightarrow_{j\rightarrow0} 0$
+
+Theorem: If $Q \subset \mathbb{R}^d$ is any box, then $|Q|_e = \vol(Q)$.
+
+Clearly, since $Q \subset Q$, then $|Q|_e \leq \vol(Q)$.
+
+Now, let $\{Q_k\}_k$ be any countable cover of $Q$ by boxes. For each $k$, let $\overline{Q_k}$ be a box such that $Q_k \subset \overline{Q_k}^o$ and $\vol(\overline{Q_k}) \leq (1 + \epsilon) \vol(Q_k)$.
+
+Then $Q \subset \cup_{k=1}^\infty Q_k \subset \cup_{k=1}^\infty \overline{Q_k}^o$. But Q is compact, so there exists $M \geq 1$ such that $Q \subset \cup_{k=1}^M  \overline{Q_k}^o$. Then, $|Q|_e \leq |\cup_{k=1}^M  \overline{Q_k}^o |\leq \Sigma_{k=1}^M |\overline{Q_k}^o| = \Sigma_{k=1}^M |\overline{Q_k}| \leq \Sigma_{k=1}^M \vol(\overline{Q_k}) \leq   \Sigma_{k=1}^M(1 + \epsilon) \vol(Q_k)$. This is true, but not exactly what we wanted to prove.
+
+Now, we have $\vol(Q) \leq \vol(\cup_{k=1}^M \overline{Q_k}^o) \leq \vol(\cup_{k=1}^M \overline{Q_k})$, and we continue with the train of inequalities above.
+
+So, we have $\vol(Q) \leq \Sigma_{k=1}^\infty(1 + \epsilon) \vol(Q_k) \leq \Sigma_{k=1}^\infty\vol(Q_k) \implies \vol(Q) \leq |Q|_e$
+
+Corollary: $|\mathbb{R}^d|_e = \infty$.
+
+For all $k \in \mathbb{N}$, $[-k,k]^d \subset \mathbb{R}^d$. Proof should be obvious from here.
+
+Lemma: If $Q$ is a box, then $|Q|_e = |Q^o|_e$ and $|\partial Q|_e = 0$. Sketch, we can always bound the boundary of a box in a box tube.
+
+Cantor Set: 
+
+Define $F_0 = [0,1]$. Then, define $F_1 = F_0 \setminus (1/3,2/3)$. And continue by removing the middle third. of each segment. Define $C = \cap_{n=0}^\infty F_n$ the cantor set.
+
+Some properties. $C$ is closed. $C$ is uncountable and $|C|_e = 0$
+
+\section*{Sept 14th}
+Regularity of the exterior measure. 
+
+If $E \subset \mathbb{R}^d$, then for every $\epsilon > 0$, there exists an open set $U \supset E$ such that $|E|_e \leq |U|_e \leq |E|_e + \epsilon$. Consequently, we have that $|E|_e = \inf \{ |U|_E\}$.
+
+Proof:
+
+Let $\epsilon > 0$. there exists a $\{ Q_k \}_{k=1}^\infty$ such that $\cup_{k=1}^\infty Q_k \supset E$ and  $\Sigma_{k=1}^\infty\vol(Q_k) \leq |E|_e + \epsilon/2$. For each $k$, let $\overline{Q_k}$ be a box such that $Q_k \subset \overline{Q_k}^o$ and $\vol(\overline{Q_k}) \leq \vol(Q_k) + \epsilon/2^{k+1}$.
+
+Then, we have $E \subset \cup Q_k \subset \cup  \overline{Q_k}^o = U$ for some open set. 
+
+We have that $|U|_e = |\cup\overline{Q_k}^o|_e \leq \Sigma |\overline{Q_k}^o|_e$
+
+Corollary. If $E \subseteq \mathbb{R}^d$ and $|E|_e < \infty$, then there exists an open set $U \supset E$ such that $|U|_e < |E| + \epsilon$.
+
+Definition. Call a set $E \subseteq \mathbb{R}^d$ Lebesgue measurable if, for every $\epsilon > 0$ there exists $U$ an open set such that $U \supset E$ and $|U \setminus E|_e \leq \epsilon$. 
+
+If $E$ is Lebesgue measurable, then its Lebesgue measure is its exterior measure, and we denote it as $|E| = |E|_e$.
+
+We will also denote the collection of all measurable sets by $\mathcal{L} = \{ E \subseteq \mathbb{R}^d : E \text{ is Lebesgue measurable }\}$.
+
+Lemma.
+Every open set $U \subseteq \mathbb{R}^d$ is measurable.
+
+Let $\epsilon > 0$ be given. $|U \setminus U|_e = | \emptyset|_e = 0 < \epsilon$.
+
+Lemma
+
+If $E \subseteq \mathbb{R}^d$ and $|E|_e = 0$, then $E$ is Lebesgue measurable.
+
+Proof:
+
+Let $\epsilon > 0$. Well, there exists an open set $U \supset E$ such that $|U|_e \leq |E|_e + \epsilon = \epsilon$. But, we have that $U \setminus E \subset U \implies |U \setminus E|_e \leq |U|_e \leq \epsilon$.
+
+Theorem.
+
+Let $E_1, E_2, ...$ be countably many measurable sets. Then $\cup_{k=1}^\infty E_k$ is measurable, and $|\cup_{k=1}^\infty E_k| \leq \Sigma_{k=1}^\infty |E_k|$.
+
+Proof:
+
+Goal: Given an $\epsilon > 0$ we want to find a $U$ such that $U \supset \cup E_k$ and $|U \setminus \cup_{k=1}^\infty E_k|_e \leq \epsilon$.
+
+Let $\epsilon > 0$. Set $E = \cup_{k=1}^\infty E_k$.
+
+For each $k$, since $E_k$ is measurable, we know that there exists an open set $U_k$ such that $U_k \supset E_k$ and $|U_k\setminus E_k |_e \leq \epsilon/2^{k+1}$
+
+Let $U = \cup U_k$, an open set. Clearly, $U \supset E$.
+
+Well, $U \setminus E = \cup_{k=1}^\infty U_k \setminus \cup_{k=1}^\infty E_k \subseteq \cup_{k=1}^\infty(U_k \setminus E_k) $
+
+Then $ |U \setminus E|_e \leq |\cup_{k=1}^\infty(U_k \setminus E_k) |_e \leq \Sigma_{k=1}^\infty |U_k \setminus E_k|_e \leq \Sigma_{k=1}^\infty \epsilon / 2^{k+1} = \epsilon$.
+
+Corollary:
+
+Every box $Q \subseteq \mathbb{R}^d$ is measurable.
+
+Proof:
+
+$Q = Q^o \cup \partial Q$, an open set and a set of measure 0, both measurable.
+
+Lemma:
+
+Let $A,B \subseteq \mathbb{R}^d$ be nonempty sets such that $\text{dist}(A,B) > 0$, where we define $\text{dist}(A,B) = \inf\{ \Vert x-y \Vert : x \in A, y \in B\}$
+
+Then, $|A \cup B|_e =  |A|_e + |B|_e$
+
+Remark: $ text{dist}(A,B) \implies A \cap B = \emptyset$, but the converse is not true.
+
+Proof.
+
+We already know that $|A \cup B|_e \leq |A|_e + |B|_e$ by subadditivity. So we need only prove the other inequality.
+
+Let $\epsilon > 0$. Then, there exists $\{ Q_k \}_{k=1}^\infty$ such that $A \cup B \subset \cup_{k=1}^\infty Q_k$ and $\Sigma_{k=1}^\infty(Q_k) \leq | A \cup B| + \epsilon$. Define $\text{diam}(Q_k) = \sup \{ \Vert x - y \Vert : x,y \in Q_k \}$. We can also take $\text{diam}(Q_k) < \text{dist}(A,B)$, essentially, that we can take boxes small enough.
+
+Let $\{ Q_k^A \}$ be the set of all boxes such that $A \subset \cup Q_k^A$ and $B \subset \cup Q_k^B$. 
+
+Then $|A|_e + |B|_e \leq \Sigma_k (Q_k^A) + \leq \Sigma_k (Q_k^B) \leq \Sigma_k (Q_k) \leq |A \cup B|_e $
+
+Then $|A|_e + |B|_e \leq |A \cup B|_e$.
+
+Corollary:
+
+If $F_1, F_2$ are disjoint compact subset of $\mathbb{R}^d$ then $|\cup F_k|_e = \Sigma |F_k|_e$.
+
+Proof: Induct on the number of sets. For $N=2$. $F_1$ and $F_2$ compact, disjoint, then their distance is greater than 0.
+
+Theorem. If $E \subseteq \mathbb{R}^d$ is compact then $E$ is measurable. 
+
+Let $\epsilon > 0$. There exists an open set $U$ such that $U \supset E $ and $|U|_e \leq |E|_e + \epsilon$.
+
+But $U \setminus E$ is open. So there exists $\{ Q_k \}_{k=1}^\infty$ non overlapping.
+
+With $U \setminus E = \cup_{k=1}^\infty (Q_k)$.
+
+For each $M$, let $R_M = \cup_k^M Q_k$, $R_M$ is measurable.
+
+$| R_M| = \Sigma_{k=1}^M |Q_k|$
+
+But $R_M$ and $E$ are compact disjoint sets contained in $U$. 
+
+$|E|_e + \Sigma_{k=1}^M |Q_k|  = |E|_e + |R_M| = |E \cup R_M| \leq |U|_e \leq |E|_e + \epsilon$.
+
+Then, $|E|_e + \Sigma_{k=1}^M |Q_k| \leq |E|_e + \epsilon \implies \Sigma_{k=1}^M |Q_k| \leq \epsilon$.
+
+Then, $|U \setminus E|_e = |\cup Q_k|_e \leq \Sigma |Q_k|_e = \lim{M \rightarrow \infty} \Sigma_k^M |Q_k| \leq \epsilon$.
+
+Then $|U \setminus E|_e \leq \epsilon$.
+
+Corollary: Every closed set is measurable.
+
+Proof: Let E be closed. 
+
+Then, we can rewrite $E = \cup_{k=1}^\infty( E \cap [-k,k]^d)$. Then, since $E$ is closed, and $[-k,k]^d$ is compact, the intersection is compact and thus closed. Since this is now a countable intersection of closed sets, then E is measurable.
+
+Theorem
+
+If $E$ is measurable, then so is $E^c$.
+
+\section*{Sept 19th}
+
+
+Proof of last theorem:
+
+Suppose $E \subseteq \mathbb{R}^d$ is Lebesgue measurable. Then, its complement $E^c$ is measurable.
+
+For each $k \geq 1$, there exists an open set $U_k$ such that $E \subset U_k$ and $|U_k \setminus E| < 1/k$.
+Set $F_k = U_k^c$, closed sets. Define $H = \cup_{k=1}^\infty F_k$, which is measurable, as it is a countable union of closed sets.
+
+Now, of course, by construction, $H \subset E^c$. But also, we may write that $E^c = H \cup (E^c \setminus H)$.
+
+Well, $E^c \setminus H = E^c \cap H^c = E^c \cap ( \cup F_k^c) = \cap (E^c \cup F_k^c) = \cap (E^c \cup U_k) = \cap (U_k \setminus E) \subseteq U_k \setminus E$.
+
+And we have that $|E^c \setminus H| \leq |U_K \setminus E| \leq 1/k$ for every $k$, so $|E^c \setminus H| = 0$.
+
+Corollary:
+
+Suppose $E_1,...E_k$ is a countable collection of measurable sets. Then, $\cap E_k$ is measurable.
+
+Well $\cap E_k = (\cup E_k^c)^c$. This is the complement, of the countable union of the complement of measurable sets $\implies$ measurable.
+
+Corollary: 
+
+If $A \subseteq B \subseteq \mathbb{R}^d$ are measurable, then so is $B \setminus A$.
+
+Definition: ($\sigma$-algebra)
+
+Let $X$ be a non-empty set. Let $\Sigma$ be a collection of subsets of $X$, that is $\Sigma \subseteq P(X)$, the power set of $X$. We call $\Sigma$ a $\sigma$-algebra of subsets of $X$ if:
+
+(a) $X \in \Sigma$
+
+(b) $\Sigma$ is closed under complements
+
+(c) $\Sigma$ is closed under countable unions
+
+Recall that we called $\mathcal{L}$ the set of Lebesgue measurable sets. From the recent results, this is a $\sigma$-algebra.
+
+Theorem:
+
+Let $E \subseteq \mathbb{R}^d$. $E$ is Lebesgue measurable iff for every $\epsilon > 0$, there exists a closed set $F \subset E$ such that $|E \setminus F|_e < \epsilon$. 
+
+Proof:
+
+Let $\epsilon > 0$, and suppose we have a closed set $F \subset E$ with $|E \setminus F|_e < \epsilon$. Let $U = F^c$, an open, and thus measurable set. Further, since $F \subset E$, $ F^c \subset E^c$, and $(F^c \setminus E^c) = E \setminus F$. So we found an open set $F^c$ such that $|F^c \setminus E^c|_e < \epsilon$. Then, $E^c$ is measurable, and thus $E$ is measurable.
+
+Now, suppose $E$ is measurable and thus, $E^c$ is as well. Then, for any $\epsilon > 0$, we have an open set $U$ such that $E^c \subset U$, and $|U \setminus E^c| < \epsilon$. But, $U^c \setminus E$, and $|E \setminus U^c| = |U \setminus E^c| < \epsilon$. So, we have a sequence of $U^c$ closed sets.
+
+Theorem:
+
+Let $E_1,E_2,...,E_k,...$ be a countable collection of disjoint measurable sets.
+
+Then, $|\cup E_i| = \Sigma |E_i|$.
+
+Proof: From subadditivity, we already have that $|\cup E_i| \leq \Sigma |E_i|$. So we need only show that $\Sigma|E_i| \leq |\cup E_i|$.
+
+Now, suppose first that each $E_k$ is bounded. 
+
+Let $\epsilon > 0$. For each $k \geq 1$, there exists $F_k \subseteq E_k$ such that $|E_k \setminus F_k| < \epsilon/2^{k+1}$. Well, $F_k$ is closed, bounded, and thus compact. Let $n \geq 1$, and consider $\Sigma_{k=1}^n |F_k| = | \cup_{k=1}^n F_k | \leq | \cup_{k=1}^n E_k |  \leq | \cup_{k=1}^\infty E_k |$.
+
+Well, this is a bounded sequence, so it must converge. So we have that $\Sigma_{k=1}^\infty |F_k| \leq | \cup E_k|$.
+
+Now, consider $\Sigma |E_k| = \Sigma | F_k | + | E_k \setminus F_k| = \Sigma | F_k | +  \Sigma | E_k \setminus F_k| \leq | \cup E_k| + \Sigma_{k=1}^\infty \epsilon/2^{k+1} \leq | \cup E_k| + \epsilon$. So we have that $\Sigma |E_k| \leq | \cup E_k |$, and thus for bounded $E_k$,  $|\cup E_i| = \Sigma |E_i|$
+
+Now, suppose $E_i$ are not necessarily bounded. We rewrite $E_i = \cup_{j=1}^\infty E_i^j \cap \{ j-1 \leq \Vert x \Vert \leq j \}$. So, we have that $ \cup_{k=1}^\infty E_k = \cup_{k=1}^\infty \cup_{j=1}^\infty E_k^k$. But, by construction, each $E_i^j$ is bounded. So we have that $| \cup_{k=1}^\infty E_k| = \Sigma_{k=1}^\infty \Sigma_{j=1}^\infty |E_k^j| =   \Sigma_{k=1}^\infty |E_k|$.
+
+Corollary:
+
+If $\{ Q_k \}$ is a countably family of disjoint boxes. Then we have that $|\cup Q_k| = \Sigma |Q_k|$
+
+\section*{Sept 21st}
+
+Definition:
+
+We call a set $H \subseteq \mathbb{R}^d$ a $G_\delta$ set if we may express $H = \cap_{k=1}^\infty U_k$ for a countable collection of open sets $U_k$.
+
+We call a set $H \subseteq \mathbb{R}^d$  a $F_\sigma$ set if we may express $H = \cup_{k=1}^\infty V_k$ for a countable collection of closed sets $V_k$.
+
+This definition may be extended further. For example, we may define $G_{\delta\sigma}$ as the countable union of $G_\delta$ sets.
+
+Lemma:
+
+Let $E \subseteq \mathbb{R}^d$. Then:
+
+(a) There exists a $G_\delta$ set $H \supset E$ such that $ |H| = |E|_e$.
+
+(b) We can arrange the set $H$ in part (a) such that $H = \cap_{k=1}^\infty U_k$, $U_k$ open, and $U_1 \supset U_2 ...$.
+
+Proof:
+
+If $|E|_e = \infty$, then we may take $H = \mathbb{R}^d$.
+
+Now, suppose $|E|_e$ is finite. Take $k \in \mathbb{N}$.
+
+There exists $V_k$ open, such that $V_k \supset E$ and $|V_k \setminus E|_e < 1/k$.
+
+Now, let $H = \cap_k V_k \supset E$.
+
+$ H \setminus E \subset V_k \setminus E$, so we have that $|H \setminus E|_e \leq 1/k$. Then, we have that $|H|_e = |E|_e + |H \setminus E|_e$ but the second term is arbitrarily small, goes to 0. 
+
+(b)
+
+Now, define $U_k  = \cap_{i=1}^k V_k$.
+
+Lemma:
+
+Let $E \mathbb{R}^d$. The following statements are equivalent.
+
+(a) $E$ is Lebesgue measurable.
+
+(b) $E = H \setminus Z$ where $H$ is a $G_\delta$ set and $|Z| = 0$
+
+(c) $E = F \setminus Z’$ where $F$ is a $F_\sigma$ set and $|Z’| = 0$.
+
+
+Theorem: (Caratheodory’s Criterion)
+
+A set $E \subseteq \mathbb{R}^d$ if and only if for every $A \subseteq \mathbb{R}^d$:
+
+$$ |A|_e = |A \cap E|_e + |A \setminus E|_e$$
+
+Definition:
+
+We call a property $P$ to be true almost everywhere if it is true everywhere except maybe a set of measure 0. In this case, we write that the property holds almost everywhere.
+
+Example: Let $C$ be the cantor set. Define $1_C$ as the characteristic function of $C$, that is $1_C(x) = 0$ if $x \not \in C$ and $1_C(x) = 1$ if $x \in C$.
+
+We notice that $1_C$ 0 almost everywhere.
+
+Definition:
+
+Let $E \subseteq \mathbb{R}^d$.
+
+(a) Call the essential supremum for a function $f: E \to [-\infty,\infty]$ as $\text{ess sup}(f) =\inf \{ M \in [-\infty,\infty] : f(x \leq M a.e.\}$.
+
+(b) If $f$ is either an extended real-valued or complex-valued function on $E$, then if $\text{ess sup}(f) < \infty$, we call $f$ essentially bounded.
+
+Example:
+
+$f(x) = x 1_Q$
+
+Lemma: 
+
+Let $f: E \to [-\infty,\infty]$ and $m = \text{ess sup}(f)$. 
+
+(a) $f(x) \leq m $ for a.e. $x\in E$
+
+(b) $m$ is the smallest real number $M$ such that $f(x) \leq M$ a.e on $E$.
+
+Corollary:
+
+Let $E \subseteq \mathbb{R}^d$ and $f: E \to [-\infty,\infty]$ or $f: E \to \mathbb{C}$.
+
+(a) If $f$ is essentially bounded, then there exists a constant $m > 0 $ such that $|f(x)|< m$ a.e. on $E$. In particular, $f$ is finite a.e.
+
+(b) The essential supremum of $f$ is 0 $\iff$ $f$ is 0 almost everywhere.
+
+Note that if we mod out by the functions that are 0 a.e., we can use the ess sup as a norm.
+
+Theorem: Continuity from below:
+
+Suppose $E_1 \subseteq E_2 \subseteq ...$ with $E_i$ measurable for all $i$.
+
+Then $|E_1| \leq |E_2| \leq ...$, and that $| \cup_{k=1}^\infty E_k | = \lim_{k\to \infty} |E_k|$
+
+Proof: Suppose $|E_k| < \infty$ for all $k$. Consider the partial sum $\cup_{k=1}^m E_k = E_m$.
+
+Call $E_0 = \emptyset$
+
+By the nested property, we can rewrite $\cup E_k = \cup_{k=1}^m (E_k \setminus E_{k-1})$, and so we can rewrite $|\cup_{k=1}^m (E_k \setminus E_{k-1})| = \Sigma_{k=1}^M | E_k \setminus E_{k-1} | = \Sigma_{k=1}^M | E_k | -  E_{k-1} | = |E_m| - |E_0|  = |E_m|$
+
+Then, we have $\lim_{m\to \infty} |(\cup_k^m E_k )| = \lim_{m\to \infty} |E_m| \implies  |\cup_k^\infty E_k | = \lim_{m\to \infty} |E_m|$.
+
+Theorem:
+
+Let $E_1 \supset E_2 \supset ...$ be measurable, such that $|E_{k_0}| < \infty$ for some $k_0 > 1$.
+
+Then, $|E_1| \geq |E_2| \geq ...$ and $|\cap_{k=1}^\infty| = \lim{k \to \infty } |E_k|$.
+
+Corollary:
+
+Let $E \subseteq \mathbb{R}^d$ be measurable with $|E| < \infty$. Then there exists open sets $V_1 \supset V_2 \supset ...$, and $V_i \supset E$ for all $i$. such that $\lim_{k \to \infty}|V_k| = |E|$.
+
+Theorem:
+
+If $E \subseteq \mathbb{R}^n$ is measurable, and $F \subseteq \mathbb{R}^m$ is measurable, then $E \times F \in \mathbb{R}^{m+n}$ is measurable, with $|E \times F| = |E||F|$
+
+We want for a linear transformation $L: \mathbb{R}^d \to \mathbb{R}^d$, that for a measurable set $|E|$, $|L(E)| = |\det(L)| |E|$.
+
+Lemma:
+ 
+Suppose $F: \mathbb{R}^n \to \mathbb{R}^m$. 
+ 
+\section*{Sept 26th}
+
+From last time, suppose we have a linear transformation $L: \mathbb{R}^n \to \mathbb{R}^m$. 
+
+Case 1: If $n < m$, then we have that for any measurable $E \subseteq \mathbb{R}^n$, then $L(E)$ is measurable. Further, $L(E) = 0$.
+
+Case 2: If $n > m$, then we cannot say much.
+
+Now, suppose $n = m$.
+
+But first: Lemma:
+
+Suppose $F: \mathbb{R}^n \to \mathbb{R}^m$ is continuous and maps zero sets to zero sets. Then $F$ maps measurable sets to measurable sets, that is, if $E \subseteq \mathbb{R}^n$ is measurable, so is $F(E)$.
+
+Proof: Let $E \subseteq \mathbb{R}^n$ be measurable.
+
+We may write $E = H \cup Z$ with $H$ being an $F_{\sigma}$ set, and $|Z| = 0$.
+
+Then, $F(E) = F(H \cup Z)  =  F(H) \cup F(Z)$. By hypothesis $F(Z)$ is measurable. We can rewrite $F(H) = F(\cup F_k) = F(\cup (\cap_j^\infty F_k  [-j,j]^n)$ but $F$ continuous so it takes all of these compact sets to compact sets, so we reclaim that $F(H)$ is a $F_\sigma$ set when the dust settles.
+
+Definition:
+
+We call a function $F: \mathbb{R}^n \to \mathbb{R}^n$ Lipschitz if there exists $k > 0$  such that for all $x,y \in \mathbb{R}^n$:
+
+$$ \Vert F(x) - F(y) \Vert \leq k \Vert x - y \Vert $$
+
+We call $k$ the Lipschitz constant of $F$. 
+
+Lemma: If $F$ is linear, then it is Lipschitz.
+
+Theorem: If $F: \mathbb{R}^d \to \mathbb{R}^d$ is Lipschitz, then it maps sets with measure 0 to sets with measure 0. Further, $F$ maps measurable sets to measurable sets.
+
+Proof: Let $Z \subseteq \mathbb{R}^d$ with $|Z| = 0$. Then, we can take $\{ Q_k \}_k$ boxes such that $Z \subseteq \cup Q_k$ and $\Sigma |Q_k| < \epsilon$. for any $\epsilon > 0$. Well, then we have that $F(Z) \subseteq \cup F(Q_k)$. By Lipschitz, we have that $|F(Q_k ) \leq K ^d \text{diam}(Q_k^d)$, so we have that $|F(Z)| \leq \Sigma K^d \alpha |F(Q_k)| < K^d  \epsilon$ for some $\alpha < 1$ relating the diameter to the volume of a box.
+
+Corollary: If $L: \mathbb{R}^d \to \mathbb{R}^d$ is a linear transformation and $E \subseteq \mathbb{R}^d$ is a measurable set, then $L(E)$ is measurable and $|L(E)|= |\det(L)| |E|$.
+
+Axiom of Choice:
+
+Let $S$ be a non-empty set. Let $\mathcal{P}$ be the collection of non-empty subsets of $S$, the power set. Then, there exists a function $f: \mathcal{P} \to S$ such that for each $A \in \mathcal{P}$, $f(A) \in A$.
+
+Let $x,y \in \mathbb{R}$. Define $x \sim y$ if $x -y \in \mathbb{Q}$. This defines an equivalence relation on $\mathbb{R}$. Call $[x] = \{ y \in \mathbb{R} : y - x \in \mathbb{Q} \} = \{ x + q : q \in \mathbb{Q} \} $. We recall that equivalence relations partition the space, so we can write $\mathbb{R} = \cup_x [x]$. Since $\mathbb{R}$ is uncountable, then we must have an uncountable number of distinct equivalence classes, since the cardinality of $[x]$ is countable.
+
+By the axiom of choice, there exists a set $M \subseteq R$ such that $M$ contains one element from each equivalence class.
+
+Theorem: $M$ is not Lebesgue measurable.
+
+Let $q_k$ be an enumeration of the rationals. We may write $\mathbb{R} = \cup_{x \in M} (x + Q) = \cup_{x \in M} \cup_{q_k \in \mathbb{Q}} \{ x + q_k \} = \cup_{q_k \in \mathbb{Q}}  \cup_{x \in M} \{ x + q_k \}  = \cup_{q_k \in \mathbb{Q}} (M + q_k)$. Suppose $M$ were measurable. Then, $\infty = |R| = |\cup q_k + M| \leq \Sigma |q_k + M| = \Sigma |M|$. Thus, $ |M| > 0$. But, by Steinhauss, we see that $(-a,a) \subseteq M - M$ for some $a > 0$, that is, there exists $r \in \mathbb{Q} \setminus \{ 0 \} : r \in M$, which is a contradiction.
+
+Theorem: [ Steinhauss Theorem ]
+
+If $E \subseteq \mathbb{R}^d$ is measurable, and $|E| > 0$, then the set $E - E = \{ x - y : x, y \in E \}$ contains an interval centered at $0$. 
+
+Proof:
+
+Suppose $|E| > 0$. there exists $I = [a,b]$ such that $|E \cap I| > 3/4 |I|$. Let $ F = E \cap I$. Then, for $t \geq 0$, consider $I \cup I + t \subseteq [a,b+t]$.
+
+Also, for $ t < 0$, $I \cup I + t \subseteq [a -  |t|,b]$. In either case, we have that $ | I \cup (I + t) | \leq |I| + |t| $. Suppose $F \cap F + t = \emptyset$. Then, $|F \cap F + t | = |F| + |F + t| = 2|F|$. But we have $2 |I| \leq 4/3 2|F| = 4/3 |F \cap F + t | \leq 4/3  | I \cup (I + t) | \leq 4/3 |I| + |t|  \implies |I|/2 \leq |t|$. Then, we have that if $|t| < |I|/2$, then our intersection is non-empty. In particular, then, we can then say that $(-|I|/2, |I|/2) \subseteq F- f \subseteq E - E $. 
+
+Theorem:
+
+There exists no function $\mu: \mathcal{P}(\mathbb{R}) \to [0,\infty]$ such that:
+
+(a) $\mu([0,1])  = 1$
+
+(b) For any $E_1,E_2,...$ countably disjoint sets, we have $\mu(\cup_k E_k) = \Sigma \mu(E_k)$
+
+(c) For any $E \subseteq \mathbb{R}, h \in \mathbb{R}$, $\mu(E + h) = \mu(E)$.
+
+(d) For all $E_1,E_2 \subseteq \mathbb{R}$, if $E_1 \subseteq E_2$, then $\mu(E_1) \leq \mu(E_2)$.
+
+Again, take $x \sim y$ if $x -y \in \mathbb{Q}$, and restrict this to $[0,1]$. Using the axiom of choice, construct $M$ by taking one member of each equivalence class. Define $\{ q_k \}$ as an enumeration of $ \mathbb{Q} \cap [-1,1]$. Then, we have that $[0,1] \subseteq \cup_k M + q_k \subseteq [-1,2]$.
+
+\section*{Sept 28th}
+
+Measurable Functions:
+
+Let $E \subseteq \mathbb{R}^d$. We want to look at functions $f : E \to [-\infty, \infty]$, that is, extended real valued functions, $f : E \to \mathbb{R}$, or $f : E \to \mathbb{C}$. We focus on the extended line, since we can always just take out a set of measure 0 to recover a real valued function.
+
+Definition: [Extended real-valued measurability]
+
+Let $E \subseteq \mathbb{R}^d$, $f: E \to [-\infty,\infty]$. Call $f$ Lebesgue measurable on $E$, or a simply measurable function on $E$, if $\{ f > a \} = f^{-1}(a,\infty) $ is measurable for all $a \in \mathbb{R}$.
+
+Example:
+
+Let $A \subseteq \mathbb{R}^d$, and recall we may define a function $\chi_A(x) = 1 \text{ if } x \in A \text{ or } 0 \text { else }$. We notice that $\{ \chi_A > a \}$ is empty when $a \geq 1$, $\mathbb{R}^d$ when $a < 0$ and $A$ else. So, we have then by definition, that the indicator function is measurable iff the underlying set is measurable.
+
+Lemma:
+
+Let $E \subseteq \mathbb{R}^d$. If $f: E \to [-\infty,\infty]$, then the following are equivalent:
+
+(a) $f$ is measurable, that is $\{ f > a \}$ is measurable.
+
+(b) $\{ f \geq a \}$ is measurable.
+
+(c) $\{ f < a \}$ is measurable.
+
+(d) $\{ f \leq a \}$ is measurable.
+
+By complements, we see that (a) iff (d) and (b) iff (c).
+
+(a) $\implies$ (b)
+
+Well, we have that $\{ f \geq a \} = \cap_{k=1}^\infty \{ f > a  - 1/k \}$.
+
+For the reverse, we can see that $\{ f > a \} = \cup_{k=1}^\infty \{ f \geq a + 1/k \}$.
+
+Remark:
+
+Suppose $f$ is an extended real-valued function, measurable.
+
+Let $U \subseteq [-\infty,\infty]$. be an open set. Then, $f^{-1}(U)$ is measurable. (we can always take $U = \cup_{k=1} \{ f > -k \}$.)
+
+Lemma: 
+
+Every continuous real-valued function $f: \mathbb{R}^d \to \mathbb{R}$ is Lebesgue measurable.
+
+Lemma:
+
+Let $E \subseteq \mathbb{R}^d$ be a measurable set. Let $f: E \to [-\infty,\infty]$ be a measurable function. Suppose $g: E \to [-\infty,\infty]$ is a function s.t. $g = f$ almost everywhere. Then $g$ is measurable. 
+
+Proof: Let $Z \subseteq E$ s.t. $|Z| = 0$ and $f(x) = g(x)$ on $Z^c$. Let $a \in \mathbb{R}$. Consider $\{ g > a \}$. 
+
+Of course, $\{ g > a \} = \{ g > a \} \cap [ Z \cup Z^c ] = (\{ g > a \} \cap Z) \cup \{ f > a \}$. But $\{ f > a \}$ is measurable, $\{ g > a \} \cap Z)$ is measure 0 thus measurable, so $\{ g > a \}$ is measurable.
+
+Corollary:
+
+If $f: \mathbb{R}^d \to [-\infty,\infty]$ is a function, and there exists a continuous function $g: \mathbb{R}^d \to \mathbb{R}$ s.t $f = g$ almost everywhere, then $f$ is measurable.
+
+For a function $f: E \to [-\infty,\infty]$. We write $f^+ = \max(f(x),0)$ and $f^- = \max(-f(x),0)$. Then, we have that $f = f^+ - f^-$ and $|f| = f^+ + f^-$. (to be clear, the absolute value of the function)
+
+If $f: E \to \mathbb{C}$. Then instead we just write $f = f_r + i f_c = (f_r^+ + f_r^-) + i (f_c^+ + f_c^-)$ that is, real and complex parts and reduce from there.
+
+Operations on Measurable Functions:
+
+Lemma:
+
+Let $E \subseteq \mathbb{R}^d$ be Lebesgue measurable. Assume $f,g: E \to [-\infty,\infty]$ are measurable functions on $E$, finite a.e. Then, the following are measurable: $f+g, f-g$. 
+
+Proof: Let $Z_f$ be a set of measure 0 such that $f$ is finite, let $Z_g$ for $g$. Define a function $f’(x) = f \text{ if } x \in Z_f^c \text{ and } 0 \text{ otherwise }$ and same with $g’(x)$ Then, consider $f’+g’$ on $Z_f^c \cap Z_g^c = Z^c$. This is equal to $f+g$ a.e., and $f’+g’$ is finite everywhere. Now, consider: $\{ f+ g > a \} = \cup_{n = 1}^\infty \{ f + g > a + r_n \} =  \cup_{n = 1}^\infty \{ f  > a + r_n - g \}$, where we take $r_n \in \mathbb{Q}^+$ to be an enumeration of the positive rationals. 
+
+\section*{Oct 3rd}
+
+Continued from last time:
+
+Coarsement of statement:
+
+Let $E \subseteq \mathbb{R}^d$ be Lebesgue measurable. Assume $f,g: E \to [-\infty,\infty]$ are measurable functions on $E$ such that $f + g$ never takes the form $\infty - \infty$ or $-\infty + \infty$. Then, the following are measurable: 
+
+(a) $\{ f < g\}$ is measurable.
+
+(b) $g+b$ and $-g + b$ is measurable for every $b \in \mathbb{R}$
+
+(c) $f + g$ is measurable.
+
+Proof:
+
+Suppose $ x \in \{ f < g \}$. Then, there exists a $q \in \mathbb{Q}$ such that $f(x) < q < g(x)$. Then, we have that $\{ f < g \} = \cup ( \{ f < r \} \cap \{ g > r \})$, a countable collection of measurable sets.
+
+(b) is trivial. Let $ a \in \mathbb{R}$ be given. Then, $\{ g + b > a \} = \{ g > a - b \}$, which is measurable.
+
+(c) Fix a $a \in \mathbb{R}$. We see that $ \{ f + g < a\} = \{ f < -g +a \}$, but by part (a) and (b), we have that $-g + a$ is measurable, and $f$ is less than $g’ = -g +a$, so measurable.
+
+Further, because we can replace a function if it’s only infinite on a set of measure 0 with an equivalent one, we can actually relax the condition to be that $f,g$ finite a.e.
+
+Proof:
+
+Take the set $Z = \{ x \in \mathbb{R} : f+g(x) is undefined \}$, that is, $f+g = -\infty + \infty$ or $\infty - \infty$. Since $|Z| = 0$, define a new function $f_1(x) = 1$ when $x \in Z$ and $f(x)$ otherwise. Define $g_1(x)$ in the same way. But now, then $f_1 + g_1$ is measurable. Further, $f+g$ differs from $f_1 + g_1$ only on $Z$, a set of measure 0. Thus, $f_1 + g_1$ is measurable.
+
+Lemma: $f*g$ is measurable (same conditions on $f,g$.
+
+Consider the equality $fg = 1/4 [(f+g)^2 - (f-g)^2 ]$. Then, we just need that squares of measurable functions are measurable. Fix a $a \in \mathbb{R}$. If $a < 0$, then this is the whole set. Now, assume $a \geq 0$. Then, we have that $\{ f^2 > a \} = \{ f >  \sqrt{a} \} \cup \{ f <  -\sqrt{a} \}$.
+
+Lemma: 
+
+Let $E \subseteq \mathbb{R}^d$ be Lebesgue measurable. Assume $f,g: E \to [-\infty,\infty]$ are measurable functions on $E$ such that $f,g$ finite a.e and $g \not = 0$ a.e., then $f/g$ is measurable.
+
+Proof:
+
+Assume $g(f) \not = 0$ for all $x \in E$. Fix an $a \in \mathbb{R}$. Consider $\{ 1/g > a \}$. If $a > 0$, then we have $ \{ g < 1/a \}$ if 0, we have $ \{ g > 0 \}$. and similar for $a < 0$.
+
+Then, if $g$ is zero or infinite on a set of measure 0, then we can do the same redefinition trick.
+
+Lemma: Let $E \subseteq \mathbb{R}^d$ be a measurable set. Let $f: E \to [-\infty,\infty]$ be a measurable function s.t. it is finite almost everywhere. 
+
+(a) If $\phi: \mathbb{R} \to \mathbb{R}$ is continuous, then $ \phi \cdot f$ is measurable. 
+
+(b) $|f|, f^2, f^+, f^-, |f|^p$ for $p > 0$ is measurable. 
+
+Proof: Suppose $f$ is finite for all $x \in E$. Let $a \in \mathbb{R}$. Then, by the continuity of $\phi$, we consider $\{\phi \cdot f > a \}$. This is exactly $(\phi \cdot f)^{-1} (a,\infty) = f^{-1}(\phi^{-1}((a,\infty)))$. Since $\phi$ is cts, then the inverse image is open. Since $f$ is measurable, we have that the inverse image of open is measurable.
+
+Now, if $f$ is finite a.e., redefine $f’ = f$ in the same way as always.
+
+Lemma: Let $E \subseteq \mathbb{R}^d$ be a measurable set. If $f: E \to [-\infty,\infty]$ is measurable, and $L: \mathbb{R}^d \to \mathbb{R}^d$ is an invertible linear transformation, then $f \cdot L: L^{-1}(E) \to [-\infty,\infty]$ is measurable.
+
+Proof: $\{ f \cdot L > a \} = L^{-1}(f^{-1}(a,\infty]))$. $f^{-1}(a,\infty]$ is measurable. And $L$ brings measurable sets to measurable sets.
+
+Lemma: Assume $E \subseteq \mathbb{R}^d$ is a measurable set. If $f_n: E \to [-\infty,\infty]$ is a measurable functions, and finite a.e. for each $n \geq 1$, then the following hold:
+
+(a) Each of $\sup_n f_n$, $\inf_n f_n$, $\lim\sup f_n$, $\lim \inf f_n$ are measurable functions.
+
+(b) If $f(x) = \lim_{n \to \infty} f_n(x)$ exists almost everywhere, then $f$ is measurable.
+
+(c) If $f(x) = \Sigma_{n=1}^\infty f_n(x)$ exists a.e., then $f$ is measurable.
+
+Fix an $a \in \mathbb{R}$. We consider $\{ \sup_{n} f_n > a \} = \cup_n \{ f_n > a \}$. $\inf f = \sup -f, \lim \sup = \inf \sup f_n, \lim \inf  = \sup \inf f_n$. (b) follows since if lim exists, lim sup = lim inf = lim. (c) follows by partial sums.
+
+Definition: [ Simple Functions ] 
+
+Let $E \subseteq \mathbb{R}^d$ be a measurable set. A simple function on $E$ is a measurable function $\phi: E \to \mathbb{R} \text { or } \mathbb{C}$ that takes on only finitely many distinct values.
+
+Lemma: Let $\phi$ be a simple function whose domain is a measurable set $E$. Let $\{ c_1,...,c_M \} $ be the distinct values attained by $\phi$. Let $E_k = \{ x \in E : \phi(x) = c_k \}$. Then, we can identify $\phi = \Sigma_{k=1}^M c_k \chi_{E_k}$.
+
+We can see that we can recover standard form for a sum of simple functions by just taking over $\chi_{E_k \cap F_l}$ for $E_k, F_l$ the sets for two different simple functions.
+
+Theorem: Let $ E \subseteq \mathbb{R}^d$ be measurable. Let $f : E \to [0,\infty]$ be a nonnegative measurable function on $E$. Then, the following hold:
+
+(a) There exists non negative simple functions $\phi_n$ such that $\phi_n \nearrow f$, that is, $0 \leq \phi_1 \leq ...\leq f$ and $\lim_n \phi_n = f$.
+
+(b) If $f$ is bounded on some subset $A \subseteq E$. Then the convergence is uniform on $A$. That is, $\lim_n \sup_{ x \in A} | \phi_n(x) - f(x) | = 0$
+
+Proof: (sketch, by picture). Consider the sets that look like $E_i = A_i \cup [i,\infty]$ where we define $A_i = \cup_{k=1}^{j2^j} [ (k-1)/2^j, k/2^j )$. We then define $\phi_i = i $ if $f > i$, and otherwise, for the $ [ (k-1)/2^j, k/2^j )$ that $x$ belongs to, $\phi_i = (k-1)/2^j$.
+
+\section*{Oct 5th}
+
+Recall, and proof from last time:
+
+Theorem: Let $E \subseteq \mathbb{R}^d$ be a measurable set, and let $f: E \to [0,\infty]$ be a non-negative measurable function. Then:
+
+(a) There exists a sequence of non-decreasing non-negative simple functions $\phi_n$ that converges to $f$ on $E$, that is, $0 \leq \phi_1 \leq .... \leq \phi_m \leq ...$ and $\lim_{n\to \infty} \phi_n(x) = f(x)$ for all $x \in E$.
+
+(b) If $f$ is bounded on a subset $A \subseteq E$, then the convergence is uniform. That is, $\lim_{k\to \infty} \sup_{x \in A} | \phi_n(x) - f(x) | = 0$.
+
+Proof: For each $ n \geq 1$, let $E_{k-1}^n = \{ k-1/2^n \leq f(x) \leq k/ 2^n \}$ for $k = 1,...,n2^n$. Let $E^n_{n2^n} = \{ f \geq n \}$. We should be able to see that $E = \cup_{k = 1}^{n2^n + 1} E_{k-1}^n$. 
+
+Define $\phi_n(x) = n$ if $f(x) \geq n$ and $k-1/2^n$ if $k-1/2^n \leq f(x) \leq k/ 2^n$. 
+
+Then, we should be able to see that $\phi_n(x) = \Sigma_{k=1}^{n2^n + 1} (k-1)/2^n \chi_{E^n_{k-1}}$. By construction, we have that $0 \leq \phi_n(x) \leq f(x)$.
+
+So, now we need only show that , $\phi_n(x) \leq \phi_{n+1}(x)$. But this is pretty clear. Suppose we have $x : (k-1)/2^n \leq f(x) \leq k/ 2^n$. Then, we may say that either $ f(x) \in [(2k-2)/2^{n+1},(2k-1)/2^{n+1}) $ or $ f(x) \in [(2k-1)/2^{n+1},(2k)/2^{n+1}) $. In the first case, $\phi_{n+1} = (2k-2)/2^{n+1} = (k-1)/2^n = \phi_n$. In the second case, $\phi_{n+1} = (2k-1)/2^{n+1} > (2k-2)/2^{n+1} > (k-1)/2^n  = \phi_n$. Now, suppose $ f(x) \geq n$. If $f(x) \in [n,n+1]$, then in particular, $f(x) \in [((n2^n + 1) - 1)/2^n, (k+1)/2^n)$ so $\phi_{n+1} = n = \phi_n$. Else, $\phi_{n+1} = n + 1 > \phi_n$.
+
+Now, if $f(x)$ is infinite at $x$, then we have that $\phi_n(x) = n$ for all $n$, so $\lim \phi_n = \infty  = f(x)$. Now, suppose $f(x) < \infty$. Let $\epsilon > 0$ be given. Choose $n_0$ such that $f(x) < n_0$ and $2^{-n_0} < \epsilon$. Then, for every $n > n_0$, we have that $|f(x) - \phi_{n_0}  | \leq 2^{-n} \leq 2^{-n_0} \leq \epsilon$.
+
+In particular, if $f$ is bounded on $A$, then, this is true regardless of the point $x \in A$.
+
+Corollary: Let $E \subseteq \mathbb{R}^d$ be a measurable set, and let $f: E \to \overline{F}$  (extended reals, or complex) be a measurable function. Then:
+
+(a) There exists a sequence of simple functions $\phi_n$ such that $\lim_{n\to \infty} \phi_n(x) = f(x)$ for all $x \in E$.
+
+(b) $|\phi_n(x)| \leq |f(x)|$ for all $x \in E, n \geq 1$.
+
+(c) If $f$ is bounded on a subset $A \subseteq E$, then the convergence is uniform. That is, $\lim_{k\to \infty} \sup_{x \in A} | \phi_n(x) - f(x) | = 0$.
+
+Let’s look at the Lebesgue space $L^\infty(E)$.
+
+Define $\Vert f \Vert_\infty = \text{esssup}_{x \in E} |f(x)|$, where we recall $\text{ess sup}(f) =\inf \{ M \in [-\infty,\infty] : f(x \leq M a.e.\}$.
+
+Definition: If $E \subseteq \mathbb{R}^d$ is measurable, then $L^\infty(E) = \{ f: E \to \overline{F}$ such that $f$ is measurable and $\Vert f \Vert_\infty < \infty \}$.
+
+Not quite a norm, because we don’t have $f = 0 \iff \Vert f \Vert_\infty$, but if we can mod out, we’re good.
+
+A sequence $\{ f_n \}_{n=1}^\infty \subseteq L^{\infty} (E)$ is said to converge to a function $f$ in the $L^\infty(E)$-norm if $\lim_{n\to \infty}\Vert f_n - f \Vert_\infty = 0$. Turns out this has a Banach space structure.
+
+Lemma: If $\{ f_n \}_{n=1}^\infty \subseteq L^{\infty} (E)$ is a Cauchy sequence, then there exists an $f \in L^\infty(E)$ such that $f_n \to f$.
+
+Proof: For each $m,n \geq 1$, let $Z_{m,n} = \{ | f_m - f_n | > \Vert f_m - f_n \Vert_\infty \}$. By definition, this must be a set of measure 0. Construct $Z = \cup_{m,n} Z_{m,n}$. This must be a set of measure 0.
+
+Now, let $\epsilon > 0$ be given. Because our sequence is Cauchy, we may find a $N$ such that for all $m,n \geq N$, $\Vert f_m - f_n \Vert_\infty < \epsilon$.
+
+Then, for each $x \not \in Z$, for every $m,n \geq N$, we have that $| f_m(x) - f_n(x) | \leq \Vert f_m(x) - f_n(x)\Vert_\infty < \epsilon$. For a fixed $x$, this is a Cauchy sequence, thus convergent.
+
+Then, define $f(x) = 0$ on $Z$, and $\lim_{n \to \infty} f_n(x)$ on $Z^c$, which must be measurable. (limit of measurable sets).
+
+It should be bounded and convergent because we can triangle inequality.
+
+Egorov’s Theorem:
+
+Let $E$ be a measurable subset of $\mathbb{R}^d$ such that $|E| < \infty$. Suppose $\{ f_n \}$ is a sequence of measurable functions such that $f_n \to f$ almost everywhere (pointwise) where $f$ is finite a.e. Then, for each $\epsilon > 0$, there exists $A \subseteq E$ such that:
+
+(a) $|A| < \epsilon$
+
+(b) $f_n \to f$ uniformly on $E \setminus A$, that is $\lim \sup |f_n -f | = 0$ on $E \setminus A$.
+
+Working a simple case:
+
+Suppose $f_n \to f$, and suppose $f$ is finite everywhere. Let $\delta > 0$. Define $F_n = \cup_{m=n}^\infty \{ |f_m - f| < \delta \}$. Clearly, this is a decreasing sequence of measurable sets. But in particular, because $f_n \to f$, $\cap F_n = \emptyset$. So, we have that by continuity from above, we have that $\lim_{n\to \infty} F_n = 0$. That is, we can find a $F_n$ such that $|F_n | < \epsilon$. And, in particular, we have that on $F_n^c$, that for all $n \geq N$, that $|f_n(x) - f(x)| < \delta$.
+
+\section*{Oct 12th}
+
+Restatement of Egorov’s theorem in preparation for a general case: 
+
+Egorov’s Theorem:
+
+Let $E$ be a measurable subset of $\mathbb{R}^d$ such that $|E| < \infty$. Suppose $\{ f_n \}$ is a sequence of measurable functions such that $f_n \to f$ almost everywhere (pointwise) where $f$ is finite a.e. Then, for each $\epsilon > 0$, there exists $A \subseteq E$ such that:
+
+(a) $|A| < \epsilon$
+
+(b) $f_n \to f$ uniformly on $E \setminus A$, that is $\lim \sup |f_n -f | = 0$ on $E \setminus A$.
+
+Definition:
+
+Let $E \subseteq \mathbb{R}^d$ be measurable. We say a sequence of $f_n: E \to F$ converges almost uniformly to $f$ on $E$ if, for all $\epsilon > 0$, there exists $A \subseteq E$ such that:
+
+(a) $|A| < \epsilon$
+
+(b) $f_n \to f$ uniformly on $E \setminus A$.
+
+Proof (of Egorov’s):
+
+Case 1: $f_n: E \to \mathbb{C}$
+
+Let $Z  = \{ x \in E : f_n(x) \not \to f(x) \}$. By hypothesis, $|Z| = 0$. Define, for $k \geq 1$, $A_n(k) = \cup_{m=n}^\infty \{ |f_n(x) - f(x) | > 1/k \}$, and let $Z_k = \cap_{k=1}^\infty A_n(k)$. Firstly, we notice by construction, $A_1(k) \supset A_2(k) ....$, so because $|E| < \infty$, we apply continuity from above to get that $|Z_k|  = |\cap_{k=1}^\infty A_n(k)| = \lim_{n \to \infty} A_n(k)$. But, we also notice that since $Z_k$ is a statement on continuity, $Z_k \subseteq Z$, so $|Z_k| = 0$. So $\lim_n A_n(k) = 0$
+
+Now, let $\epsilon > 0$ be given. Since $\lim A_n(k) = 0$, we can take $n_k$ such that $|A_{n_i}(k) < \epsilon/2^k$. Define a set $A = \cup_i A_{n_i}(k)$, and we can see that $|A| < \epsilon$. Now, take an $x \in E \setminus A$. Then, since $x \in A^c$, we have that $x \in A_{n_k}(k)^c$ for every $n_k$. Then, by construction, for each $n_k$, for every $m \geq n_k$, $|f_m(x) - f(x)| < 1/k$.
+
+Case 2: $f_n: E \to [-\infty,\infty]$
+
+Well, first, we take $Y = \{ f = \pm \infty \}$. Then, on $E \setminus Y$, apply case 1, since we can make the same construction now, and we do not have to worry about degenerate cases where we need to consider $\infty - \infty$ or similar forms.
+
+Convergence in Measure:
+
+Definition:
+
+Let $E \subseteq \mathbb{R}^d$ be measurable. Assume $f_n, f: E \to F$ are measurable functions. We say that $f_n \to f$ in measure if for any $\epsilon > 0$, the limit $\lim_{n \to \infty} \{ | f_n - f | > \epsilon \} = 0$. We denote this as $f_n \xrightarrow[]{m} f$.
+
+Lemma:
+
+Let $E \subseteq \mathbb{R}^d$ be measurable, and $f_n,f: E \to F$ be measurable, finite a.e. If $f_n \xrightarrow[]{m} f$, then there exists a subsequence $f_{n_k}$ such that $f_{n_k} \xrightarrow[]{a.e.} f$.
+
+Proof:
+
+By definition, we know that for any $\epsilon > 0, \delta > 0$, we may find an $N$ such that for all $n \geq N$, $| \{ | f_n - f| > \epsilon \} | < \delta$.
+
+Well, choose $\epsilon = 1/k, \delta = 2^{-k}$, and we can choose a sequence of $n_k$ such that $|\{ | f_n - f| > 1/k \}| < 2^{-k}$
+
+Define $E_k = \{ | f_n - f| > 1/k \}$, and define $Z = \cap_{n=1}^\infty \cup_{k=n}^\infty E_k$.
+
+Well, we know that $\Sigma_{k} |E| \leq \Sigma 2^{-k} < \infty$. Then, since $Z$ is a limsup/liminf of a collection of sets that have finite measure, $|Z| = 0$.
+
+Let $x \not \in Z$. Then, there exists an $n \geq 1$ such that $x \not \in \cup_{k=n}^\infty E_k$. Then, we have a $k$ such that $|f_{n_k} - f| < 1/k$, which is a continuity condition.
+
+Corollary:
+
+Let $E \subseteq \mathbb{R}^d$ be measurable, $f,f_n: E \to \overline{F}$ be measurable, finite a.e. If $|E| < \infty$, $f_n \xrightarrow[]{a.e} f$, then $f_n \xrightarrow[]{m} f$.
+
+Definition:
+
+Let $E \subseteq \mathbb{R}^d$ be measurable, $f_n: E \to \overline{F}$ be measurable, finite a.e. We say that $f_n$ is Cauchy in measure if for every $\epsilon > 0$, we have that $\lim_{m,n \to 0}, | \{ | f_n(x)  - f_m(x) | \} | = 0$. That is, alternatively, for every $\epsilon,\delta > 0$, there exists $M$ such that for all $m,n > M$, $| \{| f_m - f_n | > \epsilon \} | < \delta$.
+
+Theorem: Let $E \subseteq \mathbb{R}^d$ be measurable. If $\{ f_n \}$ is a sequence of measurable functions that is Cauchy in measure, then there exists a measurable function $f$ such that $f_n \xrightarrow[]{m} f$.
+
+Proof: Pick a sequence $n_1 < n_2 < ...$ such that $| \{ | f_{n_{k+1}} - f_{n_k} | > 2^{-k} \} | < 2^{-k}$ from the Cauchy condition. Set $g_k = f_{n_k}$, and define $E_k = \{ g_{k+1}  - g_k \} > 2^{-k}$. Define a set $Z = \cap_{n=1}^\infty \cup_{k=n}^\infty E_k$. By borel cantelli, we have that $|Z| = 0$. Pick an $x \in E \setminus Z$, and consider $g_k(x)$. In particular, to be in $Z^c$, $g_k(x)$ must be a Cauchy sequence of real numbers, so convergent to some $g(x)$. So, then, define $f(x) = g(x)$ on $E \setminus Z$, $0$ on $Z$, and claim $f_n \to f$.
+
+\section*{Oct 17th}
+
+Review from last time and flesh out a bit:
+
+Lemma:
+
+Let $E \subseteq \mathbb{R}^d$ be measurable, and $f_n,f: E \to F$ be measurable, finite a.e. If $f_n \xrightarrow[]{m} f$, then there exists a subsequence $f_{n_k}$ such that $f_{n_k} \xrightarrow[]{a.e.} f$.
+
+Proof:
+
+By definition, we know that for any $\epsilon > 0, \delta > 0$, we may find an $N$ such that for all $n \geq N$, $| \{ | f_n - f| > \epsilon \} | < \delta$.
+
+Well, choose $\epsilon = 1/k, \delta = 2^{-k}$, and we can choose a sequence of $n_k$ such that $|\{ | f_n - f| > 1/k \}| < 2^{-k}$ for all $n > n_k$
+
+Define $E_k = \{ | f_{n_k} - f| > 1/k \}$, and define $Z = \cap_{n=1}^\infty \cup_{k=n}^\infty E_k$.
+
+Well, we know that $\Sigma_{k} |E| \leq \Sigma 2^{-k} < \infty$. Then, since $Z$ is a limsup/liminf of a collection of sets that have finite measure, $|Z| = 0$.
+
+Let $x \not \in Z$. Then,  $x  \in \cap_{k=n}^\infty E_k$. Then, we may choose $M$ such that for all $n_k > M$, for $1/k < \epsilon$, $| f_{n_k}(x) - f(x)| < 1/k$. But that is the definition of pointwise convergence.
+
+Theorem:
+
+Let $E \subseteq \mathbb{R}^d$ be measurable, and let $\{ f_n \}$ be a sequence of measurable functions, Cauchy in measure. Then, there exists a measurable function $f$ such that $f_n \xrightarrow[]{m} f$.
+
+Proof:
+
+Choose, yet again, $n_k$ such that $| \{ |f_{n_{k+1}} - f_{n_k} |> 2^{-k} \} | \leq 2^{-k}$ for all $k \geq 1$. Define $g_k = f_{n_k}$. Define $E_k = \{ | g_{k+1} - g_{k}| > 2^{-k} \}$. Define $H_n = \cup_{k=n}^\infty E_k, Z = \cap_n H_n$. In the same way, by Borel Cantelli, $|Z| = 0$. Now, choose $x \in Z^c$. Then, there must exists $M$ such that for all $k \geq M$, $|g_{k+1} - g_k| \leq 2^{-k}$. Consider $k,k’$ such that $k > k’ > M$. Then, we have that $|g_k - g_k’| \leq \Sigma_{i=k’}^{k-1} | g_{i+1} - g_i | \leq \Sigma_i 2^{-i} \leq 2^{-k’+1}$. Then, we have that $\{ g_k(x) \}$ is a Cauchy sequence of field elements. Thus, there exists a $y$ such that $\lim_k g_k(x) = y(x)$. Define $f(x) = 0$ on $Z$, and $y(x)$ on $Z^c$. Since $g_k \to f$ almost everywhere, $f$ is measurable, since the $g_k$’s were measurable.
+
+Now, claim that $g_k \xrightarrow[]{m} f$. Let $\epsilon > 0$ be given. Take an $x \in Z^c$. Then, there exists an $M \geq 1$ such that for all $k > k’ > M$, we have that $|g_{k’} - g_{k} | \leq 2^{-k’+1} \leq 2^{-k + 1}$. If we take $k$ to be arbitrarily large, we can say that $|f(x) - g_{k’}(x) | < \epsilon$, since $g_k \to f$. So, for all $k > M$, $\{ | f(x) - g_k(x) | > \epsilon \} \subseteq H_M$. But then we have that $|\{ | f(x) - g_k(x) | > \epsilon \} | \leq |H_M| \leq \delta$, since $|H_M| \to 0$. Thus, $g_k \xrightarrow[]{m} f$. 
+
+So now, we want to show that the full sequence converges. Well, by the triangle inequality, we have that $|f - f_n| \leq |f - f_{n_k}| + |f_{n_k} - f_n|$ for some $n_k$. But then we have that $\{ |f_n - f| > \epsilon \} \subseteq \{ |f_{n_k} - f_n| > \epsilon \}  \cup \{ |f_{n_k} - f| > \epsilon/2 \}$ 
+
+Lebesgue Integral:
+
+Definition:
+
+Let $\phi: E \to F$ be a non-negative simple function, where $E \subseteq \mathbb{R}^d$ is measurable. Assume $\phi = \Sigma_k a_k \chi_{E_k}$ is the standard representation of $\phi$. The Lebesgue integral of $\phi$ over $E$ is $\int_E \phi = \int_E \phi(x)  dx = \Sigma_{k=1} a_k |E_k|$, potentially infinite.
+
+Notationally, we say that if $E = [a,b]$, $\int_E = \int_a^b$.  
+
+Lemma:
+
+If $\phi, \psi$ are non-negative simple functions on a measurable set $E \subseteq \mathbb{R}^d$ and $c \geq 0$, then the following hold:
+
+(a) $\int_E c \phi = c \int_E \phi$ and $\int_E \phi + \psi = \int_E \phi + \int_E \psi$.
+
+(b) If $E_1,...,E_n \subseteq \mathbb{R}^d$ are measurable, $c_1,...,c_n \geq 0$, then $\int_E \Sigma_{k=1}^n c_k \chi_{E_k} = \Sigma c_k |E_k$.
+
+Proof:
+
+(a)
+
+$\int_E c \phi =  c \int_E \phi$. Well, $c \phi = \Sigma_k c a_k \chi_{E_k}$, pretty easy to see.
+
+Now, suppose we have $\phi = \Sigma_{k}^N a_k \chi_{E_k}$, and $\psi = \Sigma_{j}^M b_j \chi_{E_j}$. Now, we notice we may express $E_k = \cup_i^M (E_k \cap F_j)$ and $F_j = \cup_k^N (F_j \cap E_k)$.
+
+Then, we have the following:
+
+$$ \int_E \phi = \Sigma_k \Sigma_j a_k | E_k \cap F_j|$$
+
+$$\int_E \psi = \Sigma_j \Sigma_k b_j | E_k \cap F_j|$$
+
+So we have 
+
+$$ \int_E \phi + \int_E \psi = \Sigma_j \Sigma_k (a_k + b_j) | F_j \cap E_k|$$.
+
+Without writing it explicitly, we notice that we may enforce this to be in standard form by collecting all collections $k,j$ such that $a_k + b_j = a_{k’} + b_{j’}$. But this is exactly the form of $\phi + \psi$. 
+
+(b) is easy, induction via what we proved in (a).
+
+\section*{Oct 19th}
+
+In the same vein as last Lemma:
+
+Lemma:
+
+If $\phi, \psi$ are non-negative simple functions on a measurable set $E \subseteq \mathbb{R}^d$, the following hold:
+
+(a) If $\phi \leq \psi$ on $E$, then we have that $\int_E \phi \leq \int_E \psi$
+
+(b) $\int_E \phi = 0 \iff \phi = 0$ a.e.
+
+(c) If $A \subseteq E$ is measurable, then $\phi \chi_A$ is a simple function, and $\int_A \phi = \int_E \phi \chi_A$
+
+(d) If $A_1,...,A_i,...$ are disjoint, measurable sets, and $A = \cup_n A_n$, then $\int_A \phi = \Sigma \int_{A_n} \phi$
+
+(e) If $A_1 \subset A_2 ...$ are nested measurable subsets of $E$ and $A = \cup_n A_n$, then $\int_A \phi = \lim_{n \to \infty} \int_{A_n} \phi$
+
+Definition: [Lebesgue Integral for non-negative, measurable functions]
+
+Let $ E \subseteq \mathbb{R}^d$ be a measurable set. If $f: E \to [-\infty,\infty]$ is measurable, then we define the Lebesgue integral of $f$ over $E$ as:
+
+$$ \int_E f = \int_E f(x) dx = \sup \{ \int_E \phi : 0 \leq \phi \leq f, \phi \text{ a simple function } \}$$
+
+Lemma: 
+
+The notion of Lebesgue integrals for non-negative, measurable functions is consistent with the one for simple functions.
+
+Proof:
+
+Let $\psi$ be a non-negative simple function, explicitly, $\psi = \Sigma_k c_k E_k$
+
+Let $\phi$ be a simple function such that $ 0 \leq \phi \leq \psi$. 
+
+Then, we have that $\int_E \phi \leq \psi  = \Sigma c_k |E_k|$, for all $\phi$. Then, we have that $\sup \leq \Sigma_k c_k E_k$. But further, since $\psi$ itself is a simple function, and $\psi \leq \psi$, we have that $\Sigma_k c_k E_k \leq \sup$ by properties of the sup. Thus, they are equal.
+
+Lemma: Let $E \subseteq \mathbb{R}^d$ be measurable, and $f,g: E \to [0,\infty]$ be measurable, non-negative functions on $E$.
+
+(a) If $A \subseteq E$ is measurable, then $\int_A f = \int_E f \chi_A$ and $\int_A \leq \int_E f$.
+
+(b) If $f \leq g$, then $\int_E f \leq \int_E g$
+
+(c) If $c \geq 0$, then $\int_E cf = c \int_E f$
+
+(d) If $\int_E f < \infty$, then $f(x) < \infty$ a.e.
+
+A formal argument for (d):
+
+Suppose that $f(x) = \infty$ on a set of measure 0. Then, the measure of $\{ f > n \}$ for $n \geq 1$ is positive. Define $A_n = \{ f > n \}$, clearly, $\cap A_n \subseteq A_n$, and by (a), we have that 
+
+Theorem [Tchebyshev’s Inequality]
+
+Let $E \subseteq \mathbb{R}^d$ be measurable, and $f: E \to [0,\infty]$ be a measurable function. For each $\alpha > 0$,
+
+$$ | \{ f >\alpha \} | \leq \frac{1}{\alpha} \int_{\{ f > \alpha \}} f \leq \frac{1}{\alpha} \int_E f$$
+
+Proof: Let $\alpha > 0$. Take the simple function $\phi = \alpha \chi_{\{ f > \alpha \}}$ We have that $\int_E f \geq \int_{\{ f > \alpha \}} f \geq \int_{\{ f > \alpha \}} \phi = \alpha |\{ f > \alpha \}|$, and dividing by $\alpha$, we are done.
+
+Monotone Convergence Theorem and Fatou’s Lemma:
+
+Theorem [MCT]:
+
+Let $E \subseteq \mathbb{R}^d$ be a measurable subset. Let $\{ f_n \}_{n=1}^\infty$ be a sequence of non-decreasing, non-negative measurable functions. Let $f(x) = \lim f_n(x)$, that is, converging pointwise. Then, $\int_E f = \lim_n \int_E f_n$.
+
+Proof:
+
+We have that $0 \leq f_1 \leq f_2 ... \leq f$. By the last lemma, we have that $0 \leq \int_E f_1 \leq \int_E f_2 \leq ... \leq \int_E f$. So, we have that $\lim_n \int_E f_n \leq \int_E f$. 
+
+Now, let $0 \leq \phi \leq f$ be a simple function, and let $\alpha \in (0,1)$. Consider $E_n = \{ f_n \geq \alpha \phi \}$. We notice that $E_1 \subseteq E_2 \subseteq ...$.
+
+We claim that $E = \cup_n E_n$. Clearly, $\cup_n E_n \subseteq E$. Now, let $x \in E$. Suppose $x \not \in E_n$ for any $n$. Then, we have that $f_n(x) < \alpha \phi$ for all n. But, due to the definition of $f$, then we have that $\phi \leq f \leq \alpha \phi$, but since $\alpha < 1$, this is impossible.
+
+Then, we have that $\int_E \phi = \lim_n \int_{E_n} \phi$ by the last lemma. But, by definition of $E_n$, $ \lim_n \int_{E_n} \phi \leq 1/\alpha \int_{E_n} f_n$. But $ 1/\alpha \int_{E_n} f_n \leq 1/\alpha \int_E f_n$ as $E_n \subseteq E$. Since the choice of $\phi$ was arbitrary, this is an upper bound for the supremum, so we have that $\int_E f \leq 1/\alpha \int_E f_n$. But, since this is true for $\alpha \in (0,1)$, we may take the limit as $\alpha \to 1$, so we recover $\int_E f \leq \lim \int_E f_n$.
+
+Theorem: Let $f,g: E \to [0,\infty]$ be measurable functions on a measurable subset. Then, $\int_E f + g = \int_E f + \int_E g$.
+
+Proof:
+
+Let $\phi_n \nearrow f$, and $\psi_n \nearrow g$ be simple, increasing, non-negative functions. Then, $\phi_n + \psi_n \nearrow f+g$ and $\phi_n + \psi_n$. Then, we apply the MCT a few times:
+
+$$ \int f+g = \lim_n \int \phi_n + \psi_n = \lim \int \phi_n + \int \psi_n = \lim \int \phi_n + \lim \int \psi_n = \int f + \int g$$
+
+Corollary:
+
+Let $\{ f_n \}$ is a sequence of non-negative measurable functions on a measurable set $E \subseteq \mathbb{R}^d$. Then:
+
+$$ \int_E \Sigma_n f_n = \Sigma_n \int_E f_n$$
+
+Theorem: [Fatou’s Lemma]
+
+%$$ \int \lim f_n = \lim \int f_n $$
+
+If $\{ f_n \}$ is a sequence of non-negative, measurable functions on a measurable subset $E \subseteq \mathbb{R}^d$, then $\int_E \liminf_n f_n \leq \liminf_n \int_E f_n$, In particular, if $f(x) = \lim f_n(x)$, then $\int f \leq \liminf \int f_n$.
+
+Proof:
+
+$\liminf f_n = \sup_n \inf_{k \geq n} f_n(x)$ Well, define $g_k = \inf_{k \geq n} f_n(x)$, increasing. Then, by MCT, we have that $\int \liminf f_n= \int \lim g_n = \lim \int g_n = \liminf \int g_n \leq \liminf \int f_n$
+
+\section*{Oct 24th}
+
+Missing some notes due to shuttle (4.3.1 - 4.3.5) in book:
+
+Lemma: Let $E \subseteq \mathbb{R}^d$ be a measurable set. Let $f,g: E \to \overline{F}$ be measurable, $c$ a scalar in the relevant codomain.
+
+a) If $\int_E f$ and $\int_E g$ both exist, and $f \leq g$ a.e. then $\int_E f \leq \int_E g$.
+
+b) If $\int_E f$ and $\int_E g$ both exist, and $f = g$ a.e. then $\int_E f = \int_E g$.
+
+c) If $\int_E f$ exists, and $A \subseteq E$ a measurable subset, then $\int_A f$ exists.
+
+d) If $f = 0$ a.e., then $\int_E f$ exists, and $\int_E f = 0$.
+
+e) If $\int_E f$ exists, then $\int_E cf$ exists, and is equal to $c \int_E f$.
+
+f) If $\int_E f$ exists, and $A_1,...,A_i$ disjoint measurable subsets of $E$, then $\int_{\cup A_i} f = \Sigma_i \int_{A_i} f$.
+
+g) If $\int_E f$ exists, and $A_1 \subseteq A_2 \subseteq ...$ are nested measurable sets, then $\int_{\cup A_i} f = \lim_i \int_{A_i} f$.
+
+Proof:
+
+If $\int_E f, \int_E g$ exists, then by definition, they are $\int_E f^+ - \int_E f^-$ and same for $g$. Well, we know for sure that $f^+ - f^- \leq g^+ - g^-$. Rearranging, we find that for all $x \in E$, $f^+ + g^- \leq g^+ + f^-$, but here, we have non-negative functions on both sides, so we have that $\int_E f^+ + g^- \leq \int_E g^+ + f^- \implies \int_E f^+ - \int_E f^- \leq \int_E g^+ - \int_E g^-$. (just be careful about infinities)
+
+e): Let $f: E \to F$. if $c = 0$, then we’re done. If $c > 0$, then $cf = cf^+ - cf^-$, which is fine, and similar to $c < 0$.
+
+Theorem (MCT):
+
+Assume that $E \subseteq \mathbb{R}^d$ is measurable. If $f_n: E \to [-\infty,\infty]$ are measurable functions, $f_n \geq 0$ a.e., $f_n \nearrow f$ a.e. then $\lim_n \int_E f_n = \int_E f$.
+
+Proof: Let $Z = \{ x \in E : f_n < 0 \text{ or } \lim_n f_n \text{ does not exist } \}$. By hypothesis, $|Z| = 0$. Then, redefine $g_n = f_n$ off $Z$, and $0$ on $Z$ and same for $g$. But now we just apply monotone convergence for non-negative functions, and because $g, g_n$ differ from $f,f_n$ on a set of measure 0, they have the same integral.
+
+Theorem (Fatou’s)
+
+Assume that $E \subseteq \mathbb{R}^d$ is measurable. If $f_n: E \to [-\infty,\infty]$ are measurable, and $f_n \geq 0$ a.e., then $\int_E \liminf f_n \leq \liminf \int_e f_n$.
+
+The Lebesgue space $L^1(E)$:
+
+Definition:
+
+Let $E \subseteq \mathbb{R}^d$ be measurable and let $f : E \to \overline{F}$ be a measurable function.
+
+a) The extended real number $\Vert f \Vert_1 = \int_E |f|$ is called the $L^1$-norm of $f$.
+
+b) If $\Vert f \Vert_1 < \infty$, then we say $f$ is integrable on $E$.
+
+We notice that if $|E| < \infty$, then any bounded, measurable function is integrable.
+
+Definition:
+
+If $E \subseteq \mathbb{R}^d$ is measurable, then the Lebesgue space of integrable functions on $E$ is $L^1(E) = \{ f: E \to F : f$ is measurable and $\Vert f \Vert_1 < \infty \}$.
+
+Properties:
+
+For the following, let $E \subseteq \mathbb{R}^d$ be measurable, $f,g \in L^1(E)$, and $c$ a scalar.
+
+a) $0 \leq \Vert f \Vert_1 < \infty$
+
+b) $\Vert cf \Vert_1 = |c| \Vert f \Vert_1$
+
+c) $\Vert f + g \Vert_1 \leq \Vert f \Vert_1 + \Vert g \Vert_1$
+
+d) $\Vert f \Vert_1 = 0$ if $ f = 0$ a.e
+
+\section*{Oct 26th}
+
+Definition:
+
+Let $E \subseteq \mathbb{R}^d$ be measurable. A sequence of integrable functions on $E$ is said to converge to $f \in L^1(E)$ if $\lim_{n \to \infty} \Vert f_n -f \Vert_1 = \lim_n \int_E |f_n - f| = 0$.
+
+Note that pointwise convergence does not imply $L^1$ convergence - take shrinking triangles, height 2n, base 1/n.
+
+Lemma:
+
+Let $E$ be a measurable subset of $\mathbb{R}^d$, $f_n,f$ be integrable functions on $E$. If $f_n \to f$ on $L^1$, then the following hold:
+
+(a) $f_n \xrightarrow[]{m} f$
+
+(b) There exists a subsequence $\{ f_{n_k} \}$ such that $f_{n_k} \to f$ a.e.
+
+Fast exercise, do part (a) with Tchebyshev’s
+
+Lemma:
+
+Let $E \subseteq \mathbb{R}^d$ be measurable, and $f_t, f \in L^1(\mathbb{R}^d)$, for $t \in (0,c), c > 0$. Then, we have that $f_t \to f$ under the $L^1$-norm $\iff$ $\lim_{k\to\inf} \Vert f_{t_k} - f \Vert_1 = 0$ for every sequence $\{ t_k \} \subseteq (0,c)$ such that $\lim_{k \to \infty} t_k = 0$.
+
+Let’s review convergences:
+
+We have that $L^\infty$-norm convergence $\implies$ almost uniform convergence $\implies$ convergence in measure $\implies$ point-wise convergence almost every of a subsequence.
+
+We also have: convergence a.e. $\implies$ almoust uniform convergence if $|E| < \infty$, and almost uniform convergence $\implies $pointwise a.e. convergence.
+
+We just proved $L^1$ convergence implies in measure.
+
+Theorem:
+
+Let $E \subseteq \mathbb{R}^d$ be measurable. If $f,g: E \to \overline{F}$ are integrable, and $a,b$ are scalars, then $\int_E (af + bg) = a \int_E f + b \int_E g$
+
+Proof:
+
+First, work for $\overline{F} = [-\infty,\infty]$
+
+So we already have that, from the triangle inequality, we have that $\int_E | f + g| \leq \int_E |f| + \int_E |g| < \infty$ as $f,g \in L^1(E)$.
+
+Now, define $$ \begin{cases} E_1 = \{ f,g \geq 0 \}, \\E_2 = \{ f \geq 0, g < 0, f+g \geq 0 \}, \\E_3 = \{ f < 0, g \geq 0, f+g \geq 0 \}, \\E_4 = \{ f \geq 0, g < 0, f+g < 0 \} , \\E_5 = \{ f  < 0, g \geq 0, f+g < 0 \}, \\E_6 = \{ f < 0, g < 0, f+g < 0 \} \end{cases}$$
+
+Clearly, these are disjoint, so we may say that $\int_E f + g = \Sigma \int_{E_i} f + g$. It is clear on $E_1, E_6$, since we have either strictly non-negative or non-postiive functions, so we apply the linearity of non-negative functions. On $E_6$, we multiply by $-1$. We hope that the argument for $E_2,...E_5$ are similar, so we focus on $E_2$. Consider the related sum:
+
+$$ \int_{E_2} (f + g) - \int_{E_2} g  =  \int_{E_2} (f + g) + \int_{E_2} -g  = \int_{E_2} f \implies \int_{E_2} (f + g)  = \int_{E_2} f  + \int_{E_2} g $$
+
+By the linearity of non-negative functions, and the ability to show that $c \int_E f = \int_F cf$
+
+Now, proving that $\int_E (af) = a \int_E f$, make an argument on $af = a(f^+ - f^-)$.
+
+Now, if $\overline{F} = \mathbb{C}$, we break $f,g$ into real and imaginary parts and use what we’ve proved for the reals.
+
+Comparing $L^\infty(E)$ and $L^1(E)$
+
+We notice that if $|E| < \infty$, we have that $L^\infty(E) \subset L^1(E)$ as a proper subset. Look at $E = [0,1]$, examples: $1/\sqrt{x}$, but then also that $|f| < \Vert f \Vert_\infty$, so integrate both sides.
+
+However, if we take $E = \mathbb{R}$, we see that $f(x) = e^{2\pi x} \in L^\infty(\mathbb{R}), \not \in L^1(\mathbb{R})$.
+
+The Lebesgue Dominated Convergence Theorem [LDCT]
+
+Theorem:
+
+Let $\{ f_n \}$ be a sequence of measurable functions on a measurable set $ E \subseteq \mathbb{R}^d$. If $f(x) = \lim_{n \to \infty} f_n(x)$ exists for a.e. $x \in E$ and there exists a single integrable function $g$ on $E$ such that $|f_n(x)| \leq g(f)$ a.e. for all $n \geq 1$, then $f_n \to f$ in $L^1$. As a consequence, we have that $\int_E f_n \to \int_E f$
+
+Proof:
+
+Assume $f_n \geq 0$ for all $n$. Then, we already know that for all $n$, because $f_n \leq g$ a.e., then $f_n \in L^1(E)$. Further, since $f_n \leq g$, then defining $f(x) = \lim f_n(x)$ wherever it exists, then $f \leq g$.
+
+Now, then we have, by Fatou’s lemma:
+
+$$ 0 \leq \int_E f = \int_E \liminf f_n \leq \liminf \int_E f_n$$
+
+Now, consider $g - f_n$, and apply Fatou’s lemma here again (also use the fact that $\liminf (-x_n) = - \limsup x_n$):
+
+$$ 0 \leq \int_E g - f \leq \liminf \int_E g - f_n = \liminf \int_E g - \int_E f_n = \int_E g \liminf ( - \int_E f_n) = \int_E g - \limsup \int_E f_n $$ 
+
+But, we have that $\int_E (g-f) = \int_E g - \int_E f$, so we have that $\int_E g - \int_E f \leq \int_E g - \limsup \int_E f_n \implies \int_E f \geq \limsup \int_E f_n$. But since $\limsup f_n \geq \liminf f_n$, and $ \limsup f_n \leq \int_E f \leq \liminf \int_E f_n$, we have $\lim \int f_n = \int f$.
+
+Now, we apply this to $| f_n - f| \geq 0$. Then, we have that $| f_n  - f | \to 0$ a.e.. By a triangle inequality, we have that $| f_n - f| \leq |f_n| + |f| \leq g + g = 2g$. So, then, we have that $\lim_n \int_E | f_n - f| = \int 0 = 0$.
+
+Corollary:
+
+If $E \subseteq \mathbb{R}^d$, with $|E| < \infty$, and $\{ f_n \}_{n=1}^\infty$ is a sequence of measurable functions such that there exists $M > 0, |f_n| \leq M$ a.e. for all $n \geq 1$. If $f(x) = \lim_n f_n(x)$ exists for a.e, then $f_n \to f$ on $L^1(E)$
+
+\section*{Oct 31st}
+
+Lemma: 
+
+Let $E \subseteq \mathbb{R}^d$ be measurable, $f: E \to \overline{F}$ be integrable. For $n \geq 1$, let $f_n = f \chi_{B_n(0)}$ where $B_n{0}$ is the ball of radius $n$ centered on $0$. Then $f_n \to f$ in $L^1(E)$.
+
+Proof:
+
+First, we notice that $f_n$ is measurable for all $n$. We also notice from the definition $f_n \to f$ pointwise for every $x$. Further, we have that $|f_n| = |f| |\chi_{B_n(0)}| \leq |f|$ since $|\chi_{B_n(0)}|$ is either 0, 1. Therefore, by LCDT, we have that $f_n \to f$.
+
+Definition:
+
+Call $C_c(\mathbb{R}^d) = \{ f: \mathbb{R}^d \to \mathbb{C} : \text{supp}(f) \text{ is compact } \}$, that is, $f^{-1}(\mathbb{C} \setminus \{ 0 \})$ is compact.
+
+Theorem: Urysohn’s Lemma:
+
+If $E, F$ are disjoint closed sets of a metric space $\mathcal{X}$ then there exists a cts function $\Theta$ such that $\Theta: \mathcal{X} \to \mathbb{R}, 0 \leq \Theta(x) \leq 1, \Theta = 0$ on E and $\Theta = 1$ on F.
+
+Proof:
+
+First, consider $\delta: x \to \text{dist}(x,E) = \inf \{ d(x,y) : y \in E \}$.
+
+If $ E \subset \mathcal{X}$ is closed, then consider $\delta(x) - \delta(x’)$
+
+In particular, we know that, for an arbitrary $y \in E$, $\delta(x) \leq d(x,y) \leq d(x,x’) + d(x’,y) \implies \delta(x) - d(x,y’) \leq d(x’,y)$. But since this is true for all $y$, this is less that $\delta(x’)$. So, rearranging, we have that $\delta(x) - \delta(x’) \leq d(x,x’)$ and since we can swap labels, this is an absolute value on both sides, so $\delta$ is Lipschitz.
+
+Then, we may define $\Theta: \frac{ \text{dist}(x,E) }{\text{dist}(x,E) + \text{dist}(x,F)}$. Since we showed $\delta$ as Lipschitz, thus cts, this is a quotient of cts functions, thus cts. Also, well defined since $E \cap F = \emptyset$ so the denominator is never 0. Lastly, we can easily check that it has the properties that we wanted, that is, in $[0,1]$ and 0 on E, 1 on F.
+
+Theorem:
+
+Let $f \in L^1(\mathbb{R}^d$, and $\epsilon > 0$. There exists $\Theta \in C_c(\mathbb{R}^d)$ such that $\Vert f - \Theta \Vert_1 < \epsilon$.
+
+Proof:
+
+Case 1: $f = \chi_E, |E| < \infty$. Let $\epsilon > 0$. We may find an open $U \supset E, |U \setminus E| < \epsilon$ and a closed $F \subset E, |E \setminus F| < \epsilon$. Take $F’ = \mathbb{R}^d \setminus U$. Clearly, since $F \subset E, F \subset  U$, so $F \cap F’ = \emptyset$. Then, by Urysohn’s Lemma, we can find a $\Theta: \mathbb{R}^d \to \mathbb{R}$ such that $0 \leq \Theta \leq 1$, $\Theta = 1$ on F, $0$ on $F’$, cts.
+
+Let’s look at $\Vert \Theta - f \Vert_1 = \int_{E} |\Theta - f| \leq \int_{U \setminus F} 2 \leq 4\epsilon$.
+
+Case 2: Let $f = \Sigma_{k=1}^M c_k \chi_{E_k}, |E_k| < \infty$. For each $E_k$, we can find $\Theta_k$ with $\Vert \chi_{E_n} - \Theta_n \Vert_1 < \epsilon/(M |a_k|)$. Then, defining $g = \Sigma a_n \Theta_n$ is enough. 
+
+Now, let $f \in L^1(\mathbb{R}^d)$. Let $\epsilon > 0$. There exists an $f_M : \text{supp}(f_M) \subseteq B_M(0), \Vert f - f_M \Vert_1 < \epsilon/3$. Then, we may approximate $f$ by a simple function $\phi$ with $Vert \phi_ - f_M \Vert_1 < \epsilon/3$ and by part 2, we have a $\Theta_M$ with $\Vert \Theta_M - \phi_M \Vert_1 < \epsilon/3$. Finish via triangle inequality.
+
+Definition:
+
+We call a function $\phi: \mathbb{R} \to \overline{F}$ really simple if it may be expressed in the form $\phi = \Sigma_{k=1}^M c_k \chi_{[a_k,b_k)}$, with $c_k$ scalars, $a_k < b_k \in \mathbb{R}$.
+
+Theorem:
+
+If $f \in L^1(\mathbb{R})$, then for $\epsilon > 0$, there exists a really simple function $\phi$ such that $\Vert f - \phi \Vert_1 < \epsilon$.
+
+Theorem:
+
+Let $f : [a,b] \to \mathbb{C}$ be a bounded function, whose domain is a closed and bounded interval $[a,b]$.
+
+(a) If $f$ is Riemann integrable on $[a,b]$, then it is Lebesgue integrable on $[a,b]$ and they coincide.
+
+(b) $f$ is Riemann integrable on $[a,b]$ $\iff$ $f$ is cts at almost every point $x \in [a,b]$.
+
+Proof:
+
+(a)
+
+WLOG: $f: [a,b] \to \mathbb{R}$. Take a partition $\Gamma =  \{a_0 < a_1 < .... < a_n \}$ and define the mesh $|\Gamma| = max(a_n - a_{n-1})$. Define $m_j = \inf_{[a_{n-1},a_n]} f(x)$, $M_j = \sup_{[a_{n-1},a_n]} f(x)$. Define $L_\Gamma = \Sigma_{j=1}^n m_j(a_n - a_{n-1})$, $U_\Gamma = \Sigma_{j=1}^n M_j(a_n - a_{n-1})$. Define really simple functions: $\phi_\Gamma = \Sigma_{j=1}^n m_j \chi_{[a_n - a_{n-1})}, \psi_\Gamma = \Sigma_{j=1}^n M_j \chi_{[a_n - a_{n-1})}$. We define $\phi_\Gamma(a_n) = f(n) = \psi_\Gamma(a_n)$, and we notice by the definitions, $\phi_\Gamma \leq f \leq \psi_\Gamma$, and that $\int_a^b \phi_\Gamma = L_\Gamma, \int_a^b \psi_\Gamma = U_\Gamma$.
+
+Now, let $\{ \Gamma_k \}_k$ be a sequence of partitions such that $\Gamma_{k+1}$ is a refinement of $\Gamma_{k}$ and $\lim_k |\Gamma_k| \to 0$. Because $f$ is Riemann integrable, we have that $L_{\Gamma_k} \to I, U_{\Gamma_k} \to I$.
+
+First of all, since $\Gamma_k$’s are refinements, we have that $\phi_{\Gamma_k}$ is an increasing sequence, and $\psi_{\Gamma_k}$ is a decreasing sequence. Let $\phi = \lim_k \phi_{\Gamma_k}$ and $\psi = \lim_k \psi_{\Gamma_k}$ measurable, since limits of measurable functions. By MCT, we have that the Lebesgue integrals: $\int \phi = \lim \int \phi_{\Gamma_k} = \lim L_k = I = \lim U_k = \lim \int \psi_k = \int \psi$. But, since we have $\phi_k \leq f \leq \psi_k$ here, we have that $\phi \leq f \leq \psi$. 
+
+Since we have that $\int \phi = \int \psi \implies \int \psi - \phi = 0$. But, since $\psi - \phi \geq 0$, $\psi - \phi = 0$ a.e. But, by the squeeze theorem then, $f = \phi = \psi$ a.e.
+
+(b)
+
+First, suppose $f$ is Riemann integrable. By part (a), we found a $\phi$ Lebesgue integrable, $E \subseteq [a,b]$ where $|Z| = | [a,b] \setminus E| =0$, and $f = \phi$ a.e. on $E$. Let $\{ \Gamma_k \}_k$ be a sequence of partitions, and let $S$ be the collection of all partition points from every $\Gamma_k$. Since $S$ at most countable, $S$ is measurable, and in particular $|S| = 0$. And now, claim: for all $ [a,b] \setminus (S \cup Z)$, $f$ is cts.
+
+\section*{Nov 2nd}
+
+Repeated integration:
+
+Fubini’s Theorem:
+
+Let $E \subseteq \mathbb{R}^m, F \subseteq \mathbb{R}^n$, measurable in the respective spaces. If $f: E\times F \to \overline{F}$ is integrable on $E \times F$, then the following statements hold:
+
+(a) $f_x(y) = f(x,y)$ is measurable, integrable for a.e. $x \in E$.
+
+(b) $f^y(x) = f(x,y)$ is measurable, integrable for a.e. $y \in F$.
+
+(c) $g(x) = \int_F f_x(y) dy$ is measurable and integrable on $E$.
+
+(d) $h(y) = \int_E f^y(x) dx$ is measurable and integrable on $F$.
+
+(e) The following three integrals exist, and are finite and equal:
+
+$$ \iint_{E \times F}  f(x,y) (dxdy) = \int_F (\int_E f(x,y) dx) dy = \int_E (\int_F f(x,y) dy) dx$$
+
+Proof:
+
+First, assume $E = \mathbb{R}^m, F = \mathbb{R}^n$, $\overline{F} = [-\infty,\infty]$, because for any $f : E \times F \to [-\infty,\infty]$, we can always extend to $\mathbb{R}^{m+n} \to [-\infty,\infty]$ by defining $\overline{f} = f$ on $E \times F$ and 0 otherwise.
+
+Now, define $\mathcal{F} = \{ f : \mathbb{R}^{m+n} \to [-\infty, \infty] :$ integrable, such that f satisfies the results of the theorem $\}$. Clearly, we have that $\mathcal{F} \subseteq L^1(\mathbb{R}^{m+n})$ because it is made up of integrable functions. Further, we know that it is non-empty, since the 0 function satisfies. So we need only the reverse inclusion.
+
+Lemma: $\mathcal{F}$ is a subspace of $L^1(\mathbb{R}^{m+n})$. Somewhat obvious, by the linearity of the integral.
+
+Lemma: If $A \subseteq \mathbb{R}^m, B \subseteq \mathbb{R}^n$ are measurable, with $|A|, |B| < \infty$, then for $E = A \times B$, $\chi_E \in \mathcal{F}$.
+
+Proof: If $f(x,y) = \chi_E = \chi_{A \times B}$. Fix an $x_0 \in A$, and we may look at $f_{x_0}: y \to f_{x_0}(y)  = \chi_A(x_0) \chi_B(y)$. But $\chi_A(x_0)$ is a scalar, and $\chi_B(y)$ is measurable, since $B$ is measurable. So this restriction is measurable and integrable since $|B| < \infty$. Further, $g(x) = \int_A f_x(y) dy = \chi_A(x) \int_B \chi_B(y) dy = |B| \chi_A(x)$. But $A$ is measurable, so this is measurable, integrable. We see (b),(d) follow, by swapping the labels. Lastly, we see that the three integrals are equal, because of the shape of the sets/integrals, that is, $\iint_{\mathbb{R}^{m+n}} f dx dy = |A| |B| = \int_{\mathbb{R}^m} g dx = \int_{\mathbb{R}^m} \int_{\mathbb{R}^n} f(x,y) dy dx$.
+
+Lemma:
+
+Assume $0 \leq f_k \in \mathcal{F}$ for all $k \geq 1$ and let $f \in L^1(\mathbb{R}^{m+n}$.
+
+(a) If $f_k \nearrow f \implies f \in \mathcal{F}$
+
+(b) If $f_k \searrow f \implies f \in \mathcal{F}$
+
+Proof: 
+
+If $f_k \nearrow \mathcal{F}$, then we have that for a.e. $x\in \mathbb{R}^m$, that $(f_k)_x$ is integrable, measurable, and $(f_k)_x \nearrow f_x$. But, then, by MCT, we have that $\int_{\mathbb{R}^n} (f_k)_x dy \nearrow \int_{\mathbb{R}^n} f_x dy$. But, by hypothesis, we see that the left hand side here is measurable, integrable, so that $\int_{\mathbb{R}^m} (\int_{\mathbb{R}^n} (f_k)_x dy) dx = \int_{\mathbb{R}^m} (\int_{\mathbb{R}^n} f_x dy) dx$. But, we recall that we have a convergence via $f_k$, so:
+
+$$\iint_{\mathbb{R}^{m+n}} f = \lim_k \iint_{\mathbb{R}^{m+n}} f_k = \lim_k \int_{\mathbb{R}^m} (\int_{\mathbb{R}^n} f_k) = \int_{\mathbb{R}^m} (\int_{\mathbb{R}^n} f_x) dy $$
+
+We get (b) by considering the sequence $f_1 - f_k$.
+
+Let $U$ be an open, bounded set in $\mathbb{R}^{m+n}$, $\chi_{U} \in \mathcal{F}$. Can we figure a sequence $A_1,...,A_k,...$ such that $U = \cup A_i$ and $A_1 = Q_1$, $A_2 = Q_2 \setminus Q_1$, etc where $Q_i$ is a cover of boxes of $U$ such that they potentially only overlap on the boundary.
+
+Lemma: If $U$ is a bounded open subset of $\mathbb{R}^{m+n}$, then $\chi_U \in \mathcal{F}$.
+
+Lemma: (a) If $Z \subseteq \mathbb{R}^{m+n}$, then $|Z| = 0 \implies \chi_Z \in \mathcal{F}$.
+
+(b) If $A$ is any bounded measurable subset of $\mathbb{R}^{m+n}$ then $\chi_A \in \mathcal{F}$.
+
+Theorem:
+
+$L^1(\mathbb{R}^{m+n} \subseteq \mathcal{F}$. Consequently $L^1(\mathbb{R}^{m+n} = \mathcal{F}$.
+
+Proof:
+
+Let $f \in L^1(\mathbb{R}^{m+n})$. We may rewrite $f = f^+ - f^-$. Assume, wlog, that $f$ is non-negative, since if this works, we can do this for the non-negative parts separately. Since $f$ is non-negative, we may find $0 \leq \phi_k \nearrow f$, where $\phi_k$ are simple functions. For $k \geq 1$, let $Q_k = [k,k]^{m+n}, \psi_k = \phi_k \chi_{Q_k} \nearrow f$. In particular, since $Q_k$ are compact, the $\psi_k$ are bounded. That is, from the increasing lemma, we have that $(\psi_k)_x \nearrow f_x$ for a.e. $ x\in \mathbb{R}^m$, and $\int_{\mathbb{R}^m} (\psi_k)_x \nearrow \int_{\mathbb{R}^m}  f dy$. But, $\int_{\mathbb{R}^m} (\psi_k)_x = \int_{\mathbb{R}^n} \psi_k dy \nearrow \iint f$. Since these are limits of measurable functions, we know that $f_x$ is measurable, we know that the integral over y is integrable. So that we have that $\int_{\mathbb{R}^m} ( \int_{\mathbb{R}^n} \psi_k dy) dx \nearrow  \int_{\mathbb{R}^m} ( \int_{\mathbb{R}^n} f(x,y) dy) dx $.
+
+Tonelli’s Theorem:
+
+Let $E \subseteq \mathbb{R}^m, F \subseteq \mathbb{R}^n$ be measurable sets in their respective spaces. Suppose $f: E \times F \to [0,\infty]$ is measurable. Then the following statements hold:
+
+(a) $f_x(y) = f(x,y)$ is measurable for a.e. $x \in E$.
+
+(b) $f^y(x) = f(x,y)$ is measurable for a.e. $y \in F$.
+
+(c) $g(x) = \int_F f_x(y) dy$ is measurable on $E$.
+
+(d) $h(y) = \int_E f^y(x) dx$ is measurable on $F$.
+
+(e) The following three integrals exist, as non-negative extended real-valued numbers, and are equal:
+
+$$ \iint_{E \times F}  f(x,y) (dxdy) = \int_F (\int_E f(x,y) dx) dy = \int_E (\int_F f(x,y) dy) dx$$
+
+We’ll talk about convolutions later.
+
+\section*{Nov 7th}
+
+Proof of Tonelli’s:
+
+For $k \geq 1$, let $Q_k = [-k,k]^{m+n}$. Define $f_k (x,y) = k$ if $(x,y) \in Q_k, f(x,y) > k$, $f(x,y)$ if $(x,y) \in Q_k, 0 \leq f(x,y) \leq k$, $0$ else.
+
+This is measurable, because we may express this as $f_k = \chi_{Q_k \cap \{ f > k \}} + f(x,y) + f(x,y)\chi_{Q_k \cap \{ f \leq k \}}$.
+
+Further, because we’re bounded, non-0 on a set of finite measure, we’re integrable, and clearly we have $f_k \nearrow f$. Then, we may apply Fubini’s theorem to see that $(f_k)_x$ is a measurable function for a.e. $x \in E$ and $(f_k)_x \nearrow f_x$. Then, we have by monotone convergence theorem that:
+
+$$ g_k(x) = \int_F (f_k)_x = \int_F f_k(x,y) \nearrow \int_F f(x,y) dy = g(x)$$
+
+By Fubini’s, we have that $g_k$ is measurable. And since $g$ is a pointwise limit of measurable functions, $g$ is measurable.
+
+We can prove (b),(d) in the same way.
+
+So now, we just want to prove (e)
+
+Well we have that:
+
+$$\iint_{E \times F} f (dxdy) = \lim_k \iint_{E \times F} f_k(x,y) (dxdy) = \lim_k \int_E (\int_F f_k(x,y)dy) dx $$
+$$ = \int_E (\lim_k \int_F f_k(x,y)dy) dx = \int_E (\int_F f(x,y)dy) dx $$
+
+Where the first equality from MCT, 2nd and 3rd from Fubini’s, and last by MCT.
+
+Corollary:
+
+Let $f : E \times F \to [-\infty,\infty]$ be measurable, $E, F$ be measurable sets. Then:
+
+$$ \iint_{E\times F} | f(x,y)| (dxdy) = \int_E (\int_F |f(x,y)| dy) dx = \int_F (\int_E |f(x,y)| dx) dy$$
+
+So now, we may find if a function is integrable by looking at any of the iterated integrals.
+
+Convolutions:
+
+Let $f,g: \mathbb{R}^d \to \overline{F}$.
+
+Define $f \ast g (x) = \int_{\mathbb{R}^d} f(y) g(x-y) dy$.
+
+We call this function the convolution of $f$ and $g$.
+
+If $f,g \in L^1(\mathbb{R}^d)$, then $f \ast g$ exists for a.e. $x \in \mathbb{R}^d$ and $f \ast g \in L^(\mathbb{R}^d)$.
+
+Look at Fubini’s on $F(x,y) = f(y) g(x-y)$.
+
+\section*{Nov 9th}
+
+Just practice problems.
+
+Note, on-site for 14th, 16th - this was 5.1-5.2 area.
+
+\section*{Nov 21st}
+
+Recall:
+
+Theorem: [Jordan Decomposition]
+
+Let $f: [a,b] \to \mathbb{R}$ be given. Then the following are equivalent:
+
+(a) $f \in \bv[a,b]$
+
+(b) There exists two monotone increasing functions $g,h$ such that $f = g -h$.
+
+Corollary:
+
+$f : [a,b] \to \mathbb{C}$ and $f \in \bv[a,b] \iff$ there exists monotone increasing functions $f_1,...,f_4: [a,b] \to \mathbb{R}$ such that $f = (f_1 - f_2) + i(f_3 - f_4)$
+
+From this, we can say that $$\bv[a,b] = \text{Span}\{ f: [a,b] \to \mathbb{R}, f \text{ monotone increasing } \}$$
+
+Covering Lemmas:
+
+Theorem: [Simple Vitali Lemma]
+
+Let $\mathcal{B}$ be a non-empty collection of open balls in $\mathbb{R}^d$. Let $U$ be the union of the balls in $\mathcal{B}$. Fix a $0 < c < |U|$. Then, there exists finitely many disjoint balls $B_1,...,B_M \in \mathcal{B}$ such that $\Sigma_k^M |B_k| > c/3^d$
+
+Proof:
+
+Let $ 0 < c < |U|$ be given. Then there exists a compact set $K \subseteq U$ such that $0 < c \leq |K| < |U|$.
+
+There exists $\tilde{B_1}, \tilde{B_2}, \tilde{B_i} \in \mathcal{B}$ such that $K \subseteq \cup_{j=1}^i \tilde{B_j} $, due to compactness, we must have a finite cover.
+
+Define $B_1 = \tilde{B}_{j_{\max}}$, that is, the $\tilde{B}_j$ with the largest radius. If $B_1$ overlaps with every other $\tilde{B}_j$, then we take $M = 1$. Else, let $B_2$ be the next largest ball disjoint from $B_1$. Continue this procedure until we run out of $\tilde{B}_j$.
+
+Now, let $B_k^*$ be the ball of the same center as $B_k$, but with radius $3$ times the radius of $B_k$. We claim, by proof by picture, that $K \subseteq \cup_{k=1}^M B_k^*$, due to the choice of $B_k$ being the $k$-th largest radius, so it must subsume all of the $\tilde{B_j}$ that overlap with $B_k$ specifically.
+
+Then, we have that:
+
+$$0 < c < |K| \leq |\cup_{k=1}^M B_k^*| \leq \Sigma_k^M |B_k^*|  = 3^d \Sigma_k^M|B_k| $$
+
+Definition: [Vitali Cover]
+
+A collection $\mathcal{B}$ of closed balls is a Vitali cover of the subset $E \subseteq \mathbb{R}^d$ if, for every $x \in E, \epsilon > 0$, there exists a ball $B \in \mathcal{B}$ such that $x \in B$ and the radius of $B$ is less than $\epsilon$.
+
+Theorem: [Vitali Covering Lemma]
+
+Let $E \subseteq \mathbb{R}^d$ with $0 < |E|_e < \infty$. If $\mathcal{B}$ is a Vitali cover of $E$, then for every $\epsilon > 0$, there exists disjoint closed balls $B_1,...,B_M \in \mathcal{B}$ such that:
+
+$$ \left| E \setminus (\cup_k^M B_k) \right|_e < \epsilon, \Sigma_k^M |B_k| < |E|_e + \epsilon $$
+
+Differentiability of Monotone Functions:
+
+Definition: [Dini’s Numbers]
+
+Let $f: E \to \mathbb{R}$ be a real-valued function for $E \subseteq \mathbb{R}$. If $x \in E$ is an interior point, then the four Dini numbers of $f(x)$ are:
+
+$$D^+ f(x) = \limsup_{h \to 0^+} \frac{f(x+h) - f(x)}{h} , D_+ f(x) = \liminf_{h \to 0^+} \frac{f(x+h) - f(x)}{h} $$
+
+$$D^- f(x) = \limsup_{h \to 0^-} \frac{f(x+h) - f(x)}{h} , D_- f(x) = \liminf_{h \to 0^-} \frac{f(x+h) - f(x)}{h} $$
+
+Clearly, by the $\liminf, \limsup$ properties, we have that $D^+ \geq D_+$, and $D^- \geq D_-$. Further, we can see if these are all equal, then $f$ is differentiable at $x$.
+
+Theorem: 
+
+If $f: [a,b] \to \mathbb{R}$ is monotone increasing, then the following hold:
+
+(a) $f$ has at most countably many points of discontinuity, and all of them are jump discontinuities.
+
+(b) $f’(x)$ exists for almost every $x \in [a,b]$
+
+(c) $f’$ is measurable and $f’(x) \geq 0$ a.e.
+
+(d) $f’ \in L^1[a,b]$ and $0 \leq \int_{[a,b]} f’ \leq f(b) - f(a)$
+
+Proof:
+
+WLOG, extend $f$ on all of $\mathbb{R}$ such that $f(x) = a$ for $x < a$ and $f(x) = b$ for $x > b$.
+
+First, assume $a,b$ are true.
+
+(c)
+
+Then, since $f’$ exists, we know that $f’ = \lim_n f(x+1/n) - f(x)/ 1/n$ exists. $f$ monotone implies $f$ measurable, so this is a limit of a different of measurable functions, thus measurable. Further, since this is monotone, this is non-negative.
+
+(d)
+
+Define $f_n =  f(x+1/n) - f(x)/ 1/n$
+
+We have $0 \leq \int_{[a,b]} f’ = \int_a^b \liminf f_n(x) \leq \liminf \int f_n(x)$
+
+Looking at $\int f_n(x)$, we have:
+
+$$\int f_n(x) = n \int f(x + 1/n) - f(x) = n [\int_{a + 1/n}^{b + 1/n} f - \int_a^b f] = n[\int_{a + 1/n}^b f - \int_b^{b + 1/n} f - \int_a^b f] = $$
+
+$$ n [ 1/n f(b) - \int_a^{a + 1/n} f  = n [f(b)/n - f(a)/n] = f(b) - f(a) $$
+
+So, we have that $\int_{[a,b]} f’  \leq f(b) - f(a)$.
+
+(a) Outline: Let $D = \{ x \in [a,b] : f$ is discontinuous $\}$.
+
+Let $x \in D$. Since $f$ is a real valued, monotone function, we use the inf/sup property on the reals to conclude that we must have that $f^+(x) = \lim_{y \to x^+} f(y)$ exists and same for the below. Further, from monotonicity, we have that $f^+ - f^- \geq 0$.
+
+Now, define $\Sigma_{x\in D} f^+(x) - f^-(x)  = \sup\{ \Sigma_{i=1}^M f^+(x_i) - f^-(x_i) : \{ x_i \} \subseteq D, M \geq 1 \}$.
+
+Assume $D \not = \emptyset$, and take a collection $\{ x_i \}_{i=1}^M \subseteq D$. Then, we can reorder this into a partition, and at worst, we can add in $a,b$ as the terminal points:
+
+$$a = x_0 < x_1 < ... < x_M < x_{M+1} = b$$
+
+But, then, we notice that this sum is bounded above by the variation, which is exactly $f(b) - f(a)$ because monotone. Then, these are all bounded above by the total variation, which because this is monotone, is finite. Then, for an sum to be finite, it must be at most countable.
+
+For (b) Use the Vitali covering lemma to show that $S = \{ D^f < D^- f \}$ has measure 0.
+
+Corollary:
+
+Let $f \in \bv[a,b]$. For $x \in [a,b]$, let $V(x) = V[f;a,x]$. Then we have the following:
+
+(a) $f’$ exists for a.e. $x \in [a,b]$
+
+(b) $f’ \in L^1[a,b]$
+
+(c) $|f’| \leq V’$ a.e.
+
+(c) $\Vert f’ \Vert_1 = \int_a^b |f’| \leq V[f;a,b]$
+
+Proof:
+
+a) trivial, we just proved it, b) we just found an antiderivative
+
+c) Let $Z = \{ x : f’$ or $V’$ do not exist $\}$.
+
+Suppose $x \not \in Z$, fix $h > 0$. We have that:s
+
+$$ | f(x+h) - f(x) | \leq V[f;x,x+h] = V(x+h) - V(x)$$
+
+Then, dividing through, and taking a limit, we have (c).
+
+(d) integrate both sides of (c).
+
+Lemma:
+
+Suppose $f_k$ is monotone increasing on $[a,b]$. For all $k \geq 1$, if the series $S(x) = \Sigma_k^\infty f_k(x)$ converges for all $x \in [a,b]$, then $S$ is differentiable a.e. and $S’(x) = \Sigma_k^\infty f_k’(x)$.
+
+Proof:
+
+For each $M \geq 1$, set $S_{M}(x) = \Sigma_k^M f_k(x)$ and $R_M(x) = \Sigma_{k = M+1}^\infty f_k(x)$. Because $S$ converges, $S_M$ is finite, and $R_M$ must converge. Further, for all $M \geq 1$, $S_M, R_M$ are increasing due to the monotone nature of $f_k$.
+
+Then, there exists $Z_M, |Z_M| = 0$ such that for all $x \not \in Z_M$, $S_M’, R_M’$ exist.
+
+Define $Z = \cup_M Z_M$.
+
+We claim that for all $x$, we have that $R_M \to 0$ as $M \to \infty$. Then, for any $\delta_j \geq 1$, we can find a $M_j$ such that $R_{M_j}(a), R_{M_j}(b) < 2^{-j}$
+
+So then, we have that:
+
+$$0 \leq \Sigma_j^\infty R_{M_j}(b) - R_{M_j}(a) \leq \Sigma_j^\infty 2^{-j} < \infty$$
+
+Define $g = \Sigma_{j=1}^\infty f’_{M_j}$. We notice this is non-negative, so we have that:
+
+$$ 0 \leq \int_a^b g(x) \leq \int_a^b \Sigma_j^\infty R’_{M_j} = \Sigma_j^\infty \int_a^b R’_{M_j} \leq \Sigma_j^\infty R_{M_j}(b) - R_{M_j}(a) < \infty $$
+
+So $g < \infty$ a.e. implying that $\lim_{j \to \infty} R’_{M_j} = 0$ a.e.
+
+So, we have that $S’ - S’_{M_j} = R’_{M_j}$, thus, the $\lim_{j \to \infty} (S’ - S’_{M_j} = 0$. 
+
+Then, because $S’_{M}$ is an increasing sequence in $M$, so by the monotone convergence theorem, $S’_{M_j} \to S’$
+
+\section*{Nov 28th}
+
+If $f: \mathbb{R}^d \to \mathbb{C}$, $h > 0$, define $\tilde{f}_h = 1/|B_h(x)| \int_{B_h(x)} f(t) dt$.
+
+Lemma: If a function $f: \mathbb{R}^d \to \mathbb{C}$ is continuous at $x \in \mathbb{R}^d$, then the limit $\lim_{h \to 0} 1/|B_h(x)| \int_{B_h(x)} |f(x) - f(t)| dt = 0$ and $\lim_{h \to 0} \tilde{f}_h = f(x)$.
+
+Proof:
+
+We see that we need to only prove the first part and the second part follows:
+
+$$ \left| \tilde{f}_h - f(x) \right| = \left| \frac{1}{|B_h(x)|} \int_{B_h(x)} f(t) dt - \frac{1}{|B_h(x)|} \int_{B_h(x)} f(x) dt \right| \leq \frac{1}{|B_h(x)|}  \int_{B_h(x)} |f(x) - f(t)| dt $$
+
+By continuity, for $\epsilon > 0$, we can find $\delta$ such that if $| t - x | < \delta \implies |f(t) - f(x)| < \epsilon$. So, then, for any $t$, we can find $h < \delta$ such that $|t - x| < h < \delta$, and so on this ball, $|f(x) - f(t)| < \epsilon$. Then, we have that 
+
+$$ \frac{1}{|B_h(x)|} \int_{B_h(x)} |f(x) - f(t)| dt \leq \frac{1}{|B_n(x)|} \epsilon | B_h(x)|  = \epsilon $$
+
+So this goes to 0.
+
+Theorem:
+
+Let $f \in L^1(\mathbb{R}^d)$. Then, $\tilde{f}_h \to f$ in $L^1$.
+
+Proof:
+
+$$\Vert \tilde{f}_h - f \Vert_1 = \int_{\mathbb{R}^d} | \tilde{f}_h - f  | dx = \int_{\mathbb{R}^d} \left| \frac{1}{|B_h(x)|} \int_{B_h(x)} f(t) - f(x) dt \right| dx$$
+
+Using a change of variables $t’ = x-t$:
+
+$$ \int_{\mathbb{R}^d} \left| \frac{1}{|B_h(x)|} \int_{B_h(x)} f(t) - f(x) dt \right| dx =  \int_{\mathbb{R}^d} \left| \frac{1}{|B_h(0)|} \int_{B_h(0)} f(x-t’) - f(x) dt’ \right| dx $$
+
+Then, by the triangle inequality, this is at most:
+
+$$ \frac{1}{|B_h(0)|} \int_{\mathbb{R}^d} \int_{B_h(0)} | f(x - t’) - f(x)| dt’ dx =  \frac{1}{|B_h(0)|} \int_{B_h(0)} \int_{\mathbb{R}^d} | f(x - t’) - f(x)| dx dt’$$
+
+We define $\int_{\mathbb{R}^d} | f(x - t’) - f(x)| dx = \Vert T_hf - f \Vert_1$, that is, the $L^1$ norm of the translation of $f$ subtracted by $t$.
+
+However, we have shown (??) that $\Vert T_m f - f \Vert_1 \to 0$ as $m \to 0$. So, we can take an $\epsilon$, find a $\delta$ so that this is small, and shrink $h < \delta$ and have that 
+
+$$ \frac{1}{|B_h(0)|} \int_{B_h(0)}  \Vert T_hf - f \Vert_1 <  \frac{1}{|B_h(0)|} |B_h(0)| \epsilon  = \epsilon$$
+
+Definition:
+
+Let $f: \mathbb{R}^d \to \overline{F}$ be measurable. We say that $f$ is locally integrable on $\mathbb{R}^d$ if, for every compact set $K \subseteq \mathbb{R}^d$,
+
+$$ f \cdot \chi_K \in L^1(\mathbb{R}^d)$$
+
+We may then define $L^1_{\text{loc}}(\mathbb{R}^d) = \{ f: \mathbb{R}^d \to \overline{F}, f \text{ locally integrable } \} $ that is, the space of locally integrable functions.
+
+Definition: [Hardy-Littlewood Maximal Functions]
+
+The Hardy Littlewood maximal function of $f \in L^1_{\text{loc}}(\mathbb{R}^d)$ is defined as:
+
+$$M f(x) = \sup_{h > 0} \tilde{f}_h(x) = \frac{1}{|B_h(x)|} \int_{B_h(x)} |f(t)| dt $$
+
+Theorem [Maximal Theorem]
+
+If $f \in L^1(\mathbb{R}^d), \alpha > 0$, then $| \{ Mf(x) > \alpha \}| \leq 3^d/\alpha \Vert f \Vert_1$.
+
+Proof:
+
+Let $\alpha > 0, E_\alpha = \{ x \in \mathbb{R}^d : Mf(x)  > \alpha \}$. If $x \in E_\alpha$, then there exists a $r_n > 0$ such that:
+
+$$ \frac{1}{|B_{r_x}|} \int_{B_{r_x}(x)} |f(t)| > \alpha $$
+
+by the sup properties.
+
+Since these are balls, centered on any $x$, we can look at $E_\alpha \subseteq \cup_{x \in E_\alpha} B_{r_x}(x)$.
+
+Let $0 < c < |E_\alpha|$. Then, the Vitali simple lemma tells us that there exists $x_1,...,x_n \in E$ such that these balls are disjoint, and that $ \Sigma_{k=1}^n | B_{r_{x_k}}| > c/3^d$.
+
+So, we have that, due to the choice of $\alpha$:
+
+$$ \frac{c\alpha}{3^d} < \Sigma_{k=1}^n | B_{r_{x_k}}| \alpha \leq \Sigma_{k=1}^n \int_{B_{r_{x_k}}} |f(t)| dt \leq \int_{\mathbb{R}} | f(t)| dt$$
+
+So, therefore, $c < 3^d/\alpha \Vert f \Vert_1$
+
+But, since $0 < c < |E_\alpha|$, this implies that $|E_\alpha| \leq 3^d/\alpha \Vert f \Vert_1$.
+
+Theorem: [Lebesgue Differentiation Theorem]
+
+If $f$ is locally integrable on $\mathbb{R}^d$, then for almost every $x \in \mathbb{R}^d$, 
+
+(a) the limit $\lim_{h \to 0} \frac{1}{|B_h(x)|} \int_{B_h(x)} |f(x) - f(t)| = 0$
+
+(b) the limit $\lim_{h \to 0} \tilde{f}_h(x) =  \lim_{h \to 0} \frac{1}{|B_h(x)|} \int_{B_h(x)} f(t) dt = f(x)$.
+
+Proof:
+
+(b)
+
+We show this for $f \in L^1$.
+
+Let $\epsilon > 0$. Then, there exists a $g \in C_c(\mathbb{R}^d)$ such that $\Vert f - g \Vert_1 < \epsilon$. We claim that:
+
+$$\limsup_{h \to 0} |\tilde{f}_h(x) - f(x)| = 0 \text{ a.e. }$$
+
+By triangle inequality, we have that:
+
+$$ |\tilde{f}_h(x) - f(x)|  \leq |\tilde{f}_h(x) - \tilde{g}_h(x)| + |\tilde{g}_h(x) - g(x)|  + |g(x) - f(x)| \leq   |\tilde{f}_h - \tilde{g}_h| + |\tilde{g}_h - g|  + |g(x) - f(x)| $$
+
+So, then, we have that:
+
+$$ \limsup_{h \to 0} |\tilde{f}_h(x) - f(x)|  \leq |g(x) - f(x)| + \limsup_{h \to 0} \Vert \tilde{g}_h - g \Vert_u + \limsup_{h \to 0} \Vert \tilde{g}_h - \tilde{f}_h \Vert_u$$
+
+We notice that $| \tilde{f}_h - \tilde{g}_h | \leq 1/|B_h(x)| | \int_{B} f - g dt  | \leq  1/|B_h(x)| \int_{B} |f - g| dt = M(f-g)$
+
+We also notice that because $g$ is compactly supported, and $\tilde{g}$ also compactly supported then, that $ \limsup_{h \to 0} \Vert \tilde{g}_h - g \Vert_u = 0$
+
+Then, we have that
+
+$$ \limsup_{h \to 0} |\tilde{f}_h(x) - f(x)|  \leq |g(x) - f(x)| + M(f - g) $$
+
+Suppose $\alpha > 0$. We notice that:
+
+$$ \{ x : \limsup_{h \to 0} |\tilde{f}_h(x) - f(x)| > \alpha \} \subseteq \{ g - f > \alpha/2 \} \cup \{ M(f-g) > \alpha/2 \} $$
+
+Looking at their measures, we notice that since $g-f$ is in $L^1$, that 
+
+$$|\{ g - f > \alpha/2 \}| \leq 2/\alpha \Vert f -g \Vert_1$$
+
+Further, from the Maximal theorem, we have that
+
+$$ | \{ M(f-g) > \alpha/2 \}| < 2 * 3^d/\alpha \Vert f - g \Vert_1 $$
+
+Then, since $\alpha$ is fixed, and $ \Vert f - g \Vert _1 < \epsilon$, this goes to 0. So, $\{ x : \limsup_{h \to 0} |\tilde{f}_h(x) - f(x)| > \alpha \}$, that is, the bad points is a set of measure 0, and otherwise, we have that it converges downwards to $0$.
+
+FInish the proof by thinking of locally compact functions as $L^1$ functions with a good choice of characteristic function.
+
+Now, we attack (a). Let $c \in \mathbb{C}$, $f \in L^1_{\text{loc}}$, and define $g(x) = | f(x) -c|$. $g$ should be in $L^1_{\text{loc}}$.
+
+by (b), we have that there exists $Z_c$ such that $|Z_c| = 0$ and that for all $x \not \in Z_c$, $\lim_{h \to 0} 1/|B_h(x)| \int_B |f(t) - c| dt = |f(x) - c|$.
+
+Now, suppose $c \in \mathbb{Q}[i]$. We can then take $Z = \cup_{c} Z_c$. Suppose $x \not \in Z$, and let $\epsilon > 0$. Then, we can find a $c \in \mathbb{Q}[i]$ such that $|f(x) - c| < \epsilon$.
+
+Then, finally, we have that:
+
+$$ 1/|B_h(x)| \int_B | f(t) - f(x)| dt \leq  1/|B_h(x)| \int_B |f(t) - c| + 1/|B_h(x)| \int_B |f(x) - c| dt$$
+
+The second term is a constant, that we chose. The first term we said that it is less than $|f(x) -c|$. so we have two copies of $\epsilon$.
+
+Definition: Let $f \in L^1_{\text{loc}}$. If a point $x \in \mathbb{R}^d$ is such that $\lim_{h \to \infty} 1/|B_h(x)| \int_B |f(t) - f(x)|dt = 0$, it is called a Lebesgue
+point of $f$. The collection of all Lebesgue points of $f$ is the Lebesgue set of $f$.
+
+A collection of measurable sets $\{ E_n \}$ shrinks regularly to $x \in \mathbb{R}^d$ as $n \to \infty$ if there exists $\alpha > 0$, $r_n \to 0$ as $n \to \infty$, for all $n \geq 1$, $E_n \subseteq B_{r_n}(x)$ and $|E_n| \geq \alpha | B_{r_n}(x)|$.
+
+\section*{Nov 30th}
+
+Oops sick. (6.1 + 6.2) in the book
+
+\section*{Dec 5th}
+
+Theorem [Banach Zaretsky]
+
+Let $f: [a,b] \to \mathbb{R}$ be a function. The following are equivalent:
+
+(a) $f \in \ac[a,b]$
+
+(b) $f$ is continuous, then $f \in \bv[a,b]$ and
+
+$$ A \subseteq [a,b], |A| = 0 \implies |f(A)| = 0 $$
+
+(c) $f$ is continuous, differentiable a.e., $f’ \in L^1[a,b]$ and
+
+$$ A \subseteq [a,b], |A| = 0 \implies |f(A)| = 0$$
+
+Proof:
+
+2 implies 3 is trivial.
+
+1 inplies 2:
+
+Let $f \in \ac[a,b]$. Then, for all $\epsilon > 0$, we may take $\delta$ such that if $\{ [a,b] \}$ is a collection of non-verlapping intervals in $[a,b]$, then
+
+$$ \Sigma_j [b_j - a_j) < \delta \implies \Sigma | f(b_j) - f(a_j)| < \epsilon$$
+
+Let $A \subset [a,b]$, with $|A| = 0$. Then, there exists an open set $U$ such that $U \supset A$ and $|U| < |A| + \delta = \delta$.
+
+Take $U = \cup_j (a_j,b_j)$ disjoint, since we know we can partition an open set into boxes. Then, $A \subseteq \cup_j (a_j,b_j)$, so $f(A) \subseteq \cup f((a_j,b_j))$
+
+Well, we can view $(a_j,b_j)$ as living in $[a_j,b_j]$, which is compact, so we can view this as:
+
+$$ f(a_j,b_j) \subseteq [f(c_j), f(d_j)] \text{ for some } c_j,d_j \in [a_j,b_j]$$
+
+since we actually attain a maximum/minimum.
+
+Then, we have that:
+
+$$|f(A)| \leq \Sigma_j | f(d_j) - f(c_j) | < \epsilon $$
+
+because $| d_j - c_j | \leq b_j - a_j$
+
+3 implies 1 apparently comes from growth lemmas
+
+Corollary:
+
+If $f \in \ac[a,b]$, then $f$ takes sets of measure 0 to sets of measure 0, and measurable sets to measurable sets.
+
+Proof: look at $F_\sigma$ with a zero measure set.
+
+Corollary:
+
+If $f: [a,b] \to \mathbb{C}$, differentiable everywhere on $[a,b]$ and $f’ \in L^1[a,b]$, then $f \in \ac[a,b]$
+
+Proof: 
+
+By a growth lemma (6.2.4), we have that for $A \subseteq [a,b], |A| = 0$, that $|f(A)| \leq \int_A |f’| = 0$
+
+Definition:
+
+Let $f: [a,b] \to \mathbb{R}$. Call $f$ singular if $f’$ exists a.e. and is equal to 0 where it exists.
+
+Corollary:
+
+If $f: [a,b] \to \mathbb{C}$ is such that $f \in \ac[a,b]$ and singular, then $f$ is constant.
+
+So, we have the following containments of functions:
+
+$$ C^1[a,b] \subsetneq \text{ Lip}[a,b]  \subsetneq \ac[a,b] \subsetneq \bv[a,b] \subsetneq L^\infty[a,b]$$
+
+Lemma: if $g \in L^1[a,b]$, then the indefinite integral
+
+$$G(x) = \int_a^x g(t)dt \text{ for } x \in [a,b]$$
+
+is in $\ac[a,b]$ and $G’(x) = g(x)$ almost everywhere.
+
+Theorem [FTC]
+
+If $f: [a,b] \to \mathbb{C}$, then the following are equivalent:
+
+(a) $f \in \ac[a,b]$
+
+(b) There exists $g \in L^1[a,b]$ such that $f(x) - f(a) = \int_a^x g(t) dt$ for all $x$
+
+(c) $f$ is differentiable almost everywhere, $f’ \in L^1[a,b]$, and $f(x) - f(a)  = \int_a^x f’(t) dt$ for all $x$
+
+Proof:
+
+we see that c implies b
+
+so we need to do a implies c, b implies a
+
+a implies c:
+
+Since $f \in \ac$, $f’$ exists a.e., with $f’ \in L^1$
+
+Consider $F(x) = \int_a^x f’(t) dt$.
+
+By our lemma we have that $F \in \ac[a,b]$, and $F’ = f’$ almost everywhere.
+
+Therefore, $(F - f)’ = 0$ a.e., so $F - f$ is singular. But, they are both $\ac$, so $F - f \in \ac$. Therefore, $F - f$ is a constant by our other lemma.
+
+So, we have that:
+
+$$F(x) - f(x) = F(a) - f(a) = - f(a)$$
+
+where we set $F(a) = 0$ because we define $\int_a^a g = 0$ for all $g$.
+
+b implies a is easy from lemma
+
+Corollary:
+
+If $f \in \bv[a,b]$, then $f = g + h$, where $g \in \ac[a,b]$ and $h$ is singular. Moreover, $g,h$ unique up to a constant, and $g(x) = \int_a^x f’(t) dt$.
+
+Theorem:
+
+If $f \in \ac[a,b]$, then $V[f;a,b] = \int_a^b |f’|$
+
+Proof:
+
+We know already that $\int_a^b |f’| \leq V[f;a,b]$ from 5.4.3
+
+Now, if $f \in \ac[a,b]$, then we have that from the FTC, $f(x) = f(a) + \int_a^x f’(t) dt$. Call the integral $F(x)$.
+
+Well, we have that $V[F;a,b] \leq \int_a^b |F’(x)| = \int_a^b |f’|$.But, F differs from f only by a constant, so $V[F;a,b] = V[f;a,b]$ and we are done.
+
+Corollary:
+
+Let $f \in \ac[a,b]$ and $V(x) = V[f;a,x]$
+
+(a) $V \in \ac[a,b]$
+
+(b) $V(x) = \int_a^x |f’|$
+
+(c) $V’ = |f’|$ a.e.
+
+Chapter: $L^p$ spaces
+
+First, we will start with $l^p$ spaces.
+
+We will take $0 < p \leq \infty$, and call sequences $c = (c_k)_{k=1}^\infty$, and define a norm $\Vert c \Vert_p = \left( \Sigma_k^\infty |c_k|^p \right)^{1/p}$ when $p < \infty$, and otherwise, say $\Vert c \Vert_\infty = \sup | c_k |$
+
+
+
+Define $l^p = \{ c : \Vert c \Vert_p < \infty \}$.
+
+Notice that $0 < p < q \leq \infty$, then $l^p \subsetneq l^q$
+
+This is from algebraic manipulation, and the fact that being in $l^p$ implies being in $l^1$.
+
+Define $C_0 = \{ c : \lim_{k \to \infty} c_k = 0\}$ and $C_{00} = \{ c : $ only finintely many $c_k$ are non-0 $\}$
+
+So, we have that $C_{00} \subset l^p \subset C_0$ for $p < \infty$.
+
+Fact:
+
+$l^\infty$ is a vector space, and $\Vert c \Vert_\infty$ is a norm. Further, this is true for $l^p$ as a vector space, but might be harder to show it is a norm.
+
+Prove this.
+
+Holder’s Inequality:
+
+If $1 \leq p \leq \infty$, let $p’ \in [1,\infty]$, with $1/p + 1/p’ = 1$ If $c \in l^p$, and $d \in l^{p’}$, then $cd \in l^1$ and $\Vert cd \Vert_1 \leq \Vert c \Vert_p \Vert d \Vert_{p’}$
+
+Claim: For all $ t \geq 0$, for all $\theta \in (0,1)$, $t^\theta \leq \theta t + (1 - \theta)$ with equality if $t = 1$.
+
+We see that if either norm is 0, we are done, since these are norms. Then, we can assume $\Vert c \Vert_p = \Vert d \Vert_{p’} = 1$, by scaling by a constant. We examine $\Sigma |c_k| |d_k|$. Take $t = |c_k|^p|d_k|^{-p’}$? Well, we want $\theta = 1/p$, so $1 - \theta = 1/p’$
+
+\section*{Dec  7th}
+
+Could not move shoulder.
+
+\section*{Dec 12th}
+
+Definition:
+
+Let $X$ be a metric space that contains a countable dense subset. We call $X$ separable.
+
+Example: $\mathbb{R}$ contains $\mathbb{Q}$, countable, dense.
+
+Lemma:
+
+For $1 \leq p < \infty$, $L^p(\mathbb{R})$ is separable.
+
+Proof:
+
+Let $R_{\mathbb{Q}} = \Sigma_k^M t_k \chi_{[c_k,d_k]} : M > 0, t_k, c_k, d_k \}$. It is clear that these are dense in the simple functions in $L^p$. And since we already have that the simple functions with real parameters are dense, we are done.
+
+Remark:
+
+If there exists an uncountable subset $\mathcal{A}$ in a metric space $X$ such that $d(x,y) \geq 1$ for all $x\not = y \in \mathcal{A}$, then $X$ is not separable.
+
+Recall some nice things from linear algebras:
+
+In a $\mathbb{C}^d$, we have:
+
+$<x,y> = \Sigma_k^d x_k \overline{y}_k$, with an induced norm $\Vert x \Vert = \sqrt{<x,x>}$
+
+$<x,y> = 0$ being orthogonal $\iff \Vert x + y \Vert^2 = \Vert x \Vert^2 + \Vert y \Vert^2$.
+
+This motivates the idea of a Hilbert space.
+
+Let $H$ be a vector space over a field $k$. 
+
+Define a semi inner-product on $H$. This is a bilinear form $ H \times H \to k$ that sends $(x,y) \to <x,y>$, such that 
+
+(a) $0 \leq <x,x>$
+
+(b) $<x,y> = \overline{<y,x>}$
+
+(c) $<ax + by,z> = a<x,z> + b<y,z>$
+
+(d) If, in addition, we have that $<x,x> = 0 \iff x = 0$, then this is actually an inner product.
+
+If this is true, then we call $H$ an inner product space.
+
+Remark:
+
+If $< \cdot , \cdot >$ is a semi-inner product on $H$, then $\Vert \cdot \Vert = \sqrt{< \cdot , \cdot>}$ defines a semi-norm on $H$.
+
+Of course, if this is actually an inner product, then the induced semi-norm is a norm.
+
+Now, in the setting of $L^2(E)$, for $E$ a measurable subset of $\mathbb{R}^d$, we can take:
+
+$<f,g>_2 = \int_E f \overline{g}$
+
+We notice that this is a semi-linear product, but $<f,f> =0$ does not imply $f = 0$. Further, via Holder inequality, this is well-defined.
+
+Fact: If we have a semi-norm inner product on $H$, then:
+
+(a) $\Vert x+ y\Vert^2 = \Vert x \Vert^2 + 2 \text{Re}<x,y> + \Vert y \Vert^2 $
+
+(b) $<x,y> = 0 \implies \Vert x \pm y \Vert^2 = \Vert x \Vert^2 + \Vert y \Vert^2$
+
+(c)  $\Vert x + y \Vert^2  + \Vert x - y \Vert^2 = 2 (\Vert x \Vert^2 + \Vert y \Vert^2)$
+
+(d) $| <x,y> | \leq \Vert x \Vert \Vert y \Vert $
+
+Definition:
+
+A complete, inner product space $H$ is called a Hilbert space.
+
+In particular, $L^2(E)$ is a Hilbert space.
+
+If $H$ is an inner product space, then:
+
+(a) $x,y \in H$ are orthogonal if $<x,y> = 0$
+
+(b) A sequence is orthogonal if $<x_k,x_l> = 0$ 
+
+(c) A orthogonal sequence is orthonormal if $\Vert x_i \Vert = 1$ for all $i$.
+
+Lemma: Let $H$ be an inner product space. Then $x \perp y \iff \Vert x \Vert \leq \Vert x + \lambda y \Vert$ for all $\lambda \in \mathbb{C}$.
+
+Definition: Let $H$ be an inner product space, with $A,B \subseteq H$.
+
+Then, we have that:
+
+(a) $x \perp A$ if $<x,a> = 0$ for all $ a \in A$
+
+(b) $A \perp B$ if $<a,b> = 0$ for all $a \in A, b \in B$
+
+(c) $A^\perp = \{ x \in H : x \perp  A \}$. We call this the orthogonal complement of $A$. Note that this is a closed linear subspace of $H$.
+
+It turns out, that we can identify every Hilbert space as looking like either $l^2(E)$ or $L^2(E)$.
+
+
+
+\end{document}
