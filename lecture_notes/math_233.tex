@@ -47,6 +47,7 @@
 \newcommand{\calN}{\mathcal{N}}
 \newcommand{\calT}{\mathcal{T}}
 \newcommand{\calH}{\mathcal{H}}
+\newcommand{\ind}{\text{Ind}}
 
 \newcommand{\trace}{\operatorname{trace}}
 \newcommand{\diag}{\operatorname{diag}}
@@ -193,6 +194,459 @@ If $f$ is representable by power series on $\Omega$, then $f’$ is also represe
 
 $$ f^{(k)} = \Sigma_{n=k}^\infty n(n-1)...(n-k+1) c_n (z-a)^{n-k}$$
 
-Further, we have that at $z = a$, that $f^{(k)}(a) = k! c_k \implies c_k = f^{(k)}(a)/k!$. So we can find every coefficient by successively taking derivatives. 
+Further, we have that at $z = a$, that $f^{(k)}(a) = k! c_k \implies c_k = f^{(k)}(a)/k!$. So we can find every coefficient by successively taking derivatives, and, in particular, equivalent to a Taylor series.
+
+\section*{Jan 23rd}
+
+Suppose that $\Omega \subseteq \mathbb{C}$ is open, and $f$ is a complex-valued function on $\Omega$. We say that $f$ is representable by a power series in $\Omega$ if, for every disk $D(a,r) \subseteq \Omega$, $f$ has a power series representation in $\Omega$ of form:
+
+$$ f(z) = \sum_{n=1}^\infty c_n (z - a)^n $$
+
+Note that, of course, the power series representation is dependent on the choice of disk.
+
+From last time, we saw that if $f$ is analytic, then $f$ is in fact holomorphic.
+
+General question: Can we generate functions representable by power series?
+
+Theorem:
+
+Suppose $(X,\mu)$ is a complex (or finite, positive) measure space. Let $\varphi: X \to \mathbb{C}$ be a bounded, complex, measurable function. Let $\Omega \subseteq \mathbb{C}$ be an open set disjoint from $\varphi(X)$. Then the function
+
+$$f(z) = \int_X \frac{d\mu(x)}{\varphi(x) - z} $$
+
+defined on $z \in \Omega$ is analytic on $\Omega$.
+
+Example:
+
+Let $g: [-1,1] \to \mathbb{R}$, continuous. Then, this can be used as a measure. Let $\Omega = \mathbb{C} \setminus [-1,1]$. Then:
+
+$$ f(z) = \int_{-1}^1 \frac{ g(x)}{x - z} dx $$
+
+is analytic on $\Omega$.
+
+Proof:
+
+%Suppose that $D(a,r) \subset \Omega$. For any $z \in D(a,r)$, we notice that $|\varphi(x) - z|
+
+First, fix a point $z \in \Omega$. Because $\Omega$ is open, we may find a $\delta > 0$ such that $D(z,\delta) \subset \Omega$. Because $\Omega \subset \varphi(X)^c$, this implies that for any $x \in X$, $| \varphi(x) - z| > \delta \implies \frac{1}{| \varphi(x) - z|}  \leq \frac{1}{\delta}$. Thus, $\frac{1}{ \varphi(x) - z} $ is bounded above. Thus, because this function is bounded, measurable (being the absolute value of a difference of measurable functions, we have that:
+
+$$\int_X \frac{d\mu(x)}{\varphi(x) - z} $$
+
+exists as a complex value for every $z$.
+
+Now, let $D(a,r) \subset \Omega$. For any $z \in D(a,r)$, we have that:
+
+$$ f(z) = \int_X \frac{d\mu(x)}{\varphi(x) - z}  = \int_X \frac{d\mu(x)}{(\varphi(x) - a) - (z - a)} =  \int_X \frac{1}{\varphi(x) - a} * \frac{d\mu(x)}{1 - \frac{z - a}{\varphi(x) - a}} $$
+
+Now, we recall, $|z - a| < | \varphi(x) - a|$ due to $z \in D(a,r)$ and $\varphi(x)$ being outside of $\Omega$. Thus 
+
+$$ \left|\frac{z - a}{\varphi(x) - a}\right| < 1 $$
+
+so we may expand this as a geometric series. Rewriting our integrand then:
+
+$$\int_X \frac{1}{\varphi(x) - a} * \frac{d\mu(x)}{1 - \frac{z - a}{\varphi(x) - a}} =  \int_X \frac{d\mu(x)}{\varphi(x) - a} * \sum_{n=0}^\infty \left( \frac{z - a}{\varphi(x) - a} \right)^n = \int_X \sum_{n=0}^\infty \frac{(z-a)^n}{(\varphi(x) - a)^{n+1}} d\mu(x) $$
+
+Assuming we may interchange the integral, this is equal to:
+
+$$\sum_{n=0}^\infty \left( \int_X \frac{(z-a)^n}{(\varphi(x) - a)^{n+1}} d\mu(x) \right)$$
+
+We notice here, that $(z-a)^n$ is independent of the integral. So, if we define $c_n = \int_X \frac{d\mu(x)}{\varphi(x) - a)^{n+1}}$, we identify this as:
+
+$$ \sum_{n=0}^\infty c_n (z-a)^n $$.
+
+Now, we come back to proving that this integral may be interchanged.
+
+Claim:
+
+The series $\sum_{n=0}^\infty \frac{(z-a)^n}{(\varphi(x) - a)^{n+1}}$ converges uniformly in $x$.
+
+Since $z \in D(a,r)$, there exists a $\rho > 0$ such that $|z-a| < \rho < r$, so we have that:
+
+$$ \left| \frac{(z-a)^n}{(\varphi(x) - a)^{n+1}} \right| = \frac{|z-a|^n}{|\varphi(x) - a|^{n+1}} \leq \frac{\rho^n}{r^{n+1}}$$
+
+But, we notice that because $\rho < r$, we see that $\sum_{n=0}^\infty \frac{\rho^n}{r^{n+1}} < \infty$.
+
+Thus, identifying these as $M_n$ and applying the Weierstrauss M-test, we have that the series converges uniformly.
+
+And finally, for a uniformly convergent series, we may interchange an integral and sum.
+
+The exponential function:
+
+We define the function $exp(z)$ as:
+
+$$ exp(z) = \sum_{n=0}^\infty \frac{z^n}{n!} $$
+
+We notice by the ratio test, this series converges absolutely for all $z \in \mathbb{C}$. Thus, this function has a radius of convergence of $R = \infty$.
+
+We also notice that because this function is analytic, we may consider its derivative.
+
+$$\frac{d}{dz} exp(z) = \sum_{n=0}^\infty \frac{d}{dz} \frac{z^n}{n!} = \sum_{n=1}^\infty \frac{z^{n-1}}{(n-1)! } = \sum_{n=0}^\infty \frac{z^n}{n!}  = exp(z)$$
+
+We will, going forward, denote $e^z = exp(z)$.
+
+Now, let $a,b \in \mathbb{C}$.
+
+Consider $e^{a+b}$:
+
+$$ e^{a+b} = \sum_{n=0}^\infty \frac{(a+b)^n}{n!} = \sum_n \frac{1}{n!} \sum_k \frac{n!}{k!(n-k)!} a^k b^{n-k} = \sum_n \sum_k \frac{a^k}{n!} \frac{b^{n-k}}{(n-k)!} $$  
+
+Now, if we rewrite the inner sum, we may rewrite as:
+
+$$  \sum_k \frac{a^k}{n!} \frac{b^{n-k}}{(n-k)!}  = \sum_{n-k = l, k \geq 0, l \geq 0} \frac{a^k}{n!} \frac{b^l}{l!}$$ 
+
+We identify this as summing over every $(k,l) \in \mathbb{N}^2$, where we take $\mathbb{N}$ to include $0$. Then, we claim that this is actually equal to:
+
+$$\sum_{k=0}^\infty \sum_{l=0}^\infty  \frac{a^k}{k!} \frac{b^l}{l!} = \sum_{k=0}^\infty\frac{a^k}{k!} \sum_{l=0}^\infty  \frac{b^l}{l!} = e^a e^b$$
+
+where we justify the rearranging of the terms due to the absolute convergence of the exponential function.
+
+Note that if $\theta\in \mathbb{R}$, then
+
+$$ e^{i\theta} = \sum_{n=0}^\infty \frac{(i\theta)^n}{n!} = \sum_{n=0}^\infty \frac{(i\theta)^{2n}}{(2n)!}  + \sum_{n=0}^\infty \frac{(i\theta)^{2n+1}}{(2n+1)!} = \sum_{n=0}^\infty (-1)^n\frac{(\theta)^{2n}}{(2n)!}  + i\sum_{n=0}^\infty (-1)^n\frac{(\theta)^{2n+1}}{(2n+1)!} = \cos(\theta) + i \sin(\theta)$$
+
+Thus, if we have $z \in \mathbb{C}$, we can rewrite as $z = x + iy, x,y \in \mathbb{R}$, and:
+
+$$ e^z = e^x e^{iy} = e^x (\cos(y) + i \sin(y)) $$
+
+In particular:
+
+$$ |e^z| = | e^x (\cos(y) + i \sin(y)) | = |e^x| |\cos(y) + i \sin(y)| = e^x = e^{\Re(z)}$$
+
+Because for any $y \in \mathbb{R}$,  $\cos(y) + i \sin(y)$ lies on the unit circle, so $|\cos(y) + i \sin(y)| = 1$ and $e^x > 0$ for all $x \in \mathbb{R}$, so $|e^x| = e^x$.
+
+We notice then, that $e^z \not = 0$ for any $z$, since $e^x > 0$. 
+
+We also notice that $e^z$ cannot be one to one, because from the expression $e^x (\cos(y) + i \sin(y)) $, we see that $e^{z} = e^{z + 2\pi i}$
+
+Conversely, suppose that $e^z = e^w$, for $z,w \in \mathbb{C}$. Then, we must have that $z = w + 2\pi i n$ for some $n \in \mathbb{Z}$.
+
+Thus, $z \to e^z$ is one to one on the horizontal strip $-\pi < y \leq \pi$
+
+\section*{Jan 25th}
+
+A curve in a topological space $X$ is a continuous map $\gamma: [\alpha,\beta] \to X$. If $\gamma(\alpha) = \gamma(\beta)$, we call the curve closed.
+
+A path is a piecewise differentiable curve in $\mathbb{C}$. That is, we have a partition $\alpha = s_0 < s_1 <.... < s_n = \beta$ such that $\gamma’(t)$ exists on every subinterval $(s_{i-1}, s_i)$. Note that the path refers to the map. On the other hand, we will use $\gamma^*$ to refer to the image. We will call a path closed if the curve is closed.
+
+Integration over paths:
+
+Let $\gamma$ be a path on $\mathbb{C}$, and suppose that $f$ is a complex-valued function, continuous on $\gamma^*$. We define the integral of $f$ over $\gamma$ as the complex number:
+
+$$ \int_\gamma f(z) dz \coloneqq \int_\alpha^\beta f(\gamma(t)) \gamma’(t) dt$$
+
+where we remark that even though $\gamma’(t)$ may not exist at our corner points, they represent a set of measure 0. Further, the value of this integral is invariant under differentiable changes of parameter. Example: suppose $t = \phi(s)$, where $\phi: [\alpha’, \beta’] \to [\alpha, \beta]$, and $\phi \in C^1([\alpha’, \beta’]$. Then, via the chain rule, we would have that:
+
+$$\int_\alpha^\beta f(\gamma(t)) \gamma’(t) dt = \int_{\alpha’}^{\beta’} f(\gamma(\varphi(s)) \gamma’(\varphi(s)) \varphi’(s) ds =  \int_{\alpha’}^{\beta’} f(\gamma_1(s)) \gamma_1’(s) ds $$
+
+We see that it is not too difficult to concatenate paths. If we have two paths, $\gamma_1, \gamma_2$, with intervals, $[\alpha_1,\beta_1], [\alpha_2, \beta_2]$, then if $\beta_1 = \alpha_2$, then we may form the path $\gamma$ on the interval $[\alpha_1, \beta_2$, such that $\gamma(t) = \gamma_1$ if $t \in [\alpha_1, \beta_1$ and $\gamma(t) = \gamma_2$ if $t \in [\alpha_2, \beta_2]$. In this case, we write:
+
+$$ \int_\gamma f(z) dz  = \int_{\gamma_1} f(z) dz + \int_{\gamma_2} f(z) dz $$
+
+Since we may always translate and scale, without loss of generality, going forward, we will usually take paths on $[0,1]$. 
+
+Let $\gamma: [0,1] \to \mathbb{C}$. Define the path opposite to $\gamma$ as $\gamma_1: [0,1] \to \mathbb{C}$ such that $\gamma_1(t) = \gamma(1-t)$. It should be clear that $\gamma_1^* = \gamma^*$. Further, we have that:
+
+$$ \int_{\gamma_1} f(z) dz = \int_0^1 f(\gamma_1(t)) \gamma_1’(t) dt = \int_1^0 f(\gamma(1-t)) \left(-\gamma’(1-t)\right) dt =  $$
+$$  - \int_1^0 f(\gamma(s)) \gamma’(s)(-ds) = - \int_0^1 f(\gamma(s)) \gamma’(s) ds $$
+
+where we use the fact that, by the chain rule:
+
+$$ \gamma’(t) = -\gamma’(1-t)$$
+
+Now, we recall that in general:
+
+$$ \left| \int f(z) dz \right| \leq \int | f(z) | dz $$
+
+In a path integral context, we have that:
+
+$$ \left| \int_\gamma f(z) dz \right|  = \left| \int_\alpha^\beta f(\gamma(t)) \gamma’(t) dt \right| \leq $$
+$$ \int_\alpha^\beta |f(\gamma(t))| |\gamma’(t)| dt \leq \int_\alpha^\beta \max_{z \in \gamma^*} |f(z)| |\gamma’(t)| dt =  \max_{z \in \gamma^*} |f(z)| L(\gamma)  $$
+
+That is, the integral is bounded above by the maximum value on the path times the length of the path.
+
+Note: annoyingly, we will sometimes denote the directed line segment in the complex plane for $a,b \in \mathbb{C}$ from $a$ to $b$ as $[a,b]$. We should know from context if this is a path, real interval, etc.
+
+Let $(a,b,c)$ be an positively-oriented, ordered triple in $\mathbb{C}$, and define $\Delta$ as the triangle with vertices $a,b,c$ together with their interior points. We define the ordered boundary $\partial \Delta$ as the closed path traversing the triangle, which is $[a,b], [b,c], [c,a]$.
+
+Then, we would have that:
+
+$$ \int_{\partial \Delta} f(z) dz = \int_{[a,b]} f(z)dz +  \int_{[b,c]} f(z)dz  +  \int_{[c,a]} f(z)dz $$
+
+Theorem:
+
+Let $\gamma$ be a closed path, and let $\Omega = \mathbb{C} \setminus \gamma^*$
+
+For any $z \in \Omega$, define the function:
+
+$$\text{Ind}_\gamma(z) \coloneqq \frac{1}{2\pi i} \int \frac{d\zeta}{\zeta - z}$$
+
+Then the $\text{Ind}_\gamma(z)$ is integer-valued, and is constant on each component of $\Omega$. In particular, it takes on $0$ on the unbounded component of $\Omega$.
+
+We will see later that the index corresponds to the winding number of the component.
+
+Remark:
+
+We know that $\gamma^*$ is compact, that is, is contained in some disk $\overline{D}(0,R)$. Consider $\mathbb{C} \setminus \overline{D}(0,R)$. This must be connected, so it may only lie in a single component of $\Omega$. Then, for every other component of $\Omega$, they are contained in this disk, and therefore bounded as well.
+
+Proof:
+
+We see by the definition of the index, that it must be analytic (by the generating theorem for power series representable functions), and therefore holomorphic, and therefore cts. Thus, if we can prove that the index is integer-valued, then is must be constant on each connected component of $\Omega$. Moreover, if $z$ belongs to the unbounded component of $\Omega$, we notice that we may always choose $z$ such that $|\zeta - z| > M$ for all $\zeta \in \gamma, M \in \mathbb{N}$. So, if it actually is integer-valued, then the integral must be 0.
+
+Now, fix some $z \in \Omega$. Assume that $\gamma: [\alpha, \beta] \to \gamma^*$. Then:
+
+$$\text{Ind}_\gamma(z) \coloneqq \frac{1}{2\pi i} \int \frac{d\zeta}{\zeta - z} = \frac{1}{2\pi i} \int_\alpha^\beta \frac{\gamma’(s) ds}{\gamma(s)- z}$$
+
+Here, we define the related function $\varphi: [\alpha,\beta] \to \mathbb{C}$ via
+
+$$ \varphi(t) = \int_\alpha^t \frac{\gamma’(s) ds}{\gamma(s)- z} $$
+
+Then, by the fundamental theorem of calculus, we have that:
+
+$$ \varphi’(t) = \frac{\gamma’(t)}{\gamma(t)- z}  \implies \gamma’(t) - \varphi’(t)\left( \gamma(t) - z\right) = 0 \implies \frac{d}{dt} \left[ (\gamma(t) - z) e^{-\varphi(t)} = 0 \right]$$ 
+
+This implies that $(\gamma(t) - z) e^{-\varphi(t)}$ is a constant on $[\alpha, \beta]$
+
+Thus, we have that:
+
+$$ (\gamma(\alpha) - z) e^{-\varphi(\alpha)} = (\gamma(\beta) - z) e^{-\varphi(\beta)} \implies e^{-\varphi(\alpha)} = e^{-\varphi(\beta)} $$
+
+Since we may pick $z \not = 0$, and because $\gamma$ is closed, $\gamma(\alpha) = \gamma(\beta)$.
+
+But $\varphi(\alpha) = 0$ from the definition of $\varphi$. So, we have that $\varphi(\beta) = 2\pi i k$ for some $k \in \mathbb{Z}$.
+
+Thus, we have that:
+
+$$ \text{Ind}_\gamma(z) = \frac{1}{2\pi i} \varphi(\beta) = m $$
+
+\section*{Jan 30th}
+
+Theorem [10.11]
+
+If $\gamma$ is a positively oriented circle with center $a$ and radius $r$, then $\text{Ind}_\gamma(z) = 0 $ if $|z - a| > r$ and $1$ if not, where we take the index to be the complement of our path.
+
+Proof:
+
+Take $z = a$, since we can choose any point to apply the index to. Choose the parametrization $\gamma: [0, 2\pi]$ that sends $t \to a + r e^it$
+
+Then, we compute:
+
+$$\text{Ind}_\gamma(z) \coloneqq \frac{1}{2\pi i} \int \frac{d\zeta}{\zeta - a} = \frac{1}{2\pi i} \int \frac{rie^{it}}{re^{it}} = \frac{1}{2\pi} \int_0^{2\pi} dt = 1 $$
+
+The Local Cauchy Theorem [10.12]:
+
+Suppose a function $f \in \mathcal{H}(\Omega)$, such that $f’$ is continuous. Then:
+
+$$\int_\gamma f’(z) dz = 0$$
+
+for every closed path $\gamma$. 
+
+Proof:
+
+Let $\gamma$ be parametrized by $[\alpha,\beta]$. Then, we can rewrite this as:
+
+$$ \int_\gamma f’(z)dz = \int_\alpha^\beta f’(\gamma(t)) \gamma’(t) dt = f(\gamma(\beta)) - f(\gamma(\alpha)) = 0$$
+
+because this is a closed path, $\gamma(\beta) = \gamma(\alpha)$
+
+Corollary:
+
+Since $z^n$ is the derivative of $\frac{z^{n+1}}{n+1}$ for all $n \in \mathbb{Z}$ except $n = -1$, then we have that:
+
+
+$\int_\gamma z^n dz = 0$ for every closed path $\gamma$, so long as $n \geq 0, n \in \mathbb{N}$
+
+Further, if $\gamma$ is a closed path such that $0 \not \in \gamma^*$, then this also vanishes for $n \in \mathbb{Z}, n \leq -2$ 
+
+Theorem [Cauchy’s Theorem for Triangles]
+
+Suppose $\Delta$ is a closed triangle in a plane open set $\Omega$. Let $p \in \Omega$, $f$ be a continuous function on $\Omega$, and $f \in \mathcal{H}(\Omega \setminus \{ p \})$. Then:
+
+$$ \int_{\partial \Delta} f dz = 0 $$
+
+Proof:
+
+Case 1:
+
+$ p \not \in \Delta$
+
+Call $J = \int_{\partial \Delta} f(z) dz $. Define $a’$ as the midpoint of $\overline{BC}$, and $b’,c’$ in the same way, and connect $a’,b’,c’$ to subdivide our triangle into 4 smaller triangles. Then, we may rewrite $J$ as:
+
+$$J = \sum_{j=1}^f \int_{\partial \Delta_j} f(z) dz$$
+
+Choose $\Delta_1$ as one of the subdivided triangles such that:
+
+$$ \left| \int_{\partial\Delta_1} f(z) dz \right| \geq \left| \frac{J}{4} \right| $$
+
+Of course, $\Delta \supset \Delta_1$. But, we may repeat this process. Subdivide further $\Delta_1$ into 4 component triangles with the correct orientation to preserve the original integral, and take $\Delta_2$ as having at least $\left| \frac{J}{4^2} \right|$.
+
+Then, we construct a chain:
+
+$$ \Delta \supset \Delta_1 \supset ... \supset \Delta_n \supset \Delta_{n+1} \supset ... $$
+
+with 
+
+$$ |J| \leq 4^n \left| \int_{\partial \Delta_n} f(z) dz \right| $$
+
+But, we notice, looking at the lengths, that 
+
+$$ | \partial \Delta_n | = 2^{-n} | \partial \Delta| = 2^{-n} L $$
+
+Since this is a nested set of compact sets, we expect that $\cap_{n=1}^\infty \Delta_n = \{ z_0 \}$ for some unique point. But, we must have that $z_0 \in \Delta$ with $f$ differentiable at $z_0$. 
+
+Taking $\epsilon > 0$, for $r > 0$, we have that:
+
+$$| f(z) - f(z_0) - f’(z_0)(z - z_0) | \leq \epsilon |z - z_0| $$ so long as $| z - z_0 | < r$. In particular, we may choose $n$ such that $| z - z_0| < r$ for all $z \in \Delta_n$ , since we can always choose a triangle small enough.
+
+We claim that:
+
+$$\int_{\partial \Delta_n} f(z) dz = \int_{\partial \Delta_n} (f(z) - f(z_0) - f’(z_0)(z - z_0) = -f(z_0) \int_{\partial \Delta_n} dz - f’(z_0) \int_{\partial \Delta_n} zdz + f’(z_0) z_0 \int_{\partial \Delta_n} dz$$
+
+Taking the absolute values, we notice that:
+
+$$ \left|  \int_{\partial \Delta_n}  f(z) dz \right | \leq \int_{\partial \Delta_n} |(f(z) - f(z_0) - f’(z_0)(z - z_0)| \leq \epsilon  \int_{\partial \Delta_n} | z- z_0| dz \leq \epsilon 2^{-n} L | \partial \Delta_n|  = \epsilon (2^{-n}L)^2 $$
+
+But, we recall that $|J| \leq 4^n \left| \int_{\partial \Delta_n} f(z) dz \right|  \leq \epsilon L^2 $. Since $\epsilon$ was arbitrary, this implies $|J| < 0$. 
+
+Now, suppose $p \in \Delta$. 
+
+First, suppose that $p$ is one of the vertices of our triangle, $a = p$. Take $x, y$ such that $x \in \overline{pc}$, $y \in \overline{pb}$, with $x, y$ “close” to $p$, and then subdivide such that we draw $\overline{xp}, \overline{xy}$. Clearly, the subdivided triangle with parts without $p$ have integral due to the first part of the proof. But we may subdivide such that the triangle has arbitrarily small area. So this must converge to 0.
+
+Now, suppose $p$ is an interior point. Then, we just connect $a,b,c$ to $p$, and apply what we discovered when $p$ is a vertex.
+
+Theorem [ 10.14 Cauchy’s Theorem on a convex set ]:
+
+Suppose $\Omega$ is a convex open set, $p \in \Omega$, $f$ continuous on $\Omega$, and $f \in \mathcal{H}(\Omega \setminus \{ p \})$. Then, $f = F’$ for some $F \in \mathcal{H}(\Omega)$. Hence, $\int_\gamma f(z) dz = 0$ for every closed path $\gamma$ on $\Omega$. 
+
+Proof:
+
+Fix an $a \in \Omega$, and let $z \in \Omega$. Consider:
+
+$$ f(z) = \int_{[a,z]} f(z) dz$$
+
+If $z_0 \in \Omega$, then we may consider the triangle with $\{ a, z, z_0 \}$, which is contained within $\Omega$ by convexity. But, then, we have that the integral over the entire triangle must vanish. So we have that:
+
+$$ \int_{[a,z]} f(z) dz + \int_{[z,z_0]} f(\zeta) d\zeta + \int_{[z_0, a]} f(\zeta) d\zeta = 0$$
+
+But we recognize the first integral as $F(z)$, and the last integral as $-F(z_0)$ by orientation. So we have that:
+
+$$ F(z) - F(z_0) = \int_{[z_0,z]} f(\zeta) d\zeta $$
+
+Now, assuming $z \not = z_0$, we have that:
+
+$$ \frac{f(z) - f(z_0)}{z - z_0} - f(z_0) = \frac{1}{z - z_0} \int_{[z_0,z]} (f(\zeta) - f(z_0)) d\zeta$$
+
+Taking the absolute value of both sides, we use the continuity of $f$ at $z_0$. 
+
+We have that for $\epsilon > 0$, we can find $\delta > 0$ such that $| \zeta - z_0| < \delta \implies | f(\zeta) - f(z_0) | < \epsilon | $
+
+So, if $| z - z_0 | < \delta$, we have that:
+
+$$\left| \frac{F(z) - F(z_0)}{z - z_0} - f(z_0) \right| \leq \frac{1}{z - z_0} \epsilon | z - z_0|  = \epsilon $$
+
+Thus, we have that $F’(z_0) = f(z_0)$, and that
+
+$$ \int_\gamma f(z) dz = \int_\gamma F’(z) dz = 0$$
+
+\section*{Feb 1st}
+
+Theorem [10.15, Cauchy’s formula for a Convex Set]
+
+Suppose $\gamma$ is a closed path in a convex, open set $\Omega$. If $z \in \Omega$, and $z \not \in \gamma^*$, then:
+
+$$f(z) \text{Ind}_\gamma(z) = \frac{1}{2\pi i} \int_\gamma \frac{f(\zeta)}{\zeta - z} d\zeta $$
+
+Proof:
+
+Fix a $z \in \Omega$. Define $$g(\zeta) = \begin{cases} \frac{f(\zeta) - f(z)}{\zeta - z} & \text{ if } \zeta \in \Omega, \zeta \not = z \\ f’(z) & \text{else} \end{cases}$$
+
+We remark that of course, $g$ is holomorphic on $\Omega \setminus \{ z \}$ because $f$ is holomorphic everywhere. 
+
+Then, by the Cauchy theorem on a convex set, we have that:
+
+$$  0 = \int_\gamma g(\zeta) d\zeta = \int_\gamma \frac{f(\zeta) - f(z)}{\zeta - z}  d\zeta \implies f(z) \text{Ind}_\gamma(z) = \frac{1}{2\pi i} \int_\gamma \frac{f(\zeta)}{\zeta - z} d\zeta $$
+
+Theorem: [10.16]
+
+For every open set $\Omega$ in the plane, every $f \in \mathcal{H}(\Omega)$ is representable by a power series in $\Omega$. 
+
+Recall: [10.7] If $\mu$ is a finite, complex measure on a measurable set $X$, $\varphi$ is a complex, measurable function on $X$, $\Omega$ an open set in the plane which is disjoint from $\varphi(X)$, and $$ f(z) = \int_X \frac{d\mu(\zeta)}{\varphi(\zeta) - z}$$, when $f$ is representable by a power series.
+
+Proof:
+
+Let $f \in \mathcal{H}(\Omega)$. Pick $ a \in \Omega$, and $R$ such that $D(a, R) \subset \Omega$. Let $\gamma$ be positively oriented circle of center $a$, and radius $r < R$. 
+
+Then, $D(a,R)$ is a convex set, so by 10.15, we have that $$f(z) = \int_\gamma \frac{f(\zeta)}{\zeta - z} d\zeta = \int_\alpha^\beta \frac{f(\gamma(t))}{\gamma(t) - z} \gamma’(t) dt $$
+
+Here, we recognize that $$ f(\gamma(t)) \gamma’(t)dt$$ defines a complex valued measure, so so by 10.7, we have that $f(z)$ is representable by a power series (and further, it is unique). That is, there exist unique $\{ c_n \} \subset \mathbb{C}$ such that $f(z) = \sum_{n=0}^\infty c_n (z -a)^n$ for all $z \in D(a,r)$. But we picked $r < R$, arbitrarily, so we can do this as $r \to R$, and this actually applies on the entire $D(a,R)$. Since we can do this for any $a$, we have a representation for every disk in $\Omega$. 
+
+Corollary:
+
+$$f \in \calH(\Omega) \implies f’ \in \calH(\Omega)$$
+ 
+ That is, if $f$ is holomorphic, so is its derivative.
+ 
+Theorem [10.17, Morera’s Theorem]
+
+Suppose $f$ is a continuous, complex-valued function on an open set $\Omega$ such that $\int_{\partial \Delta} f(z) dz = 0$ for every closed triangle $\Delta \subset \Omega$. Then, $f \in \calH(\Omega)$.
+
+Proof:
+
+Let $V$ be a convex, open set in $\Omega$. Then, we may construct $F \in \calH(V)$ by fixing a $z_0 \in \Omega$, and for all $z \in \Omega$, we define $F(z) = \int_{[z_0, z]} f(\zeta) d\zeta$.
+
+This implies that since $F’ = f$, that $f \in \calH(V)$.
+
+Since we can do this for each convex open set $V$, and we can patch $\Omega$ via convex open sets, this is true on $\Omega$.
+
+We wish to investigate the power series representation a bit more closely.
+
+Theorem [10.18]
+
+Suppose that $\Omega \subseteq \mathbb{C}$ is a region, $f \in \calH(\Omega)$, and define $Z(f) = \{ a \in \Omega : f(a) = 0 \}$, that is, the set of zeros.
+
+Then, either $Z(f) = \Omega$, or $Z(f)$ has no limit point in $\Omega$. In the latter case, there exists a correspondence between each $a \in Z(f)$ and a unique positive integer $m = m(a)$ such that $f(z) = (z-a)^m f(z)$ where $g \in \calH(\Omega)$ and $g(\Omega) \not = 0$. Further, $Z(f)$ is at most countable. We call the integer $m(a)$ the order of the zero $a$.
+
+Proof:
+
+Let $A$ be the set of all limit points of $Z(f)$. Clearly then, $A \subset Z(f)$. Fix an $a \in Z(f)$ and choose $r > 0$ such that $D(a,r) \subset \Omega$.
+
+Because $f$ is holomorphic, it has a power series representation:
+
+$$f(z) = \sum_{n=0}^\infty c_n (z-a)^n$$ where $z \in D(a,r)$. 
+
+Suppose $c_n = 0$ for all $n$. Then, we have that $D(a,r) \subset A$, since it is 0 everywhere. Then, we have that $a \in \mathring{A}$
+
+Otherwise, there exists a smallest positive integer $m$ such that $c_m \not = 0$. Define $$g(z) = \begin{cases} (z-a)^{-m} f(z) & z \in \Omega \setminus \{a\} \\ c_m & \text{ if } z = a \end{cases}$$
+
+Certainly, $g \in \calH(\Omega \setminus \{ a \})$. In fact, we may write $g$ as:
+
+$$ g(z) = \sum_{k=0}^\infty c_{m+k} (z-a)^k$$ where $z \in D(a,r)$, by examining the power series of $f$. Since $g$ is representable by a power series, then $g \in \calH(D(a,r)) \implies g \in \calH(\Omega)$, where we extend to all of $\Omega$. Lastly, it should be clear that $g(a) \not = 0$. 
+
+Then, we can conclude $a$ is an isolated point. Then, if $a \in A$, we are back in case 1, and $A$ must be open, which implies that $B = \Omega \setminus A$ is open, which implies that $\Omega = A \cup B$. But since $\Omega$ is connected, then either $A = \Omega$ or $B = \Omega$, and either $Z(f) = \Omega$ or $Z(f)$ has no limit points, and has at most finitely many points in each compact subset of $\Omega$. Thus, over all of $\Omega$, $Z(f)$ is at most countable, since $\Omega \subset \mathbb{C}$ is $\sigma$-finite.
+
+Corollary:
+
+If $f, g \in \calH(\Omega)$, for $\Omega$ a region, $f(z) = g(z)$ for all $z$ in some set which has a limit point in $\Omega$, then $f(z) = g(z)$ on all of $\Omega$. (easy, consider the function $f - g$.)
+
+Definition:
+
+If $a \in \Omega$, and $f \in \calH(\Omega \setminus \{ a \})$, then $f$ is said to have an isolated singularity at $a$. If $f$ can be extended to be defined at $a$ such that the extended function $\tilde{f}$ is holomorphic on all of $\Omega$, then we call the singularity removable.
+
+Theorem:
+
+Suppose $f \in \calH(\Omega \setminus \{ a \})$, and $f$ is bounded on $D’(a,r)$ for some $r > 0$, where we denote $D’$ as the punctured disk, $\{ z : 0 < |z-a| < r \}$. Then $f$ has a removable singularity at $a$. 
+
+Proof:
+
+Let $h(a) = 0$, $h(z) = (z-a)^2 f(z)$, for $z \in \Omega \setminus \{ a \}$. 
+
+Then, we notice that $$ \frac{h(z) - h(a)}{z-a}= (z-a) f(z)$$ so the absolute value:
+
+$$  \left| \frac{h(z) - h(a)}{z-a} \right| \leq |z-a| |f(z)| \leq |z-a| M$$ because $f$ is bounded on $D’$. Taking the limit as $z \to a$, we find that $h’(a) = 0$.
+
+So $h$ is holomorphic on all of $D(a,r)$, so we have a power series representation:
+
+$$h(z) = \sum_{n=2}^\infty c_n(z-a)^n = (z-a)^2 \sum_{n=1}^\infty c_{n+1} (z-a)^n = (z-a)^2 f(z)$$ where we use the fact that $f(a) = 0$, and $h’(a) = 0$, and therefore, we have that $$ f(z) = \sum_{n=0}^\infty c_{n+2} (z-a)^n$$, and $f(a) = c_2$.
+
+
 
 \end{document}
