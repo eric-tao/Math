@@ -139,6 +139,39 @@ Suppose that $f \in L^1(\mathbb{R})$ is such that $f'\in L^1(\mathbb{R})$ and $ 
 
 \begin{proof}[Solution]
 
+First, we wish to prove that $f$ is actually uniformly continuous. Let $\epsilon > 0$ be given. Because $f'$ is integrable, we have that there exists $\delta > 0$ such that for all measurable $E \subseteq \mathbb{R}$:
+
+$$ |E| < \delta \implies \int_E |f| < \epsilon $$
+
+Now, let $x,y \in \mathbb{R}$ such that $|x - y| < \delta$. WLOG, suppose $x < y$. Since $f \in \ac[x,y]$, by the fundamental theorem, we have that 
+
+$$|f(y) - f(x)| = \left| \int_x^y f'(t) dt \right| \leq \int_x^y |f'(t)| dt < \epsilon $$
+
+Thus, $f$ is uniformly continuous.
+
+Now, suppose that $\lim_{x \to \infty} \not = 0$, where we tackle the positive infinity first. Then, fix any $\epsilon > 0$. We may find $\{ x_n \}_n \to \infty$ such that $|f(x_i)| > \epsilon$. In order to space these out, since we take $x_n \to \infty$, we may assume that $x_{n+1} - x_n > k$ for all $n$, as if it is not, we may always take a subsequence such that our points are sufficiently spaced out.
+
+Now, from the uniform continuity, we have that there exists $\delta > 0$ such that if $| x - y | < \delta$, then $|f(x) - f(y)| < \epsilon/2$. Enforce that $\overline{\delta} = \min(\delta,1)$.
+
+Consider the intervals of form $I_n = (x_n, x_n + \overline{\delta})$. By continuity, this implies that $|f| \geq \epsilon/2$ on these intervals. Then, we would have that 
+
+$$\int_0^\infty |f| \geq \Sigma \int_{I_n} |f| \geq \Sigma \int_{I_n} \epsilon/2 = \Sigma \delta \epsilon/2 = \infty $$
+
+since there are countably many of these intervals, and $\delta, \epsilon > 0$. 
+
+But, this is a contradiction, thus $\lim_{x \to \infty} f(x) = 0$. The same argument works for $x \to -\infty$. So, we have that $\lim_{|x| \to \infty} f(x) = 0$.
+ 
+Now, consider $f_n = f \chi_{[-n,n]}$. We notice, since $f \in \ac[-n,n]$ for each $n$, then $f_n \in \ac[-n,n]$. Then, we may apply the fundamental theorem to see that:
+
+$$ f_n(n) - f_n(-n) = \int_{[a,b]} f_n'(t) dt = \int_{\mathbb{R}} f_n'(t)dt$$
+
+where we use the construction of $f_n$ to argue that the integral of $f_n'$ is the same on $[-n,n]$ as it is on $\mathbb{R}$ since $f_n'$ is identically 0 outside of $[-n.n]$.
+
+We have that, by construction, $f_n' \to f'$ pointwise a.e., and $|f_n'(x)| \leq f'$ a.e. 
+
+Then, we have that
+
+$$\int_{\mathbb{R}}f' = \lim_{n \to \infty} \int_{\mathbb{R}} f_n'(t) = \lim_{n \to \infty} f(n) - f(-n) = 0 $$
 
 \end{proof}
 
@@ -166,6 +199,52 @@ $$\int_E \Sigma_{n=1}^\infty f_n = \Sigma_{n=1}^\infty \int_E f_n $$
 \end{problem}
 \begin{proof}[Solution]
 
+(a)
+
+First, we check the convergence of $\Sigma_{n=1}^\infty |f_n|$. Looking at the partial sums, we have that:
+
+$$\Vert \Sigma_{n=1}^N |f_n| \Vert_p \leq \Sigma_{n=1}^N \Vert f_n \Vert_p \leq \Sigma \Vert f_n \Vert_p < \infty$$
+
+Now, because $\Vert \Sigma_{n=1}^N |f_n| \Vert_p$, varying over $N$, is a monotone increasing set of numbers by the triangle inequality, bounded above by $\Sigma \Vert f_n \Vert_p < \infty$, we may apply the Monotone Convergence Theorem to state that $\Vert \Sigma_{n=1}^\infty |f_n| \Vert_p < \infty$. Then, $ \Sigma_{n=1}^\infty |f_n| < \infty$ almost everywhere by Lemma 4.1.8, since we would have that:
+
+$$ \int_E \left(  \Sigma_{n=1}^\infty |f_n| \right)^p < \infty \implies  \int_E \Sigma_{n=1}^\infty |f_n| < \infty $$
+
+Then, this implies that almost everywhere, $\Sigma_{n=1}^\infty |f_n(x)| < \infty$, and an absolutely convergent series of complex or real numbers is itself convergent. Thus,  $f(x) = \Sigma_{n=1}^\infty f_n(x)$ converges for almost every $x \in E$.
+
+Further, via this process, it should be clear that $f \in L^p(E)$, as $|f| \leq \Sigma_{n=1}^\infty |f_n| < \infty$, so we can take both sides to the $p-th$ power, and, looking at the integrals, this remains true.
+
+Lastly, we have that $f$ must converge in the $L^p$ norm, because we have the following chain of inequalities:
+
+$$ \left|f -  \Sigma_{n=1}^N f_n\right|^p  \leq \left(|f| + \left|\Sigma_{n=1}^N f_n\right|\right)^p \leq \left(|f| + \Sigma_{n=1}^N |f_n|\right)^p \leq $$
+$$ \left( \Sigma_{n=1}^\infty |f_n| + \Sigma_{n=1}^\infty |f_n|\right)^p  = (2 \Sigma_{n=1}^\infty |f_n| )^p < \infty $$
+
+Therefore, we have that $|f - \Sigma_{n=1}^N f_n|^p \to 0$ almost everywhere, and that $\left|f -  \Sigma_{n=1}^N f_n\right|^p \leq (2 \Sigma_{n=1}^\infty |f_n| )^p < \infty$, so by the Dominated Convergence Theorem, we have that 
+
+$$ \lim_{N \to \infty} \Vert f - \Sigma_n^N f_n \Vert_p =  \lim_{N \to \infty} \int_E \left|f -  \Sigma_{n=1}^N f_n\right|^p = \int_E 0 = 0$$
+
+(b)
+
+If we believe in part (a), theorem 1.2.8 states that if every absolutely convergence series in a metric space $X$ converges in $X$, then $X$ is complete. Part (a) just said that, for an arbitrary absolutely convergence series, it converges in $L^p(E)$, so we are done.
+
+(c)
+
+Without repeating the argument in (a), we see that if $\Sigma f_n$ is absolutely convergent in $L^1(E)$, then we have that $f = \Sigma f_n$ converges a.e., $f \in L^1(E)$, and that it converges in the $L^1$ norm. Then, by convergence in $L^1$, we have that:
+
+$$ \lim_{N \to \infty} \int_E \Sigma_{n=1}^N f_n = \int_E f = \int_E \Sigma f_n $$
+
+However, we know that because the $f_n$ are absolutely convergent, this means that they are in $L^1$ individually, so by the linearity of the integral, we have that:
+
+$$ \lim_{N \to \infty} \int_E \Sigma_{n=1}^N f_n = \lim_{N \to \infty} \Sigma_{n=1}^N \int_E f_n $$
+
+Lastly, since they are absolutely convergent, we have that:
+
+$$ \Sigma \Vert f_n \Vert_1 = \Sigma_n \int_E |f_n| < \infty $$
+
+which implies that $\int_E f_n$ is an absolutely convergent series, and thus convergent. Therefore, we may replace this as:
+
+$$\Sigma_n \int_E f_n = \lim_{N \to \infty} \Sigma_n^N \int_E f_n =  \lim_{N \to \infty} \int_E \Sigma_{n=1}^N f_n = \int_E f = \int_E \Sigma f_n $$
+
+
 \end{proof}
 
 
@@ -181,6 +260,23 @@ Fix a $1 \leq p < \infty$. Given $f_n \in L^p(\mathbb{R}^d)$, prove that $f_n \t
 
 \end{problem}
 \begin{proof}[Solution]
+
+First, assume (a)-(c) are true.
+
+Let $\epsilon > 0$ be given.
+
+
+It is fairly clear that if $f_n \to f$ in $L^p(\mathbb{R}^d)$ is true, (a)-(c) is true:
+
+(a)
+
+By Theorem 7.3.4, if they converge in the $L^p$ norm, we automatically have that $f_n \xrightarrow[]{m} f$.
+
+(b)
+
+First, we assume that the $f_n$ are simple functions with compact support. Then, because $f_n \in L^p(\mathbb{R}^d$, we can look at $max(\{ f_n(x): x \in \text{Supp}(f_n )\}) < \infty$. This must be finite because, if not, $\Vert f_n \Vert_p = \infty$. Further, we may talk in particular about the max over all such $f_n$. This must be finite, because if not,  
+
+Ok, you know, I don't know how this works.
 
 \end{proof}
 

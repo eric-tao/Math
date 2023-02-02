@@ -1,0 +1,164 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{}
+\author{Eric Tao\\
+Math 235: Final exam}
+\maketitle
+
+\begin{problem}{1}
+
+Let $E = \{ (x, x^3) : x \in \mathbb{R} \} \subset \mathbb{R}^2$. Using only the definition, prove that $E$ is Lebesgue measurable, and find its measure $|E|$.
+
+\end{problem}
+\begin{proof}[Solution]
+
+Let $\epsilon > 0$ be given. First, we notice that we may slice up $E = \cup E_n$, where $E_n = \{ (x, f(x)) : x \in [-n,n] \}$. Then, we notice that since this is the graph of a continuous function $f(x) = x^3$, for each $E_n$, since $[-n,n]$ is compact, we may find $\delta$ such that $|x - y| < \delta \implies |f(x) - f(y)| < \epsilon/(4n * 2^k)$. Dividing up $[-n,n]$ into equal length intervals $[a_l,b_l] : b_l - a_l < \delta$, we consider:
+
+$$ C = \cup_k [a_l,b_l] \times [M_n - \frac{\epsilon}{4n 2^k}, M_n + \frac{\epsilon}{4n 2^k}] $$
+
+where $M_n = \sup_{x \in [-n,n]} |f(x)|$. Then, we have that $E_n \subseteq C$, by construction. Further, by monotonicity, we have that:
+
+$$ |E_n|_e \leq \Sigma_l (b_l - a_l)  \frac{\epsilon}{2n 2^k} = 2n\frac{\epsilon}{2n 2^k} =\frac{\epsilon}{2^k} $$
+
+Then, we use subadditivity to have that:
+
+$$ |E|_e \leq \Sigma |E_n|_e  = \Sigma \frac{\epsilon}{2^k}  = \epsilon $$ 
+
+Since $\epsilon$ was arbitrary, this tells us that $|E|_e = 0$, which implies that $|E| = 0$, measurable.
+
+\end{proof}
+
+\begin{problem}{2}
+
+Let $T = \{ (x,y) \in \mathbb{R}^2 : 0 \leq y \leq x < \infty \}$.
+
+Evaluate $\lim_{n \to \infty} \iint_T e^{-(x + \frac{1}{n} + \frac{n+1}{n} y)} (dxdy)$ justifying your answer.
+
+\end{problem}
+\begin{proof}[Solution]
+
+First, we look at the integrand  $e^{-(x + \frac{1}{n} + \frac{n+1}{n} y)}$ for a fixed $n$ and claim this is measurable. Well, we see that $ x + \frac{1}{n} + \frac{n+1}{n} y$ is polynomial in $x,y$, therefore continuous, and we know that the exponential function is continuous. Therefore, this function is continuous, being the composition of two continous functions. Thus, by 3.1.6, this function is measurable. 
+
+Further, we notice that we can rewrite the integral as $\int_{[0,\infty] \times [0, \infty]} \chi_{T} e^{-(x + \frac{1}{n} + \frac{n+1}{n} y)}$. Then, on this domain, we may apply Tonelli's theorem, and instead, evaluate the interated integral:
+
+$$ \int_{[0,1]} \left( \int_{[0,1]} \chi_{T} e^{-(x + \frac{1}{n}+ \frac{n+1}{n} y)} dx\right) dy = e^{-\frac{1}{n}}  \int_{[0,1]} \left( \int_{[0,1]} \chi_{T} e^{-(x + \frac{n+1}{n} y)} dx\right) dy $$
+
+Computing $\int_{[0,1]} \chi_{T} e^{-(x + \frac{n+1}{n} y)} dx$ first, we see that:
+
+$$ \int_{[0,1]} \chi_{T} e^{-(x  + \frac{n+1}{n} y)} dy = \int_{[y,\infty]} e^{-(x + \frac{n+1}{n} y)} dx = -  e^{-(x + \frac{n+1}{n} y)} \Big|_y^\infty =  e^{-( \frac{2n+1}{n} y)}$$
+
+where we use the fact that $\lim_{k \to \infty} e^{-k} = 0$. 
+
+Now, evaluating the second integral:
+
+$$\int_{[0,1]} \chi_T e^{-( \frac{2n+1}{n} y)} dy = \int_{[0,\infty]} e^{-( \frac{2n+1}{n} y)} dy = -\frac{n}{2n+1}  e^{-( \frac{2n+1}{n} y)} \Big|_0^\infty = \frac{n}{2n+1}$$
+
+So, we have that by Tonelli's, that:
+
+$$ \iint_T e^{-(x + \frac{1}{n} + \frac{n+1}{n} y)} (dxdy) = \frac{n}{2n+1}$$
+
+Thus, we have that:
+
+$$\lim_{n \to \infty} \iint_T e^{-(x + \frac{1}{n} + \frac{n+1}{n} y)} (dxdy) = \lim_{n \to \infty} \frac{n}{2n+1} = \frac{1}{2} $$
+
+
+
+\end{proof}
+
+\begin{problem}{3}
+
+Assume that $f \in \ac[0,1]$ and that there is a function $g$, continuous on $[0,1]$ such that $f' = g$ a.e.  Show that $f$ is differentiable everywhere on $[0,1]$ and that $f' = g$ for all $x \in [0,1]$. Show by example that absolute continuity is necessary.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+By 5.2.8, since $g$ is continuous, we can define:
+
+$$ G(x) = \int_a^x g(t) dt $$
+
+such that $G$ is Lipschitz and $G' = g$ everywhere. Then, by 6.1.3, we have that $G$ is absolutely continous. Then, consider the difference $f - G$. This is a difference of absolutely continous functions, thus absolutely continuous. Further, looking at its derivative $(f - G)'$, we have that:
+
+$$(f - G)' = f' - G' = f' - g' = 0 $$ 
+
+almost everywhere. Now, $f - G$ is an absolutely continuous function and singular, therefore, $f - G = a$ for some constant $a$.
+
+Then, we have that $f = G + a$ everywhere, and since $G' = g$ everywhere, $f' = (G + a)' = G' = g$ everywhere.
+
+Counterexample for $f \not \in \ac[0,1]$. Choose $f = \phi$, the Cantor-Lebesgue function. We have that $f' = 0$ almost everywhere, so we may pick $g = 0$. However, $f$ is not differentiable everywhere.
+
+\end{proof}
+
+\begin{problem}{4}
+
+Let $f \in L^1(\mathbb{R})$ and define $F(x) = \int_\mathbb{R} f(t) \frac{\sin tx}{t} dt$.
+
+(a) Prove that $F$ is differentiable on $\mathbb{R}$ and find $F'$.
+
+(b) Is $F$ absolutely continuous on each compact subinterval of $\mathbb{R}$? Justify your answer.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+Try to compute this directly: $F' = \lim_{h \to 0} F(x+h) - F(x) / h$
+
+Condering just the interior, we have that:
+
+$$\frac{ F(x+h) - F(x)}{h} = \frac{\int_\mathbb{R}  f(t) \frac{\sin t(x+h)}{t} dt - \int_\mathbb{R} f(t) \frac{\sin tx}{t} dt}{h} =  \int_\mathbb{R}  f(t) \frac{\sin t(x+h) - \sin tx}{ht} dt$$
+
+Here, we see that $\lim_{h \to 0}  f(t) \frac{\sin t(x+h) - \sin tx}{t}/{h} = f(t)/t \lim_{h \to 0} \frac{\sin t(x+h) - \sin tx}{th} = f(t) \cos(tx)$ everywhere, by the definition of the derivative of $(\sin)' = \cos$. But, we also have that $|cos| \leq 1$ everywhere. Then, by the mean value theorem, since the difference of sines over $h$ is simply a secant line, it must be equal to $cos'$ somewhere, so bounded above by $1$. Then, we have that $| f(t) \frac{\sin t(x+h) - \sin tx}{ht}| \leq f(t) $, since we pull the $t$ as part of the secant line. But, by hypothesis, $f$ is integrable, so we have that by Dominated Convergence Theorem:
+
+$$ \lim_{h \to 0}  \int_\mathbb{R}  f(t) \frac{\sin t(x+h) - \sin tx}{ht} dt =  \int_\mathbb{R}  \lim_{h \to 0} \left(  f(t) \frac{\sin t(x+h) - \sin tx}{ht} dt \right) =  \int_\mathbb{R} f(t) cos(tx) dt $$
+
+(b)
+
+Since we see that $F$ is differentiable, and that $F'$ is integrable, because $|f(t) cos(tx)| \leq |f(t)|$, then $F$ must be absolutely continuous for any arbitrary interval $[a,b]$ by corollary 6.3.3
+
+\end{proof}
+
+\begin{problem}{5}
+
+Let $f \in L^p(\mathbb{R})$, where $1 \leq p < \infty$. For $\alpha > 0$, define:
+
+$$ E_\alpha(f) = \{ x \in \mathbb{R} : |f(x)| > \alpha \} $$
+
+(a) Show that $E_\alpha$ has finite Lebesgue measure.
+
+(b) Use (a) to show that every $f \in L^p(\mathbb{R})$, $1 \leq p \leq 2$ can be decomposed as $f_1 + f_2$ where $f_1 \in L^1(\mathbb{R})$ and $f_2 \in L^2(\mathbb{R})$.
+
+\end{problem}
+\begin{proof}[Solution]
+
+(a) Fix an $\alpha > 0$. Suppose not, and $|E_\alpha| = \infty$. Then consider $\int_{E_\alpha} f \leq \int_{\mathbb{R}} f$. In particular, look at $\int_{E_\alpha} |f|$. Then, we have that:
+
+$$ \int_{E_\alpha} |f| \geq \int_{E_\alpha} \alpha = \infty$$
+
+This implies then that at least one of $\int f^+, \int f^-$ divergse on $E_\alpha$. If both diverge, then the integral does not exist, a contradiction. If at least one diverges, wlog, $\int f^+$, then we would have that $\int f  = \infty$, a contradiction since $f \in L^p$ implies $\int f < \infty$. Thus, the set must have finite Lebesgue measure.
+
+(b)
+
+Ran out of time, sorry!
+
+
+\end{proof}
+
+
+ 
+
+\end{document}
