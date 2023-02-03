@@ -1,0 +1,87 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+
+\newenvironment{problem}[2][]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#1}
+\author{Eric Tao\\
+Math 233: Homework \#1}
+\maketitle
+
+\begin{problem}{Question 1}
+The following fact was tacitly used in this chapter: if $A, B$ are disjoint subsets of the plane, $A$ is compact, $B$ is closed, then there exists a $\delta > 0$ such that, for all $\alpha \in A$, $\beta \in B$, $| \alpha - \beta | \geq \delta > 0$. Prove this for $A, B \subset X$ for $X$ an arbitrary metric space. 
+
+\end{problem}
+\begin{proof}[Solution]
+
+Let $X$ be a metric space, $A \subseteq X$ compact, $B \subseteq X$ closed, $A \cap B = \emptyset$
+
+Suppose not. Then, there exist pairs of points $(\alpha_n, \beta_n)$ such that $d(\alpha_n,\beta_n) < \frac{1}{n}$. Now, consider the sequence of points $\{ \alpha_n \}_{n=1}^\infty$. Since $A$ is compact, we know that there exists a subsequence $\{ \alpha_{n_k} \}_{k=1}^\infty$, convergent to $\alpha$. 
+
+Let $\epsilon > 0$ be given. Since $\alpha_{n_k} \to \alpha$, choose $N_k$ such that $d(\alpha, \alpha_{n_k}) < \frac{\epsilon}{2}$ for all $n_k > N_k$. Choose $N$ such that $\frac{1}{n} < \frac{\epsilon}{2}$ for all $n > N$. Choose $M_k$ such that $M = \max(N, N_k)$. Assume $m > M, m \in \{ n_k \}_{k=1}^\infty$. Consider the sequence of $\{ \beta_{n_k} \}_{k=1}^\infty$, and in particular, consider:
+
+$$ d(\alpha, \beta_m) \leq d(\alpha, \alpha_m) + d(\alpha_m, \beta_m) < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$$
+
+Thus, we have that $\beta_{n_k} \to \alpha$. Since $\{ \beta_{n_k} \}_{k=1}^\infty\subset B$, a closed set, $ \alpha \subset B$, because closed sets contain its limit points. But, this is a contradiction. Thus, $\delta > 0$ exists.
+\end{proof}
+
+\begin{problem}{Question 2}
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+
+\end{proof}
+
+\begin{problem}{Question 3}
+
+Suppose $f, g$ are entire functions, and suppose that for all $z \in \mathbb{C}$, that $| f(z) | \leq | g(z)|$. What conclusion can you draw?
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+Claim: for some $m \in \mathbb{C}$, $f = mg$.
+
+First suppose $g = 0$. Then, since $|f| \leq |g| = 0$, this implies that $f = 0$ everywhere. Then, of course $f = mg$, for actually any $m$.
+
+Now, suppose not. Then, define $Z(g) = \{ z \in \mathbb{C} : g(z) = 0 \}$, that is, the zero set of $g$, and consider the function $h = \frac{f}{g}$. By the algebra of holomorphic functions, we have that $h$ is holomorphic on at least $\mathbb{C} \setminus Z(g)$.
+
+Because $\mathbb{C}$ is of course a connected open set, we have the result that $Z(g)$ has no limit points in $\mathbb{C}$. Then, let $a \in Z(g)$. Because $a$ is not a limit point, there exists $r > 0$ such that $D(a,r) \cap Z(g) = \emptyset$. We have then that $h$ is holomorphic on $D(a,r) \setminus \{ a \}$, a region. Further, on $\mathbb{C} \setminus Z(g)$, we have that $|h| = \frac{|f|}{|g|} \leq 1$. So, in particular, on $D'(a,\frac{r}{2}) = \{ z \in \mathbb{C} : 0 < |z - a| < \frac{r}{2} \} \subseteq \mathbb{C} \setminus Z(g)$, we have that $h$ is bounded. Then, by Theorem 10.20 from Rudin, we have that $f$ has a removable singularity at $a$.
+
+Now, we recall from Theorem 10.18, that $Z(g)$ is at most countable. So, we may patch $h$ countably many times at each point in $Z(g)$ to produce a holomorphic function everywhere, which we call $\tilde{h}$. Further, since $\tilde{h}$ is holomorphic, it must be continuous everywhere. Thus, since $|\tilde{h}(z)| \leq 1$ at every point other than $z \in Z(g)$, we must have that $|\tilde{h}(z)| \leq 1$ everywhere by continuity. Thus, we have that $\tilde{h}$ is a bounded, entire function, and by Liouville's Theorem, it must be constant, that is, $\tilde{h} = k$ for some $k \in \mathbb{C}$. Then, we have that at least on $\mathbb{C} \setminus Z(g)$, that $f(z) = k g(z)$.
+
+However, $k g(z)$ is certainly holomorphic, and it agrees with $f(z)$ almost everywhere, which of course is a set with limit points in $\Omega$. Thus, $f = kg$ everywhere.
+
+
+\end{proof}
+
+\begin{problem}{Question 4}
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+
+\end{proof}
+
+\begin{problem}{Question 5}
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+\end{proof}
+
+\end{document}
