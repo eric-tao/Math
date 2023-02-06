@@ -68,11 +68,45 @@ However, $k g(z)$ is certainly holomorphic, and it agrees with $f(z)$ almost eve
 \end{proof}
 
 \begin{problem}{Question 4}
+Suppose that $f$ is an entire function, and
+
+$$ | f(z) | \leq A + B|z|^k$$
+
+for all $z$, where $A, B, k$ are positive real numbers. Prove that $f$ must be polynomial.
 
 \end{problem}
 
 \begin{proof}[Solution]
 
+Because $f$ is entire, it is analytic, specifcally at $a = 0$, with infinite radius of convergence. Then, we may rewrite $f$ as:
+
+$$f(z) = \sum_{n=0}^\infty c_n z^n $$
+
+Now, we apply Theorem 10.22. We have that:
+
+$$ \sum_{n=0}^\infty |c_n |^2 r^{2n} = \frac{1}{2\pi} \int_{-\pi}^\pi | f(re^{i\theta})|^2 d\theta $$
+
+Here, we use our hypothesis. Since we have that $ | f(z) | \leq A + B|z|^k$, we must have that:
+
+$$ |f(r e^{i\theta}) | \leq A + B |re^{i\theta}|^k = A + Br^k$$
+
+Thus, using our first equation then, we have a bound:
+
+$$  \sum_{n=0}^\infty |c_n |^2 r^{2n}  = \frac{1}{2\pi} \int_{-\pi}^\pi | f(re^{i\theta})|^2 d\theta \leq  \frac{1}{2\pi} \int_{-\pi}^\pi (A + Br^k)^2 d\theta = (A + Br^k)^2 $$
+
+Now, suppose we have that $c_n \not = 0$ for some $n > k$. Then, we would have that:
+
+$$\frac{|c_n| r^{2n}}{(A + Br^k)^2} = \frac{|c_n| r^{2(n - k)}}{(\frac{A}{r^k} + B)^2}$$
+
+Now, since $f$ is entire and thus the radius of convergence is infinite,  we may take the limit as $r \to \infty$. But, since $n > k$, we have that:
+
+$$ \lim_{r \to \infty} \frac{|c_n| r^{2(n - k)}}{(\frac{A}{r^k} + B)^2} = \infty$$
+
+Then, $c_n = 0$ for every $n > k$. Then, this implies that we have that
+
+$$ f(z) = \sum_{n=0}^{ \lfloor k \rfloor } c_n z^n $$
+
+and since this holds everywhere, with finite degree, $f$ is polynomial.
 
 \end{proof}
 

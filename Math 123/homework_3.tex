@@ -146,6 +146,16 @@ $$ F(C_1,...,C_k)  \sum_{k=1}^K \sum_{x_i \in C_K} \Vert \mu_k - x_i \Vert_2^2 $
 
 \begin{proof}[Solution]
 
+(a)
+
+Fix some $K \in \mathbb{N}$. Since $n$ is a fixed natural number, we have finitely many data points. In particular, if we have finitely many data points, then we can only have finitely many partitions of $n$ into $K$ subsets. Then, if we consider the values of $F_i$, where we index a partition $\Gamma_i$ by $i$, this is a set of non-negative real numbers, finite. By the least upper bound property of the real numbers, this must have an infimum since this is bounded below by $0$, and further, since this is a finite set, it must achieve the infimum, since finite sets do not have limit points. Thus, $F$ must achieve a minimum for fixed values of $K$.
+
+(b)
+
+If $K= n$, then we allow only the partition$C_1 = \{x_1\}, C_2 = \{ x_2 \} ... C_n = \{ x_n \}$ up to relabeling, since we have $n$ data points and $n$ boxes. Then, the centroid of each is exactly $\mu_j = x_j$, so then we have that for each $C_n$, that $$\sum_{x_i \in C_j  } \Vert \mu_j - x_i \Vert_2^2 = \Vert x_j - x_j \Vert_2^2 = 0$$ 
+
+Thus, $F = \sum_{K=1}^n 0 = 0$, and the minimum and only value of $F$ if $K = n$ is $0$. And since the minimum value of a sum of non-negative real values is $0$, this must be the minimum value.
+
 
 \end{proof}
 
