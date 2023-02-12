@@ -35,15 +35,6 @@ $$ d(\alpha, \beta_m) \leq d(\alpha, \alpha_m) + d(\alpha_m, \beta_m) < \frac{\e
 Thus, we have that $\beta_{n_k} \to \alpha$. Since $\{ \beta_{n_k} \}_{k=1}^\infty\subset B$, a closed set, $ \alpha \subset B$, because closed sets contain its limit points. But, this is a contradiction. Thus, $\delta > 0$ exists.
 \end{proof}
 
-\begin{problem}{Question 2}
-
-\end{problem}
-
-\begin{proof}[Solution]
-
-
-\end{proof}
-
 \begin{problem}{Question 3}
 
 Suppose $f, g$ are entire functions, and suppose that for all $z \in \mathbb{C}$, that $| f(z) | \leq | g(z)|$. What conclusion can you draw?
@@ -110,11 +101,150 @@ and since this holds everywhere, with finite degree, $f$ is polynomial.
 
 \end{proof}
 
-\begin{problem}{Question 5}
+\begin{problem}{Question 6}
+There is a region $\Omega$ such that $\text{exp}(\Omega) = D(1,1)$. Show that the exponential function is one-to-one on $\Omega$, but that there are many such $\Omega$. Fix one, and define $\text{log}(z)$, for $|z-1| < 1$ to be $w \in \Omega$ such that $e^w = z$. Prove that $\text{log}'(z) = \frac{1}{z}$. Further, find the coefficients $a_n$ in
+
+$$ \frac{1}{z} = \sum_{n=0}^\infty a_n(z-1)^n$$
+
+and hence, find the coefficients $c_n$ in the expansion
+
+$$ \text{log} z = \sum_{n=0}^\infty c_n (z-1)^n$$.
+
+In what other discs can this be done?
+\end{problem}
+
+\begin{proof}[Solution]
+
+First, we find the shape of one such $\Omega$. We notice that $D(1,1) = \{ z : |z-1| < 1 \}$. Thus, we would have that, for $x, y \in \mathbb{R}, z = x + yi$:
+
+$$ |e^z - 1| < 1 \implies |  e^{x}(\cos(y) + i \sin(y)) - 1 | < 1 \implies | e^{x}\cos(y) - 1 + i e^{x} \sin{y} | < 1 \implies \sqrt{ e^{2x} - 2e^{x}\cos(y) + 1} < 1 $$
+
+However, we make one more observation, that first of all $e^z$ is cyclic in the imaginary component $y$, with a period of $2\pi$. Further, we have that in terms of the radial component, $D(1,1)$ is completely contained within $(-\pi/2,\pi/2)$, and that other regions may be found, but they are separated by integer multiples of $2\pi$ and therefore disconnected from this one. So, then, we have that we may describe our region as $\Omega = \{ x + yi :  \sqrt{ e^{2x} - 2e^{x}\cos(y) + 1} < 1. y \in (-\pi/2,\pi/2) \}$. We notice that this must be 1:1 because the exponential $e^z = e^x(\cos(y) + i \sin(y))$ must be 1:1 on $y \in (-\pi/2,\pi/2)$:
+
+$$ e^x(\cos(y)+ i \sin(y)) = e^{x'} (\cos(y') + i \sin(y') \implies \begin{cases}e^x \cos(y) = e^{x'} \cos(y') \\ e^{x}\sin(y)  = e^{x'}\sin(y')\end{cases}$$
+
+$$\implies \begin{cases}e^{2x} \cos^2(y) = e^{2x'} \cos^2(y') \\ e^{2x}\sin^2(y)  = e^{2x'}\sin^2(y')\end{cases} \implies e^{2x} = e^{2x}( \cos^2(y) + \sin^2(y) ) =e^{2x'}( \cos^2(y') + \sin^2(y') ) = e^{2x'} $$
+
+Thus, we have that $x = x'$. Now, we note that on $(-\pi/2, \pi/2)$, $\sin$ is 1:1, so therefore 
+
+$$ e^x \sin(y) = e^{x'} \sin(y') \implies \sin(y) = \sin(y') \implies y= y'$$
+
+Thus, we have that $e^z$ is one-to-one on this region.
+
+As noted earlier though, we notice that we can find another region easily - $\Omega' = \{ x + yi :  \sqrt{ e^{2x} - 2e^{x}\cos(y) + 1} < 1. y \in (3\pi/2,5\pi/2) \}$ is certainly another valid region, and there are actually infinitely many, separated by $2\pi n, n \in \mathbb{N}$.
+
+Now, choose an arbitrary one of these $\Omega$. Define $\log z = w \in \Omega$ such that $e^w = z$, where $z \in D(1,1)$. It should be clear that because the exponential in injective on $\Omega$, $\log$ must be injective on $D(1,1)$.
+
+%Fix some point $z_0 \in D(1,1)$. Clearly, we have that the exponential is holomorphic on $\Omega$, since it is entire, and since it is non-0 everywhere, and its own derivative, we have that $e'(z_0) \not = 0$. Then, we have a neighborhood on 
+
+Fix some $z_0 \in D(1,1)$. Since the exponential is one-to-one on $\Omega$, this corresponds to $\log(z_0) = w_0$. Then, for arbitrary $w \in \Omega$ and $z \in D(1,1)$, we have that:
+
+
+$$ \frac{\log(z) - \log(z_0)}{z - z_0} = \frac{ w - w_0}{e^w - e^{w_0}} $$
+
+just by the injective nature of these functions and using the fact that $z = e^w, w = \log(z)$.
+
+Then, by the continuity of the exponential, we have that as $w \to w_0$, that $z \to z_0$. Thus, we have that, by taking the limit of both sides as $w \to w_0, z \to z_0$:
+
+$$ \frac{\log(z) - \log(z_0)}{z - z_0} = \frac{ w - w_0}{e^w - e^{w_0}} \implies \lim_{z\to z_0} \frac{\log(z) - \log(z_0)}{z - z_0} = \lim_{w\to w_0} \frac{ w - w_0}{e^w - e^{w_0}} \implies \log'(z_0) = \frac{1}{e^{w_0}}$$
+
+But, by our definition of $\log$, $e^{w_0}$ is exactly $z_0$. So $\log'(z_0) = \frac{1}{z_0}$ as desired. 
+
+Well, now we notice that $\frac{1}{z}$ is holomorphic on regions that exclude the origin, thus we can use the corollary to 10.6 to compute coefficients to our power series. Since $$\frac{d^n}{dz^n}\frac{1}{z} = \frac{(-1)^n n!}{ z^{n+1}}$$
+
+we have that
+
+$$n! c_n = f^{(n)}(1) \implies c_n = \frac{1}{n!}\frac{(-1)^n n!}{ 1^{n+1}} = -1^n$$
+
+So, we have that
+
+$$ \frac{1}{z} = \sum_{n=0}^\infty (-1)^n(z-1)^n$$
+
+Doing term by term integration, then, we have that the n-th term becomes:
+
+$$\int (-1)^n(z-1)^n dz = \frac{(-1)^n}{n+1}(z-1)^{n+1} $$
+
+up to a constant. So, then, we have that:
+
+$$\log(z) = c_0 + \sum_{n=0}^\infty \frac{(-1)^n}{n+1}(z-1)^{n+1}$$
+
+where $c_0$ is some constant connected to the choice of $\Omega$.
+
+We remark that this procedure is not special to the disk $D(1,1)$, but rather, is permissable on any disk that does not include the origin, as if it does, there is no $z$ such that $e^z = 0$. In such a case, the inverse function defined on a region missing the origin would have a pole at $0$, and discs that include $0$ may come from a single region, and may be hard to restrict to a disconnected domain. For example, the disk $D(0,1)$ has, as a preimage under the exponential, $\{ x + yi : x \leq 0 \}$, which has a many to 1 relation with $D(0,1)$.
+
+\end{proof}
+
+
+\begin{problem}{Question 7}
+
+Let $f \in \mathcal{H}(\Omega)$. Under certain conditions on $z, \Gamma$, we have that:
+
+$$ f^{(n)}(z) = \frac{n!}{2\pi i} \int_\Gamma \frac{f(\zeta)}{(\zeta - z)^{n+1}} d\zeta$$
+
+for $n \in \mathbb{N}$. State these, and prove the formula.
 
 \end{problem}
 
 \begin{proof}[Solution]
+
+Before we start, we will prove a necessary result. We will prove that for a closed cycle $\Gamma$, an open set $\Omega$, and $z \in \Omega \setminus \Gamma^*$, that $\int_{\Gamma} (z - \zeta)^{-m} d\zeta = 0$ for $m  > 1$. 
+
+Well, since $z \not \in \Gamma^*$, we have that $(z - \zeta)^{-m}$ is continuous, and thus integrable on $\Gamma^*$. In particular, since we have that $m > 1$, it has exactly anti-derivative $F(\zeta) = \frac{(z-\zeta)^{-m+1}}{-m+1}$. Then, if $\Gamma = \gamma_1 + \gamma_2 + ... + \gamma_n$, and if the endpoints of $\gamma_i$ are $\alpha_i, \beta_i$, we can rewrite this as:
+
+$$ \int_{\Gamma} (z - \zeta)^{-m} d\zeta = \sum_{i=1}^n \int_{\gamma_i} (z - \zeta)^{-m} d\zeta = \sum_{i=1}^n F(\beta_i) - F(\alpha_i) = 0 $$
+
+because since $\Gamma$ is a closed cycle, we must have that $\beta_i = \alpha_{i+1}$ with the understanding that $\beta_n = \alpha_1$. So, this is a telescoping sum and vanishes, at least when $m > 1$. Note that although we may prove this for really, more generally, $m \not = 1$ in the same manner, this is all we need here.
+
+We will need that $z \in \Omega \setminus \Gamma^*$, so that we can take a contour integral over $\Gamma$, as well as $\text{Ind}_\Gamma(z) = 1$ and $\text{Ind}_\Gamma(\alpha) = 0$ when $\alpha \not \in \Omega$ for use in Cauchy's theorem.
+
+First, fix some $z \in \Omega \setminus \Gamma^*$, and choose some $n \in \mathbb{N}$. Define the related function $P(\zeta)$ on $\Omega$ via:
+
+$$ P(\zeta) = f(z) + f'(z)(\zeta - z) + ... + \frac{f^{(n-1)}(z)}{(n-1)!} (\zeta - z)^{n-1} $$
+
+First, we show that $f(\zeta) - P(\zeta) = (\zeta - n)^n h(\zeta)$:
+
+Since $f$ is holomorphic and thus analytic, we can write a power series for $f$ around $z$:
+
+$$ f(\zeta) = f(z) + f'(z) (\zeta - z) + ... =  \sum_{n=0}^\infty \frac{f^{(i)}(z)}{i!} (\zeta - z)^i $$
+
+where the coefficients come from the corollary to theorem 10.6.
+
+Then, we can compute:
+
+$$f(\zeta) - P(\zeta) =  \sum_{i=0}^\infty \frac{f^{(i)}(z)}{i!} (\zeta - z)^i - \sum_{i=0}^n \frac{f^{(i)}(z)}{i!} (\zeta - z)^i = \sum_{i=n}^\infty  \frac{f^{(i)}(z)}{i!} (\zeta - z)^i = (\zeta - z)^n \sum_{i=n}^\infty  \frac{f^{(i)}(z)}{i!} (\zeta - z)^{i-n}  $$
+
+Identifying $h(\zeta) =  \sum_{i=n}^\infty  \frac{f^{(i)}(z)}{i!} (\zeta - z)^{i-n}$, we notice that:
+
+$$ h(z) = \sum_{i=n}^\infty \frac{f^{(i)}(z)}{i!} (z - z)^{i-n} = \frac{f^{(n)}(z)}{n!}$$.
+
+Next, we claim that:
+
+$$\int_\Gamma \frac{P(\zeta)}{(\zeta - z)^{n+1}} d\zeta = 0$$.
+
+Well:
+
+$$\int_\Gamma \frac{P(\zeta)}{(\zeta - z)^{n+1}} d\zeta = \int_\Gamma \sum_{i=0}^{n-1} \frac{f^{(i)}(z) (\zeta - z)^{i}}{i!(\zeta - z)^{n+1}} d\zeta = \sum_{i=0}^{n-1} \int_\Gamma  \frac{f^{(i)}(z)}{i!(\zeta - z)^{n+1 - i}} d\zeta =  \sum_{i=0}^{n-1} \frac{f^{(i)}(z)}{i!} \int_\Gamma (\zeta - z)^{i - n - 1} d\zeta  $$ 
+
+Since for all $0 \leq i \leq n-1$, we have that $-n-1 \leq i -n - 1 \leq -2$ and since $z \not \in \Gamma^*$, we apply the lemma we proved at the beginning to show that $ \int_\Gamma (\zeta - z)^{i - n - 1} d\zeta = 0$ for all $i$. Thus, the entire integral vanishes, and we have that:
+
+$$ \int_\Gamma \frac{P(\zeta)}{(\zeta - z)^{n+1}} d\zeta = 0$$
+
+Now, consider the following quantity:
+
+$$ \int_{\Gamma} \frac{f(\zeta)}{(\zeta - z)^{n+1}} d\zeta = \int_\Gamma \frac{ P(\zeta) + (\zeta - n)^n h(\zeta)}{(\zeta - z)^{n+1}} d\zeta = \int_\Gamma \frac{ P(\zeta))}{(\zeta - z)^{n+1}} d\zeta +  \int_\Gamma \frac{ h(\zeta)(\zeta - n)^n}{(\zeta - z)^{n+1}} d\zeta  =  \int_\Gamma \frac{ h(\zeta)}{(\zeta - z)} d\zeta $$
+
+where we applied the facts that $\int_\Gamma \frac{P(\zeta)}{(\zeta - z)^{n+1}} d\zeta = 0$ and $f(\zeta) - P(\zeta) = (\zeta - n)^n h(\zeta) \implies f(\zeta)  =  P(\zeta) + (\zeta - n)^n h(\zeta) $.
+
+Now, since $h$ is analytic, it must be holomorphic on $\Omega$. Further, due to our conditions on $z$ and $\Gamma$, we may apply Cauchy's theorem to claim that:
+
+$$h(z) * \text{Ind}_\Gamma(z) = \frac{1}{2\pi i} \int_\Gamma \frac{h(\zeta)}{\zeta - z} = \frac{1}{2\pi i}  \int_{\Gamma} \frac{f(\zeta)}{(\zeta - z)^{n+1}} d\zeta $$
+
+Now, we use the condition that $\text{Ind}_\Gamma(z) = 1$, and the result that $h(z) = \frac{f^{(n)}(z)}{n!}$ to get that:
+
+$$ \frac{f^{(n)}(z)}{n!} = \frac{1}{2\pi i}  \int_{\Gamma} \frac{f(\zeta)}{(\zeta - z)^{n+1}} d\zeta \implies f^{(n)}(z) = \frac{n!}{2\pi i}  \int_{\Gamma} \frac{f(\zeta)}{(\zeta - z)^{n+1}}$$
+
+Since the choice of $n$ was arbitrary, we can use this procedure for any natural number $n$, the desired result.
+
 
 \end{proof}
 

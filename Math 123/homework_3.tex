@@ -3,6 +3,7 @@
 \usepackage[margin=1in]{geometry} 
 \usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
 \usepackage[font=small,labelfont=bf]{caption}
+\usepackage{float}
 
 \newcommand{\supp}{{\text{supp}}} 
 \newcommand{\bv}{{\text{BV}}}
@@ -173,6 +174,42 @@ Run the MATLAB script 'Kmeans\_Gaussians'.
 
 \begin{proof}[Solution]
 
+Fixing a set of outputs from the Gaussians, we use the kmeans method built into matlab. Over 100 iterations, we find replicates that look like this:
+
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{gaussian_points}
+  \captionof{figure}{Gaussian points}
+  \label{fig:test1}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{gaussian_cluster_assignments}
+  \captionof{figure}{Gaussian points with Centroids and Cluster assignments}
+  \label{fig:test2}
+\end{minipage}
+\end{figure}
+
+Additionally, we had good agreement on the total error across replicates:
+
+\begin{center}
+\includegraphics[,scale=0.5]{gaussian_iterations}
+\captionof{figure}{}
+\end{center}
+
+Now, this time we specify a value for MaxIter, and record the best total sum of distances as a function of the max iterations, over a single replicate. We do this for 1-10, as we noticed that convergence happened in the 100 replicants within usually 6 iterations and graph total error against MaxIter:
+
+\begin{center}
+\includegraphics[,scale=0.5]{maxiter_against_total_error_gaussian}
+\captionof{figure}{}
+\end{center}
+
+Visually at least, it seems like it converges reasonably after the first few iterations to an error of around 3820.
+
+The clusters, as seen in figure 2, agree with our intuition. The code generated samples from a normal distribution centered on $(0,0)$ and then $(4,0)$. We then expect in two clusters, that our centroids would land on our means, which they do.
 
 \end{proof}
 
@@ -189,6 +226,43 @@ Run the MATLAB script 'Kmeans\_Ellipses'.
 \end{problem}
 
 \begin{proof}[Solution]
+
+Fixing a set of outputs from the ellipses, we use the kmeans method built into matlab. Over 100 iterations, we find replicates that look like this:
+
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ellipse_points}
+  \captionof{figure}{Ellipse points}
+  \label{fig:test1}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ellipse_cluster_assignments}
+  \captionof{figure}{Ellipse points with Centroids and Cluster assignments}
+  \label{fig:test2}
+\end{minipage}
+\end{figure}
+
+Additionally, we had good agreement on the total error across replicates, though we notice some variance in the convergence as compared to the last problem:
+
+\begin{center}
+\includegraphics[,scale=0.5]{ellipse_iterations}
+\captionof{figure}{}
+\end{center}
+
+Now, this time we specify a value for MaxIter, and record the best total sum of distances as a function of the max iterations, over a single replicate. We do this for 1-20, because many of the 100 replicants required more than 12 iterations to converge and graph total error against MaxIter:
+
+\begin{center}
+\includegraphics[,scale=0.5]{maxiter_against_total_error_ellipse}
+\captionof{figure}{}
+\end{center}
+
+Visually at least, it seems like it converges reasonably after the first few iterations to an error of around 123160, though we notice a bit more variance at low iteration counts than in the Gaussian case.
+
+The clusters, as seen in figure 2, do not really agree with our intuition, since we see visually that the scatterplot resembles two ellipses, but if we minimize the error, the best partition is actually by partitioning the data points along the elongated major axis. In a sense, due to how elongated our ellipses are, these choices of centroids, and not the centers of the ellipses, capture more of the variance.
 
 
 \end{proof}
