@@ -272,6 +272,194 @@ More precisely, $\Lambda$ has only non-0 entries when, if $\lambda_{ij}$ represe
 
 We call the columns of $U$ the left singular vectors of $A$, and the rows of $V^T$ the right singular vectors of $A$, and $\lambda_i$ the singular values.
 
+\section*{Feb 2nd}
 
+Talking more about SVD, we notice that it is unique up to scaling by norm 1 scalars, and permutation of pairs of vectors.
+
+So one way we can think of this is that we can decompose an arbitrary matrix into a sum of rank 1 matrices:
+
+$$ A = \sum_{i=1}^{\sum\{ n,d \}} \lambda_i u_i v_i^T$$
+
+with a scale factor $\lambda_i$ that corresponds to its singular value.
+
+We recall that if $A$ is square and symmetric, then this is very nice, since the scale factors are exactly eigenvalues, and the vectors $u_i, u_i = v_i$ are exactly eigenvectors.
+
+Recall that for any matrix, the row rank is the dimension of the rows, and the column rank is the dimension of the columns, and the overall rank is the minimum of the two.
+
+Theorem:
+
+The rank of $A \in \mathbb{R}^{n \times d}$ is equal to the number of non-zero singular values.
+
+Remark, a rank 1 matrix takes at least $n+d$ pieces of data, and more generally speaking, a rank $k$ matrix has $k(n+d)$. This is nice, because the naive approach, you may need to allocate $nd$ pieces of data.
+
+PCA is connected to SVD as follows:
+
+Recall we define $\Sigma = \sum x_i x_i^T$. Define $X \in \mathbb{R}^{n \times d}$ via the rows of $X$ being $x_i$ as row vectors.
+
+We notice that $X^T X = \Sigma$, so PCA wants a SVD of $X^T X$.
+
+So, let $X = U \Lambda V^T$, its SVD. Then, expanding $X^T X$:
+
+$$ X^T X = (U \Lambda V^T)^T (U \Lambda V^T) = V \Lambda^T U^T U \Lambda V^T  = V \Lambda ^T \Lambda V^T$$
+
+Here, we notice that $\tilde{\Lambda} = \Lambda^T \Lambda$ is diagonal.
+
+So, we have that $X^T X = V \tilde{\Lambda} V^T$, which is actually its eigendecomposition.
+
+In summary, the eigendecomposition of $\Sigma$ can be written in terms of the SVD of $X$. So we have a correspondence between the eigenvectors of $\Sigma$ and the right singular vectors of $X$ and between the square of the singular values to the eigenvalues.
+
+The upshot here is that sometimes, taking the SVD of the rows/columns of your data points is a similarly efficient way to get the eigendecomposition instead of hitting the covariance matrix directly, but specifically, it’s numerically more stable.
+
+\section*{Feb 7th}
+
+Unsupervised Learning: Analysis of data without human-annoatated training labels.
+
+Clustering is one example of this. We wish to assign labels to data, without training.
+
+More concretely, suppose we have $\{ x_i \}_{i=1}^\infty \subset \mathbb{R}^d$. Clustering will then assign labels $\{ y_j \}$ for $1 \leq j \leq K$, and under some algorithm to determine the clusters, we assign $x_i$ to each $y_j$.
+
+The most foundational clustering method is $K$-means, where we try to find centers from the data, and minimize the distance, somehow, over these partitions.
+
+So now consider a functional on the space of partitions. 
+
+$$F(C_1,...,C_k) = \sum_{j=1}^k D(C_j)$$
+
+where $D(C_j)$ is a shorthand for the sum of distances of points $x_j$ in $C_i$ to a privileged point.
+
+Proposition:
+
+Let $ \{ x_i \}_{i=1}^n \subset \mathbb{R}^D$. Define $G(x) = \frac{1}{n} \sum_{i=1}^n \Vert x_i - x \Vert^2$.
+
+We notice that the mean minimizes $G$. 
+
+So here, for $K$-means, we choose the privileged point as the mean of a set of numbers.
+
+So if we try to have $\mu_j = \frac{1}{|C_j|} \sum_{x_j \in C_j} x_j$, one function $F$ can be:
+
+$$F(C_1,...,C_K) = \sum_{j=1}^K \sum_{x \in C_j} \Vert x - \mu_j \Vert^2$$
+
+and thus, this becomes a minimization problem over the choice of partitions $C_i$. 
+
+But this is not easy to optimize, and it’s not clear if this converges.
+
+Scheme:
+
+Input initial centroids $\{ \mu_j \}$, with a tolerance $\epsilon = 1$.
+
+Run an iteration. If the tolerance is more than $\epsilon$, use centroids, assign points to the nearest centroid, and the then compute new centroids from these partitions. 
+
+If our functional has a delta from the last iteration of less than our tolerance, then we stop.
+
+Otherwise, we continue, up to a maximum iteration count.
+
+In general, we call this scheme a maximization expectation scheme. This specific one is Lloyd’s Algorithm. This guy has an overall complexity in one iteration of order $nD + nKD$
+
+Remark: to achieve convergence, you can potentially need $2^{\sqrt{n}}$ iterations.
+
+\section*{Feb 9th}
+
+Recalling $k$-means, we notice that this is a hard assignment rule. That is, for each data point $x_i$, it gets exactly one label/cluster $y_i$. And maybe this is good, maybe this isn’t ideal, and we want to include fuzziness.
+
+Hierarchical Clustering instead gives a family of possible clusterings that relate to each other in a natural way.
+
+Let $C = \{ C_i\}_{i=1}^k$ be a clustering of data points $X = \{ x_i \}$ into $k$ clusters. That is, the $C_i$ form a partition of $X$.
+
+Let $\mathcal{B} = \{ B_j \}_{j=1}^l$ be another partition of $X$. We call $\mathcal{B}$ nested inside of $\mathcal{C}$ if for each $B_j$, there exists a $C_i$ such that $B_j \subseteq C_i$.  
+
+In particular, the family of clusterings that hierarchical clustering produces are exactly nested families. So the question here is, do you start with singletons or the whole set?
+
+Definition:
+
+We call a strategy that starts with singletons an agglomerative strategy. We call a strategy that starts with the full set divisive.
+
+A remark: nesting structure is nice because we can visualize these via dendrograms, where a dendrogram is a tree that shows the splitting.
+
+Ok, so what kind of merge rules make sense? The approach we will take is as follows:
+
+(1) Define a distance between sets.
+
+(2) Iteratively merge between the smallest distance sets.
+
+So, the question is, how do we define this distance $\Delta$? Two choices are as follows:
+
+$$\Delta_{SL}(C_i,C_j) = \min_{x \in C_i, y \in C_j} \Vert x -y \Vert$$ 
+
+which we call single linkage and
+
+$$\Delta_{CL}(C_i,C_j) = \max_{x \in C_i, y \in C_j} \Vert x -y \Vert$$
+
+which we call complete linkage and
+
+$$ \Delta_{GA}(C_i, C_j) = \frac{ \sum_{x \in C_i, y \in C_j} \Vert x - y \Vert }{ |C_i ||C_j| }$$
+
+which we call group average.
+
+Note, a naive single linkage algorithm is $O(n^3)$, since each comparison needs around $n$ choose $2$ comparisons, so on order $n^2$, and we have $n$ iterations.
+
+Theorem [Sibson 1975]:
+
+You can do single linkage in $O(n^2)$. 
+
+\section*{Feb 14th}
+
+In summary, we’ve tried clustering based off of geometric shapes (K-means) as well as distances between clusters (hierarchical clustering).
+
+Yet another approach is to consider a notion of density.
+
+This tends to work well when we have many outliers or a lot of noise, since we can extract out what points are noise and what are data.
+
+Conceptually, the idea would be to cluster things that are close to their 10 nearest neighbors, or some heuristic like that.
+
+So, a foundational method is density-based spatial clustering of applications with noise, acronym-ed “DBSCAN”.
+
+So, we want to first identify and quarantine out the ouliers, based on how many close neighbors it has. Then, we group inliers together in an iterative manner.
+
+Concretely:
+
+Let $\{ x_i \}_{i=1}^n \subset \mathbb{R}^D$. 
+
+For a point $x \in \mathbb{R}^D$, we take the closed ball $B_r(x) = \{ y \in \mathbb{R}^d | d(x,y) \leq r \}$, for some metric. Unless we specify otherwise, we will assume this is the Euclidean distance.
+
+Let $\epsilon > 0$, and define a min points between $1, n$. We take $\epsilon$ to be the threshold on how close a point needs to be to be a neighbor. We take min points to be the minimum number of neighbors within $\epsilon$ to be considered an inlier.
+
+We call $x$ a core point if $| B_\epsilon(x) \cap \{ x_1,....,x_n \} | \geq$ min points. 
+
+Call $x$ a border point if $x$ is not a core point, and there exists a core point $z$ such that $x \in B_\epsilon(z)$.
+
+Call $x$ a noise point/outlier if it is neither a core nor a border point.
+
+We then say that if $x$ is directly density reachable from $y$ if $y$ is a core point, and $x \in B_\epsilon(y)$.
+
+Further, we call $x$ density reachable from $y$ if there exists a sequence $\{ x = x_0, x_1, ..., x_j = y \}$ such that $x_{i+1}$ is directly density reachable from $x_{i+1}$.
+
+We say $x,y$ are density connected if there exists a core point $z$ such that both $x,y$ are density reachable from $z$. 
+
+Finally, the clusters learned by DBSCAN are maximal sets of density connected paths.
+
+An example of when DBSCAN fails, but K-means works is a dumbbell. Everything is connected, but there are clearly two centroids. An example of the reverse is two concentric circles.
+
+So good things: DBSCAN doesn’t really care about the shapes or geometries of the situation.
+
+Bad things, we have two parameters to tune, and it can be computationally expensive.
+
+Remark: the notion of density is implicit in DBSCAN in terms of core, border, and noise points. We can more explicitly compute this via kernel-density estimates.
+
+That is, let $\mathcal{K}: \mathbb{R}^d \to \mathbb{R}$ such that:
+
+(a) $\mathcal{K}(x) \geq 0$
+
+(b) $\int_{\mathbb{R}^d} K(x) dx = 1$
+
+(c) $\mathcal{K}(x) = \mathcal{K}(-x)$.
+
+We call such a function a kernel.
+
+The kernel density estimator of our data is:
+
+$$\rho(x) = \frac{1}{nh^d} \sum_{i=1}^n \mathcal{K}\left(  \frac{ x - x_i}{h}\right)$$
+
+for some scale parameter $h$.
+
+It turns out, with sufficient restrictions on $n, h$, that $\rho$ converges to a nice function.
 
 \end{document}
