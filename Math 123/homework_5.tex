@@ -3,6 +3,7 @@
 \usepackage[margin=1in]{geometry} 
 \usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
 \usepackage[font=small,labelfont=bf]{caption}
+\usepackage{float}
 
 \newcommand{\supp}{{\text{supp}}} 
 \newcommand{\bv}{{\text{BV}}}
@@ -115,6 +116,47 @@ Compute the graph Laplacian with $W_{ij} = \exp(-\Vert x_i - x_j \Vert_2^2/ \sig
 \end{problem}
 
 \begin{proof}[Solution]
+
+Here follows some charts with two clusters from Ncut, with clusters coloured differently:
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{pepper_sigma_001}
+  \captionof{figure}{$\sigma = 0.01$}
+  \label{fig:test1}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{pepper_sigma_01}
+  \captionof{figure}{$\sigma = 0.1$}
+  \label{fig:test2}
+\end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{pepper_sigma_1}
+  \captionof{figure}{$\sigma = 1$}
+  \label{fig:test1}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{pepper_sigma_10}
+  \captionof{figure}{$\sigma = 10$}
+  \label{fig:test2}
+\end{minipage}
+\end{figure}
+
+Generally speaking, these preserve the pepper strucure pretty well, in the sense that we do distinctly see a shadow of a figure in the main image for all but the first figure.
+
+We notice that there is a sweet spot for $\sigma$ values that tries to make distinctions between the background and the pepper, but also have a sharp boundary. In the first figure, of course, $\sigma$ is too small to distinguish between background and foreground objects. On the other hand, as we increase $\sigma$ to 100, we notice that finer structures, especially those near the bottom left, become washed out a bit - we can see a gap that closes from figure 2, 3, and 4 that might be a gap between the pepper and its base, which may represent the background colors. In a nutshell, as $\sigma$ is very large or very small, we start to lose granularity in our clustering.
+
+Lastly, we notice that clustering wise, as we increase $\sigma$, there is a switch from the pepper as being the blue color (i.e., below our threshold) to the yellow color (above the threshold). This isn't a very interesting thing actually, since it merely indicates which cluster has more points. 
+
 
 
 \end{proof}
