@@ -48,6 +48,8 @@
 \newcommand{\calT}{\mathcal{T}}
 \newcommand{\calH}{\mathcal{H}}
 \newcommand{\ind}{\text{Ind}}
+\newcommand{\res}{\text{Res}}
+\newcommand{\vol}{\text{Vol}}
 
 \newcommand{\trace}{\operatorname{trace}}
 \newcommand{\diag}{\operatorname{diag}}
@@ -705,7 +707,7 @@ Suppose $0 < r < R$. Then, since $f$ is analytic on this disk, we can see that:
 
 $$f(a + re^{i\theta}) = \sum_{n=0}^\infty c_n (a + re^{i\theta} - a)^n = \sum_{n=0}^\infty c_n r^n e^{in\theta}$$
 
-which converges uniformly on $[-\pi, \pi]$. But, we have that $\left\{ \frac{1}{\sqrt{2\pi}} e^{i \pi \theta } \right\}_{k=-\infty}^\infty$ is a orthonormal basis for $L^2[-\pi,\pi]$. So, we have that for all $n \geq 0$, that $c_n r^n = \frac{1}{2\pi} \int_{-\pi}^\pi f(a + re^{i\theta} e^{-in \theta} d\theta$ and via Parseval’s theorem, we get that:
+which converges uniformly on $[-\pi, \pi]$. But, we have that $\left\{ \frac{1}{\sqrt{2\pi}} e^{i \pi \theta } \right\}_{k=-\infty}^\infty$ is a orthonormal basis for $L^2[-\pi,\pi]$. So, we have that for all $n \geq 0$, that $c_n r^n = \frac{1}{2\pi} \int_{-\pi}^\pi f(a + re^{i\theta}) e^{-in \theta} d\theta$ and via Parseval’s theorem, we get that:
 
 $$ \sum_{n=0}^\infty | c_n|^2 r^{2n} = \frac{1}{2\pi} \int_{-\pi}^\pi |f(a + r e^{i\theta})|^2 d\theta$$
 
@@ -1248,5 +1250,750 @@ $$ \int_{\Gamma_1} f(z) dz  = \int_{\Gamma_2} f(z) dz$$
 Preview: we will look at homotopy and index calculations next.
 
 \section*{Feb 22nd}
+
+Theorem:
+
+Let $\gamma_0, \gamma_1$ be two closed paths in $\mathbb{C}$ both with the parameter interval $[0,1]$. Let $\alpha \in \mathbb{C}$ such that
+
+$$| \gamma_0(t) - \gamma_1(t) | < | \alpha - \gamma_1(t) | $$
+
+for all $t \in [0,1]$.
+
+Then, 
+
+$$ \ind_{\gamma_0}(\alpha) = \ind_{\gamma_1}(\alpha) $$
+
+Remark, we notice essentially that this means, as we travel along the paths at the same “rate”, that the paths are closer to each other than they are to $\alpha$, so the winding is the same.
+
+Proof:
+
+Clearly, from the above inequality, $\alpha \not \in \gamma_1^*$. But also, we must have that $\alpha \not \in \gamma_0^1$, since then we would have equality.
+
+Thus, we notice that the index of $\alpha$ with respect to $\gamma_0, \gamma_1$ is well-defined.
+
+Define the path $\eta: [0,1] \to \mathbb{C}$ via
+
+$$\eta(t) = \frac{\gamma_0(t) - \alpha}{\gamma_1(t) - \alpha} $$
+
+Note that for any $t$, that $| \eta(t)  - 1 | < 1 $. This should be clear:
+
+$$ \eta(t) - 1 = \frac{\gamma_0(t) - \alpha}{\gamma_1(t) - \alpha} - \frac{\gamma_1(t) - \alpha}{\gamma_1(t) - \alpha} = \frac{\gamma_0(t) - \gamma_1(t)}{\gamma_1(t) - \alpha} $$
+
+which has modulus less than 1 by hypothesis.
+
+Thus, we have that $\eta^* \subset D(1,1)$. Therefore, we must have that $0$ belongs to the unbounded component of $\eta$, since $0 \in \mathbb{C} \setminus D(1,1)$. Thus, $\ind_\eta(0) = 0$.
+
+Thus, we have that:
+
+$$ \frac{1}{2\pi i} \int_{\eta} \frac{dz}{z} = 0 \implies  \int_{\eta} \frac{dz}{z} = 0 \implies \int_{0}^1 \frac{\eta’(t) dt}{\eta(t)} = 0$$
+
+Now, computing $\eta’(t)$ and substituting:
+
+$$  \int_{0}^1 \frac{\eta’(t) dt}{\eta(t)} = 0 \implies  \int_{0}^1 \frac{\gamma_0’(t)}{\gamma_0(t) - \alpha } - \frac{\gamma_1’(t)}{\gamma_1(t) - \alpha } dt = 0 \implies \int_0^1 \frac{\gamma_0’(t)}{\gamma_0(t) - \alpha }  =\int_0^1 \frac{\gamma_1’(t)}{\gamma_1t) - \alpha }  $$ 
+
+Then, by the definition of the index, this implies that $\ind_{\gamma_0}(\alpha) = \ind_{\gamma_1}(\alpha)$.
+
+Now, let’s talk about homotopy.
+
+Let $\gamma_0, \gamma_1$ be two closed curves on a topological space $X$, with the same parameter interval, which we will standardize as $[0,1]$.
+
+We call $\gamma_0, \gamma_1$ $X$-homotopic if there exists a continuous function $H: [0,1] \times [0,1] \to X$ such that $H(s,0) = \gamma_0(s), H(s,1) = \gamma_1(s), H(0,t) = H(1,t)$. 
+
+Intuitively, we think of this as saying that we may continuously deform $\gamma_0 \to \gamma_1$.
+
+If $\gamma_0$ is homotopic to the constant curve $\gamma_1(t) = \alpha$, then we say that $\gamma_0$ is null-homotopic.
+
+If $X$ is connected, and every curve in $X$ is null-homotopic, then we call $X$ simply connected.
+
+Example, every convex region in the complex plane is simply connected.
+
+This should be clear, let $\alpha$ be any point, let $\gamma$ be any curve, define $H(s,t) = (1 - t) \gamma(s) + t \alpha$.
+
+Objective:
+
+If $\Gamma_0, \Gamma_1$ are $\Omega$-homotopic closed paths on a region $\Omega \in \mathbb{C}$, then:
+
+$$\ind_{\Gamma_0} \alpha = \ind_{\Gamma_1} \alpha$$ for every $\alpha \not \in \Omega$.
+
+This would mean then, if $f \in \calH(\Omega)$, that $\int_{\Gamma_0} f(z) dz = \int_{\Gamma_1} f(z)dz $.
+
+Theorem:
+
+If $\Gamma_0, \Gamma_1$ are $\Omega$-homotopic closed paths in a region $\Omega \subset \mathbb{C}$. If $\alpha \not \in \Omega$, then we have that $\ind_{\Gamma_0} \alpha = \ind_{\Gamma_1} \alpha$.
+
+Proof sketch:
+
+We know that there exists a continuous map $H: [0,1] \times [0,1] \to \Omega$ such that $H(s,0) = \gamma_0(s), H(s,1) = \gamma_1(s), H(0,t) = H(1,t)$.
+
+Since $H$ has a compact domain, $H$ is actually uniformly continuous. But also, the continuous function $H(s,t) - \alpha$ is also uniformly continuous. Further, since $H$’s domain is compact, and $H$ is continuous, $H$’s image is compact as well. Then, there exists $\epsilon > 0$ such that $|H(s,t) - \alpha| > 2\epsilon$ for all $s,t$.
+
+From the uniform continuity, there exists $\delta > 0$ such that:
+
+$$ |H(s,t) - H(s’,t’)| < \epsilon $$ when $\Vert (s,t) - (s’,t’) \Vert < \delta$.
+
+Introduce a grid on $[0,1] \times [0,1]$ such that the diagonal of each square in the grid is less than $\delta$.
+
+Now, take any two points in the same subsquare in the grid. Then, we notice that 
+
+$$|H(s,t) - H(s’,t’)| < \epsilon < 2\epsilon < |H(s,t) - \alpha|  $$
+
+and by the last lemma, we try to patch this together. However, there’s a technical issue here: for each $t_0$, $H(s,t_0)$ need not be a path (i.e. differentiable at all but finitely many points.).
+
+The solution here is to instead make them piecewise linear, that is, take equally spaced $1/n$ points on the unit square at a fixed $t$, and interpolate. Then, we patch like this anyway.
+
+Corollary:
+
+If $\Gamma_0$ is a closed path in $\Omega$, null-homotopic, then:
+
+$$\int_{\Gamma_0} f(z) dz = 0$$ for all $f \in \calH(\Omega)$.
+
+The Calculus of Residues:
+
+First, we want to define a meromorphic function.
+
+Let $\Omega$ be a region. We call a function $f$ meromorphic in $\Omega$ if there exists a (potentially empty) set $A \subset \Omega$ such that the following conditions hold:
+
+(1) $A$ has no limit points in $\Omega$
+
+(2) $f$ is holomorphic on $\Omega \setminus A$
+
+(3) $f$ has a pole at each point in $A$.
+
+Examples:
+
+Rational functions of polynomials are meromorphic.
+
+For a holomorphic, non-constant function $\varphi(z)$, $\frac{1}{\varphi(z)}$ is meromorphic, since the zeros of $\varphi(z)$ have no limit points, and the fraction may only have poles at these zeros. In particular, the order of the pole of $\frac{1}{\varphi(z)}$ is the same as the order of the zero of $\varphi(z)$ at each point $a$.
+
+Recall: we say that $f$ has a pole at a point $a$ if there exists an $m \in \mathbb{N}$ and constants $c_1,...,c_m \in \mathbb{C}$ such that:
+
+$$ f(z) - \sum_{n=1}^m c_n (z - a)^n $$ 
+
+has a removable singularity at $a$. In particular, we call the residue of $f$ at $a$:
+
+$$ \text{Res}(f,a) = c_1$$
+
+Why do we care? Well, note that if $\Gamma$ is any cycle in $\Omega$, $a \not \in \Gamma^*$, then:
+
+$$\int_\Gamma \sum_{n=1}^m c_n (z - a)^n  = \int_\Gamma c_1 (z-a)^{-1} = 2 \pi i c_1 \ind_\Gamma(a)  = 2\pi i \text{Res}(f,a) \ind_\Gamma(a)$$
+
+\section*{Feb 23rd}
+
+Definition:
+
+Let $f$ be a complex valued function. We call $a \in \mathbb{C}$ a pole of $f$ if $f$ has a singularity at $a$ and there exists a positive integer $m$, with constants $c_1,...,c_m, c_m \not = 0$ such that:
+
+$$ f - \sum_{k=1}^m c_k (z-a)^{-k} $$
+
+has a removable singularity.
+
+Define $Q(z) = \sum_{k=1}^m c_k (z-a)^{-k}$. We denote this as the principal part of $f$ at $a$, and we call $c_1$ the residue of $f$ at $a$, denoted $\res(f,a)$
+
+Why do we call this the principal part? Well, if $f - Q$ has a removable singularity, it is holomorphic, and thus we can write a power series:
+
+$$f = Q + \sum_{k=0}^\infty d_k (z-a)^k$$, which is valid on a punctured disk $D’(a,r)$.
+
+Now, if $\Gamma$ is a cycle on the domain of $f$, then we have that:
+
+$$ \int_\Gamma Q = \int_\Gamma  \sum_{k=1}^m c_k (z-a)^{-k} dz = \int_\Gamma c_1 (z -a)^{-1} dz  = 2 \pi i \ind_\Gamma(a) \res(f,a)$$
+
+And we can move the $2 \pi i$ to the other side if we want to.
+
+Now, we can extend this to the concept of meromorphic functions and the residue theorem:
+
+Theorem [Residue Theorem]:
+
+Suppose that $f$ is meromorphic on $\Omega$, with poles at $A \subset \Omega$. Let $\Gamma$ be a cycle in $\Omega \setminus A$ such that $\ind_\Gamma(\alpha) = 0$ for all $\alpha \in \Omega^c$. 
+
+Then, we have that:
+
+$$\frac{1}{2\pi i} \int_\Gamma f(z) dz = \sum_{a \in A} \res(f,a) \cdot \ind_\Gamma(a)$$
+
+Remark: it turns out, from the proof of the theorem, that although $A$ may be countably infinite, the sum over $a \in A$ must be a finite sum.
+
+Proof:
+
+Let $B  =   \{ a \in A : \ind_\Gamma(a) \not = 0 \}$. We claim that $B$ has only finitely many points. Note that $B$ is bounded, as points in the unbounded component of $\mathbb{C} \setminus \Gamma^*$ have index 0. 
+
+Now, suppose $B$ is infinite. Then, because $B$ is bounded, infinite, we can produce a sequence of points $\{ b_n \}$, and due to compactness, this must have a convergent subsequence, hence, a limit point. Call this limit point $z_0$. However, by hypothesis, $A$ has no limit points, thus $z_0 \not \in \Omega$. But then, $\ind_\Gamma(z_0) = 0$. However, the set $\{ z \in \mathbb{C} \setminus \Gamma^* : \ind_\Gamma(z) = 0 \}$ is open. Then, there should be an $r > 0 $ such that for all $z \in D(z_0,r)$, $\ind_\Gamma(z) = 0$. However, we’ve found a convergent subsequence $b_{n_k} \to z_0$, and $\ind_\Gamma(b_{n_k}) \not = 0$. Contradiction.
+
+Thus, $B$ must be finite.
+
+Now, define a new set $\Omega’ = \Omega \setminus (A \setminus B)$. Then $\Omega’ $ is open, and $\int_\Gamma(\alpha) = 0$  still for $\alpha \in \mathbb{C} \setminus \Omega’$. 
+
+Let $\alpha_1,...,\alpha_n$ be the elements of $B$. For each $j = 1,...,n$, let $Q_j(z)$ be the principal part of $f$ at the point $\alpha_j$. Then, $g(z) = f(z) - \sum_{k=1}^n Q_k(z)$ is holomorphic on $\Omega’$, since it must have removable singularities at each $\alpha_j$. 
+
+Now, by Cauchy’s theorem, for $g \in \calH(\Omega’)$, we have that:
+
+$$ \int_\Gamma f(z) dz = \int_\Gamma g(z) + \sum_{k=1}^n Q_k(z) dz = \int_\Gamma g(z) + \sum_{k=1}^n \int_\Gamma Q_k(z) dz =$$
+$$ \sum_{k=1}^n \int_\Gamma Q_k(z) dz =2 \pi i  \sum_{j=1}^n \res(f,\alpha_j) \cdot \ind_\Gamma(\alpha_j)$$
+
+But, this is exactly 
+
+$$2 \pi i  \sum_{j=1}^n \res(f,\alpha_j) \cdot \ind_\Gamma(\alpha_j) = 2 \pi i  \sum_{a \in B} \res(f,a) \cdot \ind_\Gamma(a) =   2 \pi i  \sum_{a \in A} \res(f,a) \cdot \ind_\Gamma(a)$$
+
+since the index is 0 for $a \in A \setminus B$.
+
+Counting the Zeros of a Holomorphic Function
+
+Theorem:
+
+Suppose $\gamma$ is a closed path in a region $\Omega$ such that $\ind_\gamma(\alpha) = 0$ for all $\alpha \in \mathbb{C} \setminus \Omega$. Suppose further that $\ind_\gamma(\alpha) = 0, 1$ for every $\alpha \in \Omega \setminus \gamma^*$.
+
+Define $\Omega_1 = \{ \alpha : \ind_\gamma(\alpha) = 1 \}$. For every $f \in \calH(\Omega)$, denote the zeros of $f$ in $\Omega_1$ as $N_f$, counting multiplicities. Suppose that $f$ has no zeros in $\gamma^*$.
+
+Then, we have that $N_f = \frac{1}{2\pi i} \int_\Gamma \frac{f’(z)}{f(z)} dz = \ind_\Gamma(0)$, where $\Gamma(t) = f(\gamma(t))$
+
+(Rouche’s Theorem) Further, if $g \in \calH(\Omega)$, and $| f(z) - g(z) | < |f(z)|$ for all $z \in \gamma^*$, then $N_f = N_g$.
+
+Proof:
+
+Let $A = \{ a \in \Omega : f(a) = 0 \}$. Then, of course, $A \cap \gamma^*$ is empty, since $f$ has no zeros on $\gamma^*$. Further, on $f’/f$, the singularities are precisely the points of $A$. Let $a \in A$, and let $m_a$ be the order of the zero of $f$ at $a$. Then, by definition, we have that $f(z) = (z-a)^{m_a} g(z)$, for some $g \in \calH(\Omega)$. Then:
+
+$$\frac{f’(z)}{f(z)} = \frac{f’(z)}{(z-a)^{m_a} g(z)} $$
+
+and thus $f’/f$ has a pole of order at most $m_a$ at $a$. In fact, by the product rule, we have that:
+
+$$ \frac{f’(z)}{(z-a)^{m_a} g(z)} = \frac{m(z-a)^{m_a-1}g(z) + (z-a)^{m_a} g’(z)}{(z-a)^{m_a} g(z)}   = \frac{m_a}{z-a} + \frac{g’(z)}{g(z)} $$
+
+where we notice, that because $g(z)$ cannot vanish on a neighborhood of $a$, $g’/g$ must be holomorphic on such a neighborhood. Thus, $f’/f$ has a simple pole at $a$, with $m_a$ as the residue. 
+
+Thus, by the residue theorem, we have that:
+
+$$\frac{1}{2\pi i} \int_\gamma  \frac{f’(z)}{f(z)} dz = \sum_{a \in A} \res(\frac{f’}{f}, a), a) \cdot \ind_\gamma(a) = \sum_{a \in (A\cap \Omega_1} \res(\frac{f’}{f}, a), a) \cdot \ind_\gamma(a)=$$
+$$\sum_{a \in (A\cap \Omega_1} \res(\frac{f’}{f}, a), a) = \sum_{a \in (A\cap \Omega_1} m_a = N_f$$
+
+Now, on the other hand, we have that:
+
+$$\frac{1}{2\pi i}\int_\gamma  \frac{f’(z)}{f(z)} dz = \frac{1}{2\pi i}\int_a^b  \frac{f’(\gamma(t))}{f(\gamma(t))} dt = \frac{1}{2\pi i}\int_a^b  \frac{\Gamma’(t))}{\Gamma(t) - 0} dt = \ind_\Gamma(0) $$
+
+Now, for Rouche’s Theorem:
+
+Suppose that we have $g$ holomorphic, and $| f(z) - g(z) | < |f(z)|$ for all $z \in \gamma^*$. Define $\Gamma_0(t) = g(\gamma(t))$, for $a \leq t \leq b$. Then, by our inequality, we must have that:
+
+$$ | \Gamma(t) - \Gamma_0(t) | < | \Gamma(t) |  = |\Gamma(t) - 0|$$
+
+for all $t$ in our parameter interval. But, by our theorem, we have then that $\ind_{\Gamma}(0) = \ind_{\Gamma_0}(0)$, and thus, $N_f = N_g$.
+
+\section*{Feb 27th}
+
+Harmonic Functions:
+
+Firstly, let’s talk about the Cauchy-Riemann equations.
+
+Let $f: \Omega \to \mathbb{C}$ be a complex valued function, and let $f(z) = f(x + iy) = u(x,y) + iv(x,y)$, that is, we imagine this as a transformation from $\mathbb{R}^2 \supset \Omega \to \mathbb{R}^2$.
+
+Thus, we make the identification $z = x + iy = (x,y) = \begin{pmatrix} x \\ y \end{pmatrix}$
+
+Fix a $z_0 = (x_0, y_0)$, and assume $f$ is differentiable as a transformation at $z_0$. That is, we have that:
+
+$$ u_x, u_y, v_x, v_y $$ exist at $z_0$, and that the following holds:
+
+$$ \lim_{(\Delta x, \Delta y) \to (0,0)} \frac{1}{\sqrt{x^2 + y^2}} \begin{pmatrix} u(x_0 + \Delta x, y_0 + \Delta y) \\ v(x_0 + \Delta x, y_0 + \Delta y) \end{pmatrix} - \begin{pmatrix} u(x_0, y_0) \\ v(x_0, y_0) \end{pmatrix}  - $$
+$$\begin{pmatrix} u_x(x_0,y_0) & u_y(x_0, y_0) \\ v_x(x_0, y_0) & v_y(x_0, y_0) \end{pmatrix} \begin{pmatrix} \Delta x \\ \Delta y \end{pmatrix} = \begin{pmatrix} 0 \\0 \end{pmatrix} $$
+
+But, this is equivalent to:
+
+$$ \lim_{\Delta z \to 0 }\frac{1}{\Delta z} \{(u(x_0 + \Delta x, y_0 + \Delta y) + i v(x_0 + \Delta x, y_0 + \Delta y) ) - (u(x_0, y_0) + i v(x_0, y_0)) - $$
+$$[(u_x(x_0, y_0) \Delta x + u_y(x_0, y_0) \Delta y) + i (v_x(x_0, y_0) \Delta x + v_y(x_0,y_0) \Delta y)] \}= 0$$
+
+Introducing 
+$$\partial = \frac{1}{2} \left(\frac{\partial}{\partial x} - i \frac{\partial}{\partial y}\right)$$
+$$\overline{\partial} = \frac{1}{2} \left(\frac{\partial}{\partial x} + i \frac{\partial}{\partial y}\right)$$, we have then that:
+
+$$\lim_{\Delta z \to 0 }\frac{1}{\Delta z} [ f(z_0 + \Delta z) - f(z_0) - \partial f(z_0) \Delta z - \overline{\partial} f(z_0) \overline{\Delta z}] $$
+
+which is equivalent then to:
+
+$$ \lim_{\Delta z \to 0 } \left[ \frac{ f(z_0 + \Delta z)}{\Delta z} - \partial f(z_0) - \overline{\partial} f(z_0) \frac{\overline{\Delta z}}{\Delta z} \right] = 0 $$
+
+We claim that $f$ is differentiable then if and only if $\overline{\partial} f(z_0) = 0$. 
+
+Well, we notice that if $\Delta z = \Delta x$, then $ \frac{\overline{\Delta z}}{\Delta z} = 1$ and if $\Delta z = i \Delta y$, then $ \frac{\overline{\Delta z}}{\Delta z} = -1$.
+
+Proof:
+
+Suppose $f’(z_0)$ exists. Then, we have that the limit:
+
+$$ \lim_{\Delta z \to 0 } \overline{\partial} f(z_0) \frac{\overline{\Delta z}}{\Delta z} = 0$$
+
+exists, since we have that each piece of the limit above exists. But, since $\overline{\partial} f(z_0)$ is a constant, we must have that
+
+$$\overline{\partial} f(z_0) \lim_{\Delta z \to 0 }  \frac{\overline{\Delta z}}{\Delta z} = 0$$
+
+But by our remark, that limit does not exist unless $\overline{\partial} f(z_0) = 0$.
+
+Now, suppose $\overline{\partial} f(z_0) = 0$. Then, by the big limit, we have that:
+
+$$ \lim_{\Delta z \to 0 } \left[ \frac{ f(z_0 + \Delta z)}{\Delta z} - \partial f(z_0)  \right]  = 0 \implies f’(z_0) = \partial f(z_0) $$
+
+Thus, $f’(z_0)$ exists, and takes on the value $\partial f(z_0)$. 
+
+Theorem:
+
+Suppose that $f: \Omega \to \mathbb{C}$, $f(x,y) = u(x,y) + i v(x,y)$, and that $f$ is a differentiable transformation from $\Omega \to \mathbb{R}^2$. Then we have that $f \in \calH(\Omega) \iff \overline{\partial}f(z) = 0$. Moreover, if this holds, then we have that $f’(z) = \partial f(z)$ for all $z  \in \Omega$. 
+
+In particular, if $\overline{\partial}f(z) = 0$, then we have:
+
+$$\overline{\partial}f(z) = 0 \implies  \left(\frac{\partial}{\partial x} + i \frac{\partial}{\partial y}\right) (u + iv) = 0 \implies $$
+
+$$ (u_x - v_y) + i (u_y + v_x) = 0 \implies u_x = v_y, u_y = -v_x $$
+
+We call these the Cauchy-Riemann equation, that is, either a functional that is 0, or first-order differentiable functions that are equal.
+
+Further, if $f \in \calH(\Omega)$ looking at $f’(z) = \partial f(z)$:
+
+$$ \partial f(z) = \frac{1}{2} \left[ (u_x + v_y)  + i (v_x - u_y) \right] = u_x + i v_x =  v_y - i u_y $$
+
+Now, since $f$ is holomorphic, so is $f’$. Thus, we have that $u_x, u_y, v_x, v_y$ must be continuous on $\Omega$ as well. Repeating this argument on $f’$, we may say that $u,v$ have continuous partials of second order as well. By induction then, we have that $u,v \in C^{\infty} (\Omega)$. 
+
+Let’s now talk about the Laplacian (on $\mathbb{R}^2)$:
+
+This is the second order differential operator:
+
+$$\Delta = \frac{\partial^2}{\partial x^2} +  \frac{\partial^2}{\partial y^2}$$
+
+We notice that, in terms of $\partial, \overline{\partial}$ that we defined earlier, that we have:
+
+$$ \Delta = 4 \partial \overline{\partial} = 4 \overline{\partial} \partial $$
+
+Well, recall that if $f \in \calH(\Omega)$, then $\overline{\partial} f = 0$. Thus, we would have that $\Delta f = 0$ if $f$ were holomorphic. Then, we have that:
+
+$$ \Delta (u + i v) = \Delta u + i \Delta v \implies \Delta u = 0, \Delta v = 0$$
+
+This motivates the following definition:
+
+Definition:
+
+Suppose that $f \in C^2(\Omega)$. We call $f$ harmonic on $\Omega$ if $\Delta f = 0$ on $\Omega$.
+
+Then, we can say that $f$ is holomorphic if, for $f = u + iv$, that $u,v$ are both harmonic. 
+
+Objective:
+
+We want to show that if $u(x,y)$ is a real-valued harmonic on a region $\Omega \subset \mathbb{R}^2$, then $u$ is locally (say, a neighborhood of $\Omega$) the real part of a holomorphic function.
+
+Let’s first set some notation. Let $U$ now denote $D(0,1) = \{ z : |z| < 1 \}$, that is, the open unit disk. Let $T$ denote $\overline{D}(0,1) = \{ z : |z| = 1 \}$, that is, the unit circle. 
+
+The Poisson kernel:
+
+Let $ r \in \mathbb{R}, 0 \leq r < 1$. Define the function $P_r: \mathbb{R} \to \mathbb{R}$:
+
+$$P_r(t) = \sum_{n = -\infty}^\infty r^{|n|} e^{i n t} = 1 + \sum_{n=1}^\infty r^n e^{i n t} + \sum_{n=1}^{\infty} r^{n} e^{-int} = 1 + \sum_{n=1}^\infty r^n(e^{int} + e^{-int}) = 1 + 2\Re \left( \sum_{n=1}^\infty r^n e^{int} \right) =$$
+
+$$ 1 + 2\Re \left( \frac{r e^{it}}{1 - r e^{it}} \right) = \Re \left( 1 + 2 \frac{r e^{it}}{1 - r e^{it}} \right) = \Re \left(  \frac{1 + re^{it}}{1 - re^{it}} \right) = \frac{1 - r^2}{1 + r^2 - 2r\cos(t)}$$
+
+where we get the last expression by analyzing $$ \frac{1 + re^{it}}{1 - re^{it}} \frac{1 - re^{-it}}{1 - re^{-it}}$$ and its real part.
+
+Now, suppose $z = r e^{i \theta} \in U$, that is, $ 0 \leq r < 1$. Then, we have that:
+
+$$ P_r(\theta -t) = \Re \left( \frac{1 + re^{i(\theta - t)}}{1 - re^{i(\theta - t)}} \right) = \Re \left( \frac{e^{it} + re^{i\theta}}{e^{it}- re^{i\theta}} \right) =  \Re \left( \frac{e^{it} + z}{e^{it}- z} \right)$$
+
+Looking at that expression, we see that:
+
+$$ \frac{e^{it} + z}{e^{it}- z} \frac{e^{-it} - \overline{z}}{e^{-it}- \overline{z} } = \frac{1 - |z|^2 + (ze^{it} - \overline{z} e^{it})}{|e^{it} - z|^2}$$
+
+and we identify $ze^{it} - \overline{z} e^{it}$ as the difference of conjugates, and thus purely imaginary.
+
+Thus, 
+
+$$ P_r(\theta -t) = \frac{1 - |z|^2}{|e^{it} - z|^2}$$
+
+which is sometimes denoted as $P(z,e^{it})$.
+
+Ok, why do we care?
+
+Well, recall
+
+$$P_r(t) = \frac{1 - r^2}{1 + r^2 - 2r\cos(t)}$$
+
+(i) $1 - r^2 > 0$ since $0 \leq r < 1$. Further, $1 + r^2 - 2r\cos(t) \geq 1 + r^2 - 2r  = (1-r)^2 > 0$. Thus, we have that $P_r(t)$ is strictly positive. 
+
+(ii) We see that $P_r(t)$ is maximized when the denominator is minimized, i.e when $\cos(t) = 1 \iff t = 0$. Thus, we have that:
+
+$$ P_r(t) \leq P_r(0) = \frac{1-r^2}{(1-r)^2} = \frac{1+r}{1-r}$$
+
+(iii) On $[0,\pi]$, it should be clear that because $\cos$ is decreasing on that interval, $1 + r^2 - 2r\cos(t)$ is increasing, and so $P_r(t)$ is decreasing. We can see then that the minimum is at $t = \pi$, which has value $P_r(\pi) = \frac{1 - r}{1+r}$.
+
+(iv) Since $\cos(t)$ is even, $P_r(t)$ must be an even function. Also periodic of $2 \pi$, for the same reason.
+
+(v) If we fix a $0 < \delta \leq \pi$, then $P_r(\delta) = \frac{1 - r^2}{1 + r^2 - 2r \cos(\delta)}$. If we take the limit as $r \to 1$, then $P_r(t) \to 0$. 
+
+(vi) $\frac{1}{2\pi} \int_0^{2\pi} P_r(t) dt = 1$.
+
+Proof:
+
+$$\frac{1}{2\pi} \int_0^{2\pi} P_r(t) dt = \frac{1}{2\pi} \int_0^{2\pi} \left( \sum_{n=-\infty}^\infty r^{|n|} e^{int} \right) dt$$
+
+By the Weierstrauss M-test, we may interchange the sum and integral, and we notice that when $n \not = 0$, the integral is 0. Thus, this is exactly:
+
+$$ \frac{1}{2\pi} \int_0^{2\pi} 1 = 1$$
+
+\section*{March 1st}
+
+Recall from last time, our discussion on the Poisson kernel, for $0 \leq r < 1$:
+
+$$P_r(t) = \sum_{n=-\infty}^\infty r^{|n|} e^{int} = \frac{1 - r^2}{1 + r^2 - 2r \cos(t)} = \Re \left(\frac{e^{-it} + r}{e^{-it} - r}\right)$$
+
+Further, we had if $z = re^{i\theta}$, that:
+
+$$P_r(\theta - t) = \frac{1 - r^2}{1 + r^2 - 2r \cos(\theta - t)} = \Re \left(\frac{e^{it} + z}{e^{it} - z}\right) = \frac{1 - |z|^2}{|e^{it} - z|^2}$$
+
+We also denote sometimes, $P_r(\theta - t) = P(z,e^{it})$. Also recall the 7 properties above. 
+
+So now, we are able to talk about a Poisson transform. Let $f \in L^1(T)$, that is, $\int_{T} |f(z)| dz < \infty$.
+
+We define the function $P(f)$ on $U$ by:
+
+$$P(f) (re^{i\theta}) = \frac{1}{2\pi} \int_0^{2\pi} P_r(\theta - t) f(e^{it}) dt  = \frac{1}{2\pi} \int_0^{2\pi} P_r(z, e^{it} ) f(e^{it}) dt = $$
+
+$$ \frac{1}{2\pi} \int_0^{2\pi} \frac{1 - |z|^2}{|e^{it} - z|^2} f(e^{it}) dt $$ 
+
+where each of these are the same, due to properties we have on $P_r( \theta - t)$.
+
+But, does this integral exist, and where?
+
+Well, we have that $\frac{1 - |z|^2}{|e^{it} - z|^2} $ is continuous with respect to $t$, and since $U$ is contained within a compact set, we can say that it is bounded on $U$. Further, $f$ is $L^1$, thus, the integral is bounded above by the maximum of the first expression times the $L^1$ integral of $f$, and the expression is $L^1(T)$.
+
+Let’s now analyze the first equation a bit more:
+
+$$P(f) (re^{i\theta}) = \frac{1}{2\pi} \int_0^{2\pi} P_r(\theta - t) f(e^{it}) dt  = \frac{1}{2\pi} \int_0^{2\pi} \frac{1 - r^2}{1 + r^2 - 2r \cos(\theta - t)} f(e^{it}) dt$$
+
+If we have that $f$ is real valued, then we have that:
+
+$$ P(f) (re^{i\theta}) = \frac{1}{2\pi} \int_0^{2\pi} \Re \left(\frac{e^{it} + z}{e^{it} - z} f(e^{it})\right)dt = \frac{1}{2\pi} \Re \left(   \int_0^{2\pi} \frac{e^{it} + z}{e^{it} - z} f(e^{it}) dt \right)$$
+
+Doing a change of coordinates $\zeta = e^{it}$ we find:
+
+$$\frac{1}{2\pi} \Re \left( \frac{1}{i}  \int_0^{2\pi} \frac{\zeta + z}{\zeta - z} f(\zeta) \frac{d\zeta}{\zeta} \right)$$
+
+which, we notice by our theorem, the integrand is an analytic, and thus holomorphic function in $z$. Thus, $P(f)$ is a harmonic function in $U$.
+
+Now, $P$ is a linear map of functions from $L^1(T)$ to functions on $U$, due to the linearity of the integral. 
+
+Thus, if $f$ is now complex valued, we can then separate it into real and imaginary parts $f = f_1 + i f_2$, for real valued functions $f_1, f_2$. Using the linearity, we find:
+
+$$P(f) = P(f_1 + if_2) = P(f_1) + i P(f_2)$$
+
+Then, we have that $P(f_1), P(f_2)$ are harmonic functions. And, since the sum of harmonic functions are still harmonic, even with a complex factor, $P(f)$ is harmonic.
+
+Theorem:
+
+If $f \in L^1(t)$, then $P(f)$ is a harmonic function on $U$. 
+
+Proof: as above
+
+Theorem:
+
+Suppose $f \in L^1(T)$, and further, $f \in C(T)$. That is, suppose $f$ is actually continuous on the unit circle. Define the function $Hf$ on $\overline{U}$ via:
+
+$$ Hf(z) = \begin{cases} Pf(z) & \text{ if } z \in U \\ f(z) & \text{ if } z \in T \end{cases}$$
+
+Then, $Hf$ is actually continuous on $\overline{U}$. 
+
+Proof:
+
+Note that, for any $z \in U$, we have that
+
+$$Hf(z) = \int_0^{2\pi} Pf(z, e^{it}) f(e^{it}) dt \implies |Hf(z)| \leq \frac{1}{2\pi} \int_0^{2\pi} Pf(z,e^{it}) |f(e^{it})| dt \leq$$
+
+$$\frac{1}{2\pi} \int_0^{2\pi} Pf(z,e^{it}) \Vert |f| \Vert_\infty dt  = \Vert f \Vert_\infty$$
+
+where $\Vert f \Vert_\infty$ is the maximum of $f$ over $T$.
+
+Moreover, if $z \in T$, then $| Hf(z) | = |f(z)| \leq \Vert f \Vert_\infty$, by definition.
+
+Hence, over the closed unit disk, we have that:
+
+$$ \Vert Hf \Vert_\infty \leq \Vert f \Vert_\infty $$
+
+Fix a $k \in \mathbb{Z}$, and compute $H(e^{ikt})$. Well, suppose $z \in U$:
+
+$$ H(e^{ikt})(z) = P(e^{ikt})(z) = \frac{1}{2 \pi } \int_0^{2\pi} P_r(\theta - t) e^{ikt} dt =   $$
+
+$$ \frac{1}{2 \pi } \int_0^{2\pi} \sum_{-\infty}^\infty r^{|n|} e^{in(\theta - t)} e^{ikt} dt = \frac{1}{2 \pi } \int_0^{2\pi} \sum_{-\infty}^\infty r^{|n|} e^{in\theta} e^{it(n-k)} dt $$
+
+Again, by the Weierstrauss M-test, we may interchange the sum and integral:
+
+$$ \frac{1}{2\pi}  \sum_{-\infty}^\infty \left( r^{|n|} e^{in\theta} \int_0^{2\pi} e^{it(n-k)} dt  \right)$$
+
+But, the integral vanishes unless $n-k = 0$ and if $ n=k$, the integral takes on $2\pi$ so we have that:
+
+$$ H(e^{ikt})(z) = r^{|k|} e^{ik\theta}$$
+
+moreover, on $z \in T$, then $H(e^{ikt})(z) = e^{ikt}$ by definition. Hence, we have that
+
+$$ H(e^{ikt})(z) = r^{|k|} e^{ik\theta}$$
+
+on all of $\overline{U}$. 
+
+Then, we have that (with some manipulation on $r^{|k|} e^{ik\theta}$ for $k < 0$):
+
+$$ H(e^{ikt})(z) = \begin{cases} z^k & \text{ if } k \geq 0 \\ \overline{z}^{|k|} & \text{ if } z < 0 \end{cases} $$
+
+Thus, this is continuous on $\overline{U}$ and harmonic on $U$. 
+
+Now, suppose that $f$ is a trigonometric polynomial on $T$, that is:
+
+$$ f(e^{it}) = \sum_{k=-N}^N c_k e^{ikt} $$
+
+By linearity, then, $H(f) = \sum_{k=-N}^N c_kH(e^{ikt})$, and since each piece is continuous, this is a sum of continous functions, and thus the whole thing is continuous.
+
+Now, by the Stone-Weierstrauss Theorem:
+
+Suppose that $f \in C(T)$. Then, there exists a sequence of trigonometric polynomials $P_n \to f$ uniformly. Then, of course:
+
+$$ \Vert Hf - HP_n \Vert_{\overline{U}} = \Vert H(f - P_n)  \Vert_{\overline{U}}  \leq \Vert f - P_n \Vert_T \to 0$$
+
+Hence, $HP_n \to Hf$ uniformly on $\overline{U}$, and thus, since each $HP_n$ is continuous, so must be $Hf$. 
+
+Great, so now what? Turns out that if $f \in C(T)$, then $Hf$ is a function in $\overline{U}$ that solves the Dirichlet problem (at least on the closed unit disk):
+
+Given a function $f$ on $T$, find a harmonic function $u$ defined on $U$ that coincides with $f$ on the boundary $T$. 
+
+Slightly more explicitly, there is a continuous function $u \in C(\overline{U})$ such that $u$ is harmonic on $U$ and $u$ on $T$ coincides with $f$. 
+
+Theorem [Uniqueness]:
+
+Let $u \in C(\overline{U})$ be real-valued. Suppose that $u$ is harmonic on $U$. Then, on $U$, $u$ is always realized as the Poisson transform of its restriction to $T$, that is:
+
+$$ u(z) = \frac{1}{2\pi} \int_0^{2\pi} P(z,e^{it}) u(e^{it}) dt $$
+
+Moreover, from the above, we can prove that it is the real part of a holomorphic function:
+
+$$ f(z) = \frac{1}{2\pi} \int_0^{2\pi} \frac{e^{it} + z}{e^{it} - z} u(e^{it}) dt$$
+
+Proof:
+
+We define $u_1(z) = \frac{1}{2\pi} \int_0^{2\pi} P(z,e^{it}) u(e^{it}) dt$. Then, of course since the Poisson transform of $u$ is harmonic, $u_1$ is harmonic. Further, we have that on $T$, $u_1 = u$.
+
+Consider the quantity $v = u_1 - u$ on $\overline{U}$. Of course, since $u, u_1$ are harmonic, continuous, $v$ is harmonic, continuous. Further, $v = 0$ on $T$.
+
+We claim that actually, $v = 0$ on $U$ as well. Suppose not. Then, there exists $z_0 \in U$ such that $v(z_0) \not = 0$.
+
+Since $u, u_1$ are real valued, $v$ is real-valued as well. Then, we may assume that $v(z_0) > 0$, since otherwise, we consider $-v$, another harmonic function with the same properties.
+
+Let $v(z_0) = 2 \epsilon$. Define an auxiliary function on $\overline{U}$:
+
+$$ g(z) = v(z) + \epsilon |z|^2 $$
+
+Clearly, on $T$, $g(z) = \epsilon$. On the other hand, we have:
+
+$$ g(z_0) = v(z_0) + \epsilon |z_0|^2 = 2\epsilon + \epsilon |z_0|^2 > \epsilon$$
+
+Certainly, this is greater than $\epsilon$, continuous. Since $g$ is continuous on a compact set, it attains a maximum, and by the inequality above, it must be an interior maximum.
+
+Let $z_1$ be an interior maximum. Consider the Laplacian of $g$:
+
+$$ \Delta (g(z_1)) = \Delta (v + \epsilon |z|^2)(z_1) = 4 \epsilon  > 0$$
+
+However, due to the properties of being a maximum, we see that:
+
+$$ \Delta (g(z_1)) = \frac{\partial^2 g}{\partial x^2}(z_1) + \frac{\partial^2 g}{\partial y^2}(z_1)  \leq 0$$
+
+Where each component must be separately non-positive. Contradiction.
+
+\section*{March 6th}
+
+So, from last time, we’ve solved the Dirichlet problem on the unit disk, that is, given a continuous function $f$ on the unit circle $T$, there is a unique function $u$, continuous on the closed unit disk, harmonic, and agrees with $f$ on $T$. Specifically, $u = P(f)(z)$ that is, the integral of the Poisson kernel of $f$. If $f$ is real valued, then so is $u$, and $u$ is actually the real part of a holomorphic function.
+
+However, we notice that since every disk is merely a scaling and translation of the unit disk, then this should extend to any disk. 
+
+Let $F$ be a continuous function on the boundary of an arbitrary disk, $D(a,r), r > 0$. Then, there exists a unique function $u \in C(\overline{D}(a,r))$ such that $u$ is harmonic on $D(a,r)$, and $u = F$ on the boundary. 
+
+Proof:
+
+Define $F_0(e^{it}) = F(a + Re^{it})$. Clearly, $F_0$ on $T$ matches $F$ on the boundary of $D(a,r)$. Then, we know that there exists $u_0$ on $\overline{U}$, harmonic, and agrees with $F_0$ on $T$. That is:
+
+$$u_0(se^{i\theta}) = \frac{1}{2\pi} \int_0^{2\pi} \frac{1 - s^2}{1 + s^2 - 2s \cos(\theta - t)} F_0(e^{it}) dt $$
+
+Then, of course, just define $u(a + z) = u_0(\frac{z}{r})$. Thus, we have that:
+
+$$u(a + Re^{i\theta}) = u_0(\frac{R}{r} e^{i\theta}) = \frac{1}{2\pi} \int_0^{2\pi} \frac{r^2 - R^2}{r^2 + R^2 - 2rR \cos(\theta - t)} F(a + re^{it}) dt $$
+
+Thus, we’ve found the unique function that works, unique because $u$ was unique. 
+
+Upshot here:
+
+The holomorphic function of which $u$ is the real part on $D(a,r)$ is unique up to a purely imaginary constant. 
+
+Proof:
+
+Suppose $f_1, f_2$ holomorphic functions on $D(a,r)$ such that $\Re(f_1) = \Re(f_2) = u$.
+
+Well, $\Psi = f_1 - f_2$ is certainly holomorphic, with 0 real part. But, by Cauchy-Riemann then, since the real part is $0$, the imaginary part may only be a constant. 
+
+Wait what. Fulton claims open mapping theorem. If $\Psi$ is non-constant on the open disk, then $\Psi$ must be an open set, or a single point. Since it must be a subset of the imaginary axis, it cannot be an open set, and therefore, it must be a single point. Then, $\Psi$ is constant in the imaginary part. 
+
+Since every harmonic function $u$ is the real part of a holomorphic function, and the real and imaginary parts of a holomorphic function is $C^\infty$, then we have that $u \in C^\infty$ on some open set $\Omega$ that it’s harmonic on. In layman’s terms: if you have second order derivatives in complex-valued functions, you actually have derivatives of all orders. 
+
+Now, take $u$ to be harmonic on $D(a,R)$, continuous on the closure, and $u \in C(\overline{D}(a,R))$. Then, from what we’ve shown, we have:
+
+$$u(a + re^{i\theta}) = \frac{1}{2\pi} \int_0^{2\pi} \frac{R^2 - r^2}{r^2 + R^2 - 2rR \cos(\theta - t)} u(a + Re^{it}) dt $$
+
+Well, let’s evaluate at $r = 0$:
+
+$$u(a) = \frac{1}{2\pi} \int_0^{2\pi}  u(a + Re^{it}) dt $$
+
+So, what did we show? The value of the harmonic function in the middle of the disk is the average of the value of the harmonic function over the boundary. Kinda neat actually. We realize this is like a mean value theorem.
+
+Theorem:
+
+If $u$ is harmonic on an open set $\Omega$, and if $\overline{D}(a,R) \subset \Omega$, then $$u(a) = \frac{1}{2\pi} \int_0^{2\pi} u(a + Re^{i\theta}) d\theta$$
+
+that is, the average value of the function $u$ on the boundary. 
+
+Turns out the converse is also true, but we need some more.
+
+Now, let’s look at the integrand a bit more. For $0 \leq r < R$, we have that:
+
+$$\frac{R-r}{R+r} \leq \frac{R^2 - r^2}{r^2 + R^2 - 2rR \cos(\theta - t)}  \leq \frac{R + r}{R - r}$$
+
+since of course, $-1 \leq \cos \leq 1$.
+
+This leads to Harnack’s Theorem:
+
+Theorem:
+
+Let $\{ u_n \}_{n=1}^\infty$ be a sequence of harmonic functions in a region in $\Omega$.
+
+(a) If $u_n \to u$ uniformly on compact sets in $\Omega$, then $u$ is harmonic.
+
+(b) Suppose that $u_1 \leq u_2 \leq ... \leq u_n \leq ... $ in $\Omega$. Then, one of the following occurs:
+
+(i) $u_n$ converges uniformly on compact sets to a harmonic function $u$ in $\Omega$.
+
+(ii) $u_n \to \infty$ for all $z \in \Omega$
+
+Proof:
+
+(a)
+
+So, of course, since $u_n$ are harmonic, thus cts, we have that $u$ must be continuous as well, since continuity is a local property, we may restrict to a small enough compact subset of $\Omega$ for any $a \in \Omega$.
+
+Since harmonicity is a local property, let $\overline{D}(a,R)$ be any closed disk in $\Omega$. Then, we have that, for each $n$, that:
+
+$$u_n(a + re^{i\theta}) = \frac{1}{2\pi} \int_0^{2\pi}  \frac{R^2 - r^2}{r^2 + R^2 - 2rR \cos(\theta - t)} u_n(a + Re^{it}) dt$$
+
+Taking the limit of both sides as $n \to \infty$:
+
+$$u(a + re^{i\theta}) = \lim_{n \to \infty} u_n(a + re^{i\theta}) = \lim_{n\to\infty} \frac{1}{2\pi} \int_0^{2\pi}  \frac{R^2 - r^2}{r^2 + R^2 - 2rR \cos(\theta - t)} u_n(a + Re^{it}) dt = $$ 
+$$\frac{1}{2\pi} \int_0^{2\pi}  \frac{R^2 - r^2}{r^2 + R^2 - 2rR \cos(\theta - t)} u(a + Re^{it}) dt $$
+
+where, we notice that $u_n \to u$ uniformly on the compact set $\partial D(a,R)$, and these are positive functions, so we may interchange the limit and integral. 
+
+Thus, $u$ is harmonic, and since we can do this for any point $a \in \Omega$, it must be harmonic for all of $\Omega$. 
+
+(b)
+
+First, since we can do the substitution, $\{ u_n - u_1 \}$, we can assume that $u_1 = 0$, and $u_n \geq 0$ for all $n$, that is, non-negative. 
+
+Let $a \in \Omega$, and choose $R >0$ such that $\overline{D}(a,R) \subset \Omega$. Since the $u_n$ are harmonic, we have the same equation:
+
+$$u_n(a + re^{i\theta}) = \frac{1}{2\pi} \int_0^{2\pi}  \frac{R^2 - r^2}{r^2 + R^2 - 2rR \cos(\theta - t)} u_n(a + Re^{it}) dt$$
+
+By the following inequality:
+
+$$\frac{R-r}{R+r} \leq \frac{R^2 - r^2}{r^2 + R^2 - 2rR \cos(\theta - t)}  \leq \frac{R + r}{R - r}$$
+
+we notice then that, because $0 \leq u_n$ for all $n$:
+
+$$\frac{1}{2\pi} \int_0^{2\pi}  \frac{R - r}{R + r}  u_n(a + Re^{it}) dt \leq u_n(a + re^{i\theta}) \leq \frac{1}{2\pi} \int_0^{2\pi}  \frac{R + r}{R - r}  u_n(a + Re^{it}) dt$$
+
+so:
+
+$$\frac{1}{2\pi} \frac{R - r}{R + r} \int_0^{2\pi} u_n(a + Re^{it}) dt \leq u_n(a + re^{i\theta}) \leq \frac{1}{2\pi} \frac{R + r}{R - r} \int_0^{2\pi}   u_n(a + Re^{it}) dt$$
+
+Here, we use the fact that the integral of $u(a) = \frac{1}{2\pi} \int_0^{2\pi} u(a + Re^{i\theta}) d\theta$ for $u$ a harmonic function.
+
+So:
+
+$$ \frac{R - r}{R + r} u_n(a) \leq u_n(a + re^{i\theta}) \leq \frac{R + r}{R - r} u_n(a) $$
+
+What does this mean? Well, analyze via the following: Consider $\Omega_1 = \{ a \in \Omega : \{ u_n(a) \} \text{ is bounded } \}$, and $\Omega_2 =  \{ a \in \Omega : \{ u_n(a) \} \text{ is unbounded } \}$.
+
+Suppose $a \in \Omega_1$. Then, we have that $D(a,R) \subset \Omega_1$, due to our inequality, which says $u_n(z) \leq \frac{R + r}{R - r} u_n(a) < \infty$, and thus $\Omega_1$ is open, since we can always find open balls around each point.
+
+Conversely, we see that if $a \in \Omega_2$, then $D(a,R) \subset \Omega_2$, and thus is open for the same reason, just using the lower estimate.
+
+Then, because $\Omega$ is a region, and thus connected, we must have that either $\Omega = \Omega_1$ or $\Omega = \Omega_2$. Of course, if $\Omega = \Omega_2$, thus $u_n \to \infty$, and we are done. 
+
+\section*{March 8th} 
+
+Continuing with Harnack’s Theorem:
+
+So, suppose $\Omega = \Omega_1$. Then, there exists a function $u$ such that $u_n \to u$ pointwise on all of $\Omega$. But, we can restrict ourselves to compact sets of $\Omega$. In such a way, if $a \in \Omega$, then choose $R> 0$ such that $\overline{D}(a,r) \subset \Omega$. Since $\Omega$ is open, we may also find $R_1 > R$ such that we have $overline{D}(a,r) \subset \overline{D}(a,R_1) \subset \Omega$.
+
+For each $0 \leq r < R$, and any $\theta$, we have that:
+
+$$u_n(a + re^{i\theta}) = \frac{1}{2\pi} \int_0^{2\pi}  \frac{R^2 - r^2}{r^2 + R^2 - 2rR \cos(\theta - t)} u_n(a + Re^{it}) dt$$
+
+Notice first that $$ u_n(a + Re^{i\theta}) \leq \frac{R_1 + R}{R_1 - R} u_n(a) < \infty $$
+
+since we can use our estimate again on $\overline{D}(a,R_1)$, and find an upper bound that works for the inner circle. Then, we can use this to take limits of both sides, via a monotone convergence theorem to interchange limits:
+
+$$ u(a + re^{i\theta}) = \frac{1}{2\pi} \int_0^{2\pi}  \frac{R^2 - r^2}{r^2 + R^2 - 2rR \cos(\theta - t)} \left( \lim_{n\to\infty}u_n(a + Re^{it})\right) dt =$$ $$ \frac{1}{2\pi} \int_0^{2\pi}  \frac{R^2 - r^2}{r^2 + R^2 - 2rR \cos(\theta - t)} u(a + Re^{it})dt$$
+
+We notice, that because $u_n \to u$, and $u_n$ are measurable, bounded, we have that $u$ must be a bounded, measurable function. A bounded, measurable function implies that it is $L^1$, and the Poisson integral of a $L^1$ function is harmonic. Since we can do this for all points of $\Omega$, we have that $u$ is harmonic (and thus continuous) on $\Omega$. 
+
+Now, we need only verify that $u_n \to u$ uniformly on compact subsets. Let $K$ be a compact subset, and let $\epsilon > 0$ be given. 
+
+For each $n$, define $K_n = \{ z \in K : u(z) - u_n(z) \geq \epsilon \}$. It is clear that $K_n \supseteq K_{n+1}$. Further, we notice that $u(z) - u_n(z) \geq \epsilon$ is a closed set, and thus the preimage is closed. Thus, $K_n$ is compact, being a closed subset of a compact set. Finally, we have that $\cap_n K_n = \emptyset$, because $\lim_{n\to\infty} (u(z) - u_n(z)) = 0$. 
+
+Since $K_n$ are compact, and their intersection is empty, by the finite intersection property, there exists a $N$ such that $\cap_{n=1}^N K_n = \empty$. Hence, we have that for $M \geq N+1$, we have that for all $m > M$, $u(z) - u_m(z) < \epsilon$. 
+
+Mean Value Property:
+
+Let $\Omega$ be an open set in $\mathbb{R}^2$, and let $f$ be a continuous function on $\Omega$. Suppose that $\overline{D}(a,r) \subset \Omega$. 
+
+Define:
+
+$$ M^r f(a) = \frac{1}{2\pi} \int_0^{2\pi} f(a + re^{i\theta}) d\theta $$
+
+that is, the average value of the function $f$ over the circle of radius $r$ centered at $a$, $|z-a| = r$.
+
+We’ve already shown that if $u$ is harmonic, then we have that:
+
+$$M^r u(a) = u(a)$$ for any $r > 0$ such that $D(a,r) \subset \Omega$. What about the converse?
+
+Definition:
+
+Let $u$ be a continuous function on $\Omega$. Fix some $z \in \Omega$. If there exists a sequence of positive numbers $\{ r_n \}_{n=1}^\infty$ such that $r_n \to \infty$ such that $M^{r_n} u(z) = u(z)$ for all $n$ for every $z$, then we say that $u$ satisfies the Mean Value Property. Remark: we notice that the sequence of $r_n$ depends on the choice of $z$.
+
+Theorem:
+
+$u$ is harmonic on $\Omega$ if and only if $u$ satisfies the Mean Value Property.
+
+Proof:
+
+We’ve already proved that if $u$ is harmonic, then $M^{r} u(a) = u(a)$ for any $r$ such that the disk lies within $\Omega$. Thus, we only need to prove the other direction.
+
+Suppose that $u$ satisfies the Mean Value Property on $\Omega$. We see then, that because we can split $u$ into real and imaginary components, that each of those must satisfy the Mean Value Property on $\Omega$ independently. Thus, without loss of generality, we may assume $u$ is a real-valued function. 
+
+It suffices to prove that if $\overline{D}(a,R) \subset \Omega$, then $u$ is harmonic on $D(a,R)$, since then we can construct such disks for any point $a \in \Omega$.
+
+Define the function $v$ on $D(a,R)$ via:
+
+$$v(a + re^{i\theta}) = P(u) = \frac{1}{2\pi} \int_0^{2\pi}  \frac{R^2 - r^2}{r^2 + R^2 - 2rR \cos(\theta - t)} u(a + Re^{it}) dt $$
+
+By our work on the Poisson kernel, $v$ is harmonic on $D(a,r)$. 
+
+If we set $v(a + Re^{it}) = u(a + Re^{it})$, then $v$ is continuous on the closed disk and harmonic on the interior.
+
+Consider $w = v - u$ defined on the closed disk. We know that $w$ is continuous, since $u,v$ continuous, and attains $0$ on the boundary. Further, since $v$ is harmonic, it satisfies the MVP, and $u$ satisfies by hypothesis, thus $w$ satisfies the MVP. 
+
+Suppose there exists $z_0 \in \overline{D}(a,r)$ such that $w(z_0) \not = 0$. Since we can always replace $w’ = u - v$, we may assume that $w(z_0) > 0$. Clearly, since $w$ is 0 on the boundary, $z_0 \in D(a,r)$. Define $M = \max_{z \in \overline{D}(a,r)} w(z)$, which exists and is finite because this is a compact set.
+
+Define $E = \{ z \in   \overline{D}(a,r) : w(z) = M \}$. Clearly, $E$ is closed, since $w$ continuous, and $\{ M \}$ is closed, so $w^{-1}(M)$ is closed. Let $s = \max_{z \in E} |z - a| $. Because $E$ is compact, $|z-a|$ attains a maximum, so we can find $z_1 \in E$ with $w(z_1) = s$. Let $\{ r_n \}$ be a sequence that corresponds to the point $z_1$ such that $w$ satisfies the MVP. In particular, choose an $r_n$ small enough such that $\overline{D}(z_1, r_n) \subset D(a,r)$.
+
+Now, we have that 
+
+$$w(z_1) = \frac{1}{2\pi} \int_0^{2\pi} w(z_1 + e^{i\theta}) d\theta $$
+
+We notice, since $z_1$ is the furthest point from $a$ on $E$, we must have that
+
+$$  \frac{1}{2\pi} \int_0^{2\pi} w(z_1 + e^{i\theta}) d\theta  <  \frac{1}{2\pi} 2\pi M = M $$, a contradiction.
+
+
 
 \end{document}

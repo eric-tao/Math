@@ -51,6 +51,7 @@
 \newcommand{\trace}{\operatorname{trace}}
 \newcommand{\diag}{\operatorname{diag}}
 \newcommand{\sign}{\operatorname{sgn}}
+\newcommand{\vol}{\text{Vol}}
 \newcommand{\onevector}{{\mathbf 1}}
 \newcommand{\bbone}[1]{{\mathbf 1}_{[#1]}}
 
@@ -461,5 +462,238 @@ $$\rho(x) = \frac{1}{nh^d} \sum_{i=1}^n \mathcal{K}\left(  \frac{ x - x_i}{h}\ri
 for some scale parameter $h$.
 
 It turns out, with sufficient restrictions on $n, h$, that $\rho$ converges to a nice function.
+
+\section*{Feb 21st}
+
+A different family of approaches to unsupervised clustering work with graphs.
+
+(1): Data comes in
+
+(2): Construct a graph from the data
+
+(3): Try to find communities in the graph, and use communities as clusters.
+
+Define a graph $\mathbb{G}$ as a collection of vertices $V$ and a collection of edges that connect vertices $E$, that is, $\mathcal{G} = (V,E)$. We will associate our data points as exactly vertices. The edges should encode how related our points are.
+
+In practice, if we have $n$ vertices, we can represent the edges as a matrix $n \times n$.
+
+More precisely, we will consider “weighted graphs”, that is, the edges have some value associated with them. Then, we store these values in a matrix $W \in \mathbb{R}^{n \times n}$. 
+
+Here, we will have $W_{ij}$ be the weight between the i-th vertex and the j-th vertex, and we associate large weights with strong connections and vice versa.
+
+A common choice is to use $k$ nearest neighbors in the graph.
+
+Example: fix an integer $k_{nn} \geq 1$. Define:
+
+$$ W_{ij} = \begin{cases} 1 & \text{ if } x_i \text{ is a k-nearest neighbor of } x_j \text{ or vice versa} \\ 0 & \text{ else} \end{cases} $$
+
+Call $x_i$ a $k_{nn}$ nearest neighbor of $x_j$ if $\Vert x_i - x_j \Vert$ is among the $k_{nn}$ smallest distances in the collection of distances from $x_j$
+
+Remark: an advantage is that this algorithm produces sparse matrices $W$, that is, most of its entries are 0.
+
+This is nice because it has storage benefits since we don’t need to initialize the zeros, and it’s apparently faster to get the eigenvectors. This is not clear exactly why it works rigorously, but it works empirically.
+
+Another example is if $W_{ij} = \mathcal{K}(x_i,x_j)$ where $\mathcal{K}$ is a kernel function.
+
+In graph theory, we tend to use the heat kernel or Gaussian.
+
+Define $ \mathcal{K}(x_i,x_j) = e^{- \frac{\Vert x_i - x_j \Vert^2}{2\sigma^2}}$ for a tuning parameter $\sigma$.
+
+Regardless, we can create a graph now. But how do we use it to determine communities? This ends up being difficult.
+
+Attempt:
+
+Partition a graph such that the weight of broken edges is minimal.
+
+Define $F(C_1,C_2) = \sum_{x \in C_1} \sum_{y \in C_2} W_{xy} $
+
+Then, we define the optimal partition as $(C_1^*, C_2^*)  = \arg \min F(C_1,C_2) $
+
+This is painful, since this is hard to compute. This also prefers cutting out singletons potentially.
+
+Refinement:
+
+We want the same thing, but we also want that $C_1, C_2$ have a similar size. 
+
+Define:
+
+$$F(C_1,C_2) = \frac{\sum_{x \in C_1} \sum_{y \in C_2} W_{xy} }{\min \{ \sum_i \sum_{j \in C_2} W_{ij}, \sum_{i \in C_1} \sum_{j } W_{ij}\}}$$
+
+\section*{Feb 28th}
+
+Recall: Let $G = (V,E)$ be a weighted graph, with edge weights stored in a matrix. To be precise, let $V = \{ x_1,...,x_n \}$ be our points, with $x_i \in \mathbb{R}$, and let $E$ be stored in a $n \times n$ matrix $W$. Typically, $W^T = W$, and $W_{ij} \geq 0$.
+
+Example, we could construct a matrix $W$ where $W_{ij} = \exp( -\Vert x_i - x_j \Vert^2 /\sigma^2)$. But whatever, the point is we want to learn what a “good” weight computation is. We try to motivate the learning by cutting the graph, such that:
+
+i) we break as few edges as possible
+
+ii) the resultant subgraphs are roughly the same size
+
+To achieve this, we try to minimize, over partitions $C_1, C_2$, the normalized cuts functional:
+
+$$\text{Ncut}(C_1,C_2) = \frac{\sum_{i \in C_1, j \in C_2} W_{ij} }{\min\{ \sum_{i \in C_1, j \in V} W_{ij}, \sum_{i \in C_2, j \in V} W_{ij}} $$
+
+If we define the volume of a subgraph:
+
+$$ \text{Vol}(C_l) =  \sum_{i \in C_l, j \in V} W_{ij}$$
+
+We may rewrite this as:
+
+$$\text{Ncut}(C_1,C_2) = \frac{\sum_{i \in C_1, j \in C_2} W_{ij} }{\min\{ \text{Vol}(C_1), \text{Vol}(C_2)} $$
+
+We notice that $\text{Vol}(C_1) + \text{Vol}(C_2)$ is approximately the total of the edge weights, minus the shared edges. Then, the minimum of the two is smallest when they are roughly equal. 
+
+So the denominator favors a balanced partition, and the numerator favors an unbalanced partition. This is hard to analyze.
+
+Trying to simplify the situation, instead, let’s define:
+
+$$\text{Ncut}(C_1,C_2) = \sum_{i \in C_1, j \in C_2} W_{ij} \cdot \left( \frac{1}{\text{Vol}(C_1)} + \frac{1}{\text{Vol}(C_2)}\right) $$
+
+which, we notice has a similar effect.
+
+Remark, we can also use:
+
+$$ \sum_{i \in C_1, j \in C_2} W_{ij} \cdot \left( \frac{1}{|C_1|} + \frac{1}{|C_2|}\right)$$
+
+for a similar effect, that is, using the cardinality of the partitions with respect to the nodes.
+
+In any case, we want to find a partition $C_1^*, C_2^*$ to be the partitions that minimize $\text{NCut}$. This turns out to be NP-hard.
+
+The trick is to try to relax the condition, so that it’s a smooth function, and try to take derivatives or similar. In general, this may not be possible.
+
+Protocol:
+
+1) Recast into linear algebra.
+
+2) Relax the hard assignment on nodes being in exactly $C_1$ or $C_2$.
+
+3) Use matrix calculus to find an approximate solution by eigendecomposition.
+
+First, since this is a partition into two pieces, we can rewrite $(C_1,C_2) = (C, \overline{C})$, that is, its complement.
+
+Define a vector $f^c \in \mathbb{R}^n$ via:
+
+$$ [f^c]_i = \begin{cases} \sqrt{\frac{\text{Vol}(\overline{C})}{\text{Vol}(C)}} & \text{ if } i \in C \\ -\sqrt{\frac{\text{Vol}(C)}{\text{Vol}(\overline{C})}} & \text{ if } i \not \in C \end{cases} $$
+
+Further, define
+
+$$d_i = \sum_{j=1}^n w_{ij}$$ be the degree of $x_i$, that is, the sum of all edges that come from $x_i$. 
+
+Define the degree matrix $D \in \mathbb{R}^{n \times n}$ via:
+
+$$D_{ij} = \begin{cases} d_i & \text{ if } i = j \\ 0 & \text{else} \end{cases} $$
+
+Thus, $D$ is a diagonal matrix. Homework 6 preview:
+
+i) Prove that sum of the vector entries of $D f^c$ is 0. 
+
+ii) Prove that $[f^c]^T D f^c = \text{Vol}(G) = \sum_{i,j \in V} W_{ij} $
+
+Define the graph Laplacian $L \in \mathbb{R}^{n \times n}$ via $L = D - W$. 
+
+It turns out, that we may connect $L$ to NCut via:
+
+$$f^{c^T} L f^c = \text{Vol}(G) \cdot \text{NCut}(C, \overline{C}) \implies \text{NCut}(C, \overline{C}) = \frac{1}{\text{Vol}(G)}f^{c^T} L f^c $$
+
+We notice that $f^c$ depends on $C$, the partition of course, but $L$ is only dependent on the graph itself.
+
+Then, we can reduce our original problem of determining $C$ to minimizing this quantity over $f^c$. We haven’t yet made progress, since these functions are differentiable, but our inputs are still rigid. Specifically, we notice that $f^c$ has only countably many values, and we’re not really defined on an open set then.
+
+Well, relax the condition that $f^c$ is actually from a partition, and just minimize over $\mathbb{R}^n$.
+
+Thus, we want to minimize:
+
+$$f^TL f$$ with the constraints that $Df$ sums to 0 and $fDf = \text{vol}(G)$. 
+
+Turns out, since the objective is quadratic, and we have a linear, quadratic constraints, these tend to be bad. However, this turns out to be an eigenvalue problem on $L$.
+
+Then, we can read off cluster values, by just taking $C = \{ x_i | f > 0 \}$ and $\overline{C}$ to be the complement.
+
+\section*{March 2nd}
+
+Recall, for. a graph $G = (V,E)$, with associated weight matrix $W \in \mathbb{R}^{n \times n}$, we wish to partition the vertices into $C_1, C_2$ such that the following functional is minimized:
+
+$$ \text{Ncut}(C_1,C_2) = \sum_{i \in C_1, j \in C_2} w_{ij} \left( \frac{1}{\text{vol}(C_1)} + \frac{1}{\text{vol}(C_2)} \right)$$
+
+This is NP-hard, but we relax the constraints and round instead, which is much easier.
+
+Recall, let $d_i = \sum_{j=1}^n w_{ij}$ be the degree of node $i$. Let $D$ be the degree matrix, with 0s and $d_i$. And finally, define $L = D - W$. Define:
+
+$$ [f^c]_i = \begin{cases} \sqrt{\frac{\text{Vol}(\overline{C})}{\text{Vol}(C)}} & \text{ if } i \in C \\ -\sqrt{\frac{\text{Vol}(C)}{\text{Vol}(\overline{C})}} & \text{ if } i \not \in C \end{cases} $$
+
+Then, we have the following properties:
+
+(i) The sum of the vector entries of $D f^c$ is 0. 
+
+(ii) $[f^c]^T D f^c = \text{Vol}(G) = \sum_{i,j \in V} W_{ij} $
+
+(iii) $f^{c^T} L f^c = \text{Vol}(G) \cdot \text{NCut}(C, \overline{C}) $
+
+Thus, since $\vol(G)$ is a constant, we need only minimize $f^{c^T} L f^c $ over $f^c$.
+
+From linear algebra, we have the result that, for a matrix $M$, if we wish to find either the argmax or argmin of $v^T M v/ \Vert v \Vert^2$ with respect to a vector $v$, then the argmax comes from the eigenvector with largest eigenvector, and argmin comes from the smallest.
+
+Thus, this is a tractable problem. Turns out, we may take the solution that corresponds to an eigenvector of $L$. 
+
+Computational trick: Let $g = D^{1/2}F \implies F = D^{-1/2}g$ where $D_i = \sqrt{d_i}$, that is, the square root of the degree matrix. 
+
+Then, we look at:
+
+$$ g^T D^{-1/2} L D^{1/2} g $$, specifically the argmin of $g$. The upshot here, is that our constraints are:
+
+(i) $< g, D^{1/2} 1 > = 0$
+
+(ii) $ \Vert g \Vert^2 = \vol(G)$
+
+and here, we can define $L_{sym} = I - D^{-1/2} W D^{-1/2}$
+
+So, we’ve reduced our problem to minimizing the quantity $ g^T L_{sym} g$ with the above constraints. 
+
+But we know this. If we know that $D^{1/2}$ is not a eigenvector of $L_{sym}$, then $g$ must be the smallest eigenvector of $L_{sym}$. Otherwise, it’s the 2nd one.
+
+So:
+
+$$ L_{sym}(D^{1/2} 1) = D^{-1/2} (D - W) D^{-1/2}D^{1/2} 1 = D^{-1/2} (D - W)  1 = 0$$
+
+Since we notice that $D1 - W1 = 0$, by the definition of the degree and weight matrices.
+
+So, we have that $D^{1/2} 1 $ is an eigenvector of $L_{sym}$ with eigenvalue 0, since $L$ and thus, $L_{sym}$ are positive semi-definite, we must have that the $g$ that we want is the eigenvector with 2nd smallest eigenvalue. Call this value $\lambda_2$, with vector $\phi_2$
+
+Turns out, this has deep connections into the structure of the graph. $\lambda_2 > 0 \iff G$ is connected. Further, the magnitude of $\lambda_2$ is connected with the difficulty of partitioning the graph. And finally, back to our original problem, once we have $\phi_2$, we choose $C = \{  x_i : \phi_2(i) > 0 \}, \overline{C} = \{ x_i : \phi_2(i) \leq 0 \}$. Remark - points where $\phi_2 = 0$ are ambiguous, and we may analyze these as boundary points.
+
+\section*{March 7th}
+
+Just recall the general ideas of spectral clustering, minimizing NCut, the spectral Lagrangian $L = D - W$ and its reduced form $D^{-1/2} (D - W) D^{-1/2}$. 
+
+But what about the computational costs?
+
+Computing the Lagrangian is already on the order of $n^2D$, where $n$ is the data point count, and $D$ is the dimensionality of the data. Then, the eigendecomposition is of form $n^2$ assuming we only want the 2nd smallest one. Then, in general, we have $n^2D$ as the order of the complexity. This is kinda bad.
+
+However, this assumes we compute every weight combination. If we do some sort of thresholding, $W$ can be sparse, and can be computed with order $n$, if sparse enough. 
+
+But how do we actually implement the sparse matrix, in such a way to preserve the graph properties?
+
+Naive approach is to just make a k-nearest neighbors graph. That is, we only have edges with the $k$ largest weights. Turns out, this reduces our memory from $n^2 \to kn$, but also reduces the complexity of computing the spectral decomposition $n^2 \to n$, dependent on the implementation.
+
+But, can we compute what the k-nearest neighbors are, without computing every value? Turns out, sometimes. This involves either k d-trees, or cover trees. In certain domains, this achieves complexity $k^2 n \log(n)$ which is kinda reasonable.
+
+Now what if you want multiple clusters? 
+
+One option is to perform this iteratively. You can then partition the two clusters further, maybe by partitioning the larger cluster. This should invoke thoughts of hierarchical clusters. Of course, this may be an issue if the best 3 clusters does not have two clusters being a subset of one of the 2-clusters. 
+
+The slightly better option is to use the other eigenvectors. If we take $\phi_2...\phi_k$ eigenvectors, we can try to run $k$-means here. 
+
+What do we mean? Fix any $\phi_j$. Consider the set of points:
+
+$$\tilde{x_i} = (\phi_2(i), ....\phi_k(i)) \in \mathbb{R}^{k-1}$$
+
+and then run $k$-means on this guy. The idea is the exploit the Laplacian to learn graphical features of the data points, and using a feature map $x_i \to  (\phi_2(i), ....\phi_k(i))$.
+
+Ok, but how do we choose $k$? Well... the idea is to use something called the eigengap heuristic. Example: suppose we have 3 disconnected clusters. Then, with our k-nearest neighbors idea, is that we would havea block matrix where the cross clusters are 0s. In particular, we look at:
+
+$$K = \arg \max \lambda_{i+1} - \lambda_i $$, that is, where we see a jump in the eigenvalues. 
+
+
+
 
 \end{document}
