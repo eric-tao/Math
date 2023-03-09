@@ -1,0 +1,303 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+
+\newenvironment{problem}[2][]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#2}
+\author{Eric Tao\\
+Math 233: Homework \#2}
+\maketitle
+
+\begin{problem}{Question 1}
+Suppose $f$ is an entire function, and that for every power series:
+
+$$ f(z) = \sum_{n=0}^\infty c_n (z - a)^n$$
+
+at least one coefficient is 0. Prove that $f$ is polynomial.
+
+\end{problem}
+\begin{proof}[Solution]
+
+Consider the family of sets:
+
+$$Z_n = \{ a \in \mathbb{C} : f^{(n)}(a) = 0 \}$$
+
+We recall, that for the power series centered on $a$, that we have $n! c_n = f^{(n)}(a)$. Because we have that at least one coefficient is 0, that implies that for every $a \in \mathbb{C}$, $a \in Z_m$ for some $m$, because suppose $c_m$ is the coefficient that equals 0, then we have that $f^{(m)}(a) = n! c_m = 0$.
+
+We notice here that this family of sets is countable, and the complex numbers are uncountable. Thus, at least one $Z_n$ is uncountably large. In particular, we consider $f^{(n)}$. Since $f$ is entire, then so must be $f^{(n)}$. Since $Z_n$ is uncountably large, by Theorem 10.18, we must have that $Z_n = \mathbb{C}$. But then, this implies that $f^{(n)}$ is identically 0; further, taking derivatives, we have that $f^{(n+k)}$ for every $k \geq 1$ is also identically 0. 
+
+Then, we have, for every $m \geq n$, that:
+
+$$c_m = \frac{1}{m!} f^{(m)}(a) = 0 $$
+
+and thus, $f$ is polynomial, since in its formal power series, every coefficient after a certain point is identically 0.
+
+Here, we'll show that if $S$ is a set of zeros of a holomorphic function $f$, and is uncountable in $\mathbb{C}$, then it must have a limit point. Due to the $\sigma$-finite nature of $\mathbb{C}$, we may consider the sets $S \cap D(0,n)$, for $n \in \mathbb{N}$. Clearly, we have that $\cup_n \left( S \cap D(0,n) \right) = S$. But further, since there are only a countable number of sets $D(0,n)$, and $S$ is uncountable, there must exist some $n$ such that $S \cap D(0,n)$ is at least countably infinite, as otherwise, we could only have a countable infinity times a finite number of objects at most, which is less than uncountably many. 
+
+Fix such an $n$, and denote $S_n = D \cap D(0,n)$. Define a sequence $\{ s_i \}_{i=1}^\infty\subset S_n$, where each $s_i$ is unique. This is possible, of course, because $S_n$ is at least countable. But, since $f$ is holomorphic, $f$ is continuous, thus, since $f^{-1}(0) = S$, $S$ is closed. Thus, $S_n$ is the intersection of a compact set and a closed set, and is thus compact. Therefore, there exists some $x$ such that $ s_{i_j} \to x$, as in a compact set, every sequence has a convergent subsequence. If $x \not \in \{ s_i \}$, then we are done. Otherwise, suppose $x = s_{i_k}$ for some $i_k$. We notice, of course, that if we consider the sequence $\{ s_{i_j} \}_{j \not = k}^\infty$, this is a sequence without $x$, that converges to $x$. Thus, $S$ contains a limit point.
+
+\end{proof}
+
+\begin{problem}{Question 2}
+
+Suppose $P,Q$ are polynomials, with $\text{deg}(Q) \geq \text{deg}(P)  + 2$ and such that the rational function $R = P/Q$ has no pole on the real line. Prove that the integral of $R$ over $(-\infty,\infty)$ is equal to $2\pi i$ times the sum of the residues of $R$ on the upper half plane. What is the analogous statement for the lower half plane? Use this method to compute:
+
+$$ \int_{[-\infty,\infty]} \frac{x^2}{1 + x^4} dx$$
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+We begin by noticing that becuase $Q$ is polynomial, it has exactly $\text{deg}(Q) = m$ zeros, with no limit points in the set of zeros. Thus, $R$ has no limit points on $Z(Q)$, $R$ is certainly holomorphic on $\mathcal{H}(\mathbb{C} \setminus Z(Q))$, and $R$ may only have poles at a subset of $A$. Thus, $R$ is meromorphic. In particular, denote the set of points where $R$ has poles on the upper half plane as $\tilde{Z}(Q)$
+
+Then, we may apply the residue theorem. Since $Z(Q)$ is at most countable, take $r > \max \{ |z| : z \in \tilde{Z}(Q) \}$, finite. Take the chain $\Gamma$ as the upper-semicircle traversed along the real line from $(-r,0) \to (r,0)$, and then via $re^{i t}$ for $0 \leq t \leq \pi$. Clearly, this is actually a cycle, and further, since $R$ has no poles on the real line, and because $r$ is larger than the modulus of any zero of $Q$, we must have that $\Gamma^* \subset \mathbb{C} \setminus \tilde{Z}(Q)$. Vacuously, we have that $\text{Ind}_\Gamma(\alpha) = 0$ for $\alpha \not \in \mathbb{C}$, since this set is empty.
+
+Thus, we have that:
+
+$$\frac{1}{2\pi i} \int_\Gamma R(z) dz = \sum_{a \in \tilde{Z}(Q)} \text{Res}(R; a) \text{Ind}_\Gamma(a) $$
+
+Since we oriented $\Gamma$ positively, or, via 10.37, since by going into the interior of the semi-circle, we go from the right to the left of the path, we have that $\text{Ind}_\Gamma(a) = 1$ for every $a$. Thus, we have that:
+
+$$\frac{1}{2\pi i} \int_\Gamma R(z) dz = \sum_{a \in \tilde{Z}(Q)} \text{Res}(R; a) $$
+
+However, now we examine the left side a bit more. Letting $\gamma_1 = [-r,r]$ and letting $\gamma_2 = re^{it}, 0 \leq t \leq \pi$, we see that:
+
+$$\int_\Gamma R(z) dz = \int_{\gamma_1} R(z)dz + \int_{\gamma_2} R(z)dz = \int_{-r}^r R(z) dz + \int_{\gamma_2} R(z) dz$$
+
+In particular, we want to look at $\int_{\gamma_2} R(z) dz \leq \Vert R \Vert_\infty \int_0^\pi | \gamma_2'(t) dt| = \Vert R \Vert_\infty 2\pi r$. Taking an estimate, we look at $\Vert R \Vert_\infty 2\pi r$ on $\gamma_2$, as $r \to \infty$. Well, letting the degree of $Q$ be $m$:
+
+$$ \Vert R \Vert_\infty 2\pi r \leq \sup \{  \frac{ |P|}{|Q|} : z \in \gamma_2 \} * 2\pi r =  \sup \{  \frac{2\pi r |P|}{|Q|} : z \in \gamma_2 \}$$
+
+Here, we let $Q = \sum_{i=0}^m b_i z^i$, and $P = \sum_{j=0}^{m-2} a_j z^j$, where we note that since $P$ has degree at most $m+2$, it could have less, so many of the $a_j$ may be 0. This is valid because polynomials are entire, so we may take power series centered at 0.
+
+Well, then we have that:
+
+$$2 \pi r \frac{|P|}{|Q|} = 2 \pi r \frac{\left|  \sum_{j=0}^{m-2} a_j z^j \right|}{ \left|\sum_{i=0}^m b_i z^i\right|}$$
+
+Applying the triangle inequality, and reverse triangle inequalities, we have that:
+
+$$\begin{cases}  \left|  \sum_{j=0}^{m-2} a_j z^j \right| \leq \sum_{j=0}^{m-2} |a_j z^j| = \sum_{j=0}^{m-2} |a_j| | z^j| \\  \left|\sum_{i=0}^m b_i z^i\right| \geq \left| |b_m||z^m| - \sum_{i=0}^{m-1} |b_i| |z^i| \right| \end{cases}$$\
+
+Thus, we have that:
+
+$$  2 \pi r \frac{\left|  \sum_{j=0}^{m-2} a_j z^j \right|}{ \left|\sum_{i=0}^m b_i z^i\right|} \leq 2 \pi r \frac{ \sum_{j=0}^{m-2} |a_j| | z^j|}{\left| |b_m||z^m| - \sum_{i=0}^{m-1} |b_i| |z^i| \right|}$$
+
+Applying the fact that we're on $z = re^{it}$, we find that:
+
+$$ 2 \pi r \frac{ \sum_{j=0}^{m-2} |a_j| | z^j|}{\left| |b_m||z^m| - \sum_{i=0}^{m-1} |b_i| |z^i| \right|} =  2 \pi r \frac{ \sum_{j=0}^{m-2} |a_j| r^j}{\left| |b_m|r^m - \sum_{i=0}^{m-1} |b_i|r^i \right|}$$
+
+We note here that if we take $r$ large enough, then of course $|b_m| r^m > \sum_{i=0}^{m-1} |b_i|r^i$ for any parameters $b_1,...,b_m$, due to a quick application of a ratio test. Thus, we may drop the absolute values, and then divide through the entire fraction by $r^m$ to obtain:
+
+$$ 2 \pi r \frac{ \sum_{j=0}^{m-2} |a_j| r^j}{ |b_m|r^m - \sum_{i=0}^{m-1} |b_i|r^i } = 2 \pi \frac{ \sum_{j=0}^{m-2} |a_j| r^{j+1}}{ |b_m|r^m - \sum_{i=0}^{m-1} |b_i|r^i }  = 2 \pi \frac{ \sum_{j=0}^{m-2} |a_j| r^{j+1 - m}}{ |b_m| - \sum_{i=0}^{m-1} |b_i|r^{i-m }} $$
+
+Here, we notice that since $0 \leq j \leq m-2 \implies j+1 -m < 0$ and $0 \leq i \leq m-1 \implies i -m < 0$, that when we take the limit of this expression as $r \to \infty$, that the limit of this is 0.
+
+Back to our original expression, we had that:
+
+$$ \frac{1}{2\pi i} \left(  \int_{-r}^r R(z) dz + \int_{\gamma_2} R(z) dz\right) = \sum_{a \in \tilde{Z}(Q)} \text{Res}(R; a) \implies \int_{-r}^r R(z) dz + \int_{\gamma_2} R(z) dz = 2\pi i \sum_{a \in \tilde{Z}(Q)} \text{Res}(R; a) $$
+
+Taking the limit of both sides as $r \to \infty$, and noticing the right side is a constant, we find that:
+
+$$ \lim_{r \to \infty}  \left(  \int_{-r}^r R(z) dz + \int_{\gamma_2} R(z) dz\right)  = 2\pi i \sum_{a \in \tilde{Z}(Q)} \text{Res}(R; a) \implies \int_{-\infty}^\infty R(z) dz = 2\pi i \sum_{a \in \tilde{Z}(Q)} \text{Res}(R; a)$$]
+
+as desired. It should be clear that the analogous statement for the lower half plane is that
+
+$$  \int_{-\infty}^\infty R(z) dz =- 2\pi i \sum_{a \in \tilde{Z}(Q)} \text{Res}(R; a)$$
+
+where we understand $\tilde{Z}(Q)$ here to be on the lower half plane. This is because although we can construct $\Gamma$ in the same way for the upper half plane, the difference is that to traverse the real line from $-\infty \to \infty$, we would be negatively oriented, and we would have that $\text{Ind}_\Gamma(a) = -1$ for every residue on the lower half plane.
+
+Now, using this to compute $$ \int_{[-\infty,\infty]} \frac{x^2}{1 + x^4} dx$$
+
+we notice that we have poles on the upper half plane at $z = e^{\pi i/4}, e^{3\pi i /4}$. Computing the residues at these points, we notice that if we factor $1 + z^4$, that these must be simple poles. So we compute these via taking limits:
+
+$$\text{Res}(f; e^{\pi i/4}) =  \lim_{z \to  e^{\pi i/4}} (z -  e^{\pi i/4}) \frac{z^2}{(z -  e^{\pi i/4})(z^3 +  e^{\pi i/4} z^2 +  e^{2\pi i/4}z + e^{3\pi i / 4})} = \frac{ e^{2\pi i/4}}{ 4e^{3\pi i/4}} =\frac{1}{4} e^{-\pi i /4} $$
+
+and
+
+$$\text{Res}(f; e^{3\pi i/4}) =  \lim_{z \to  e^{3\pi i/4}} (z -  e^{3\pi i/4}) \frac{z^2}{(z -  e^{3\pi i/4})(z^3 +  e^{3\pi i/4} z^2 +  e^{6\pi i/4}z + e^{9\pi i / 4})} = \frac{e^{6\pi i/4}}{4e^{9\pi i/4}} = \frac{1}{4} e^{-3\pi i/4}$$
+
+Then, we have that:
+
+$$ \int_{-\infty}^\infty  \frac{x^2}{1 + x^4} dx = 2 \pi i \left(\frac{1}{4} e^{-\pi i /4} + \frac{1}{4} e^{-3\pi i /4}\right) = \frac{\pi}{2} ( e^{\pi i /4} +  e^{-\pi i /4}) = \frac{\pi}{\sqrt{2}} $$
+
+\end{proof}
+
+\begin{problem}{Question 3}
+
+Compute
+
+$$\int_0^\infty \frac{dx}{1 + x^n}$$
+
+for $n \geq 2$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+First, we work in the abstract. Suppose that $z_0$ is a pole of a rational function $g/h$, with $g, h$ being holomorphic in an open set $U$ containing $z_0$. Suppose further that $g(z_0) \not = 0, h(z_0) = 0, h'(z_0) \not = 0$. 
+
+Looking at a power series of $h$ around $z_0$, we see that since $h(z_0) = 0$, this must have form:
+
+$$ h(z) = \sum_{i=0}^\infty a_n (z - z_0)^i = \sum_{i=1}^\infty a_n (z - z_0)^i $$
+
+and thus we may factor this as:
+
+$$h(z) = \sum_{i=1}^\infty a_n (z - z_0)^i  = (z - z_0) \sum_{i=0}^\infty a_{n+1} (z - z_0)^i = (z - z_0) \psi(z)$$
+
+where we notice $\psi(z_0) = a_1 = h'(z_0)$. 
+
+We claim that this has residue $g(z_0)/h'(z_0)$. We look at the limit:
+
+$$ \lim_{z \to z_0} \left( \frac{g(z)}{h(z)} - \frac{g(z_0)}{h'(z_0) ( z - z_0)} \right) = \lim_{z \to z_0} \left( \frac{g(z)h'(z_0) ( z - z_0) - g(z_0) h(z)}{h(z)h'(z_0) ( z - z_0)}\right)$$
+
+We notice that if we evaluate $z = z_0$, the fraction has form $\frac{0}{0}$. Thus, we apply L'Hopital's once:
+
+$$ \lim_{z \to z_0} \left( \frac{g(z)h'(z_0) ( z - z_0) - g(z_0) h(z)}{h(z)h'(z_0) ( z - z_0)}\right) = \lim_{z \to z_0} \left( \frac{g'(z)h'(z_0) ( z - z_0) + g(z)h'(z_0) - g(z_0) h'(z)}{h'(z)h'(z_0) ( z - z_0) + h(z)h'(z_0)}\right) $$
+
+This still has form $\frac{0}{0}$, so applying L'Hopital's again:
+
+$$  \lim_{z \to z_0} \left( \frac{g'(z)h'(z_0) ( z - z_0) + g(z)h'(z_0) - g(z_0) h'(z)}{h'(z)h'(z_0) ( z - z_0) + h(z)h'(z_0)}\right) = $$
+$$ \lim_{z \to z_0} \left( \frac{g''(z)h'(z_0) ( z - z_0) + g'(z)h'(z_0) ( z - z_0) + g'(z)h'(z_0) - g(z_0) h''(z)}{h''(z)h'(z_0) ( z - z_0) + h'(z)h'(z_0) + h'(z)h'(z_0)}\right) = $$
+$$ \frac{g'(z_0)h'(z_0) - g(z_0) h''(z_0)}{h'(z_0)^2}$$
+
+which, because we assumed $h'(z_0) \not = 0$ is not of indeterminant form. Thus, for this value of $c_1 = g(z_0)/h'(z_0)$, $f - c_1 (z  - z_0)^{-1}$ has a removable singularity at $z_0$, and $g/h$ has a simple pole at $z_0$.
+
+Thus, we now look at $f(z) = \frac{1}{1 + z^n}$. We see that since $1 + z^n$ splits as the $n$-th roots of $-1$, that they must all be simple poles. Further, from the work done above, if we identify $g(z) = 1, h(z) = 1 + z^n$, the residue at the pole $z_0$ must be:
+
+$$  \frac{g(z_0)}{h'(z_0)} =  \frac{1}{nz_0^{n-1}}$$
+
+Then, in the same general strategy as question 2, first, we fix an $n$. We consider the path $\Gamma$ that goes $[0,r], \{ re^{t i} : 0 \leq t \leq 2\pi/n \},[re^{2\pi i/n}, 0]$. Call these paths $\gamma_1, \gamma_2, \gamma_3$ respectively. We see that since the poles are the $n$-th roots of $-1$, that they must be of form $e^{\pi i/n + 2\pi k /n}$ for $0 \leq k \leq n-1$. Then, the only residue within $\Gamma$ is at $e^{i\pi/n}$, with the value of $(ne^{i\pi (n-1)/n})^{-1}$, so long as $r > 1$. Thus, by the residue theorem, we have that since $\text{Ind}_\Gamma(a) = 1$ for everything inside $\Gamma$:
+
+$$\frac{1}{2\pi i} \left( \int_{\gamma_1} f(z) dz + \int_{\gamma_2} f(z) dz + \int_{\gamma_3} f(z) dz \right) = \frac{1}{ne^{i\pi (n-1)/n}} $$
+
+Now, since we will be taking $r \to \infty$, we may neglect $\int_{\gamma_2}$ for the same reason as the last problem, that as $r \to \infty$, $\Vert f \Vert_\infty * \int \gamma'(t) dt \to 0$.
+
+We will look at $\int_{\gamma_3} f(z) dz$ first.
+
+Evaluating this integral, we find that using the parametrization $\gamma(t) = tre^{2\pi i/n}, 0 \leq t \leq 1$ :
+
+$$ \int_{\gamma_3} f(z) dz = \int_{\gamma_3} \frac{1}{1 + z^n} dz = \int_1^0 \frac{1}{1 + (tre^{2\pi i /n})^n} re^{2\pi i/n} dt = re^{2\pi i/n}  \int_0^1 \frac{1}{1 + t^nr^ne^{2\pi i}}dt =  -re^{2\pi i/n}  \int_1^0 \frac{1}{1 + t^nr^n}dt$$
+
+Ok, let's now look at $\int_{\gamma_1} f(z) dz$, with the parametrization $\gamma(t) = rt, 0 \leq t \leq 1$:
+
+$$ \int_{\gamma_1} f(z) dz = \int_0^1 \frac{1}{1 + r^nt^n} r dt = r \int_0^1 \frac{1}{1 + t^nr^n}dt$$
+
+Thus, we notice that:
+
+$$ \int_{\gamma_3} f(z) dz = -e^{2\pi i/n} \int_{\gamma_1} f(z) dz$$
+
+So, taking the limit as $r \to \infty$, we get that:
+
+$$ \frac{1}{2\pi i} \left( \int_{\gamma_1} f(z) dz + \int_{\gamma_2} f(z) dz + \int_{\gamma_3} f(z) dz \right) = \frac{1}{ne^{i\pi (n-1)/n}} \implies \int_0^\infty f(x) dx -e^{2\pi i/n} \int_0^\infty f(x) dx = \frac{2\pi i}{ne^{i\pi (n-1)/n}}  $$
+
+Therefore:
+
+$$  \int_0^\infty f(x) dx = \frac{\pi}{n} \frac{2i}{e^{i\pi (n-1)/n} (1 - e^{2i\pi/n})} = \frac{\pi}{n} \frac{2i}{e^{i\pi (n-1)/n} - e^{i\pi (n+1)/n}} =\frac{\pi}{n} \frac{2i}{e^{i\pi /n} - e^{i\pi/n} } $$
+
+where we use the fact that $e^{i\pi} = -1$. Now, here, we use the fact that $e^{iz} = \cos(z) + i \sin(z)$ to see that:
+
+$$\frac{e^{iz} - e^{-iz}}{2i} = \frac{\cos(z) + i \sin(z) -  [\cos(-z) + i \sin(-z)] }{2i} =  \frac{\cos(z) + i \sin(z) -  \cos(z) + i \sin(z)] }{2i} = \frac{2i \sin(z)}{2i} = \sin(z)$$
+
+Thus:
+
+$$  \int_0^\infty f(x) dx = \frac{\pi}{n} \frac{2i}{e^{i\pi /n} - e^{i\pi/n} } = \frac{\pi}{n} \frac{1}{\sin{\pi/n}}$$
+
+\end{proof}
+
+\begin{problem}{Question 4}
+
+Suppose $\Omega_1, \Omega_2 \subset \mathbb{C}$ are plane regions, $f,g$ non-constant complex functions defined on $\Omega_1$ and $\Omega_2$ respectively, and $f(\Omega_1) \subset \Omega_2$. Let $h = g \circ f$. If $f,g$ are holomorphic, we know that $h$ is holomorphic. Suppose that $f, h$ are holomorphic. Can we conclude anything about $g$? How about if $g,h$ are holomorphic?
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+First, we look at the case where $g,h$ are holomorphic, but $f$ need not be.
+
+Take $\Omega_1 = \Omega_2 = \mathbb{C}$. Take $f = \sqrt{r} e^{i \theta/2}$, for $-\pi \geq \theta < \pi$, $g = z^2$, and $h = z$.
+
+It should be clear, that we have:
+
+$$ h = g(f(z)) = g( \sqrt{r} e^{i \theta/2}) = (\sqrt{r} e^{i \theta/2})^2 = r e^{i \theta} = z $$
+
+and, since $g,h$ are polynomial, they are entire. However, looking at, say, $r = 1$, if we take the path to $z = -1$, via $\theta \to \pi$, we get that:
+
+$$ f^+(r, \theta)= \sqrt{r} e^{i\theta/2} = \sqrt{r} (\cos(\pi/2) + i \sin(\pi/2))$$
+
+On the other hand, if we take the path the other way, as $\theta \to -\pi$, we find:
+
+$$ f^-(r, \theta)= \sqrt{r} e^{i\theta/2} = \sqrt{r} (\cos(-\pi/2) + i \sin(-\pi/2)) =  \sqrt{r} (\cos(\pi/2) - i \sin(\pi/2))$$
+
+Thus, $f$ is not continous as $z \to -1$, and thus, $f$ may not be holomorphic. So, we may find $f,g,h$ such that $g,h$ are holomorphic,  $h = g(f(z))$, but $f$ need not be holomorphic.
+
+Now, suppose $f,h$ are holomorphic over $\Omega_1$. We claim that $g$ is holomorphic on $f(\Omega_1)$. Since holomorphicity is defined via a limit, or equivalently, at a small enough neighborhood, it suffices to show that for any point $w_0 \in f(\Omega_1)$, that $g$ is holomorphic in some neighborhood of $w_0$.
+
+First, fix some point $w_0 \in f(\Omega_1)$, and fix some point $z_0 \in \Omega_1$ such that $f(z_0) = w_0$. We notice that since constants are holomorphic, and the sum and composition of holomorphic functions are also holomorphic, that we may assume that $w_0, z_0 = 0$, since we may consider the related function $\tilde{f}(z) = f(z + z_0) - w_0, \tilde{g}(z) = g(w + w_0) - g(w_0)$. Certainly, $\tilde{f}$ is holomorphic, since $\tilde{f} =  (f \circ z + z_0) - w_0$, and if $\tilde{g}$ were holomorphic, we may express $g =  (\tilde{g} \circ w - w_0) + g(w_0)$ and thus $g$ would be holomorphic as well.
+
+Now, first suppose $f'(0) \not = 0$. Then, by 10.30, we may find a holomorphic inverse $\psi$, defined on an open set $V$ containing $w_0$ that maps back to a neighborhood $U$ of $z_0$. Because $\psi$ is a holomorphic inverse, we have that $f(\psi(z)) = z$ for $z \in V$. Thus, we have that, for $w_0 \in V$:
+
+$$ g(w_0) = g(f(\psi(w_0))) = h(\psi(w_0)) $$
+
+Thus, since on a neighborhood of $w_0$, we can identify $g$ as a composition of holomorphic functions $\psi, h$, $g$ is holomorphic as well.
+
+Now, supose $f'(0) = 0$. Then, by 10.32, and by the hint, since we can identify:
+
+$$ f = 0 + [\phi(z)]^m $$ for some holomorphic function $\phi$ on a neighborhood of $z_0$, we can take this as a local holomorphic change of coordinates, and examine the related function $f(\phi(z)) = z^m$, it is sufficient to consider $f = z^m$. Note that we have that $m \geq 2$, since because $f(0) = 0, f'(0) = 0$, the order of the zero is at least 2.
+
+Since $h$ is a holomorphic function, we can identify a neighborhood of $z_0 = 0$ such that the power series
+
+$$ h(z) = \sum_{k=1}^\infty c_k z^k $$ converges. Now, take a neighborhood that we may let $f = z^m$ and that the power series for $h$ converges. On such a neighborhood, we have that for a m-th root of unity $\alpha$:
+
+$$ h(\alpha z) = g(f(\alpha z)) = g((\alpha z)^m) = g(z^m) = g(f(z)) = h(z) $$
+
+Then applying this to the power series:
+
+ $$ h(\alpha z) = \sum_{k=1}^\infty c_k (\alpha z)^k =  \sum_{k=1}^\infty c_k (\alpha z)^k = \sum_{k=1}^\infty c_k \alpha^k z^k =  \sum_{k=1}^\infty c_k z^k$$
+
+but, for this to be true on the entire neighborhood, we must have then that:
+
+$$ c_k = c_k \alpha^k$$ for each $k$. But, this can only be true if $c_k = 0$ if $m \nmid k$. Then, we can express $h$ as:
+
+$$h(z) = \sum_{k=1}^\infty c_{km} z^{km}$$
+
+But, since $h(z) = g(z^m)$, we have that:
+
+$$ h(z) = \sum_{k=1}^\infty c_{km} z^{km} \implies g(z^m) = \sum_{k=1}^\infty c_{km} z^{km} \implies g(z) = \sum_{k=1}^\infty c_{km} z^{k}$$
+
+Then, $g$ has a power series representation on this neighborhood, and thus, by 10.6, is holomorphic.
+
+
+\end{proof}
+
+
+\begin{problem}{Question 5}
+
+Suppose $\Omega$ is a region, $f_n \in \mathcal{H}(\Omega)$ for $n \geq 1$. Suppose further that none of the $f_n$ has a zero in $\Omega$, and $f_n \to f$ uniformly on compact subsets of $\Omega$. Prove that either $f$ has no zero in $\Omega$ or $f(z) = 0$ on all of $\Omega$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+Suppose that $f(z) \not = 0$, but there exists $z_0 \in \Omega$ such that $f(z_0) = 0$. Then, by 10.18, $z_0$ is an isolated point. Thus, we can find an $r > 0$ such that on the closed disk (and thus, compact) $\overline{D}(z_0,r)$, $f(z) = 0 \iff z = z_0$.
+
+Clearly, the (positively-oriented) boundary $\gamma = \delta\overline{D}$ is a closed path in $\Omega$, with $\text{Ind}_{\gamma}(\alpha) = 0$ for all $\alpha \not \in \Omega$. Further, $\text{Ind}_{\gamma}(\alpha) = 0,1$ for any $\alpha \in \Omega \setminus \gamma^*$. Further, since $f_n \to f$ uniformly on compact subsets, by 10.28, we have that $f \in \mathcal{H}(\Omega)$. Thus, we may apply Rouche's Theorem.
+
+By hypothesis, since $\overline{D}(z_0,r)$ is compact, we have that $f_n \to f$ uniformly here. Further, since the boundary is compact, $|f|$ obtains a minimum on $\delta \overline{D}$, which we will call $\delta_0$. Moreover, since $|f| > 0$ except at $z_0$, we must have that $|f(z)| \geq \delta_0 > 0$ for all $z \in \delta \overline{D}$.
+
+Now, because $f_n \to f$ uniformly on compact subsets, we may find a $N > 0$ such that for all $n \geq N$, $|f(z) - f_n(z)| \leq | f - f_n |_\infty < \delta_0 \leq |f(z)|$. Then, by Rouche's Theorem (10.43(b)), we have that the zeros of $f_n$, $N_{f_n}$, counted with multiplicity, are the same as the zeros of $f$, $N_f$, also counted with multiplicity, on $D(z_0,r)$. However, we have that by hypothesis, that $N_{f_n} = 0$ and $N_f = 1$, a contradiction.
+
+Therefore, either $f$ is identically 0, or $f$ has no zeros on $\Omega$.
+
+\end{proof}
+
+\end{document}

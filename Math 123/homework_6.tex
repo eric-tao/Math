@@ -1,0 +1,109 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{float}
+\usepackage{bbm}
+
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+\newcommand{\vol}{{\text{Vol}}}
+
+\newenvironment{problem}[2][]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#6}
+\author{Eric Tao\\
+Math 123: Homework \#6}
+\maketitle
+
+\begin{problem}{Question 1}
+
+Let $L = D - W$ be the unnormalized graph Laplacian associated to a graph $\mathcal{G} = (V,W)$ on points $V = \{ x_i \}_{i=1}^n$ with symmetric weight matrix $W$ and diagonal degree matrix $D$. Let $\{ C, \overline{C} \}$ be any partition of $V$, and let:
+
+$$ f^C_i = \begin{cases} -\sqrt{\vol(\overline{C})/\vol(C)} & \text{ if } x_i \in C \\ -\sqrt{\vol(C)/\vol(\overline{C})} & \text{ if } x_i \in \overline{C} \end{cases} $$
+
+(a) Prove that $\langle Df^C, \mathbbm{1} \rangle = 0$.
+
+(b) Prove that $(f^C)^T D f^C = \vol(V)$.
+
+(c) Prove that $(f^C)^T L f^C = \vol(V) \cdot \text{Ncut}(C, \overline{C})$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+\end{proof}
+
+\begin{problem}{Question 2}
+
+Recall that one construction of the weight matrix for a graph on data points $\{ x_i \}_{i=1}^n$ is to use the Gaussian kernel 
+
+$$W_{ij} = \begin{cases} \exp(-\Vert x_i - x_j \Vert_2^2/\sigma^2) &  i \not = j \\ 0 & i = j \end{cases}$$
+
+for some choice of $\sigma > 0$.
+
+(a) What happens to the resulting Laplacian matrix as $\sigma \to 0$?
+
+(b) What happens to the resulting Laplacian matrix as $\sigma \to \infty$?
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+Qualitatively, we notice that as $\sigma \to 0$, then this amounts to narrowing the Gaussian, and making it sharper around $\Vert x_i - x_j \Vert_2^2 = 0$. We can imagine in the limiting case that it has the same effect as the Dirac measure, where we assign the value to be 1 if and only if the values are the same. In such a limiting case, we would see that the Laplacian matrix would converge towards a matrix of all 0s (assuming each data point takes on distinct values), as we may pick a $\sigma$ such that $\Vert x_i - x_j \Vert_2^2 < \epsilon$.
+
+Formally: Let $\epsilon > 0$ be given. Since we know that as $t \to \infty, e^{-t} \to 0$, we can choose $\delta$ such that so long as $t > \delta$, $e^{-t} < \epsilon$.
+
+WLOG, choose $x_i = 0$, and fix some $x_j$ such that $x_j \not = x_i$.Of course the sequence $\Vert x_j \Vert_2^2 n \to \infty$ for $n \in \mathbb{N}, n \to \infty$. Thus, we may choose $N \in \mathbb{N}$ such that for all $m > N$, $\Vert x_j \Vert_2^2 m > \delta$. Further, since we know that as $x \to 0, 1/x \to \infty$, we may choose $L$ such that for all $l > L$, $1/l > m$.
+
+Choose $\sigma$ such that  $\sigma > L+1$. Then, we have that:
+
+$$ \frac{\Vert x_j \Vert_2^2}{\sigma^2} > \frac{\Vert x_j \Vert_2^2}{(L+1)^2} > \Vert x_j \Vert_2^2 m > \delta$$
+
+Thus, we have that for this choice of $\sigma$, $e^{-\Vert x_j \Vert_2^2/\sigma^2} < \epsilon$. Since this can be done for any $x_i \not = x_j$, we have that these weights go to 0 for all distinct points.
+
+We can then conclude that all edges between distinct points go to a weight of 0, which implies that, assuming our points are distinct, and that we do not consider any edges from $x_i \to x_i$, that is, any loops, that $L$ converges to the 0 matrix.
+
+(b)
+
+In the opposite case, where we take $\sigma \to \infty$, we expect instead for edge weights to converge to the value 1. WLOG, choose $x_i = 0$, and fix some $x_j$. Let $\epsilon > 0$ be given. Since the exponential is continuous, there exists $\delta > 0$ such that $ \Vert 1  - e^{t} \Vert < \epsilon$ for all $|t| < \delta$.
+
+Now, by the Archimidean principle, there exists an $N \in \mathbb{N}$ such that $\frac{\Vert x_j\Vert_2^2 }{N} < \delta$. Consider $\sigma > N$. Then, we have that:
+
+$$ \frac{\Vert x_j \Vert_2^2}{\sigma^2}\leq  \frac{\Vert x_j \Vert_2^2}{N^2} <  \frac{\Vert x_j \Vert_2^2}{N} < \delta$$
+
+Thus, for any $\sigma > N$, we have that $\Vert 1 - e^{\Vert x_j \Vert_2^2/\sigma^2} \Vert < \epsilon$, and we are done. Since this can be done for all $x_i, x_j$ in the limit, this works for every point in our data set, where we're not concerned about issues on the supremum being equal to $\infty$, since we are in the limiting cases.
+
+Thus, in terms of the Laplacian matrix, we expect things to converge to $n$ on the diagonal, and $-1$ on every other entry, where $n$ is the dimensionality of the Laplacian, or, equivalently, the number of data points.
+
+
+
+\end{proof}
+
+\begin{problem}{Question 3}
+
+Load the dataset "SalinasA\_corrected.mat" and "Salinas-S-groundtruth".
+
+(a) Run spectral clustering on this data, using a sparse Laplacian with different numbers of nearest neighbors and $K = 6$ clusters. How do the results compare to the ground truth data?
+
+(b) Plot the first 10 eigenvalues of the data for different choices of $\sigma$. What does the eigengap estimate as the number of cluster for these choices of $\sigma$?
+
+(c) Compare the projections onto the first three principle components with the first three Laplacian eigenvectors by plotting both sets in different figures using 'scatter3'. How do the representations differ qualitatively?
+
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+\end{proof}
+
+
+
+\end{document}
