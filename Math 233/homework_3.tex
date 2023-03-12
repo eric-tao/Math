@@ -1,0 +1,164 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+
+\newenvironment{problem}[2][]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#3}
+\author{Eric Tao\\
+Math 233: Homework \#3}
+\maketitle
+
+\begin{problem}{Question 1}
+
+Let $u$ be a harmonic function on a region $\Omega$. What can we say about the set of points such that $\nabla u = 0$, that is, the set of points where $u_x = u_y = 0$?
+
+\end{problem}
+\begin{proof}[Solution]
+
+Recall that if $u$ is a real harmonic function, then we may identify it as the real part of a holomorphic function $f(x,y) = u(x,y) + i v(x,y)$ locally. Suppose $u_x = u_y = 0$. Then, by the Cauchy-Riemann equations, we have that at these points, $v_x = v_y = 0$. Further, identifying $f'(z) = \partial f(z)$ for $\partial = \frac{1}{2}\left( \frac{\partial}{\partial x} - i \frac{\partial}{\partial y} \right)$, we have that:
+
+$$ f'(z) = \partial f(z) = \frac{1}{2}\left( \frac{\partial}{\partial x} - i \frac{\partial}{\partial y} \right) (u + iv) = \frac{1}{2} \left[ (u_x+ v_y) + i(v_x - u_y) \right]$$
+
+So, we have that at points where $u_x = u_y = 0$, we have that $f'(z) = 0$. But, since $f$ is holomorphic on this neighborhood, so is $f'$. Therefore, $\{ (x,y) : \nabla u(x,y) = 0 \}$ is either all of the neighborhood, or has no limit points. Since $\Omega$ is a region, we can always patch our entire region with overlapping neighborhoods, so this extends to all of $\Omega$.
+
+Now, if $u$ is a complex-valued harmonic function, we simply identify it as $u = w + iv$, where $w, v$ are the real and imaginary portions. It should be clear that if $u$ is harmonic, so must $w,v$ as:
+
+$$u_{xx} + u_{yy} = w_{xx} + i v_{xx} + w_{yy} + v_{yy} = (w_{xx}+ w_{yy}) + i (v_{xx} + v_{yy}) = 0 \implies w_{xx}+ w_{yy} = 0, v_{xx} + v_{yy} = 0 $$
+
+Then, suppose $u_x = u_y = 0$. At such points, we would have that $u_x = w_x + i v_x = 0, u_y = w_y + i v_y = 0 \implies w_x = w_y = 0, v_x = v_y = 0$. But, by the previous work, since $v,w$ are real harmonic functions, they either have no limit points, or are the full space. It should be clear then, that the set of points where $\nabla u = 0$ is simply the union of these sets. It too may only be the full space or not have limit points, as if it did, then we could construct a subsequence of points coming from either the set where $\nabla v = 0$, or  $\nabla w = 0$, which would imply that the original set had a limit point, a contradiction.
+\end{proof}
+
+\begin{problem}{Question 2}
+
+Let $u,v$ be real harmonic functions on a plane region $\Omega$. Under what conditions is $uv$ harmonic?
+
+Further, show that $u^2$ may not be harmonic on $\Omega$, unless $u$ is constant. 
+
+Further, for which $f \in \mathcal{H}(\Omega)$ is $| f|^2$ harmonic?
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+We start by proving that if we take the Laplacian of $uv$, $\Delta(uv)$, then this is equal to $2 \nabla u \cdot \nabla v$:
+
+$$ \Delta(uv) = (uv)_{xx} + (uv)_{yy} = (u_x v + uv_x)_x + (u_yv + uv_y)_y = u_{xx}v + u_x v_x + u_x v_x + u v_{xx} + u_{yy} v + u_y v_y + u_y v_y + u v_{yy} $$
+
+Because $u,v$ are harmonic, we know that $u_{xx} + u_{yy} =0, v_{xx} + v_{yy} = 0$, so:
+
+$$ = v(u_{xx} + v_{xx}) + 2 u_x v_x + u (v_{xx} + v_{yy}) + 2 u_y v_y = 2(u_x v_x + u_y v_y) = 2\langle u_x, u_y \rangle \cdot \langle v_x, v_y \rangle = 2 \nabla u \cdot \nabla v$$
+
+Here, it should be clear then that if $u^2$ is not constant, then $u^2$ is not harmonic. We have that $\Delta(u^2) = \Delta(uu) = 2 \nabla u \cdot \nabla u = 2 | \nabla u |^2$. So, suppose $u$ is harmonic, then for $\Delta(u^2) = 0$, this implies that $|\nabla u| = 0$ for all $z \in \Omega$. However, this implies immediately that $u$ is constant, and we have the contrapositive.
+
+Now, of course, if $u$ or $v$ is constant, suppose $u = a$ is constant, then of course $uv = av$ is harmonic, being a scalar multiple of a harmonic function. So, assume $u,v$ both non-constant.
+
+Define the set $A = \{ z \in \Omega : \nabla u (z) = 0 \text{ or } \nabla v(z) = 0 \}$. By the first problem, we know that neither of those sets have limit points in $\Omega$. Since both of those are closed conditions, $A$ is the union of two closed sets, and thus closed. Thus, consider $\Omega' = \Omega \setminus A$. 
+
+This is an open set, of course, being open minus closed, or equivalently, open intersect open. Further, it must be connected, since the points of $A$ have no limit points, and are at most countable. Suppose $x,y \in \Omega'$, and consider a path between them in $\Omega$. This may have at most countably many disconnections when we move to $\Omega'$. Since $A$ has no limit points, we may restrict down into a small enough punctured disk around any connection and take a path there - this punctured disk must be completely contained within $\Omega'$ due to $A$ having no limit points. Since we have merely countably many of these issues, we are assured that we can patch this. Finally, this must be dense because let $U$ be any open set in $\Omega$. Choose any $a \in U$. There exists a disk $D(a,r) \subset U$, with uncountable cardinality. But, $A$ is merely countable, thus $D(a,r) \setminus A \not = \emptyset$. Thus, since $A \cup \Omega' = \Omega$, we must have that $D(a,r) \cap \Omega' \not  = \emptyset$. Thus, we have that $\Omega'$ is a region.
+
+Now, we have that since $\Delta(uv) = 0$, we must have that $u_x v_x + u_y v_y = 0 \implies u_x v_x = -u_y v_y$. Since we wish $uv$ to be harmonic, this must hold for all $z \in \Omega'$, which leads us to two cases, since $u_x, u_y, v_x, v_y \not = 0$ on $\Omega'$:
+
+Case 1:
+
+$$ \begin{cases} v_x = -\lambda u_y \\ v_y = \lambda u_x \end{cases}$$
+
+It should be clear that due to the definition of $\Omega'$, that $\lambda \not = 0 $. In particular, since $u,v$ are harmonic on $\Omega$, they are continuous on all of $\Omega$, with continuous first derivatives. Thus, these must actually hold for all of $\Omega$, since $u_x,u_y, v_x, v_y$. Thus, we can say that the function
+
+$$ f = \lambda u + iv $$ is holomorphic, since these are exactly the Cauchy-Riemann equations for $u' = \lambda u, v' = v$. Thus, in this case, $uv$ is harmonic if we may find a $\lambda$ such that $u,v$ are real and imaginary parts of a holomorphic function.
+
+Case 2:
+
+$$ \begin{cases} u_x = -\lambda u_y \\ v_y = \lambda v_x \end{cases}$$
+
+Consider the first equation. This implies that $u_{xx} = -\lambda u_{yx}$ and $u_{yy} = -\frac{1}{\lambda} u_{xy}$. Thus, in such a case, since $u$ is harmonic, we must have that:
+
+$$ u_{xx} + u_{yy} = 0 \implies  -\lambda u_{yx} - \frac{1}{\lambda} u_{xy} = 0 \implies u_{xy} = 0$$
+
+Similarly:
+
+$$ v_{xx} + v_{yy}= 0 \implies \lambda v_{yx} + \frac{1}{\lambda} v_{xy} = 0 \implies v_{xy} = 0$$
+
+However, since $u_x, u_y \not = 0$ on $\Omega'$, this implies that $u_x = f(x)$ since $u_{xy} = 0$ and $u_y = g(y)$ since $u_{yx}= 0$. Then, we must have that $u =  F(x) + G(y)$ for $F' = f, G' = g$, and due to harmonicity, we further have that $f'(x) + g'(y) = 0$. This can only be true on all of $\Omega'$ if $f', g'$ are constant, which implies that $F, G$ are at most quadratics. However, since we started with $u_x = -\lambda u_y$, this implies that $F'(x) = -\lambda G'(y)$, and if $F,G$ are polynomials, this implies then that $F', G'$ are constants and thus $F,G$ are linear. Thus, we have that:
+
+$$u = -\lambda ax + a y + b$$
+
+Running through the same logic with $v$, we see that:
+
+$$ v =cx +\lambda c y + d $$
+
+However, here, we notice that:
+
+$$\begin{cases} u_x = -\lambda a \\ u_y = a \\ v_x = c \\ v_y = \lambda c \end{cases}$$
+
+Choosing $\lambda' = - \frac{c}{a}$, we see that:
+
+$$\begin{cases} -\lambda' u_y = \frac{c}{a} a = c = v_x \\ \lambda' u_x = -\frac{c}{a} \cdot - \lambda a =\lambda c = v_y \end{cases} $$
+
+and thus we are back in case 1. Thus, in either case, we see that $uv$ is harmonic for $u,v$ non-constant if there exists a $\lambda \not = 0$ such that $\lambda u + iv$ is holomorphic.
+
+Now, let $f \in \mathcal{H}(\Omega)$, and consider $|f|^2$. Explicitly taking derivatives:
+
+$$\frac{\partial^2}{\partial x^2}|f|^2 = \frac{\partial^2}{\partial x^2}( u^2 + v^2 )= \frac{\partial}{\partial x} (2u u_x + 2v v_x) = 2( u_x^2 + u u_{xx} + v_x^2 + v v_{xx}) $$
+
+Of course then, the same equation will hold for the $y$, just switching the labels. Thus:
+
+$$ 2( u_x^2 + u u_{xx} + v_x^2 + v v_{xx}) + 2( u_y^2 + u u_{yy} + v_y^2 + v v_{yy}) = 2( u(u_{xx} + u_{yy}) + u_x^2 + u_y^2 + v(v_{xx} + v_{yy}) + v_x^2 + v_y^2 ) = 2(u_x^2 + u_y^2 + v_x^2 + v_y^2)$$
+
+where we've used the fact that because $u,v$ come from the real, imaginary parts of a holomorphic function, $u,v$ are harmonic.
+
+Now, applying the Cauchy-Riemann equations, we obtain:
+
+$$2(u_x^2 + u_y^2 + v_x^2 + v_y^2) = 2(2 v_x^2 + 2 v_y^2)  = 4 (v_x^2 + v_y^2) = 4(u_x^2 + u_y^2) $$
+
+However, since $u$ is a real-valued function, so must be $u_x, u_y$. Then, since $u_x^2, u_y^2 \geq 0$, for this to be harmonic, we must have $u_x,u_y = 0$. But that implies that $u$ and thus $v$, are constants. Thus, we have that $|f|^2$ is harmonic iff $f$ is constant.
+\end{proof}
+
+\begin{problem}{Question 3}
+
+Suppose $f$ is a complex function on a region $\Omega$, and both $f, f^2$ are harmonic on $\Omega$. Prove that either $f, \overline{f}$ must be holomorphic on $\Omega$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+It is clear that if $f = a \in\mathbb{C}$, that is, constant, then $f, f^2$ are harmonic and $f, \overline{f}$ are both holomorphic. Thus, we restrict ourselves to $f$ non-constant.
+
+
+
+\end{proof}
+
+\begin{problem}{Question 4}
+
+Let $\Omega$ be a region, and $f_n \in \mathcal{H}(\Omega)$ for all $n$. Set $u_n = \Re(f_n)$, and suppose $u_n$ converges uniformly on compact subsets of $\Omega$ and that there exists $z \in \Omega$ such that $f_n(z)$ converges. Prove that $f_n$ converges uniformly on compact subsets of $\Omega$.
+
+\end{problem}
+ 
+\begin{proof}[Solution]
+
+\end{proof}
+  
+
+\begin{problem}{Question 5}
+Let $\Omega$ be a region, $K$ a compact subset of $\Omega$, and fix some $z_0 \in \Omega$. Let $u$ be any positive harmonic function. Prove that there exists $\alpha, \beta > 0$ such that
+
+$$ \alpha u(z_0) \leq u(z) \leq \beta u(z_0) $$
+
+for all $z \in K$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+\end{proof}
+
+\end{document}

@@ -25,7 +25,7 @@ Math 123: Homework \#6}
 
 Let $L = D - W$ be the unnormalized graph Laplacian associated to a graph $\mathcal{G} = (V,W)$ on points $V = \{ x_i \}_{i=1}^n$ with symmetric weight matrix $W$ and diagonal degree matrix $D$. Let $\{ C, \overline{C} \}$ be any partition of $V$, and let:
 
-$$ f^C_i = \begin{cases} -\sqrt{\vol(\overline{C})/\vol(C)} & \text{ if } x_i \in C \\ -\sqrt{\vol(C)/\vol(\overline{C})} & \text{ if } x_i \in \overline{C} \end{cases} $$
+$$ f^C_i = \begin{cases} -\sqrt{\vol(\overline{C})/\vol(C)} & \text{ if } x_i \in C \\ \sqrt{\vol(C)/\vol(\overline{C})} & \text{ if } x_i \in \overline{C} \end{cases} $$
 
 (a) Prove that $\langle Df^C, \mathbbm{1} \rangle = 0$.
 
@@ -36,6 +36,62 @@ $$ f^C_i = \begin{cases} -\sqrt{\vol(\overline{C})/\vol(C)} & \text{ if } x_i \i
 \end{problem}
 
 \begin{proof}[Solution]
+
+(a)
+
+We notice, that this amounts to summing up the components of $Df^C$. First, consider some $x_i$ such that $x_i \in C$. Then, we have that, with the notation $W(x_i, x_j) = w_{ij}$:
+
+$$(Df^C)_i = \sum_{x_j \in \mathcal{G}}  W(x_i, x_j) \cdot -\sqrt{\vol(\overline{C})/\vol(C)} $$
+
+Summing over $x_i \in C$, we find that:
+
+$$ \sum_{x_i \in C} (Df^C)_i =  \sum_{x_i \in C}  \sum_{x_j \in \mathcal{G}}  W(x_i, x_j) \cdot -\sqrt{\vol(\overline{C})/\vol(C)}$$
+
+Here, we notice though, that, by definition, the double summation is exactly equal to $\vol(C)$! Thus, we have that:
+
+$$ \sum_{x_i \in C} (Df^C)_i = - \vol(C) \cdot \sqrt{\vol(\overline{C})/\vol(C)} = - (\vol(C) \vol(\overline{C}))^{1/2} $$
+
+It is not hard to see that for $x_i \in \overline{C}$, that we get a similar result:
+
+$$ \sum_{x_i \in \overline{C}} (Df^C)_i = \vol(\overline{C}) \cdot \sqrt{\vol(C)/\vol(\overline{C})} =  (\vol(C) \vol(\overline{C}))^{1/2}$$
+
+Thus, summing over all $x_i$ in $(Df^C)_i$, we find that:
+
+$$\sum_{x_i \in \mathcal{G}} (Df^C)_i =  \sum_{x_i \in C} (Df^C)_i +  \sum_{x_i \in \overline{C}} (Df^C)_i =  - (\vol(C) \vol(\overline{C}))^{1/2} +  (\vol(C) \vol(\overline{C}))^{1/2} = 0$$
+
+as desired.
+
+(b)
+
+In a similar fashion to (a), we will look at this term by term. We already found that, for $x_i \in C$, that $(Df^C)_i = \sum_{x_j \in \mathcal{G}}  W(x_i, x_j) \cdot -\sqrt{\vol(\overline{C})/\vol(C)} $. Then, we have that in the inner product with $(f^C)^T$, the component that corresponds to this component will multiply to find:
+
+$$  -\sqrt{\vol(\overline{C})/\vol(C)} \cdot \left( \sum_{x_j \in \mathcal{G}}  W(x_i, x_j) \cdot -\sqrt{\vol(\overline{C})/\vol(C)} \right) = \frac{\vol(\overline{C})}{\vol(C)} \cdot \sum_{x_j \in \mathcal{G}}  W(x_i, x_j) $$
+
+Then, summing over the $x_i \in C$, we find that:
+
+$$ \sum_{x_i \in C} \frac{\vol(\overline{C})}{\vol(C)} \cdot \sum_{x_j \in \mathcal{G}}  W(x_i, x_j) =  \frac{\vol(\overline{C})}{\vol(C)} \sum_{x_i \in C} \sum_{x_j \in \mathcal{G}} W(x_i, x_j) = \frac{\vol(\overline{C})}{\vol(C)} \vol(C) = \vol(\overline{C})$$
+
+Without writing it out, it should be clear that in the same way, if $x_i \in \overline{C}$, then summing over those, we retrieve $\vol{C}$.
+
+Thus, we have that:
+
+$$ (f^C)^T D f^C = \sum_{x_i \in C}\left(  \frac{\vol(\overline{C})}{\vol(C)} \cdot \sum_{x_j \in \mathcal{G}}  W(x_i, x_j) \right) +  \sum_{x_i \in \overline{C}} \left( \frac{\vol(C)}{\vol(\overline{C})} \cdot \sum_{x_j \in \mathcal{G}}  W(x_i, x_j)\right) = \vol(\overline{C}) + \vol(C) =$$
+$$ \sum_{x_i \in \overline{C}, x_j \in \mathcal{G}} W(x_i, x_j) + \sum_{x_i \in C, x_j \in \mathcal{G}} W(x_i, x_j) = \sum_{x_i, x_j \in \mathcal{G}} W(x_i, x_j) = \vol(G)$$
+
+(c)
+
+We recall from homework 5, question 2, we found that for any vector $y$, that $y^T L y = \frac{1}{2} \sum_i \sum_j w_{ij} (y_i - y_j)^2$. Applying this for $y = f^C$, we have that:
+
+$$ (f^C)^T L f^C = \frac{1}{2}  \sum_i \sum_j w_{ij} ((f^C)_i - (f^C)_j)^2$$
+
+Clearly, if $i = j$, this value is 0. Further, if $x_i, x_j \in C$, or if $x_i, x_j \in \overline{C}$, then of course we have that $(f^C)_i  =  (f^C)_j$, and thus disappears. Lastly, we notice that this double counts everything, and that under interchange of $x_i, x_j$, the value is unchanged due to for $x_i \in C, x_j \in \overline{C}$, $ ((f^C)_i - (f^C)_j)^2 =  ((f^C)_j - (f^C)_i)^2$. So, we can say that:
+
+$$(f^C)^T L f^C = \frac{1}{2}  \sum_i \sum_j w_{ij} ((f^C)_i - (f^C)_j)^2 = \sum_{x_i \in C, x_j \in \overline{C}} w_{ij} \left(\sqrt{\frac{\vol(\overline{C})}{\vol(C)}}+ \sqrt{\frac{\vol(C)}{\vol(\overline{C})}}\right)^2 =$$
+
+$$  \sum_{x_i \in C, x_j \in \overline{C}} w_{ij} \left( \frac{\vol(\overline{C})+ \vol(C)}{\sqrt{\vol(C)\vol(\overline{C})}} \right)^2 = \sum_{x_i \in C, x_j \in \overline{C}} w_{ij}\vol(G) \frac{\vol(\overline{C})+ \vol(C)}{\vol(C)\vol(\overline{C})}=$$ 
+$$\vol(G) \sum_{x_i \in C, x_j \in \overline{C}}w_{ij} \left( \frac{1}{\vol(C)} + \frac{1}{\vol(\overline{C})} \right) = \vol(G) \cdot \text{Ncut}(C,\overline{C}) $$
+
+as desired.
 
 \end{proof}
 
@@ -95,12 +151,118 @@ Load the dataset "SalinasA\_corrected.mat" and "Salinas-S-groundtruth".
 
 (b) Plot the first 10 eigenvalues of the data for different choices of $\sigma$. What does the eigengap estimate as the number of cluster for these choices of $\sigma$?
 
-(c) Compare the projections onto the first three principle components with the first three Laplacian eigenvectors by plotting both sets in different figures using 'scatter3'. How do the representations differ qualitatively?
+(c) Compare the projections onto the first three principal components with the first three Laplacian eigenvectors by plotting both sets in different figures using 'scatter3'. How do the representations differ qualitatively?
 
 
 \end{problem}
 
 \begin{proof}[Solution]
+
+Here follows some spectral clustering on this data, with a sparse Laplacian, 6 clusters, and various numbers of nearest neighbors, with a fixed value of $\sigma = 10000$:
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{5_nn}
+  \captionof{figure}{10 Nearest Neighbors}
+  \label{fig:test1}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{10_nn}
+  \captionof{figure}{50 Nearest Neighbors}
+  \label{fig:test2}
+\end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{50_nn}
+  \captionof{figure}{100 Nearest Neighbors}
+  \label{fig:test1}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{100_nn}
+  \captionof{figure}{500 Nearest Neighbors}
+  \label{fig:test2}
+\end{minipage}
+\end{figure}
+
+In comparison, this is the groundtruth:
+
+\begin{center}
+\includegraphics[width=\linewidth]{ground_truth}
+\captionof{figure}{Salinas A Groundtruth}
+\end{center}
+
+We can see the structures pretty easily, and qualitatively, we have a decent match. There is definitely some tuning that could be done here, the boundary can be messy, and perhaps we need better separation of points with a higher $\sigma$ value.
+
+(b)
+
+Here follows the first 10 eigenvalues for specific choices of $\sigma$, and a fixed $500$ nearest neighbors:
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{1_sigma}
+  \captionof{figure}{$\sigma=1$}
+  \label{fig:test1}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{100_sigma}
+  \captionof{figure}{$\sigma=100$}
+  \label{fig:test2}
+\end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{10000_sigma}
+  \captionof{figure}{$\sigma=10000$}
+  \label{fig:test1}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{1000000_sigma}
+  \captionof{figure}{$\sigma=1000000$}
+  \label{fig:test2}
+\end{minipage}
+\end{figure}
+
+At the scale of $\sigma =1, 100$, the values are close to float rounding errors so probably should be discarded, but they seem to suggest $3$ clusters, looking at the jump from the 3rd to the 4th eigenvalue.
+
+At the scale of $\sigma = 10000, 1000000$, we see a clear jump at $9 \to 10$ for 10k, and $8 \to 9$ for $\sigma = 1000000$. This seems to suggest that as we increase $\sigma$, we get more separation in the data, and thus more reasonable distinct clustering.
+
+(c)
+
+Here, we compare projection onto the Laplacian eigenvectors for 100 nearest neighbors, $\sigma = 10000$, and PCA:
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{laplacian_projection}
+  \captionof{figure}{Projection onto the 3 Laplacian eigenvectors with smallest eigenvalues}
+  \label{fig:test1}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{covariance_projection}
+  \captionof{figure}{Projection onto the 3 principal components of largest variance}
+  \label{fig:test2}
+\end{minipage}
+\end{figure}
+
+Qualitatively, we notice that the Laplacian projections are strictly positive, whereas the projections onto the eigenvalues of the covariance matrix can take on both positive or negative values. Structurally, they seem to be very similar, but it is fairly hard to tell.
+
 
 \end{proof}
 
