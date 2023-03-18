@@ -133,7 +133,45 @@ Suppose $f$ is a complex function on a region $\Omega$, and both $f, f^2$ are ha
 
 It is clear that if $f = a \in\mathbb{C}$, that is, constant, then $f, f^2$ are harmonic and $f, \overline{f}$ are both holomorphic. Thus, we restrict ourselves to $f$ non-constant.
 
+Now, we see that:
 
+$$ \Delta (f^2) = (2ff_x)_x + (2ff_y)_y = 2[ f_x^2 + f_y^2] = 2[ (f_x + i f_y)(f_x - i f_y)] = 2\overline{\partial} f \partial f$$
+
+where, as in the text, we identify:
+
+$$  \partial = \frac{1}{2} \left( \frac{\partial}{\partial x}- i  \frac{\partial}{\partial y}\right) , \overline{\partial} = \frac{1}{2} \left( \frac{\partial}{\partial x}+ i  \frac{\partial}{\partial y}\right)$$
+
+Where we've used the fact that $f$ is harmonic to say that $f(f_{xx} + f_{yy}) = 0$ Now, since $f^2$ is harmonic, we have that $\Delta(f^2) = 0$, which implies that at every point in $\Omega$, either $\partial f = 0$ or $\overline{\partial} f = 0$. Now, consider $\partial f, \overline{\partial}f$. In particular, consider the quanitity $\overline{\partial}( \partial f)$:
+
+%$$ \partial f = \frac{1}{2} (f_x - i f_y), \overline{\partial} f = \frac{1}{2} (f_x+ i f_y)$$
+
+%We notice, these can only be simultaneously 0 only if $f_x = f_y = 0$. Then, by problem 1 of this homework, we have that the set:
+
+%$$Z =  \{ z \in \Omega : \partial f (z) = \overline{\partial} f (z) = 0 \} $$
+
+%contains no limit points, because we have assumed $f$ to be non-constant.
+
+%Now, we note a key point: Consider the quantity $\overline{\partial}( \partial f)$:
+
+$$ \overline{\partial} (\partial f) = \frac{1}{2} \left( \frac{\partial}{\partial x}+ i  \frac{\partial}{\partial y}\right)  \frac{1}{2} (f_x- i f_y) = \frac{1}{4} (f_{xx} + i f_{xy} - i f_{yx} + f_{yy}) = 0 $$
+
+That is, for $f$ harmonic, $\partial f$ is holomorphic on $\Omega$, because the Cauchy-Riemann equations hold. In particular, its zero set is either all of $\Omega$, or a countable subset without limit points. If its zero set is all of $\Omega$, we are done, since if we expand out $\partial f$, we find that:
+
+$$ \partial f = \frac{1}{2} (f_x - i f_y) = \frac{1}{2} (u_x + i v_x - i u_y + v_y) = 0 \implies \begin{cases} u_x  = - v_y \\ u_y = v_x \end{cases}$$
+
+and thus we have that:
+
+$$\overline{\partial}( \overline{f}) =  \frac{1}{2} \left( \frac{\partial}{\partial x}+ i  \frac{\partial}{\partial y}\right) (u - i v) = \frac{1}{2} ( u_x - i v_x + i u_y + v_y) = 0 $$
+
+that is, $\overline{f}$ is holomorphic. Otherwise, suppose $Z = \{ z \in \Omega : \partial f(z) = 0 \}$ has no limit points. Since $f$ harmonic, at least one of $\partial f, \overline{\partial} f = 0$ so on $\Omega \setminus Z$, $\overline{\partial} f = 0$. But, because $Z$ has no limit points, by continuity, $\overline{\partial} f = 0$ actually on all of $\Omega$, where we know this must be continuous, because it is the linear combination of continuous functions. Then, we would have that:
+
+$$ \overline{\partial} f = \frac{1}{2} (f_x+ i f_y) = \frac{1}{2} (u_x + i v_x + i u_y - v_y) \implies  \begin{cases} u_x  = v_y \\ u_y = -v_x \end{cases}$$
+
+and thus
+
+$$ \overline{\partial}(f) = \frac{1}{2} \left( \frac{\partial}{\partial x}+ i  \frac{\partial}{\partial y}\right) (u + i v) = \frac{1}{2} ( u_x + i v_x + i u_y - v_y) = 0$$
+
+that is, $f$ is holomorphic. 
 
 \end{proof}
 
@@ -145,6 +183,75 @@ Let $\Omega$ be a region, and $f_n \in \mathcal{H}(\Omega)$ for all $n$. Set $u_
  
 \begin{proof}[Solution]
 
+By hypothesis, there exists a $z_0 \in \Omega$ such that $f_n(z_0)$ converges. Since $\Omega$ is open, we may choose an $R > 0$ such that $\overline{D}(z_0,R) \subset \Omega$, since if the disk $D(a,r)$ is contained in $\Omega$, the closed disk $\overline{D}(a,r/2)$ is as well.
+
+Since this is a compact set, and $u_n$ converges uniformly on compact sets, if we set $u = \lim_{n \to \infty} u_n(z)$ for $z \in \overline{D}(z_0, R)$, by theorem 11.11, we have that $u$ is harmonic. Since $u$ is harmonic on $D(z_0,R)$ and continuous on the boundary, we have that by 11.9 that $u$ is the real part of a holomorphic function defined by:
+
+$$ f(z_0 + z) = \frac{1}{2\pi} \int_0^{2\pi} \frac{R e^{it} + z}{R e^{it} - z} u(z_0 + Re^{it}) dt$$
+
+for $|z| < R$.
+
+In the same way, we see that since each $u_n$ is harmonic on the same disk, we may find a sequence of holomorphic functions $g_n$ such that:
+
+$$ g_n(z_0 + z) = \frac{1}{2\pi} \int_0^{2\pi} \frac{R e^{it} + z}{R e^{it} - z} u_n(z_0 + Re^{it}) dt$$
+
+But, $u_n$ is also the real part of $f_n$, also a holomorphic function. Thus, by 11.10, these holomorphic functions may only differ by an imaginary additive constant, and we may say that there exists $c_n \in \mathbb{R}$ such that $f_n = g_n + i c_n$.
+
+First, we wish to show that $g_n \to f$ uniformly for any $r < R$, the closed disk $\overline{D}(z_0,r)$. Let $\epsilon > 0$ be given. Well, by definition, we have that for any point $|z| < r$:
+
+$$ |f - g_n | =  \left |\frac{1}{2\pi} \int_0^{2\pi} \frac{R e^{it} + z}{R e^{it} - z} u(z_0 + Re^{it}) dt - \frac{1}{2\pi} \int_0^{2\pi} \frac{R e^{it} + z}{R e^{it} - z} u_n(z_0 + Re^{it}) dt\right| = $$
+
+$$ \frac{1}{2\pi} \left| \int_0^{2\pi}  \frac{R e^{it} + z}{R e^{it} - z} u(z_0 + Re^{it})  -  \frac{R e^{it} + z}{R e^{it} - z} u_n(z_0 + Re^{it}) dt \right| \leq $$
+$$ \frac{1}{2\pi}  \int_0^{2\pi} \left|  \frac{R e^{it} + z}{R e^{it} - z} \right| \left|  u(z_0 + Re^{it}) -  u_n(z_0 + Re^{it})\right| dt$$
+
+Here, we notice that in terms of moduli, $|Re^{it} + z|  \leq |Re^{it}| + |z| \leq R + r$, and similarly, $|Re^{it} - z| \geq R - r$. Thus, we have the estimate:
+
+$$  \left|  \frac{R e^{it} + z}{R e^{it} - z} \right| \leq \frac{R + r}{R - r} $$ for all $| z| < r$. Further, since $\overline{D}(a,r)$ is compact, we have that $u_n \to u$ uniformly.Then, choose $N$ such that for all $n > N$, $|u(z) - u_n(z)| < \epsilon \frac{R - r}{R + r}$. Then, for any $n > N$ and for every $z \in \overline{D}(a,r)$, we have that:
+
+$$| f(z)  - g_n(z) | \leq  \frac{1}{2\pi}  \int_0^{2\pi} \left|  \frac{R e^{it} + z}{R e^{it} - z} \right| \left|  u(z_0 + Re^{it}) -  u_n(z_0 + Re^{it})\right| dt \leq \frac{1}{2\pi}  \int_0^{2\pi}  \frac{R + r}{R - r} \epsilon \frac{R - r}{R + r}  dt = $$
+
+$$ \frac{1}{2\pi}  \int_0^{2\pi} \epsilon dt = \frac{1}{2\pi} \epsilon 2\pi = \epsilon$$
+
+Thus, we have that $g_n \to f$ uniformly for every $\overline{D}(a,r), r < R$.
+
+Next, we restrict our focus to $z_0$. We have that $f_n = g_n + ic_n$. Thus, at $z_0$, since $g_n(z_0) \to f(z_0)$ because of what we showed above, we have that:
+
+$$ f(z_0) = \lim_{n \to \infty} f_n(z_0) = \lim_{n \to \infty} (g_n(z_0) + i c_n ) = \lim_{n \to \infty} g_n(z_0) + i \lim_{n \to \infty} c_n = f(z_0) + i \lim_{n \to\infty} c_n$$
+
+Thus, we have that $\lim_{n \to \infty} c_n$ exists and is equal to 0.
+
+Now, we look at any closed disk $\overline{D}(z_0,r), r < R$ again, and look at $f_n$ this time. Let $\epsilon > 0$ be given. We have that:
+
+$$ \Vert f - f_n \Vert = \Vert f - g_n - i c_n \Vert \leq \Vert f - g_n \Vert + \Vert c_n \Vert$$
+
+Since we have that $g_n \to f$ uniformly,there exists $N_g$ such that for all $n > N_g$, $\Vert f - g_n \Vert < \epsilon/2$. Since $c_n \to 0$ is a sequence of constant numbers, there exists $N_c$ such that for all $n > N_c$, $\Vert c_n \Vert < \epsilon/2$. Then, for any $n > \max(N_g, N_c)$:
+
+$$ \Vert f - f_n \Vert \leq \Vert f - g_n \Vert + \Vert c_n \Vert <  \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$$
+
+Thus, we have that $f_n \to f$ uniformly for any $\overline{D}(z_0,r), r < R$.
+
+Define $\Omega_1, \Omega_2$ via the following:
+
+$$\Omega_1 = \{ z \in \Omega : \{ f_n(z) \} \text{ converges } \} $$
+
+$$\Omega_2 = \{ z \in \Omega : \{ f_n(z) \} \text{ does not converge } \} $$
+
+From what we've shown above, $\Omega_1$ must be open, since we've shown that there exists a disk around a convergent point $z_0$ such that for any concentric, closed disk contained within this neighborhood, $f_n$ converges uniformly on the closed disk.
+
+However, we notice that $\Omega_2$ must also be open, because we chose a closed disk $\overline{D}(z_0,R)$ to analyze and the complement of such in $\Omega$ is open. Thus, the union of such complements is also open. Further, by definition, $\Omega_1 \cap \Omega_2 = \emptyset$. 
+
+Thus, because $\Omega$ is a region, we must have that either $\Omega = \Omega_1$, or $\Omega = \Omega_2$, and by hypothesis, we see that $z_0 \in \Omega_1 \implies \Omega = \Omega_1$, and thus $f_n \to f$ on all of $\Omega$.
+
+Then, the result is clear. Let $K$ be any compact subset of $\Omega$. For each $k \in K$, we may find $r_k > 0$ such that $D(k,r_k) \subset \Omega$. Consider $\cup_k D(k,r_k)$. Clearly, this is a open cover of $K$, so by the compactness of $K$, there exists a finite subcover
+
+$$ K \subset  \cup_{i =1}^n D(k_i, r_{k_i}) \subset \Omega $$
+
+Then, let $\epsilon > 0$ be given. For each $i$, choose $r_i$ such that $r_i < r_{k_i}$, but that $\cup_{i=1}^n D(k_i, r_i)$ remains a cover of $K$. We may do this because of homework 1, finding the minimum distance between $K$ and the complement of $ \cup_{i =1}^n D(k_i, r_{k_i}) $, a closed set. Then, by the work above, we have that on each $\overline{D}(k_i, r_i)$, that since $f_n \to f$ uniformly, there exists $N_i$ such that for all $n > N_i$, $\Vert f - f_n \Vert < \epsilon$ on $D(k_i, r_i)$. We notice, that there are only finitely many $N_i$ and thus it achieves a maximum. Thus, of course, we have that for $N = \max_i N_i$, for any $n > N$:
+
+$$ \Vert f - f_n \Vert_K  = \Vert f - f_n \Vert_{\overline{D}(k_j, r_j)} < \epsilon $$
+
+for some $k_j, r_j$ since they cover $K$. Thus, $f_n \to f$ uniformly on compact subsets of $\Omega$. 
+
 \end{proof}
   
 
@@ -155,9 +262,41 @@ $$ \alpha u(z_0) \leq u(z) \leq \beta u(z_0) $$
 
 for all $z \in K$.
 
+If $\{ u_n \}$ is a sequence of positive harmonic functions in $\Omega$, and $u_n(z_0) \to 0$, describe the behavior of $\{ u_n \}$ on the rest of $\Omega$. Repeat this process for if $u_n(z_0) \to \infty$. Show that $\{ u_n \}$ must be positive.
+
 \end{problem}
 
 \begin{proof}[Solution]
+
+First, fix some $z_0 \in \Omega$. Let $u$ be any positive harmonic function on $\Omega$. Let $z \in \Omega$ be any other point, and let $\gamma$ be a path, $\gamma^* \subset \Omega$ such that $\gamma(0) = z_0, \gamma(1)= z$, which exists since $\Omega$ is connected. Further, assume that $\gamma$ has a finite length. Such a path must exist.  Since the path is a compact set, and the complement of $\Omega$ is closed, this implies that we may find a $R > 0$ such that $D(\zeta,R) \subset \Omega$ for all $\zeta \in \gamma^*$.
+
+Now, consider $\overline{D}(z_0,R/2) \subset \Omega$. If $z \in D(z_0,R/3)$, then we can say that, for $r = |z - z_0|$, that:
+
+$$ \frac{R/2 - r}{R/2 + r} u(z_0) \leq u(z) \leq \frac{R/2 + r}{R/2 - r} u(z_0) \implies   \frac{R/2 - r}{R/2 + r}  \leq \frac{u(z)}{u(z_0)} \leq \frac{R/2 + r}{R/2 - r} \implies  \frac{1}{5} \leq \frac{u(z)}{u(z_0)} \leq 5 $$
+
+Where we use the fact that $\frac{R/2 - r}{R/2 + r}$ is a decreasing function, since as $r \to R/2$, $R/2 - r$ decreases, and $R/2 + r$ increases, so the fraction decreases, so it takes on its minimum value at $r = R/3$. The same logic applies for the upper bound, as an increasing function.
+
+Otherwise, take the boundary $\partial D(z_0,R/3)$. Since $z$ is not contained within $D(z_0,R/2) \supset  D(z_0,R/3)$, there exists at least some point $\zeta \in \gamma^*$ such that $\zeta \in \gamma^* \cap \partial D(z_0,R/3)$. If there are multiple such $\zeta$, we choose the one corresponding to the largest parameter in $\gamma(t)$. Calling this point $\zeta_1$, we have that:
+
+$$  \frac{R/2 - R/3}{R/2 + R/3} u(z_0) \leq u(\zeta_1) \leq \frac{R/2 +R/3}{R/2 - R/3} u(z_0) \implies \frac{1}{5} u(z_0) \leq u(\zeta_1) \leq 5u(z_0) $$
+
+Now, we repeat this process for $\zeta_1$ taking the role of $z_0$. If $z$ is contained within $D(\zeta_1,R/3)$, then we have that, for $r = |z - \zeta_1|$ again:
+
+$$  \frac{R/2 - r}{R/2 + r} u(\zeta_1) \leq u(z) \leq \frac{R/2 + r}{R/2 - r} u(\zeta_1) \implies  \frac{1}{5}^2  u(z_0) \leq u(z) \leq  5^2u(z_0) \implies  \frac{1}{5}^2  \leq  \frac{u(z)}{u(z_0)} \leq  5^2 $$
+
+Otherwise, choose $\zeta_2$ in the same fashion as $\zeta_1$, by looking at the boundary  $\partial D(\zeta_1,R/3)$. Importantly,this process must terminate in a finite amount of steps - in particular, it must terminate in at most $\lceil L/(R/3)\rceil = \lceil \frac{3L}{R} \rceil$ steps, where $L$ is the path length of $\gamma$. Thus, letting $n =  \lceil \frac{3L}{R} \rceil$ , we have for our estimate, that:
+
+$$  \frac{1}{5}^n  \leq  \frac{u(z)}{u(z_0)} \leq  5^n$$
+
+We notice that this is actually independent of $u$, and is strictly a function of the geometry.
+
+Consider the functions defined for $z \in \Omega$:
+
+$$ B(z) = \sup_u \frac{u(z)}{u(z_0)}$$
+
+$$ b(z) = \inf_u \frac{u(z)}{u(z_0)} $$
+
+
 
 \end{proof}
 
