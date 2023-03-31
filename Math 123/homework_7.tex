@@ -91,7 +91,7 @@ Viewing $w^T$ as a matrix, we see that this has one row and $D$ columns. Thus, i
 
 (b)
 
-Actually, we see that  $\{ x \in \mathbb{R}^{D \times 1} : w^T x = b \}$ is trivially not a subspace, since the zero vector is never in this set. However, due to linearity, we may identify it as a copy of $\mathbb{R}^{D-1}$. In particular, we may view it as a coset of the nullspace: Take any solution $x_0$ to $w^Tx = b$ which must exist, since we may always identify some non-0 component of $w$, say, $w_j$, and choose the vector 0 everywhere except $\frac{1}{w_j}$ in the $j$-th coordinate, and then identify the solution set as:
+Actually, we see that  $\{ x \in \mathbb{R}^{D \times 1} : w^T x = b \}$ is trivially not a subspace, since the zero vector is never in this set. However, due to linearity, we may identify it as a copy of $\mathbb{R}^{D-1}$. In particular, we may view it as a coset of the nullspace: Take any solution $x_0$ to $w^Tx = b$ which must exist, since we may always identify some non-0 component of $w$, say, $w_j$, and choose the vector 0 everywhere except $\frac{b}{w_j}$ in the $j$-th coordinate, and then identify the solution set as:
 
 $$\{  x_0 + y : w^T y = 0 \}$$
 
@@ -109,6 +109,34 @@ Using the dataset "kNN\_ClassifierSyntheticData.mat", randomly select 100 differ
 
 \begin{proof}[Solution]
 
+Running a classifier, we find the following accuracy measures, where we define accuracy as the number of labels learned that coincide with the labels predicted, divided by the number of testing points in the data set.
+
+If we graph the accuracy, this is what we find:
+
+\begin{center}
+\includegraphics[width=\linewidth]{knn_synthetic_data_accuracy}
+\captionof{figure}{kNN Accuracy Synthetic Data}
+\end{center}
+
+In particular, we find the following values:
+
+\begin{center}
+\begin{tabular}{|| c| c||}
+\hline
+kNN & Accuracy \\
+
+\hline \hline
+1 & 57\% \\ \hline
+10 & 65\% \\ \hline
+50 & 70\% \\ \hline
+100 & 70\% \\ \hline
+500 & 67\% \\ \hline
+900 &  43\% \\ \hline
+\end{tabular}
+\end{center}
+
+We see that at extreme values of $kNN$, that is, nearly all of the training data or very few neighbors, close to 1 or 900, the accuracy tends to be low. The low end tends to be low accuracy because of potentially not polling enough data points, and the high end is a result of overtuning onto the training set. Instead, accuracy is best somewhere in the middle, which graphically looks to be in the $kNN \approx 50$ range, but is fairly stable up until $kNN \approx 450$.
+
 
 \end{proof}
 
@@ -121,6 +149,49 @@ Using the Salina A dataset, randomly select $100$ different testing points in th
 
 \begin{proof}[Solution]
 
+Here, we do something very similar, though instead of using the synthetic data that was pregenerated, we will be using the Salinas A groundtruth as our labels. In this case then, we will have 7 distinct labels:
+
+\begin{center}
+\begin{tabular}{|| c| c||}
+\hline
+Label & Ground Truth \\
+
+\hline \hline
+0 & Misc \\ \hline
+1 & Brocoli\_green\_weeds\_1 \\ \hline
+10 & Corn\_senesced\_green\_weeds \\ \hline
+11 & Lettuce\_romaine\_4wk \\ \hline
+12 & Lettuce\_romaine\_5wk \\ \hline
+13 &  Lettuce\_romaine\_6wk \\ \hline
+14 & Lettuce\_romaine\_7wk \\ \hline
+\end{tabular}
+\end{center}
+
+Plotting accuracy again, we see that:
+
+\begin{center}
+\includegraphics[width=\linewidth]{knn_salinas_accuracy}
+\captionof{figure}{kNN Accuracy Salinas A}
+\end{center}
+
+Similar to the synthetic data case, we see here that at very low values of $kNN$, in our case, visually, around $0-50$, accuracy increases. However, as $kNN$ becomes very large, the model overtunes to the training data, and loses accuracy, here past $kNN = 500$. Visually, accuracy looks to be best at the 120 range, but is very stable in the 200-475 range or so.
+
+In particular, the exact values are as follows:
+
+\begin{center}
+\begin{tabular}{|| c| c||}
+\hline
+kNN & Accuracy \\
+
+\hline \hline
+1 & 22\% \\ \hline
+10 & 32\% \\ \hline
+50 & 53\% \\ \hline
+100 & 43\% \\ \hline
+500 & 33\% \\ \hline
+900 &  19\% \\ \hline
+\end{tabular}
+\end{center}
 
 \end{proof}
 

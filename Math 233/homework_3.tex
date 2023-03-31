@@ -290,14 +290,29 @@ $$  \frac{1}{5}^n  \leq  \frac{u(z)}{u(z_0)} \leq  5^n$$
 
 We notice that this is actually independent of $u$, and is strictly a function of the geometry.
 
-Consider the functions defined for $z \in \Omega$:
+Now, consider the function:
 
-$$ B(z) = \sup_u \frac{u(z)}{u(z_0)}$$
+$$ f(z) = \inf_{\gamma} \int_0^1 | \gamma'(t) | dt, \gamma(0) = z_0, \gamma(1) = z$$
 
-$$ b(z) = \inf_u \frac{u(z)}{u(z_0)} $$
+that is, the length of the shortest path from $z_0 \to z$. This function is continuous. Let $\epsilon > 0$ be given. Consider the disk $D(z,\epsilon) \subset \Omega$ and fix some $z'$ in the disk. For any path $\gamma$ from $z_0 \to z$, consider the new path $\gamma_1$ defined by:
 
+$$ \gamma_1 = \begin{cases} \gamma(2t) & \text{ for } t \in [0,1/2] \\ z'(2t - 1)  + z(2 - 2t) & \text{ for } t \in [1/2,1] \end{cases} $$
 
+that is, the path that traverses $\gamma$ twice as fast, concatenated with the straight line $z \to z'$. Then, we have that:
 
+$$ f(z') \leq \int_0^1 | \gamma_1'(t) | dt = \int_0^{1/2} | \gamma'(t) | dt + \int_{1/2}^1 | 2z' - 2z | dt < \int_0^{1/2} | \gamma'(t) | dt  + \epsilon $$
+
+Since $f$ is defined as the infimum, and we have that for any point $z'$, that the length from $z_0 \to z'$ is at most the length from $z_0 \to z$ plus $\epsilon$, since the infimum is linear, we have that $f(z') \leq f(z) + \epsilon$. Further, we see that this function is positive if $z_0$ is not in our set, being the integral of a real or complex modulus.
+
+Now, let $K$ be any compact set on $\Omega$. Since $f$ is continuous, $f$ attains a maximum on $K$. Then, we can find a maximum distance $N = \max\{ f(z) : z \in K \}$. But, applying our analysis on the path length, we have then that the largest value of $\lceil \frac{3L}{R} \rceil$ happens when $L =N$, at $\lceil \frac{3N}{R} \rceil$. Thus, we have that on $K$, that:
+
+$$   \frac{1}{5}^{\lceil \frac{3N}{R} \rceil}  \leq  \frac{u(z)}{u(z_0)} \leq  5^{\lceil \frac{3N}{R} \rceil} $$
+
+Now, suppose $u_n$ is a sequence of positive harmonic functions, and $u_n(z_0) \to 0$. Then, to maintain the ratio $u_n(z)/u_n(z_0)$, we must have that $u_n(z) \to 0$ on all of $\Omega$, since we can always find a compact subset (i.e., a closed disk) around any point in $\Omega$. Similarly, it should be clear that if $u_n(z_0) \to \infty$, we must have that $u_n(z) \to \infty$.
+
+Easy issue if $u$ is not necessarily positive. Consider $u_n((x,y)) = x + \frac{1}{n}$, which is clearly a harmonic function, and take the region $\Omega = \{ (x,y) : x^2 + y^2 < 1 \}$. Clearly, we see that $u_n((0,0)) = \frac{1}{n}$, and as $n \to \infty$, of course we have that $1/n \to 0$. However, we see that for any point, $(x,y)$, that $u_n((x,y)) = x + \frac{1}{n} \to x$, which does not align with what we've said.   
+
+In a similar fashion, we can think of the function $u_n((x,y)) = u_n(x)  = nx$. Clearly, for any $ x > 0$, we have that $\lim_{n \to \infty} u_n(x) = \lim_{n \to \infty} nx = \infty$. However, consider any $(0,y)$. On this line, we have that $u_n(x) = n \cdot 0 = 0$. Thus, when we do not have positivity on the region, we need not have the inequalities stated above.  
 \end{proof}
 
 \end{document}
