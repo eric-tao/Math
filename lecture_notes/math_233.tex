@@ -1994,6 +1994,662 @@ We notice, since $z_1$ is the furthest point from $a$ on $E$, we must have that
 
 $$  \frac{1}{2\pi} \int_0^{2\pi} w(z_1 + e^{i\theta}) d\theta  <  \frac{1}{2\pi} 2\pi M = M $$, a contradiction.
 
+\section*{March 13th}
+
+The Schwartz Reflection Principle:
+
+First, some notation:
+
+Define $\Pi^+$ as the upper half plane, and $\Pi^-$ as the lower half plane.
+
+Theorem:
+
+Let $L$ be an open interval on the $x$ axis. Let $\Omega^+ \subset \Pi^+$ be a region, such that for every $t \in L$, there exists an $r > 0$ such that $D(a,r) \cap \Pi^+ \subset \Omega^+$. Let $\Omega^-$ be the reflection of $\Omega^+$ with respect to the $x$-axis, that is, viewing the plane as the complex plane:
+
+$$ \Omega^- = \{ \overline{z} : z \in \Omega^+ \} $$
+
+Suppose that $f = u + i v \in \mathcal{H}(\Omega^+)$, that is, a holomorphic function on $\Omega^+$. Further, suppose that:
+
+$$ \lim_{z \to t} v(z) = 0 $$ for every $t \in L$. 
+
+Let $\Omega = \Omega^+ \cup \Omega^- \cup L$. Then there exists a function $F \in \mathcal{H}(\Omega)$ such that $F = f$ on $\Omega^+$, and that $F(\overline{z}) = \overline{F(z)}$ for $\overline{z} \in \Omega$. 
+
+Proof:
+
+Let $f, \Omega^+$ be given. We extend $v$ to all of $\Omega$ by letting $v(t) = 0$ on $t \in L$ and $v(z) = -v(\overline{z})$ for all $z \in \Omega^-$. Because of our limit condition, since $v$ is a continuous function on $\Omega^+$, this must be a continuous function on $\Omega$.
+
+This extension of $v$ must satisfy the Mean Value Property for all $z \in \Omega$, since $v$ is harmonic on $\Omega^+$, due to how we extend to $\Omega^-$, since the values are the same, with a negative, it must still satisfy the mean value property on $\Omega^-$. And finally, on $L$, this should be clear, since any disk around a point on $L$ has positive and negative values on the upper and lower semicircle, i.e. they cancel, and $v(t) = 0$. Thus, $v$ satisifes the MVP everywhere. Thus, $v$ is actually harmonic on all of $\Omega$.
+
+This implies that we may realize $v$ as, locally, the imaginary part of a holomorphic function on $\Omega$.
+
+Fix some $t \in L$. Choose an open disk $D_t$ centered on $t$ such that $\overline{D}_t \subset \Omega$ and a function $f_t \in \mathcal{H}(\overline{D}_t)$ such that $\Im f_t = v$, that is, a holomorphic function locally around $t$.
+
+We recall that $f_t$ is unique up to adding a real constant. So, since $\Im f = v$ on the top half, we can choose the real constant such that $f = f_t$ on $D_t \cap \Pi^+$
+
+In particular, since we can patch along $L$, with many neighborhoods, we can actually claim that $f = f_t$ for all $t$, since we can find neighborhoods close enough together such that they overlap on the upper half plane, and thus since they agree on the intersection, they agree everywhere. But this implies that $f_t = f$  on $V = \cup_{t \in L} D_t$. Call this function $F \in \calH(V)$.
+
+Note that because $f = f_t$ on $D_t \cap \Pi^+$ for each $t$, we have that $f_t$ must be real on $L$ as well, due to continuity. Thus, since we have that $f^{(n)}(t)$ is purely real for $t \in L, n \in \mathbb{N}$, we can look at a power series:
+
+$$ f_t(z) = \sum_{n=0}^\infty c_n (z-t)^n$$ with $c_n$ purely real.
+
+Thus, we have that $f_t(\overline{z}) = \overline{f_t(z)}$.
+
+Then, we extend $F$ onto all of $\Omega$ via:
+
+$$F(z) = \begin{cases} f(z) & \text{ if } z \in \Omega^+ \\ f_t(z) & \text{ if } z \in D_t \\ \overline{f(\overline{z})} & \text{ if } z \in \Omega^- \end{cases} $$
+
+First, is this well defined? Of course, due to our choice of $f_t = f$. Further, we know that $F$ is already holomorphic on $V$, and $\Omega^+ \setminus V$. So it remains to just show that $F$ is holomorphic on $\Omega^- \setminus V$.
+
+Well, take $a \in \Omega^-$, and choose $r > 0$ such that $D(a,r) \subset \Omega^-$.
+
+In particular, we know that $\overline{a} \in \Omega^+$, so $F$ is holomorphic there. Thus, we have a power series:
+
+$$ f(z) = \sum_{n=0}^\infty d_n (z - \overline{a})^n $$ for all $D(\overline{a},r)$.
+
+But, by definition:
+
+$$ F(z) = \overline{f(\overline{z})} = \overline{ \sum_{n=0}^\infty d_n (z - \overline{a})^n} = \sum_{n=0} \overline{d_n} (z -a )^n $$
+
+Since the original function converges, so must this, and thus $F$ is analytic and thus holomorphic on a neighborhood for every point in $\Omega^-$.
+
+Corollary:
+
+Thus, under the same hypotheses as above, for all $t \in L$, $\lim_{z \to t} u(z)$ exists.
+
+Preview: we can use this to prove Picard’s Little Theorem:
+
+Theorem:
+
+Let $f$ is a non-constant, entire function. Then $f(\mathbb{C}) = \mathbb{C}$ or, for some $a \in \mathbb{C}$, $\mathbb{C} \setminus \{ a \}$.  Further, for every $z \in f(\mathbb{C})$, $f^{-1}(z)$ is infinite. 
+
+Boundary Behaviors of Holomorphic Functions:
+
+Now, for any function $u$ defined on the unit disk $U$, and $0 \leq r < 1$, define $u_r$ on the unit circle:
+
+$$u_r(e^{i\theta}) = u(r e^{i\theta})$$
+
+That is, specifically the points on the circle of radius $r$.
+
+We’ve already seen that under the Poisson integral, if we define:
+
+$$\calH(f)(z) = \begin{cases} P(f)(z) & \text{ if } z \in U \\ f(z) & \text{ if } z \in T \end{cases}$$
+
+This is a continuous, and thus uniformly continuous.
+
+Now, let’s talk about this in a $L^p$ context:
+
+Theorem:
+
+Let $1 \leq p \leq \infty$, and suppose $f \in L^p(T) \implies f \in L^1(T)$ , that is $\int_T |f|^p d\theta < \infty$ . Now, let $u$ be the Poisson kernel of $f$, $u = P[f]$. Then $u$ is harmonic on $U$, and $\Vert u_r \Vert_p \leq \Vert f \Vert_p$ for all $0 \leq r < 1$. Moreover, if $1 \leq p < \infty$, then:
+
+$$ \lim_{r \to 1} \Vert u_r - f \Vert_p = 0$$
+
+Proof:
+
+Unfun, computational. See lecture notes.
+
+Maximum Modulus Theorem:
+
+Recall the theorem:
+
+Let $\Omega$ be an open set, $f \in \calH(\Omega)$, and $\overline{D}(a,r) \subset \Omega$. Then, we have that:
+
+$$|f(a) | \leq \max_{0 \leq \theta \leq 2\pi} | f(a + re^{i\theta})| $$
+
+Furthermore, we have equality if and only if $f$ is constant on $\Omega$, alternatively, if equality holds, then $f$ is constant on $\overline{D}(a,r)$. 
+
+Corollary:
+
+Suppose $\Omega$ is a region, and $f \in \calH(\Omega)$. Further, suppose $|f|$ has a local maximum on $\Omega$. Then, $f$ must be constant.
+
+Proof:
+
+Suppose $|f|$ attains a local maximum at $a$. Choose a neighborhood such that $\overline{D}(a,r)$ is at most $|f(a)|$. But, by the maximum modulus principle, we have that $|f(a)| \leq \max \overline{D}(a,r)$. Thus, we have equality, and that $f$ is constant on the disk. Then, consider the holomorphic function $g = f - c$, such that $c$ is the constant that $f$ attains on the disk. Thus, $g= 0$ on the disk, and thus must be 0 on all of $\Omega$.
+
+Corollary:
+
+Let $\Omega$ be a region, bounded, $f$ a continuous function on $\overline{\Omega}$, and holomorphic on $\Omega$. Then we have that:
+
+$$ |f(z)| \leq \Vert f \Vert_{\partial \Omega} $$
+
+If equality holds for some $z$ then $f$ is actually constant.
+
+Proof:
+
+Same idea, just use the fact that $\overline{\Omega}$ is compact, so $|f|$ attains a maximum there.
+
+Consequences on the unit disk:
+
+Let $H^\infty = \{ f \in \calH(U) : f$ is bounded $\}$.
+
+Schwartz Lemma:
+
+Suppose that $f \in H^\infty, \Vert f \Vert_\infty \leq 1, f(0) = 0$. Then:
+
+(i) $| f’(0)| \leq 1$
+
+(ii) $ |f(z)| \leq |z| $ for all $z \in U$.
+
+If we have equality in either case, then there exists $\lambda \in \mathbb{C}, |\lambda| = 1$ such that $f(z) = \lambda z$.
+
+Proof:
+
+Define the function $g$ on $U$ such that:
+
+$$g(z) = \begin{cases} \frac{f(z)}{z} & \text{ if } z \in U \setminus \{ 0 \} \\ f’(0) & \text{ if } z= 0 \end{cases} $$
+
+We notice that since $f(0) = 0$, $f(z) /z$ has a removable singularity at $0$, and looking at the power series, takes on the value $f’(0)$, as above. Thus, $g$ is actually holomorphic on $U$.
+
+Fix any $z \in U$. Then, for any $r > |z|$, we have that:
+
+$$ |g(z)| \leq \max_{\partial D(0,r)} |g| = \max_{\partial D(0,r)} \frac{f(\zeta)}{\zeta} \leq \frac{1}{r} $$ 
+
+Taking the limit as $r \to 1$, we find that $|g(z)| \leq 1$, and we are done.
+
+Now, suppose there exists $z \in U$ such that $|f(z)| = |z|$. Thus, at $z$, $g(z) = 1$. Thus, since $|g| \leq 1$, this is a local maximum, and thus constant, with $g(z) = \lambda$, $|\lambda| = 1$. Then, $f(z)/z = \lambda \implies f(z) = \lambda z$. Same argument applies for $f’(0) =1$.
+
+We want to try to generalize this:
+
+Let $\alpha, \beta \in \mathbb{C}$ such that $|\alpha| <1, |\beta| < 1$. Among every function $f \in H^\infty$, with $\Vert f \Vert_\infty \leq 1, f(\alpha) = \beta$, how large can $|f’(\alpha)|$ potentially be?
+
+We answer this question by defining 
+
+$$\varphi_\alpha(z) = \frac{z - \alpha}{1 - \overline{\alpha} z} $$
+
+This is holomorphic everywhere except potentially $z = \frac{1}{\overline{\alpha}}$ which is outside the unit disk since $|\alpha| < 1$.
+
+Lemma:
+
+$ \varphi_\alpha$ is a one to one holomorphic function from $U$ onto $U$, with inverse $\varphi_{-\alpha}$. Further, $\varphi_\alpha$ maps $\alpha \to 0$, and $\varphi_\alpha’(0) = 1 - |\alpha|^2, \varphi’(\alpha) = \frac{1}{1 - |\alpha|^2}$. So, we use this to use the Schwartz Lemma.
+
+\section*{March 15th}
+
+Again, Maximum Modulus Theorem and consequences.
+
+Recall the following results:
+
+Suppose $\Omega$ is a region, and $f \in \calH(\Omega)$. Further, suppose $|f|$ has a local maximum on $\Omega$. Then, $f$ must be constant.
+
+and
+
+Let $\Omega$ be a region, bounded, $f$ a continuous function on $\overline{\Omega}$, and holomorphic on $\Omega$. Then we have that:
+
+$$ |f(z)| \leq \Vert f \Vert_{\partial \Omega} $$
+
+If equality holds for some $z$ then $f$ is actually constant.
+
+Also:
+
+$$ \Vert f \Vert_{\overline{\Omega}} = \Vert f \Vert_{\partial \Omega} $$
+
+Also recall:
+
+Let $H^\infty(\Omega) = \{ f \in \calH(\Omega) : f$ is bounded $\}$.
+
+By convention, we denote $H^\infty(U) = H^\infty$. These are examples of Hardy spaces.
+
+Recall the Schwarz lemma:
+
+Suppose that $f \in H^\infty, \Vert f \Vert_\infty \leq 1, f(0) = 0$. Then:
+
+(i) $| f’(0)| \leq 1$
+
+(ii) $ |f(z)| \leq |z| $ for all $z \in U$.
+
+If we have equality in either case, then there exists $\lambda \in \mathbb{C}, |\lambda| = 1$ such that $f(z) = \lambda z$.
+
+Finally, recall the last question:
+
+Let $\alpha, \beta \in \mathbb{C}$ such that $|\alpha| <1, |\beta| < 1$. Among every function $f \in H^\infty$, with $\Vert f \Vert_\infty \leq 1, f(\alpha) = \beta$, how large can $|f’(\alpha)|$ potentially be?
+
+We answer this question by defining 
+
+$$\varphi_\alpha(z) = \frac{z - \alpha}{1 - \overline{\alpha} z} $$
+
+This is holomorphic everywhere except potentially $z = \frac{1}{\overline{\alpha}}$ which is outside the unit disk since $|\alpha| < 1$.
+
+Lemma:
+
+$ \varphi_\alpha$ is a one to one holomorphic function from $U$ onto $U$, with inverse $\varphi_{-\alpha}$. Further, $\varphi_\alpha$ maps $\alpha \to 0$, and $\varphi_\alpha’(0) = 1 - |\alpha|^2, \varphi’(\alpha) = \frac{1}{1 - |\alpha|^2}$. 
+
+Proof:
+
+It should be clear that if we actually compute $\varphi’(z)$, we can find those values for the derivative. It is not hard either to show that $\varphi_{-\alpha}(\varphi_\alpha(z)) = z$, from unfun algebra. But, because $\varphi_\alpha$ has a left inverse, it must be one-to-one.
+
+Lastly, if we consider:
+
+$$\varphi_\alpha(e^{i\theta}) = \frac{e^{i\theta} - \alpha}{1 - \overline{\alpha}e^{i\theta}} = e^{i\theta} \frac{1 - \alpha e^{-i\theta}}{1 - \overline{\alpha} e^{i\theta}}$$
+
+Since we recognize the fraction as $\overline{z}/z$, this is the product of two modulus 1 values, and hence lies on the unit circle $T$. Thus, we have that:
+
+$$\varphi_\alpha(T)= T$$, that is, $\varphi_\alpha$ defines a bijection from $T \to T$.
+
+Now, since our function is one-to-one, since $\varphi_\alpha(U)$ is a holomorphic function, this image is a connected open set, disjoint from $\varphi_{\alpha}(T)$. Hence, either $\varphi_\alpha(U) \subset U$ or $\varphi_\alpha(U) \cap \overline{U} = \emptyset$. Since $\varphi_\alpha(\alpha) = 0$, we conclude that $\varphi_\alpha(U) \subset U$. Then, since we can apply this to $\varphi_{-\alpha}$, we see that:
+
+$$\varphi_\alpha(\varphi_{-\alpha}(U)) = \varphi_\alpha(U) \implies U \subset \varphi_\alpha(U) \implies U = \varphi_\alpha(U)$$
+
+Ok, back to the question:
+
+Since for $f$ constant, $f’(z) = 0$ for all $z$, including $\alpha$, we may assume $f$ is non-constant. Then, we know that $f(U) \subset U, f(U) \cap T = \emptyset$, as otherwise, it would be an interior maximum.
+
+Introduce the function:
+
+$$g  = \varphi_\beta \circ f \circ \varphi_{-\alpha}$$
+
+By the properties we have discussed, we have that $\Vert g \Vert_\infty \leq 1$ on $\overline{U}$.
+
+It should be clear that $g(0) = 0$. We may apply the Schwarz lemma to $g$, which says that:
+
+$$g’(0) \leq 1$$
+
+So, we have that:
+
+$$g’(z) = \varphi_\beta’(f(\varphi_{-\alpha})(z)) \cdot f’(\varphi_{-\alpha}(z)) \cdot \varphi_{-\alpha}’(z)$$ so
+
+$$g’(0) =  \varphi_\beta’(f(\varphi_{-\alpha})(0)) \cdot f’(\varphi_{-\alpha}(0)) \cdot \varphi_{-\alpha}’(0)$$
+
+which implies that:
+
+$$ |\varphi_\beta’(0) | \cdot |f’(0)| \cdot |\varphi_{-\alpha}’(0)| \leq 1$$
+
+But, by the properties of $\varphi$, we have then that:
+
+$$| f’(0) |  \leq \frac{1 - |\beta|^2}{1 - |\alpha|^2}$$
+
+Now, if equality holds, we have that the composite map is a rotation, that is:
+
+$$g(z)  = \varphi_\beta \circ f \circ \varphi_{-\alpha}(z) = e^{i\theta} z$$ for some $\theta \in [0,2\pi)$. Composing with the inverses of $\varphi$, we see that:
+
+$$ f = \varphi_{-\beta} \circ r_\theta \circ \varphi_\alpha$$ where $r_\theta$ sends $z \to e^{i\theta} z$.
+
+Theorem:
+
+Suppose that $f$ is a one-to-one holomorphic map of $U$ onto $U$, and $f(0) = 0$. Then, $f(z) = e^{i\theta}z$ for some $\theta$.
+
+Proof:
+
+Since $f$ is one-to-one, we know that $f’(z) \not = 0$, for all $z \in U$. Hence, we have a global $f^{-1}$, holomorphic, since $f$ has local holomorphic inverses everywhere, due to the non-vanishing of the derivative, since we patch things together, $f^{-1}$ has to agree with the local holomorphic inverses on each neighborhood, so we have that there’s a neighborhood at each point where $f^{-1}$ is holomorphic.
+
+Define $g = f^{-1}$. Since we have that $g(f(z)) = z$, we have that:
+
+$$g’(0) \cdot f’(0) = 1 $$
+
+by taking the derivative of both sides. The Schwarz lemma says that $|f’(z)| \leq 1, |g’(z)| \leq 1$, therefore, $g’(0) = f’(0) = 1$ and therefore, $f$ is a rotation.
+
+Corollary:
+
+Suppose that $f$ is a one-to-one holomorphic map form $U$ onto $U$, and that $f(\alpha) = 0$. Then, $f = r_\theta \circ \varphi_\alpha$.
+
+Proof:
+
+Consider $g = f \circ \varphi_{-\alpha}$. This is a function such that $g(0) = 0$. Thus, $g(z) = r_\theta(z)$. Composing by $\varphi_{\alpha}$ on the right, we are done.
+
+Phragmen-Lindelof methods:
+
+Recall the setup for the Max. Modulus Theorem:
+
+Let $\Omega$ be a bounded region, $f$ holomorphic on $\Omega$, and continuous on $\overline{\Omega}$, then:
+
+$$ \Vert f \Vert_{\overline{\Omega}} = \Vert f \Vert_{\partial \Omega} $$
+
+non-example for unbounded region:
+
+Let $\Omega = \{ z = x + iy : -\pi/2 \leq y \leq \pi/2 \}$, and consider $f(z) = e^{e^{z}}$. Clearly, on $y = \pm\pi/2$, $f(z) = e^{\pm i e^{x}}$, so on this line $|f(z)| = 1$. However, of course, on the real line, $e^{e^{z}}$ is unbounded. So, the boundedness of the region seems to be a necessary one. 
+
+Theorem:
+
+Let $a,b \in \mathbb{R}$, and define $\Omega = \{ z = x + yi : a < x < b \}$. Let $f \in \calH(\Omega)$, and bounded on $\overline{\Omega}$, $f \not = 0$.
+
+For each $x \in [a,b]$, define $M(x) = \sup_{y} | f(x + iy)| $.
+
+Then, for any $x \in [a,b]$, we have that:
+
+$$ M(x) \leq M(a)^{b-x/b-a} \cdot M(b)^{x-a/b-a}$$
+
+In particular, we can conclude that:
+
+$$M(x) \leq \max\{ M(a), M(b) \} $$ for all $x$, and thus:
+
+$$\Vert f \Vert_{\overline{\Omega}} = \Vert f \Vert_{\partial \Omega}$$
+
+But, we notice that the original inequality is equivalent to:
+
+$$ M((1-t)a + tb) \leq M(a)^{1-t} \cdot M(b)^{t} $$
+
+via a rescaling. In particular, if $M(a), M(b) > 0$, then we have that $\log(M)$ is a convex function.
+
+\section*{March 27th}
+
+Recall the example above with $e^{e^{z}}$. Now:
+
+Theorem:
+
+Let $\Omega = \{ z = x + iy : -\pi/2 < y < \pi/2 \}$. Suppose we have that $f \in C(\overline{\Omega}), f \in \calH(\Omega)$, and that there exists $\alpha < 1, A > 0$ such that:
+
+$$ |f(z)| \leq e^{Ae^{\alpha |x|}} $$ for all $z \in \Omega$. Suppose also that $|f(x \pm \pi/2 i)| \leq 1$ for all $x$. Then, we have that $|f(z)| \leq 1$ for all $z \in \Omega$. 
+
+Proof (by Phragmen-Lindelof methods):
+
+Choose a $\beta > 0$ such that $\alpha < \beta  < 1$. For any $\epsilon > 0$, let $h_\epsilon(z) = e^{-\epsilon(e^{\beta z} + e^{-\beta z} )}$. For any $z = x + iy \in \overline{\Omega}$, we have that:
+
+$$\Re(e^{\beta z} + e^{-\beta z} ) = \Re(e^{\beta x}( \cos(\beta y) + i \sin(\beta y)) + e^{-\beta x}( \cos(\beta y) - i \sin(\beta y))) = \cos(\beta y) (e^{\beta x} + e^{-\beta x})$$ 
+
+Now, recall that $ -\beta \pi/2 \leq \beta y \leq \beta \pi/2 $.
+
+Then, we have the estimate that $\cos \beta y \geq \cos \beta \pi/2$, so:
+
+$$ \cos(\beta y) (e^{\beta x} + e^{-\beta x}) \geq \cos(\beta \frac{\pi}{2}) (e^{\beta x} + e^{-\beta x})$$
+
+We notice that $\cos(\beta \frac{\pi}{2})$ is a positive constant with respect to $x$, and since $(e^{\beta x} + e^{-\beta x}) > 0$, the whole thing is positive. For the future, define $\delta = \cos(\beta \frac{\pi}{2})$.
+
+Thus, we have that:
+ 
+$$|h_\epsilon(z)| = \left| e^{-\epsilon(e^{\beta z} + e^{-\beta z} )} \right| = e^{-\epsilon \Re(e^{\beta z} + e^{-\beta z})} \leq e^{-\epsilon \delta(e^{\beta x} + e^{-\beta x})} < e^{0} = 1$$
+
+Hence, we have that $| f h_\epsilon | \leq 1$ on $\partial \Omega$. 
+
+But, we have that:
+
+$$ |f(z) h_\epsilon(z)| \leq e^{Ae^{\alpha |x|}} e^{-\epsilon \delta(e^{\beta x} + e^{-\beta x})} = e^{Ae^{\alpha |x|}-\epsilon \delta(e^{\beta x} + e^{-\beta x})} $$
+
+%Now, taking the estimate that:
+
+%$$ e^{\beta z} + e^{-\beta z} \geq e^{\beta| z|}$$
+
+%we see that:
+
+%$$|f(z) h_\epsilon(z)|  \leq e^{Ae^{\alpha |x|}-\epsilon \delta(e^{\beta z} + e^{-\beta z})}  \leq e^{Ae^{\alpha |x|}-\epsilon \delta e^{\beta |z|} } $$
+
+Analyzing this quantity, since $\beta > \alpha$, we have that as $x \to \infty$, $Ae^{\alpha |x|} < \epsilon \delta(e^{\beta x}$. So, the thing goes to 0. Similarly, using the $-x$ side, we can make the same argument for $x \to -\infty$.
+
+Now,  back to our picture, this means then that we can choose an $R > 0$ such that as long as $|x| > R$, $|f(z) h_\epsilon(z)|  \leq 1$ on $\Omega$, because our quantity goes to 0 as $ |x| \to \infty$. 
+
+Now, restrict our attention to $\Omega \cap \{ x + yi : -R \leq x \leq R \}$, that is, the bounded remainder. By what we’ve done, $|f h_\epsilon| \leq 1$ on the left and right. But further, we have that this is still true on the top and bottom by hypothesis. Thus, we may apply the maximum modulus principle to conclude that $|f h_\epsilon| \leq 1$ on the bounded portion. Thus, $|f h_\epsilon| \leq 1$ on all of $\Omega$. 
+
+Since this is independent of $\epsilon > 0$, we can take $\epsilon \to 0$, and we are done. 
+
+What’s the upshot? The idea is that if we can find a perturbation (like $h_\epsilon$), and say something about $f h_\epsilon$ for any $\epsilon$, if we can reduce the perturbation to 0, we can say that this holds for $f$ as well. 
+
+Approximation of Rational Functions:
+
+Let $f(z)$ be entire. Then, of course, $f$ is analytic, and thus has a Maclaurin series:
+
+$$f(z) = \sum_{k=0}^\infty c_k z^k$$
+
+which converges absolutely and uniformly on compact sets. 
+
+In particular, if:
+
+$$P_n(z) = \sum_{k=0}^n z^k $$
+
+then of course, $P_n \to f$ uniformly on compact sets. 
+
+We wish to prove a similar result if $f$ is not entire, but merely holomorphic on an open set. It turns out that this is possible, but we may not be able to use polynomials. We need rational functions. (It turns out if your region is simply connected, then polynomials ar enough)
+
+Runge’s Theorem:
+
+Suppose that $\Omega$ is an open set, and that $f \in \calH(\Omega)$ is holomorphic. Then, there exists a sequence of rational functions $\{ R_n \}$, with no poles in $\Omega$, such that $R_n \to f$ uniformly on compact subsets of $\Omega$. 
+
+Corollary: If $\Omega$ is simply connected, then $R_n$ can be polynomials, not just rational functions. 
+
+Before we prove this, we need to introduce the Riemann sphere:
+
+We adjoin a point at infinity to the complex numbers $\{ \infty \}$ as follows:
+
+Let $S^2 = \mathbb{C} \cup \{ \infty \}$, that is, the normal 2-sphere in $\mathbb{R}^3$ as follows. For each $r > 0$, we take:
+
+$$D’(\infty,r) = \{ z \in \mathbb{C} : |z| > r \}$$
+
+and then declare the open neighborhoods of $\infty$ as exactly $\{ \infty \} \cup D’(\infty,r)$. Now, on all of the sphere, we declare $V\subset S^2$ is open if $V$ is a union of collections of disks. 
+
+We can show that this forms a topology, that this topology is compact, and that this is homeomorphic to the unit sphere in $\mathbb{R}^3$. 
+
+Explicitly, we can say the homeomorphism has the following form:
+
+$$\varphi: S^2 \to \{ (x,y,z) : x^2 + y^2 + z^2 = 1\}$$
+
+via $\varphi(\infty)  = (0,0,1)$, and otherwise, using the projection between $(0,0,1)$ and the complex plane identified by the $x-y$ plane. Explicitly:
+
+$$\varphi(r e^{i\theta}) =\left(\frac{2r}{r^2 + 1} \cos \theta,\frac{2r}{r^2 + 1} \sin \theta, \frac{1-r^2}{r^2 + 1}\right)$$
+
+Now, what does it mean to be holomorphic at $\infty$?
+
+If $f$ is holomorphic on $D’(\infty, r)$, then we say that $f$ has a singularity at $\infty$. Note that of course, the map that takes:
+
+$$ z \to f\left(\frac{1}{z}\right)$$ is holomorphic on $D’$, because of course, this maps $D’(\infty,r) \to D’(0,1/r)$.
+
+Then, we say that the singularity that $f$ has at $\infty$ is the type of singularity that $f(1/z)$ has at $z = 0$. 
+
+Cases:
+
+If $f$ is bounded and holomorphic on $D’(\infty)$, then $f(1/z)$ is bounded holomorphic on $D’(0)$. Then, of course, this singularity is removable at 0 for $f(1/z)$, so we say that $f$ has a removable singularity at $\infty$.
+
+Similarly, if $f(1/z)$ has a pole of order $m$ at $z=0$, then we say that $f(z)$ has a pole of order $m$ at $\infty$. 
+
+Further, suppose that the principal part of $f(1/z)$ at $z = 0$ is:
+
+$$ \frac{c_1}{z} + \frac{c_2}{z^2}  + ... + \frac{c_m}{z^m} $$
+
+Then, we say that the principal part of $f$ at $\infty$ is $c_1 z + .... + c_m z^m$.
+
+Finally, if $f(1/z)$ has an essential singularity at $0$, then we say that $f(z)$ has an essential singularity at $\infty$. 
+
+Example:
+
+Suppose $f$ an entire function, non-polynomial. Then, of course we have that $f(z) = \sum_{k=0}^\infty c_k z^k$. Thus, we have that $$f(1/z) = \sum_{k=0}^\infty c_k \frac{1}{z^k}$$ and thus, has an essential singularity at $0$, which means $f$ has one at $\infty$. 
+
+Connectedness considerations:
+
+Suppose that $\Omega$ is a set in $\mathbb{C}$. We note that $S^{2}  \setminus \mathbb{C}$ may be connected, but $\mathbb{C} \setminus \Omega$ might not be.
+
+Example: Take $\Omega = \{ z = x + iy : -1 < x < 1 \}$.
+
+\section*{March 29th}
+
+Theorem [Approximation of Open Set via Compact Sets]:
+
+Let $\Omega \subset \mathbb{C}$ be open. Then, there exists a sequence of compact sets $\{ K_n \}_{n \in \mathbb{N}}$ such that the following hold:
+
+1) $K_n \subset K_{n+1}^o$, that is, the interior of $K_{n+1}$
+
+2) $\cup_{n=1}^\infty K_n = \Omega$
+
+3) Each component of $S^2 \setminus K_n$ contains a component of $S^2 \setminus \Omega$. 
+
+Intuitively, we can understand 3) as meaning that for each hole in $K_n$, it must contain at least one hole in $\Omega$. i.e., the hole in $K_n$ cannot be filled in by $\Omega$. 
+
+Proof:
+
+For $n \in \mathbb{N}$, let $$V_n = D’(\infty, n) \cup \left( \cup_{a \in \mathbb{C} \setminus \Omega} D(a,1/n) \right) $$
+
+Now, let $K_n = \mathbb{C} \setminus V_n$. Clearly, since $V_n$ is the union of a collection of open sets, $V_n$ itself must be open. Thus, $K_n$ is closed. Further, by construction, $K_n$ must be bounded, because it is contained within the compliment of $D’(\infty, n)$, so $K_n \subset \overline{D}(0,n)$, thus $K_n$ is compact. 
+
+Now, without much work, we can see that $V_{n+1} \subset V_n$, with strict inclusion. Thus, we have that $K_n \subset K_{n+1}$. 
+
+Now, suppose $z \in K_n$. Consider the disk $D(z, 1/n - 1/(n+1))$. We notice that by construction of $K_n$, we have that $|z| \leq n$. Hence, we have that $D(z, 1/n - 1/(n+1)) \subset \overline{D}(0,n+1)$, because $1/n - 1/(n+1) < 1$, and therefore, $D(z, 1/n - 1/(n+1)) \cap D’(\infty, n+1) = \emptyset$.
+
+Further, for any $a \in \mathbb{C} \setminus \Omega$, we have that $D(z, 1/n - 1/(n+1)) \cap D(a, 1/n+1) = \emptyset$, because suppose not. Then, we have that, for some $w$ in the intersection, that $d(z,w) < 1/n - 1/(n+1)$, $d(w,a) < 1/n+1$, and by the triangle inequality, we would have that:
+
+$$ d(z,a) \leq d(w,a) + d(z,w) < 1/n $$
+
+a contradiction, since this would imply that $z \in D(a, 1/n)$, and thus in $V_n = K_n^c$. 
+
+Thus, we have that since $D(z,1/n - 1/n+1) \cap D(a, 1/n+1) = \emptyset$ for all $a$, and $D(z,1/n - 1/n+1) \cap D’(\infty, n+1) = \emptyset$, thus, since $V_n$ is simply the union of all of these things, this implies that $D(z, 1/n - 1/n+1) \cap V_{n+1} = \emptyset$. Since $V_{n+1}, K_{n+1}$ partition $\mathbb{C}$, we must have that this is contained within $K_{n+1}$, and thus, $z \in K_{n+1}^o$. Therefore, $K_n \subset K_{n+1}^o$. 
+
+Now, of course, we should be able to see that for all $n$, $\Omega^c \subset V_n$, and therefore, $K_n \subset \Omega$ for all $n$. So, we have automatically that $\cup K_n \subset \Omega$. Now, let $z \in \Omega$. Define $r = \text{dist}(z, \mathbb{C} \setminus \Omega ) > 0$, which we may do since $\Omega$ is open.
+
+Choose an $n$ such that $|z| < n, 1/n < r$. Then, by construction, we have that $ z \not \in D’(\infty, n)$, but also, by the distance, we have that $z \not \in D(a,1/n)$ for any $a \in \Omega^c$. 
+
+Thus, $z \not \in V_n$, for this choice of $K_n$, and thus, $z \in \cup K_n$. Since we may do this for any $z \in \Omega$, it follows that $\Omega \subset \cup K_n$ and therefore $\Omega = \cup K_n$.
+
+Finally, let $\mathcal{O}$ be a component of $S^2 \setminus K_n$. If $\infty\in \mathcal{O}$, then of course we have that the component of $\Omega^c$ that contains $\infty$ is in $\mathcal{O}$. 
+
+Now, suppose instead that we have that for some $z \in \mathcal{O}$, that $z \in D(a, 1/n)$, for some $z \not \in \Omega$. Because the open disk is connected, $\mathcal{O}$ must contain the whole disk. In particular, $a \in \mathcal{O}$, and thus, the component of $\Omega^c$ containing $a$. 
+
+Making the Cauchy Integral Formula behave well:
+
+Recall that the index part of the formula can be messy. So, how do we control this?
+
+Theorem:
+
+Suppose that $\Omega \subset \mathbb{C}$ is a non-empty open set, with $K \subset \Omega$ compact. Then there exists a cycle $\Gamma$ in $\Omega$ such that the following hold:
+
+1) $\text{Ind}_\Gamma(z) = 1$ for all $z \in K$.
+
+2) $\text{Ind}_\Gamma(w) = 0$ for all $w \in \mathbb{C} \setminus \Omega$.
+
+Why do we care? If this theorem holds, then we would have that for any holomorphic function $f \in \calH(\Omega)$, that $f(z) = \frac{1}{2\pi i} \int_\Gamma f(\zeta)/(\zeta - z) d\zeta$ for any $z \in K$ that is, we can drop the index from the Cauchy integral formula.
+
+Proof:
+
+Since $K$ compact, and $\Omega^c$ closed, define $2r$ as the smallest distance from $K$ to $\Omega^c$, with $r$ being arbitrary if $\Omega^c = \emptyset$. 
+
+Now, consider any lattice of the plane into squares of side length $r$. Consider the collection of squares $Q_1,....,Q_m$ be the squares with non-empty intersection with $K$. Let $\partial Q_1,...,\partial Q_m$ be the positively oriented boundaries of our squares. Let $\Gamma = \partial Q_1 + ... + \partial Q_m$.
+
+Clearly, by the choice of $r$, we know that $\Gamma$ is a cycle contained within $\Omega$. Hence, we have that if $w \not \in \Omega$, then $w \not \in Q_j$ for all $1 \leq j \leq m$, and therefore $\ind_\Gamma(w) = 0$, because:
+
+$$ \ind_\Gamma(w) = \sum_j \ind_{Q_j}(w) = \sum_j 0 = 0$$.
+
+Now, suppose $z \in K$. Then $z \in Q_j$ for at least some $j$. If $z \in Q_j^o$, then of course we have that $\ind_\Gamma(z) = 1$, because the index with respect to all other $Q_i$ is 0, and only 1 at $Q_j$. 
+
+Now, suppose $z$ is not in the interior of any $Q_j$. Then, it must belong to the boundary of at least some $Q_j$. By the choice of $Q_j$, $z$ must also belong to the square(s) that shares this boundary. Hence, $z \not \in \Gamma^*$, so $\ind_\Gamma(z)$ is defined. 
+
+Since $Q_j$ is a closed square, there exists a sequence of points $\{ z_n \}$ in $Q_j$ that converges to $z$, and since they lie in the interior of $Q_j$, $\ind_\Gamma(z_n) = 0$. Since the index is a integral of a continuous function, it itself is continuous, therefore, $\ind_\Gamma(z) = 1$.
+
+\section*{April 3rd}
+
+Runge’s Theorem:
+
+Analysis Preliminaries:
+
+1)
+
+Let $X$ be a normed vector space. 
+
+Define $X^*$, the dual space, as the set of all continuous linear functionals defined on $X$ (that is, $\lambda \in X^*$ is $\lambda: X \to \mathbb{C}$).
+
+Let $M$ be a vector subspace of $X$, and let $x \in X$. Then we have that $x \in \overline{M}$ if and only if for every $\Lambda \in X^*$ such that $\Lambda$ acting on $M$ is identically 0, $\Lambda x = 0$ as well.
+
+2)
+
+Let $K$ be a compact, Hausdorff space. Then, $X = C(K)$ is a normed linear space, with norm $\Vert f \Vert = \max \{ f(x) : x \in K \}$. 
+
+Theorem: Let $ \Lambda \in X^*$. Then, there exists a regular, complex Borel measure on $K$ such that:
+
+$$ \Lambda f = \int_K f(x) d\mu(x) $$
+
+That is, we realize the dual space by integration against arbitrary complex-valued Borel measures.
+
+Theorem:
+
+Let $K \subset \mathbb{C}$ be compact. Let $\{ \alpha_1, \alpha_2,... \}$ be a set that, for each connected component of $C \subset K^c$ (note: we are taking $K^c = S^2 \setminus K$, so we could be using the point at infinity), there exists a $\alpha_i \in C$.
+
+Let $\Omega$ be an open set such that $K \subseteq \Omega$. Let $f \in \calH(\Omega)$. Then, for any $\epsilon > 0$, there exists a rational function $R$, such that $R$ has a pole only at a subset of the $\alpha_i$ and
+
+$$ |R(z) - f(z) |< \epsilon $$ for all $z \in K$.
+
+Explicitly, we can express:
+
+$$R(z) = \frac{P(z)}{\Pi_{i=1}^k (z- \alpha_{j_i})^{m_i}} $$ for some polynomial $P(z)$.
+
+Proof:
+
+Consider the normed space $C(K)$ of all continuous functions on $K$. Let $M$ be the subspace of $C(K)$ consisting of the restriction of rational functions with poles only at a subset of the $\alpha_i$ to $K$. Then, it is enough to say that the restriction of $f$ to $K$ belongs to the closure of $M$.
+
+Thus, we need only show that for any $\Lambda \in C(K)^*$, such that $\Lambda M = 0$, that $\Lambda f = 0$. Let $\mu$ be a regular, complex Borel measure on $K$.
+
+From last time, we have that there exists a cycle $\Gamma$ such that $\ind_\Gamma(z) = 1$ for all $z \in K$ and $\ind_\Gamma(z) = 0$ for all $z \in \Omega^c$.
+
+Then, by the Cauchy integral formula, on $\Gamma$, we have that:
+
+$$ f(z) = \frac{1}{2\pi i} \int_\Gamma \frac{f(\zeta) d\zeta}{\zeta - z}$$
+
+Hence, we wish to consider:
+
+$$ \int_K \frac{1}{2\pi i} \int_\Gamma \frac{f(\zeta) d\zeta}{\zeta - z} d\mu(z) $$
+
+we notice that on $K \times \Gamma^*$, that $\frac{f(\zeta)}{\zeta - z} $ is a continuous function of $(\zeta, z)$. Thus, we may apply Fubini’s theorem to obtain:
+
+$$  \frac{1}{2\pi i} \int_\Gamma f(\zeta) \int_K \frac{d\mu(z)}{\zeta - z} d\zeta $$
+
+We examine the quantity $\int_K \frac{d\mu(z)}{\zeta - z} $ as a function of $z$, for any $\zeta \in S^2 \setminus K$.
+
+We notice that of course, if $\zeta = \infty$, this integral vanishes. So if we needed to, we can look at this as $\mathbb{C} \setminus K$.
+
+Let $\mathcal{O}$ be a component of $S^2 \setminus K$. Then, there exists an $\alpha_j \in \mathcal{O}$. First assume that $\alpha_j$ is not the point at infinity.
+
+We notice that with respect to $\zeta$, $\int_K \frac{d\mu(z)}{\zeta - z}$ is holomorphic. Thus, we need only prove that this integral vanishes on some neighborhood in $\mathcal{O}$. Let $2r = \text{dist}(\alpha_j, K)$, and restrict ourselves to $\zeta \in D(\alpha_j, r)$. 
+
+We notice that:
+
+$$ \frac{1}{ \zeta  -z} = \frac{1}{(\zeta - \alpha_j) - (z - \alpha_j)} = - \frac{1}{z - \alpha_j} \cdot \frac{1}{1 - \frac{\zeta - \alpha_j}{z - \alpha_j}}$$
+
+By the choice of $r$, we see that $\left|\frac{\zeta - \alpha_j}{z - \alpha_j}\right| \leq 1/2$. Then, we may rewrite our fraction as a geometric series with first term $1$, and common ratio $\frac{\zeta - \alpha_j}{z - \alpha_j}$.
+
+Thus we have that:
+
+$$ \frac{1}{ \zeta  -z} = - \frac{1}{z - \alpha_j} \cdot \frac{1}{1 - \frac{\zeta - \alpha_j}{z - \alpha_j}} = -\sum_{k=0}^\infty \frac{(\zeta - \alpha_j)^2}{(z - \alpha_j)^{k+1}} $$
+
+Substituting this back into our integral:
+
+$$\int_K \frac{d\mu(z)}{\zeta - z} = \int_K -\sum_{k=0}^\infty \frac{(\zeta - \alpha_j)^2}{(z - \alpha_j)^{k+1}}  d\mu(z)  = (\zeta - \alpha_j)^2  -\sum_{k=0}^\infty  \int_K \frac{d\mu(z)}{(z - \alpha_j)^{k+1}}$$
+
+where we’ve interchanged sum and integral due to uniform convergence via Weierstrauss M-test.
+
+However, for each $k$, we recall that $\mu$ is a measure such that the integral of rational functions in $z$ disappear. Thus, this is $0$ for $\zeta \in D(\alpha_j, r)$ and therefore $0$ on $\mathcal{O}$ by holomorphicity.
+
+Now, suppose $\alpha_j = \infty$. Choose $r > 0$ such that $K \subset D(0,r)$, which exists due to compactness. Recalling what neighborhoods of $\infty$ look like, we choose $\zeta$ such that $|\zeta| \geq 2r$. In this case:
+
+$$\frac{1}{\zeta - z} = \frac{1}{\zeta} \cdot \frac{1}{1 - \frac{z}{\zeta}} $$
+
+Yet again, $\left| \frac{z}{\zeta}\right| \leq 1/2$, so we expand and do the exact same thing:
+
+$$\frac{1}{\zeta - z} = \frac{1}{\zeta} \cdot \frac{1}{1 - \frac{z}{\zeta}} = \sum_{k=0}^\infty \frac{z^k}{\zeta^{k+1}} $$
+
+So:
+
+$$\int_K \sum_{k=0}^\infty \frac{z^k}{\zeta^{k+1}}  d\mu(z) = \frac{1}{\zeta^{k+1}} \sum_{k=0}^\infty \int_K  z^k d\mu(z) $$
+
+And $z^k$ is certainly a rational function with pole at $\infty$, so this disappears.
+
+Thus, we have that our original iterated integral disappears, and we are done.
+
+Corollary:
+
+Suppose that $S^2 \setminus K$ is connected. (i.e. $K$ is simply connected.) Let $f \in \calH(\Omega)$, where $\Omega \supset K$ is some open set. Then, there exists a sequence of polynomials $\{ P_n \}$ such that $P_n \to f$ uniformly on $K$.
+
+Proof: Just use the theorem, and take $\alpha_j = \infty$. 
+
+Finally:
+
+Runge’s Theorem:
+
+Let $\Omega \subset \mathbb{C}$ be open, and let $A$ be a set containing a point in each connected component of $S^2 \setminus \Omega$. Suppose that $f \in \calH(\Omega)$. Then, there exists a sequence of rational functions $R_n(z)$ such that $R_n(z)$ has poles on $A$, and that $R_n \to f$ uniformly on compact subsets of $\Omega$. 
+
+\section*{April 5th}
+
+Recall our discussion on the last theorem and corollary:
+
+Theorem:
+
+Let $K \subset \mathbb{C}$ be compact. Let $\{ \alpha_1, \alpha_2,... \}$ be a set that, for each connected component of $C \subset K^c$ (note: we are taking $K^c = S^2 \setminus K$, so we could be using the point at infinity), there exists a $\alpha_i \in C$.
+
+Let $\Omega$ be an open set such that $K \subseteq \Omega$. Let $f \in \calH(\Omega)$. Then, for any $\epsilon > 0$, there exists a rational function $R$, such that $R$ has a pole only at a subset of the $\alpha_i$ and
+
+$$ |R(z) - f(z) |< \epsilon $$ for all $z \in K$.
+
+Corollary:
+
+Suppose that $S^2 \setminus K$ is connected. (i.e. $K$ is simply connected.) Let $f \in \calH(\Omega)$, where $\Omega \supset K$ is some open set. Then, there exists a sequence of polynomials $\{ P_n \}$ such that $P_n \to f$ uniformly on $K$.
+
+Question:
+
+If $K$ has holes, can a function $f$, which is holomorphic on a neighborhood of $K$, still be uniformly approximated by polynomials?
+
+No!
+
+
+
 
 
 \end{document}
