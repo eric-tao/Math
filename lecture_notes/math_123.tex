@@ -693,6 +693,167 @@ Ok, but how do we choose $k$? Well... the idea is to use something called the ei
 
 $$K = \arg \max \lambda_{i+1} - \lambda_i $$, that is, where we see a jump in the eigenvalues. 
 
+\section*{March 9th}
+
+Supervised learning:
+
+The hope is here that you start with some existing, labelled data, and use this to classify new data coming in.
+
+Two problems (in the mathematical sense):
+
+Regression problem: 
+
+Given a set of data $\{ (x_i, f(x_i)) \}$, construct a model function $f$ that can reasonably predict future outputs.
+
+Class function:
+
+Build a classification function $C: \{ x_i \} \to \{ 1,...,k\}$, that is, place them in boxes.
+
+We won’t do much with regression. In terms of classification, we do either nearest neighbor, support vectors machines, or neural nets. 
+
+In general, this is in order of increasing complexity. 
+
+Well, how does nearest neighbors work?
+
+Take a new point $x$. We compute the $l$ nearest neighbors of $x$ with respect to the training data. Then, look at the $y_i$, that is, the labels associated to the $l$ nearest neighbors in $x$. Then, assign to $x$ the label that appears the most. 
+
+So....how legit is this? Our only real parameter is the number of nearest neighbors.
+
+It’s computationally heavy too. Though, if the dataset is large, a random sample of the full dataset large compared to the number of nearest neighbors can be workable.
+
+The other issue is the curse of dimensionality.
+
+\section*{March 14th}
+
+Recall kNN classification conceptually is to decide labels for points based off of local proximity. This is ok, but we require a lot of calculation at labeling time, so it’s not great.
+
+The goal is to try to use the training data such that future classification is fast. That is, support vector machines.
+
+The idea here: Attempt to split the data by learning on a hyperplane that separates labels. Is this efficiently possible? Well, maybe.
+
+Setup:
+
+Let $\{ (x_i, y_i) \}$ be our data points with binary labels $y_i = -1,1$.
+
+Recall that a hyperplane, we usually say is a set $H \subset \mathbb{R}^d$ satisfying $w^T x = b$ for some constants $w \in \mathbb{R}^D$, for some $b \in \mathbb{R}$.
+
+So, the set of $X$ that satisfy this equation lives in a copy of $\mathbb{R}^{d-1}$, satisfying a single affine subspace.
+
+So, the idea here is that we want to learn the parameters $w, b$ via the training data. Therefore, from this, we can see that depending on if $w^T x’ > b$ or less than, we can classify into labels. 
+
+We notice, of course, there are some datasets that are hard to classify like this. Think circles. But in such a case, we try to relax the idea of hyperplanes, and instead go via non-linear boundaries - kernel support vector machines.
+
+Define a new set of vectors:
+
+$$V_i = ( y_i * x_i , y_i ) \in \mathbb{R}^{d+1} $$
+
+Further, define $u = (w,b)$. Of course, we want to choose $u$ such that $v_i \cdot u > 0$ for all $i = 1,...,n$.
+
+We see that:
+
+$$ v_i \cdot u = (y_i x_i, y_i ) \cdot (w,b) = y_i \cdot (w^T x_i + b) $$
+
+Ok, great. Turns out, we can use optimization via linear programming to solve this. 
+
+Formulation:
+
+We wish to maximize $C^T x$ subject to some constraints - for example, maybe $Ax \leq b$. To be explicit: $c,d , x \in \mathbb{R}^{d \times 1}, A \in \mathbb{R}^{d \times d}$.
+
+In a sense here, we can say our constraint is $Au \geq 0, A_{i} = v_i$, where this denotes the $i$-th row of the matrix and 0 here is the 0 vector. 
+
+In matlab, note that linprog is very useful. But this will be beaten out by specific models.
+
+Support vectors machines, then, are providing a framework for choosing a best separating hyperplane, when multiple choices exist. The concept is to maximize the margins between the test data clusters, so as to reduce generalization error, that is, error on future data, assuming that the training data is reasonable.
+
+\section*{March 16th}
+
+ Recall the setup for support vector machines, trying to find a nice hyperplane to divide our datasets.
+ 
+ Recall, that we want to find $w,b$ such that $w^Tx + b$ assigns the right label to a new data point $x$. Recall that this is equivalent to finding $u$ such that $v_i u > 0$ for all $i$. If a $u$ exists, we have at least one separating hyperplane. In the case where there are many separating hyperplanes (and this should be common)
+ 
+ The idea is to choose the hyperplane such that the min distance to either label is minimized.
+ 
+ Definition:
+ 
+ Let $H = \{ x | w^T x + b = 0 \}$ be a hyperplane. Let $Y_i = \{ (x_i, y_i) | y_i = i \}$. Define the margin of $H$ to be $\min_{y_i} \text{dist}(H,x_i)$
+ 
+ Specifically, we call the points that attain these minimum, over possible choices of $H$, the support vectors of the problem.
+ 
+ Ok, well, this is all well and good, but we need to actually compute $w,b$. 
+ 
+ We have constraints $v_i \cdot u > 0$. but what about the margin constraints?
+ 
+ We do a trick: Rewrite $x_i = \text{Proj}_H(x_i) + r \cdot \frac{w}{\Vert w \Vert} $, that is, perpendicular and parallel components. From this, we can see then that the distance to $H$ is exactly $r$, and we can use this to compute the distances for all points to $H$.
+ 
+Analyzing this with respect to the hyperplane, we notice that $w^T x_i = -b  + r \Vert w \Vert \implies r = w^T x_i + b/\Vert w \Vert$
+
+We notice though, that the parametrization of $H$ is not unique. That is, if we scale $w, b$ by $\alpha$, we define the same hyperplane. 
+
+This implies that we should restrict ourselves in our choice of hyperplane. Our canonical hyperplanes then satisfy that $|wx_i + b| = 1$ if $x_i$ achieves the margin distance.
+
+To summarize, we maximize $\frac{1}{\Vert w \Vert}$ subject to $(w^T x_i + b) \geq 1$
+
+\section*{March 28th}
+
+Recall the concept about support vector machines (SVM), where we try to separate data via some hyperplane, that is, a $\mathbb{R}^{n-1}$ surface. 
+
+Problem: a hyperplane is an open condition, so there should be infinitely many distinct hyperplanes. 
+
+The idea is that we want to use margin maximization as our criterion. We need statistical theory to back this up, but the concept is that this will generalize best to new data.
+
+We recall that a calculation tells us that we merely want to optimize $\min \Vert w \Vert_2$ subject to $y_i (wx_i + b) \geq 1$.
+
+Note that in many real world cases, the feasible set is empty. Take, obviously, points on a circle, and alternate labels. 
+
+So what if we tried to relax our constraint?
+
+Ok, well, so we try to strike a balance between minimizing $\Vert w \Vert_2$ and the $y_i (wx_i + b) \geq 1$.
+
+Thus, we can consider the unconstrained problem:
+
+$$F(w,b) = \Vert w \Vert_2^2 + \lambda  \cdot \sum_{i=1}^n \max\{ 0, 1 -y_i (w^T x_i + b)\} $$
+
+for some tuning parameter $\lambda$.
+
+Intuition on $\lambda$. If $\lambda = 0$, that is, $F(w,b) = \Vert w \Vert^2$, then we say that the hyperplane is infinitely far from the data, and we may not have any interesting structure. On the other hand, as we take $\lambda \to \infty$, we retrieve the original constraint. 
+
+Upshot, this always has a solution for non-0, infinite $\lambda$. 
+
+Downside? This is non-differentiable at 0, that is, at $1 - y_i(w^T x_i + b) = 0$. 
+
+If we wanted this to be differentiable, we need a higher power of our functions. i.e. $\max \{ 0, (1 - y_i(w^T x_i + b))^2\} $ which is smooth.
+
+\section*{March 30th}
+
+Recall that hinge loss. How do we even approach minimizing this in $w,b$?
+
+Recall that if a function $F: \mathbb{R} \to \mathbb{R}$ is smooth, we can try to optimize it by looking at its limiting behavior and points where $\nabla F = 0$. 
+
+But this might be hard in $\mathbb{R}^d$, either due to the boundary, or non-smooth functions, or whatever.
+
+So let’s set up the problem. We want to minimize $F: \mathbb{R}^D \to \mathbb{R}$ subject to the constraint $h: \mathbb{R}^d \to \mathbb{R}^{m}$, where $h(x) \geq 0$, shorthand for each vector component of $h$. 
+
+Of course, we still have that for interior points, we can merely analyze critical points $\nabla F = 0$. However, the hard part is analyzing the constraints.
+
+The goal here is that we wish to find general conditions for when $x^*$ is an optimal point, minimum or maximum, for some optimization problem, under constraints $h$. 
+
+The goal is to set up the KKT conditions: Karush-Kuhn-Tucker conditions.
+
+Now, recall that if our optimal point is on the boundary, then we must have that the value of the gradient at that point must be orthogonal to the direction of the boundary.
+
+So consider the surface traced out by $h(x,y) = 0$ in the 2-D case, and we look at $h(x, y(x))$. Then we have that the derivative here is:
+
+$$ \nabla_x h(x, y(x)) = \frac{\partial h}{ \partial x} + \frac{ \partial h}{ \partial y} y’(x) = 0  \implies y’(x) = -  \frac{\frac{\partial h}{ \partial x}}{\frac{ \partial h}{ \partial y}}  $$
+
+where the 0 comes from the fact that we know that $h = 0$.
+
+On the other hand, we want this to be orthogonal to $\nabla h = \langle  \frac{\partial h}{ \partial x}, \frac{ \partial h}{ \partial y}\rangle$. But, in the 2d case, this is always true.
+
+But also, we can now characterize directions $v : \Vert v \Vert = 1$. In particular, if $v \cdot \nabla h(x,y) > 0$, then we’re inside and otherwise, we’re outside.
+
+The idea here is that, if we’re a critical point on the boundary, it must be that the direction derivative in any direction that’s at most orthogonal to $\nabla h < 0$. 
+
+
 
 
 
