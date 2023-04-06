@@ -45,15 +45,16 @@ By the Schwarz reflection principle (11.14), and a relabeling of the two lines a
 \draw[->,ultra thick] (0,-5)--(0,5) node[above]{$y$};
 \draw[gray, thick] (-4.5,5) -- (4.5,-5) node[right]{$L_2$};
 \draw[blue, thick] (-4.5, -5) -- (4.5, 5) node[right]{$\sigma_1(L_2)$};
-\draw[red, thick] (-0.5, -5) -- (0.5, 5) node[right]{$\sigma_1(L_1)$};
+\draw[red, thick] (-0.5, -5) -- (0.5, 5) node[right]{$\sigma_2(L_1)$};
 \draw[black, ->] (1,0) node[above]{$\theta_0$} arc (0:-48:1) ;
 \draw[black, ->] (2,0)  node[above]{$2\theta_0$} arc (0:-96:2);
+\draw[black, ->] (3,0) arc (0:48:3)  node[left]{$-\theta_0$} ;
 \end{tikzpicture}
 \end{figure}
 
-where we have that the angle between $L_1, \sigma_1(L_1)$ is $2 \theta_0$ because the angle between $\sigma_1(L_1)$ and $L_2$ is $\theta_0$, due to how reflections work.
+where we have that the angle between $L_1, \sigma_1(L_1)$ is $2 \theta_0$ because the angle between $\sigma_1(L_1)$ and $L_2$ is $\theta_0$, due to how reflections work. Further, we also see that $\sigma_1(L_2)$ takes on the angle $- \theta_0$.
 
-We notice that we may iterate this process, and in fact generate lines of $k\theta_0$ via successive reflections. However, we know that if $\theta_0$ is not a rational multiple of $\pi$, then $\{ e^{im\theta_0} \}$ is dense in $T$. And since $v = 0 $ on all of these lines, if it is $0$ on a dense set, then it is $0$ everywhere by continuity. Thus, this implies that we must have that $\theta_0$ is a rational multiple of $\pi$.
+We notice that we may iterate this process, and in fact generate lines of $k\theta_0$ via successive reflections. However, we know that if $\theta_0$ is not a rational multiple of $\pi$, then $\{ e^{im\theta_0} :m \in \mathbb{Z} \}$ is dense in $T$. And since $v = 0 $ on all of these lines, if it is $0$ on a dense set, then it is $0$ everywhere by continuity. Thus, this implies that we must have that $\theta_0$ is a rational multiple of $\pi$.
 
 Now, suppose instead that $L_1, L_2$ are parallel. In such a case, applying the Schwarz reflection principle on successive lines, we note that then we must have that $v$ is periodic, $0$ at each interval $d = \text{dist}(L_1, L_2)$, since we can keep translating and applying reflections to find a line on the opposite side. For example, assuming $L_1: x = 1, L_2: x = 5$ one such $v$ could be $v(x,y) = e^{y} \sin(\pi(x-1)/\pi)$. This is generalizable with a suitable linear transformation on $x,y$ to match our parallel 1-D lattice.
 
