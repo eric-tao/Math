@@ -2648,8 +2648,106 @@ If $K$ has holes, can a function $f$, which is holomorphic on a neighborhood of 
 
 No!
 
+Suppose $S^2 \setminus K$ has multiple components. Let $U$ be a bounded component of $S^2 \setminus K$, and fix an $\alpha \in U$. Consider the function $f(z) = \frac{1}{z - \alpha}$, holomorphic on $\mathbb{C} \setminus \{ \alpha \}$, which is a neighborhood of $K$. Suppose that we can find a polynomial approximation to $f$.
 
+Let $r = \max_{z \in K} |z - \alpha|$. Then, $r$ is a finite postiive real value, since $K$ is compact. Let $\epsilon = \frac{1}{r+1}$. By hypothesis, we may find a polynomial such that $\left|P(z) - \frac{1}{z - \alpha}\right|  < \frac{1}{r+1}$. Hence:
 
+$$ \left| (z- \alpha) P(z) - 1 \right|< \frac{|z - \alpha|}{r+1} < 1 $$
+
+for all $z \in K$.
+
+In particular, since $U$ is a bounded component of the compliment, we have that $\partial U \subset K$, and thus we have that we may apply the max modulus principle on $(z - \alpha) P(z) - 1$ to obtain:
+
+$$ |(z - \alpha) P(z) - 1 | < 1$$
+
+But, when $z = \alpha$, we get that $|1| < 1$, a contradiction. Thus, there is no polynomial that approximates $f$ on $K$ given this hole.
+
+Back to Runge’s Theorem:
+
+Let $\Omega \subset \mathbb{C}$ be open, and let $A$ be a set containing a point in each connected component of $S^2 \setminus \Omega$. Suppose that $f \in \calH(\Omega)$. Then, there exists a sequence of rational functions $R_n(z)$ such that $R_n(z)$ has poles on $A$, and that $R_n \to f$ uniformly on compact subsets of $\Omega$. 
+
+Proof:
+
+Recall, we can find a sequence of compact sets $K_n$ such that the following hold:
+
+(a) $K_n \subset \text{int}(K_{n+1})$
+
+(b) each component of $S^2 \setminus K_n$ contains a component of $S^2 \setminus \Omega$
+
+(c) $\cup K_n = \Omega$.
+
+Note that because (b), for a good choice of prescribed set $A = \{ \alpha_1,...,\}$, we can find one that applies for every $K_n$. 
+
+By our theorem, there exists a rational function $R_n$ with poles on $A$ such that $|R_n - f| < 1/n$ for all $z \in K_n$.
+
+Now, let $K$ be an arbitrary compact subset of $\Omega$. Since by condition (c), it implies that $\cup \text{int}(K_n) = \Omega$, this implies that this is an open cover of $K$, and thus since these are nested properly, this implies that for at least one n, $K \subset K_n$. Hence, for $n \geq N$, we have that $| f - R_n | < 1/n$ for all $z \in K \subset K_n$ and we are done.
+
+Mittag-Leffler Theorem:
+
+Let $\Omega$ be open. Let $A \subset \Omega$ be a set without limit points in $\Omega$, which is of course at most countable. Suppose to each $\alpha \in A$, there is an associated integer $m(\alpha) \in \mathbb{Z}$, and a rational function 
+$$P_\alpha(z) = \sum_{j=1}^{m(\alpha)} \frac{c_{j,\alpha}}{(z-\alpha)^j} $$
+
+Then there exists a a meromorphic function $f$ on $\Omega$ such that the poles precisely at $A$, such that at each $\alpha \in A$, the principal part of the pole is exactly $P_\alpha(z)$.
+
+Proof:
+
+Introduce the nested sequence as before, that is, compact sets that are nested in the nice way with interiors. Designate $A_1 = A \cap K_1$, and define for $n \geq 2$, $A_n = A \cap (\text{int}(K_{n}) \setminus K_{n-1}) $.
+
+Now, for each $n$, define $Q_n(z) = \sum_{\alpha \in A_n} P_{\alpha}(n) $, which we notice that this must be a finite sum, due to the compactness of $K_n$. For each $n \geq 2$, $Q_n$ is holomorphic in some neighborhood of $K_{n-1}$. Hence, on $K_{n-1}$, we may find a rational function with poles on $S^2 \setminus \Omega$ such that $| R_n - Q_n | < 1/2^n$ for all $z \in K_{n-1}$. 
+
+Define:
+
+$$f(z) = Q_1(z) + \sum_{n=2}^\infty (Q_n(z) - R_n(z))$$
+
+for all $z \in \Omega$.
+
+First, fix some $N$. Then, on $K_N$, we have that:
+
+$$ f(z) = (Q_1 + ... Q_N) + (P_1 + ... + P_N) + \sum_{i = N+1}^\infty (Q_i - P_i) $$.
+
+We notice, that for each $Q_i - P_i$ for each $i \geq N+1$, this is holomorphic on a neighborhood of $K_N$, each with modulus less than $1/2^{i}$. Thus, this sum converges, and the infinite sum is holomorphic on a neighborhood of $K_N$. 
+
+Moreover, the sum $P_1 + ... + P_N$ is holomorphic, because the poles are outside of $\Omega$, and $K_N \subset \Omega$. 
+
+So of course $f - (Q_1 + ... + Q_N)$ is holomorphic on a neighborhood of $K_N$, and the poles of $Q_1 + ... + Q_N$ are in $K_N$. Hence, $f$ must be meromorphic on some neighborhood of $K_N$, with poles in $A_1 \cup .. \cup A_N$. Since the choice of $N$ was arbitrary, this extends to $\Omega$.
+
+Analytic Notions of Simple Connectivity:
+
+Theorem:
+
+Let $\Omega$ be a planar open set. The following are equivalent:
+
+(1) $\Omega$ is homeomorphic to $U = \{ (x,y) : x^2 + y^2 < 1 \}$
+
+(2) $\Omega$ is simply connected
+
+(3) $\ind_\gamma(\alpha) = 0$ for every closed path in $\Omega$ and every $\alpha \not \in  \Omega$
+
+(4) $S^2 \setminus \Omega$ is connected
+
+(5) There is an approximation for every $f \in \calH(\Omega)$ by a sequence of polynomials $R_n \to f$ uniformly on compact subsets of $\Omega$.
+
+(6) For every $f \in \calH(\Omega)$, and every closed path $\gamma \in \Omega$, Cauchy’s theorem holds, that is, $\int_\gamma f(z) dz = 0$. 
+
+(7) For every $f \in \calH(\Omega)$, there exists a function $F \in \calH(\Omega)$ such that $F’ = f$. 
+
+(8) For every $f \in \calH(\Omega)$ such that $f \not = 0$ on $\Omega$, there exists a $g \in \calH(\Omega)$ such that $f = e^{g}$
+
+(9) For every $f \in \calH(\Omega)$ such that $f \not = 0$ on $\Omega$, there exists a $g \in \calH(\Omega)$ such that $f = g^2$
+
+Some proofs:
+
+(1) $\to$ (2)
+
+Obvious, since homeomorphism preserve connectedness. Otherwise, we could push an open set and show $U$ to not be connected.
+
+(2) $\to$ (3)
+
+Obvious, since if $\Omega$ simply connected, then every path homotopic to the constant path, homotopy preserves indices, and the index of any point with respect to the constant path is $0$.
+
+(3) $\to$ (4)
+
+Suppose not. Then $S^2 \setminus \Omega$ is the union of at least 2 disjoint closed sets $K, E$ such that at least one, $K$ is compact. Define $\Omega’ = K \cup \Omega$. Of course, this must be open. Hence, we may find a cycle $\Gamma$ in $\Omega’$ such that $\Gamma^* \cap K = \emptyset$ and $\ind_\Gamma(z) = 1$ for all $z \in K$. But then, $\Gamma$ is actually also a cycle in $\Omega$, contradiction.
 
 
 \end{document}
