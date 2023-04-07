@@ -68,6 +68,47 @@ Suppose $\Delta$ is a closed equilateral triangle in the plane, with vertices $a
 
 \begin{proof}[Solution]
 
+First, fix some $a,b,c \in \mathbb{C}$. We notice that the function:
+
+$$ f(z) = (z - a)(z-b)(z-c)$$ 
+
+is a polynomial, thus entire. Then, we may apply the maximum modulus principle to our closed triangle which then says that:
+
+$$ |z-a||z-b||z-c| \leq \Vert (z-a)(z-b)(z-c) \Vert_{\partial \Delta} $$
+
+Thus, it is sufficient to consider the value of $(z-a)(z-b)(z-c)$ on the boundary of our equilateral triangle. Further, since the quantity we are concerned about is
+
+$$\Vert (z-a)(z-b)(z-c) \Vert_{\partial \Delta} = \max\{ |z-a||z-b||z-c| : z \in \partial \Delta \} $$
+
+where we use max instead of sup due to being compact, this is simply the product of the distances from $z$ to $a,b,c$. Thus, under any isometries, this product is preserved. Therefore, we may take rotations and translations such that the following picture holds, for $2s$ the side length of our triangle:
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\draw[->,ultra thick] (-5,0) -- (5,0);
+\draw[->,ultra thick] (0,-5) -- (0,5);
+\draw[red, thick] (-1,0) node[below left]{$(-s,0)$} -- (1,0) node[below right]{$(s,0)$};
+\draw[red, thick] (-1,0) -- (0,1.73) node[right]{$(0,\sqrt{3}s)$};
+\draw[red, thick] (1,0) -- (0,1.73);
+\end{tikzpicture}
+\end{figure}
+
+Due to symmetries, we can also restrict ourselves to analyzing $z$ on the real line, as a simple rotation will find us the value on the other sides. It should also be clear that due to reflectional symmetries, we can restrict ourselves to the non-negative reals as well.
+
+Let $z = (x,0)$ with $x \in [0,s]$. Computing the value of $|f|$, we find:
+
+$$|f(z)| = |(x,0) - (s,0)| + |(x,0) - (-s,0)| + | (x,0) - (0,\sqrt{3} s)| = (s- x)(x + s)\sqrt{x^2 + 3s^2} = (s^2 - x^2)\sqrt{x^2 + 3s^2} $$
+
+But now, this is a real function, so we may take a derivative and check endpoints to find the maximum. We see pretty clearly that:
+
+$$ f’(x) = -2x\sqrt{x^2 + 3s^2} + x(s^2 - x^2)\frac{1}{ \sqrt{x^2 + 3s^2} } = \frac{1}{ \sqrt{x^2 + 3s^2} } \left(-2x(x^2 + 3s^2) + x(s^2 - x^2) \right) =  $$
+
+$$ \frac{1}{ \sqrt{x^2 + 3s^2} } (-3x^3 - 5xs^2) = \frac{1}{ \sqrt{x^2 + 3s^2} } x(-3x^2-5s^2)$$
+
+Clearly, since $x^2 \geq 0, s^2 > 0$, we have that $x^2 + 3s^2$ and $-3x^2-5s^2$ never vanish. Thus, we have only the critical point $x = 0$. Since at $x=s$, $f$ vanishes, because this is also a boundary of our domain, this must be the maximum. Thus, we have that the maximum of $f$ is equal to:
+
+$$ f(0) = s^2 \sqrt{3s^2} = \sqrt{3} s^3$$ where $2s = |a - b | = |b - c| = |c - a|$
+
 \end{proof}
 
 \begin{problem}{Question 3}
@@ -163,6 +204,14 @@ Suppose $f \in \mathcal{H}(\Omega)$. Under what conditions can $|f|$ have a loca
  
 \begin{proof}[Solution]
 
+We see that for $f$ non-constant, $|f|$ may have a local minimum on a  connected component of $\Omega$ if and only if $f$ never attain 0 on that component. Equivalently, we prove that $|f|$ has a non-0 local minimum on a connected component if and only if $f$ is constant on that component.
+
+For what follows, let $\Omega$ be a single connected component. Clearly, if $f$ is a non-0 constant, then $|f|$ has a non-0 local minimum, as at any point $\zeta \in \Omega$, $f(\zeta) = f(z) \implies f(\zeta) = f(z)$ for all $z \in \Omega$. So we need only prove the other direction.
+
+Suppose $|f|$ has a non-0 local minimum at $\zeta \in \Omega$, that is, $0 < |f(\zeta)| \leq |f(z)|$ for all $z \in \Omega$. Then, $f$ has no 0s on $\Omega$, but is holomorphic. Thus, $g = 1/f$ is a holomorphic function on $\Omega$. In particular, at $\zeta$ we have that $ g(\zeta) = \frac{1}{f(\zeta)}$. Since $|f|$ is at a minimum at $\zeta$, $|g| = |1/f|$ is at a maximum at $\zeta$. Thus, we would have that $|g|$ has a local maximum on $\Omega$. However, by the maximum modulus principle, since $|g|$ has a local maximum, we have that $g$ is constant. But, if $g$ is constant, then since $g = 1/f \implies f = 1/g$, $f$ too must be constant.
+
+Thus, $|f|$ having a positive local minimum is equivalent to $f$ being constant on the component containing a local minimum.
+
 \end{proof}
   
 
@@ -175,6 +224,38 @@ Suppose $f \in \mathcal{H}(\Omega)$. Under what conditions can $|f|$ have a loca
 \end{problem}
 
 \begin{proof}[Solution]
+
+(a)
+
+Since $\overline{D}$ is compact and $|f|$ is a continuous function, $|f|$ achieves a minimum somewhere on $\overline{D}$. First, suppose $|f| \geq \delta > 0$ on $\overline{D}$.
+
+If this occurs on the interior, then by the last problem, $f$ must be constant on $D$, a contradiction. Thus, suppose this occurs on the boundary, that is $|f|$ attains a minimum on $\overline{D}$ on $\partial D$. Since $|f|$ is constant, the minimum is attained at all points on the boundary, call it $a$. However, by the maximum modulus principle, we have that $|f(z)| \leq \Vert f \Vert_{\partial D} = a$ for all $z \in D$. Thus, we have that for all $z \in D$, $a = \Vert f \Vert_{\partial D} \leq |f(z)| \leq \Vert f \Vert_{\partial D} = a \implies |f(z)| = a$. Since $f$ is holomorphic, for this to satisfy the Cauchy-Riemann equations on a disk, we must have that $f$ is constant. Thus, we cannot have that we achieve a positive minimum anywhere.
+
+Now, suppose that $|f|$ achieves 0 somewhere. If it is on the boundary, because $|f|$ is constant on the boundary, then $|f| = 0$ on all of $\partial D$. However, by the maximum modulus principle then, $f = 0$ everywhere, a contradiction. Then, we must have that $|f| = 0$ somewhere on $D$, and thus $f = 0$ somewhere on $D$.
+
+(b)
+
+We claim that under these hypotheses, this is satisfied only if $f = cz^m$ for some $m \geq 0$ and $c \in \mathbb{C}$ such that $|c| = 1$. Clearly, if $f$ is constant, then any function that satisfies this is just $f = e^{i \theta}$ for $\theta \in [0,2\pi)$ and this satisfies the above conditions for $m = 0$. 
+
+So, assume $f$ is non-constant. Let $m$ be the multiplicity of the zero of $f$ at $z = 0$, with $m = 0$ if $f(0) \not = 0$. Define:
+
+$$f_1(z) = \frac{f(z)}{z^m}$$
+
+We notice the following. When $|z| = 1$, we have that $|f_1(z)| = \frac{|f(z)|}{|z|^m} = \frac{1}{1} = 1$, and that by definition, for $m \not = 0$, we can find a $h(z)$ such that $f(z) = z^m h(z)$ on $\Omega$ with $h(0) \not = 0$, that
+
+$$f_1(z) = \frac{f(z)}{z^m} = \frac{z^m h(z)}{z^m} = h(z)$$
+
+and thus $f_1(0) \not = 0$.
+
+Now, if $f_1(z)$ is constant, we are done, since of course, we must have that $|\lambda| = 1$, as:
+
+$$f_1(z) = \lambda \implies \frac{f(z)}{z^m} = \lambda \implies f(z) = \lambda z^m$$
+
+and if $|z| = 1$, $|f(z)| = 1$, then $|\lambda| = 1$.
+
+Then, suppose $f_1(z)$ is not constant.
+
+
 
 \end{proof}
 
