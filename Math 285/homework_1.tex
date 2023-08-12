@@ -1,0 +1,252 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{float}
+\usepackage{bbm}
+
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+\newcommand{\vol}{{\text{Vol}}}
+
+\newenvironment{problem}[2][]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#1}
+\author{Eric Tao\\
+Math 285: Homework \#1}
+\maketitle
+
+\begin{problem}{Question 1}
+
+Define $f: \mathbb{R} \to \mathbb{R}$ via:
+
+$$ f(x) = \begin{cases} e^{-1/x^2} & \text{ for } x \neq 0 \\ 0 & \text{ for } x = 0\end{cases}$$
+
+Using the definition of the derivative, prove that $f \in C^\infty(\mathbb{R})$, and that the derivatives $f^{(k)}(0)$ vanish for all $k \in \mathbb{N}$. 
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+Well, first, we restrict ourselves to $\mathbb{R} \setminus \{ 0 \}$. On this domain, $f(x) =  e^{-1/x^2}$, and, familiarly, we can see that
+
+$$f'(x) = e^{-x^{-2}} \frac{d}{dx} (-x^{-2})=  e^{-x^{-2}} 2x^{-3} = 2x^{-3} f(x) $$
+
+then, we identify:
+
+$$f^{(2)}(x) = f'(x)2x^{-3} - 6x^{-4}f(x) = 2x^{-3} f(x)2x^{-3} -  6x^{-4}f(x) = f(x) (4x^{-6} - 6x^{-4})$$
+
+More generally, we can see that:
+
+$$f^{(n)}(x) = f(x) p_n\left(\frac{1}{x}\right)$$
+
+for $p_n\left(1/x\right)$ a polynomial in $1/x$ because the derivative of a polynomial in $1/x$ is simply a polynomial, and the derivative of $f$ is $f'(x) =  2x^{-3} f(x)$. Explicitly:
+
+$$f^{(n+1)}(x) = \frac{d}{dx} \left[f(x) p_n\left(\frac{1}{x}\right)\right] = f'(x) p_n\left(\frac{1}{x}\right) + f(x) p_n'\left(\frac{1}{x}\right) \frac{-1}{x^2} = f(x) \left[ 2x^{-3} p_n\left(\frac{1}{x}\right) - p_n'\left(\frac{1}{x}\right)x^{-2}\right] = f(x) p_{n+1}\left(\frac{1}{x}\right)$$
+
+Further, we notice that by our identification:
+
+$$  p_{n+1}\left(\frac{1}{x}\right) = 2x^{-3} p_n\left(\frac{1}{x}\right) - p_n'\left(\frac{1}{x}\right)x^{-2} $$
+
+and that because $p_0(1/x) = 1$, that $\deg(p_n(y)) = \deg(p_{n-1}(y)) + 3 = 3n$, where we can say this because the degree of the first term in the recurrence is $\deg(p_n) + 3$ and the degree of the second term is $\deg(p_n') + 2 = \deg(p_n) -1 + 2 = \deg(p_n)+1$, so the leading term in the first term cannot vanish, and we have that the overall polynomial has degree $\deg(p_n) + 3$.
+
+Now, let's examine the limit as $x \to 0$ of $f^{(n)}(x)$. Well:
+
+$$\lim_{x\to 0} f^{(n)}(x) = \lim_{x\to 0} f(x) p_n\left( \frac{1}{x} \right)$$
+
+Here, we rewrite this as examining two easier limits, by letting $y = 1/x$:
+
+$$\begin{cases} \lim_{y \to \infty} e^{-y^2} p_n(y) \\  \lim_{y \to -\infty} e^{-y^2} p_n(y) \end{cases} $$
+
+where of course, $p_n(y)$ is a polynomial in $y$, with non-negative powers. Well:
+
+$$\lim_{y \to \infty} e^{-y^2} p_n(y)  = \lim_{y \to \infty}\frac{p_n(y)}{e^{y^2}} $$
+
+Making the assumption that the leading coefficient of $p_n(y)$ is positive (if not, we pull out a negative sign and examine $-p_n(y)$), we see that the conditions for L'H\^opital's is met, as both numerator and denominator diverge to positive infinity.
+
+Thus, we may take a derivative to find:
+
+$$  \lim_{y \to \infty}\frac{p_n(y)}{e^{y^2}} =  \lim_{y \to \infty}\frac{p_n'(y)}{2ye^{y^2}} =  \lim_{y \to \infty}\frac{p_n'(y)/2y}{e^{y^2}}$$  
+
+
+Well, if $p_n'(y)/2y$ has no positive powers, then we're done, as in that case, $\lim_{y \to \infty} p_n'(y)/2y = c$, at most a constant. Otherwise, if it does have a positive power, its limit remains $\infty$, so we may iteratively keep taking derivatives since $p_n$ has finite degree until this is true. Thus, because $\lim_{y \to\ infty} e^{y^2} = \infty$, we have that:
+
+$$ \lim_{y \to \infty}\frac{p_n(y)}{e^{y^2}}= 0$$
+
+The same argument works for $y \to -\infty$, with potentially examining $-p_n(y)$ if the leading term has odd degree. Thus, in terms of our original limit, we have that:
+
+$$\lim_{x\to 0} f^{(n)}(x) = \lim_{x\to 0} f(x) p_n\left( \frac{1}{x} \right) = 0$$
+
+So, we have that to remove the discontinuity, we would enforce that $ f^{(n)}(0) = 0$ for all $n$. Thus, derivatives exist on all of $\mathbb{R}$ continuously and smoothly for all $n$, as we may patch the discontinuity at $x = 0$. Thus, $f \in C^\infty(\mathbb{R})$.
+
+%where we define $p^*_n(x) = p_n(1/x) * 1/x^{3n}$, that is, the polynomial with non-negative powers of $x$ after factoring out by the highest power of $1/x$.
+
+%Well:
+
+%$$ \lim_{x\to 0} \frac{f(x) p^*_n(x)}{x^{3n}} $$
+
+%is a form where we may apply L'H\^opital's rule to, as $\lim_{x \to 0} f(x) p^*_n(x) = 0$ since $\lim_{x \to 0} f(x) = 0$ and $\lim{x \to 0} p^*_n(x) = a_0$, some constant term and because $\lim_{x \to 0} x^{3n} = 0$.
+
+\end{proof}
+
+\begin{problem}{Question 2}
+
+Let $\overline{0} = (0,0)$ be the origin in $\mathbb{R}^2$, and let $B(\overline{0},1)$ be the open unit disk centered at the origin. To find a diffeomorphism between $B(\overline{0},1)$ and $\mathbb{R}^2$, we identify $\mathbb{R}^2$ as $\{ (x,y,0) : x,y, \in \mathbb{R} \} \subseteq \mathbb{R}^3$, and introduce the lower open hemisphere:
+
+$$ S = \{ (x,y,z) : x^2 + y^2 + (z-1)^2 = 1; z < 1 \} \subseteq \mathbb{R}^3 $$
+
+as an intermediate space. Notice that the map:
+
+$$f: B(\overline{0},1) \to S \text{ via } (a,b) \mapsto (a,b,1 - \sqrt{1 - a^2 - b^2}) $$
+
+is a bijection.
+
+(a) The stereographic projection $g: S \to \mathbb{R}^2$ through $(0,0,1)$ is the map that sends a point $(a,b,c) \in S$ to the point in the $xy$ plane given by the line through $(0,0,1)$ and $(a,b,c)$. Show that it is given by:
+
+$$(a,b,c) \mapsto (u,v) = \left( \frac{a}{1-c}, \frac{b}{1-c} \right); c =1 - \sqrt{1 - a^2 -b^2} $$
+
+and its inverse is given by:
+
+$$(u,v) \mapsto \left( \frac{u}{w}, \frac{v}{w}, 1 - \frac{1}{w} \right); w = \sqrt{1 + u^2 + v^2} $$
+
+(b) 
+
+Define
+
+$$h = g \circ f :  B(\overline{0},1) \to \mathbb{R}^2$$
+
+Show that:
+
+$$h(a,b) = \left( \frac{a}{\sqrt{1 - a^2 - b^2}}, \frac{b}{\sqrt{1 - a^2 - b^2}} \right)$$
+
+Further, find a formula for $h^{-1}(u,v) = (f^{-1} \circ g^{-1})(u,v)$ and conclude that $h$ is a diffeomorphism. 
+
+(c)
+
+Generalize part (b) to $\mathbb{R}^n$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+
+\end{proof}
+
+\begin{problem}{Question 3}
+
+Let $A$ be an algebra over a field $k$. Let $D_1, D_2$ be derivations of $A$. Show that $D_1 \circ D_2$ need not be a derivation, but $D_1 \circ D_2 - D_2 \circ D_1$ is.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+Counterexample: Let $A = k[x]$, the polynomial ring over the field $k$. Let $D_1 = \frac{d}{dx}$, the formal derivative with respect to $x$, and let $D_2 = x\frac{d}{dx}$.
+
+First, we check that these are actual derivations. We can see this by the action on $x^n$ for arbitrary $n,m$ that these are $k$ linear maps:
+
+$$D_1: \begin{cases} \frac{d}{dx}(cx^n) = cn x^{n-1} = c \frac{d}{dx}(x^n) \\   \frac{d}{dx}(x^n + x^m) = nx^{n-1} + mx^{m-1} = \frac{d}{dx}x^n + \frac{d}{dx}x^m \end{cases} $$
+
+$$D_2: \begin{cases} x\frac{d}{dx}(cx^n) = xcn x^{n-1} = cxn x^{n-1} = cx \frac{d}{dx}(x^n) \\   x\frac{d}{dx}(x^n + x^m) = xnx^{n-1} + xmx^{m-1} = x \frac{d}{dx} x^{n} + x \frac{d}{dx} x^m \end{cases} $$
+
+Further, we can see that this follows the Leibniz rule:
+
+$$ D_1(fg) = \frac{d}{dx} (fg) = \frac{d}{dx}(f) g + f \frac{d}{dx}(g) = D_1(f) g + fD_1(g) $$
+
+$$D_2(fg) = x \frac{d}{dx}(fg) = x \left[  \frac{d}{dx}(f) g + f \frac{d}{dx}(g) \right ] = x \frac{d}{dx}(f) g + f x  \frac{d}{dx}(g) = D_2(f) g + fD_2(g) $$
+
+However, consider $D_2 \circ D_1$ acting on $x^3 = x^2 * x$:
+
+$$D_2 \circ D_1 (x^3) = D_2(\frac{d}{dx} x^3 ) = D_2(3x^2)  = 6x$$
+
+On the other hand:
+
+$$D_2 \circ D_1(x^2) * x + x^2D_2\circ D_1(x) = D_2(2x) * x + x^2 D_2(1) = 2x^2 + 0 = 2x^2 $$
+
+where we've used the fact that $\frac{d}{dx}(1) = 0$ to conclude $D_2(1) = 0$.
+
+Thus, even though $D_1, D_2$ are derivations, $D_2 \circ D_1$ need not be a derivation.
+
+However, now consider $D_1 \circ D_2 - D_2 \circ D_1$ for generic derivations $D_1, D_2$.
+
+Well:
+
+$$ D_1 \circ D_2 - D_2 \circ D_1(fg) = D_1 \circ D_2(fg) - D_2 \circ D_1(fg) = D_1(D_2(f)g  + fD_2(g) ) - D_2(D_1(f)g  + fD_1(g)) = $$
+
+$$ D_1 \circ D_2(f) g + D_2(f) D_1(g) + D_1(f) D_2(g) + f D_1 \circ D_2(g) - [ D_2 \circ D_1(f)g + D_1(f) D_2(g) + D_2(f) D_1(g) + fD_2 \circ D_1(g) ] = $$  
+
+$$ D_1 \circ D_2(f) g + f D_1 \circ D_2(g) - D_2 \circ D_1(f)g - fD_2 \circ D_1(g) =  [D_1 \circ D_2(f)  -  D_2 \circ D_1(f)]g  + f[ D_1 \circ D_2(g)  - D_2 \circ D_1(g) ] = $$
+
+$$ D_1 \circ D_2 - D_2 \circ D_1(f)g  + f D_1 \circ D_2 - D_2 \circ D_1(g) $$
+
+\end{proof}
+
+\begin{problem}{Question 4}
+
+Let $U$ be a neighborhood of a point $p \in \mathbb{R}^n$, and let $X,Y$ be smooth vector fields on $U$. Define a function $Z_p : C_p^\infty \to \mathbb{R}$ via:
+
+$$Z_p(f) = X_p(Yf) $$
+
+(a)
+
+Show that $Z_p$ does not satisfy the Leibniz rule, and is therefore not a derivation at $p$.
+
+(b)
+
+Show that $X_pY  - Y_pX$ satsifies the Leibniz rule on $C_p^\infty$. Hence, $[X,Y]_p := X_p Y - Y_pX$ is a tangent vector at $p$, and $[X,Y]$ is a vector field on $U$. Call this the Lie bracket of $X, Y$.
+
+(c)
+
+Let $X = \sum_i a^i \frac{\partial}{\partial x^i}, Y =  \sum_j b^j \frac{\partial}{\partial x^j}$. /Find the coefficient $c_k$ in $[X,Y] = \sum_k c^k \frac{\partial}{\partial x^k}$.
+
+(d) 
+
+Show that if the vector fields $X,Y$ are smooth on $U$, then their Lie brakcet is also a smooth vector field on $U$.
+\end{problem}
+
+\begin{proof}[Solution]
+
+
+\end{proof}
+
+\begin{problem}{Question 5}
+
+Let $V$ be a vector space of dimension $n$, with basis $e_1,...,e_n$. Let $\alpha^1,...,\alpha^n$ be the dual basis for $V^*$. Show that a basis for the space of $k$-linear functions of $V$, $L_k(V)$ is $\{ \alpha^{i_1} \otimes ... \otimes \alpha^{i_k}$ for any multi-index $(i_1,...,i_k)$. In particular, conclude that $\dim(L_k(V)) = n^k$.  
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+
+\end{proof}
+
+\begin{problem}{Question 6}
+
+Let $V$ be a vector space. For $a,b \in \mathbb{R}, f \in A_k(V), g \in A_l(V)$, show that $af \wedge bg = (ab) f \wedge g$
+\end{problem}
+
+\begin{proof}[Solution]
+
+
+\end{proof}
+
+\begin{problem}{Question 7}
+
+Suppose we have two sets of covectors on a vector space $V$: $\{ \beta^1,...,\beta^k \}, \{ \gamma^1,....,\gamma^k \}$. Further, suppose we have that they are related by:
+
+$$ \beta^i  = \sum_{j=1}^k a_j^i \gamma^j$$ for each $1 \leq i \leq k$, such that the $a_j^i$ form the entries of a $k\times k$ matrix $A$. Show that:
+
+$$ \beta^1 \wedge ... \wedge \beta^k = \det(A) \gamma^1 \wedge ... \wedge \gamma^k$$
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+
+\end{proof}
+
+\end{document}

@@ -251,10 +251,31 @@ Now, if $f_1(z)$ is constant, we are done, since of course, we must have that $|
 
 $$f_1(z) = \lambda \implies \frac{f(z)}{z^m} = \lambda \implies f(z) = \lambda z^m$$
 
-and if $|z| = 1$, $|f(z)| = 1$, then $|\lambda| = 1$.
+and since by hypothesis, when $|z| = 1$, $|f(z)| = 1$, therefore $|\lambda| = 1$.
 
-Then, suppose $f_1(z)$ is not constant.
+Then, suppose $f_1(z)$ is not constant. Then, by part (a), we must have at least one zero on $U$, away from $z= 0$. Let $\alpha_1,...,\alpha_m$ be the zeros of $f_1$ in $U$ with multiplicity according to the order of the zero.Recall the function defined in Rudin (12.4) as:
 
+$$\varphi_\alpha(z) = \frac{z - \alpha}{1 - \overline{\alpha}z} $$
+
+Then, consider the function:
+
+$$g(z) = \frac{f_1(z)}{\varphi_{\alpha_1}(z) ... \varphi_{\alpha_m}(z)} = f_1(z) \cdot \prod_{j=i}^m \frac{1 - \overline{\alpha}_j z}{z - \alpha_j}$$
+
+We notice that by construction, $g$ must be holomorphic on $U$, because suppose $f_1$ has a zero of order $m$ at $\alpha_i$. Then we may write $f_1 = (z-\alpha_i)^m h(z)$ for some holomorphic function $h_{\alpha_i}$ that is non-0 at $\alpha_i$. Further, by construction, since we counted $\alpha_i$ as zeros of $f$ with multiplicity according to the order of the 0, there are exactly $m$ copies of $\frac{1}{z-\alpha_i}$ in the product. Thus, $g$ has a removable singularity at each 0 of $f_1(z)$.
+
+Further, suppose $g = 0$ on $U$. This cannot happen at any of the zeros of $f_1$, due to the analysis presented above, as the order of the zero is cancelled out by the denominators, and we are left with a non-0 function, as $(1 - \overline{\alpha_j}\alpha_i) = 0 \iff  \overline{\alpha_j}\alpha_i = 1$, which implies that $| \overline{\alpha_j} | = | \alpha_j | = \frac{1}{|\alpha_i} > 1$. But since $\alpha_j$ is a 0 of $f_1$ in $U$, $|\alpha_j| < 1$, so this cannot happen. Further, by the same logic, none of the $1 - \overline{\alpha_j} z$ disappear on $U$. Thus, $g$ is non-0 on $U$.
+
+Further, $g$ must be at least meromorphic everywhere, since $f_1$ is at least meromorphic, being the ratio of an entire function with a polynomial, and it is being multiplied by a finite product of rational functions.
+
+Lastly, suppose $|z| = 1$. We recall from the text, that $\varphi_\alpha$ is a map that takes $T \to T$. Thus, we notice that when $|z| = 1$, we had earlier that $|f_1| = 1$, and that for each $\frac{1}{\varphi_{\alpha_j}}$, that for any $|z| = 1$,  $\left|\frac{1}{\varphi_{\alpha_j}(z) }\right| = \frac{1}{|\varphi_{\alpha_j}(z)| } = 1$. Therefore, when $|z| = 1$, so too does $|g(z)| = 1$.
+
+Now, we have that $g$ is holomorphic on the disk, with $|g|$ constant on the boundary, with no 0. By the discussion above in part (a), this implies then that $g$ is constant on $D$, and by continuity, $g = \lambda$ such that $|\lambda| = 1$. 
+
+However, let's consider what this means for $f$. Since $g$ is constant, and $f_1(z) = \frac{f(z)}{z^m}$, we have then that at least on $U$:
+
+$$\lambda = \frac{f(z)}{z^m} \cdot \prod_{j=i}^m \frac{1 - \overline{\alpha}_j z}{z - \alpha_j} \implies f(z) = \lambda z^m \prod_{j=i}^m \frac{z - \alpha_j}{1 - \overline{\alpha}_j z}$$
+
+However, since $g$ is meromorphic, since it is constant on $U$, this must hold everywhere. But this is a contradiction, as this expression has poles at each $\frac{1}{\overline{\alpha}_j}$. Therefore, this case cannot satisfy $f$ as an entire function, and we have that $f$ may only be constant (that is, exponent of 0), or of the form $f(z) = \lambda z^m$ for some $|\lambda| = 1$.
 
 
 \end{proof}
