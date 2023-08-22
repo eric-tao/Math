@@ -134,6 +134,101 @@ Generalize part (b) to $\mathbb{R}^n$.
 
 \begin{proof}[Solution]
 
+(a)
+
+Let $(a,b,c) \in S$, and consider the line through $(0,0,1)$ and $(a,b,c)$. In vector form, we may write this as:
+
+$$ (x,y,z) = (0,0,1)t + (a,b,c) (1 - t)  \text{ s.t. } t \in \mathbb{R}$$
+
+We wish to find the point at which $z = 0$. We find that for $z = 0$, then the value of $t$ is:
+
+$$  0 = t_{z=0} + c(1 - t_{z=0}) \implies t_{z=0}  = \frac{c}{c - 1} $$
+
+Now, we wish to see the values of $(x,y)$ at $t_{z=0}$. Substituting, we find that:
+
+$$\begin{cases} x_{z=0} = a - at = a - a \frac{c}{c-1} = \frac{ac - a - ac}{c - 1} = \frac{-a}{ c- 1} = \frac{a}{1-c} \\ y_{z=0} = b - bt = b - b\frac{c}{c-1} = \frac{bc - b - bc}{c-1} = \frac{-b}{c-1} = \frac{b}{1-c}\end{cases} $$
+
+Here, we notice that since we live on the lower open hemisphere, that we have that:
+
+$$ a^2 + b^2 + (c-1)^2 = 1 \implies c = 1 - \sqrt{1 - a^2 - b^2} $$
+
+where we choose the negative sign for the square root as we live on the lower hemisphere.
+
+Thus, we have that the map from the hemisphere to the disk in the plane as being from:
+
+$$ (a,b,c) \mapsto (u,v) = \left( \frac{a}{1-c}, \frac{b}{1-c} \right) \text{ where } c = 1 - \sqrt{1 - a^2 - b^2} $$
+
+Now, we can examine the inverse. Let $(u,v)$ be a point on the plane identified with $z=0$, and consider the line that joins it and $(0,0,1)$.
+
+We can parametrize the line with the form:
+
+$$ (x,y,z) = (0,0,1)(1-t) + (u,v,0)t$$
+
+Now, we need to intersect this with the sphere. We have that:
+
+$$ \begin{cases} x = ut \\ y = vt \\ z = (1-t) \\ \end{cases}$$
+
+So, substituting, we have that:
+
+$$ u^2 t^2 + v^2 t^2 + (1-t - 1)^2 = 1 \implies t^2(u^2 + v^2 + 1) = 1 \implies t = \frac{1}{\sqrt{1 + u^2 + v^2}} $$
+
+Thus, we have, as expected that:
+
+$$ (u,v) \mapsto uw, vw, 1 - w  \text{ where } w = \frac{1}{\sqrt{1 + u^2 + v^2}} $$
+
+Now, we need only show that these are inverses. Calling the first map $f_1$ and the second map $f_2$, we see that:
+
+$$f_1 \circ f_2(u,v) = f_1( (uw,vw,1-w)) = \left(\frac{uw}{1 -(1-w)}, \frac{vw}{1 - (1-w)} \right) = (u,v) $$
+
+and that:
+
+$$ f_2 \circ f_1((a,b,c)) = f_2\left(\frac{a}{1-c}, \frac{b}{1-c}\right) $$
+
+Computing first the value of $w$, we find that:
+
+$$w = \frac{1}{\sqrt{1 + \frac{a^2}{(1-c)^2} + \frac{b^2}{(1-c)^2}}} = \frac{(1-c)}{\sqrt{(1-c)^2 +a^2 + b^2}} = (1-c) $$
+
+where we use the fact that $(a,b,c)$ are points on the sphere and replace $(1-c)^2 +a^2 + b^2 = 1$.
+
+Thus:
+
+$$  f_2\left(\frac{a}{1-c}, \frac{b}{1-c}\right) = \left(\frac{a}{1-c} (1-c),  \frac{b}{1-c} (1-c), 1 - (1-c) \right) = (a,b,c) $$
+
+Thus, we have that these maps act as inverses as well.
+
+(b)
+
+As instructed, we define $h = g \circ f : B(\overline{0}, 1) \to \mathbb{R}^2$.
+
+Let’s consider the action of $h$ on a point $(a,b) \in B(\overline{0}, 1)$:
+
+$$h((a,b)) = g \circ f ((a,b)) = g(f(a,b)) = g(  (a,b,1 - \sqrt{1 - a^2 - b^2}) ) = \left( \frac{a}{\sqrt{1-a^2 - b^2}}, \frac{b}{\sqrt{1 - a^2 - b^2} } \right)$$
+
+Next, let’s consider such an inverse. Firstly, we notice that the inverse to $f$ acts like:
+
+$$f^{-1} (a,b,c) = (a,b)$$
+
+Then, we have that, for a point $(u,v) \in \mathbb{R}^2$:
+
+$$ h^{-1}(u,v) = (f^{-1} \circ g^{-1})(u,v) = f^{-1} ( uw, vw, 1 - w ) = (uw, vw) = \left(\frac{u}{\sqrt{1 + u^2 + v^2}}, \frac{v}{\sqrt{1 + u^2 + v^2}} \right)$$
+
+without writing it out, it should be clear that composing these maps will show that these are inverses. Then, we should just check that the inverse actually brings points to the disk. Indeed:
+
+$$\left| \left(\frac{u}{\sqrt{1 + u^2 + v^2}}, \frac{v}{\sqrt{1 + u^2 + v^2}} \right) \right|^2 = \frac{u^2}{1 + u^2 + v^2} + \frac{v^2} {1 + u^2 + v^2}  = \frac{u^2 + v^2}{1 + u^2 + v^2} < \frac{1 + u^2 + v^2}{ 1 + u^2 + v^2} = 1 $$
+
+Then, indeed, $h^{-1}$ is a map to the open disk.
+
+(c)
+
+Generalizing this process, take $\overline{0}_n$ to be the origin in $\mathbb{R}^n$. We may take the open disk $B(\overline{0}_n, 1)$ to be the open unit disk centered on the origin, and take a diffeomorphism to the sphere in $n+1$ dimensions defined via:
+
+$$ (a_1,...,a_n) \mapsto (a_1,...,a_n, 1 - \sqrt{1 - a^2 - b^2} $$
+
+Then, in a similar fashion, we pass to $\mathbb{R}^n$ via a stereographic projection, taking:
+
+$$(a_1,...,a_{n+1}) \mapsto (u,v) = \left( \frac{a_1}{1-c}, \frac{a_2}{1-c}, ..., \frac{a_n}{ 1-c } \right) \text{ where } c = 1 - \sqrt{ 1 - \sum_{i=1}^n a_i^2 } $$ 
+
+Composing these maps, analogously to parts a,b, we find that these act as smooth bijections between the open disk in $\mathbb{R}^n$ and all of $\mathbb{R}^n$ and thus there exists a diffeomorphism relating them.
 
 \end{proof}
 
