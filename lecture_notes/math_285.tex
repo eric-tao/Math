@@ -83,6 +83,7 @@
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{proposition}{Proposition}[section]
 \newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
 
 % Stlyle stuff
 % notes are for students , \notes with \mmp{} are for me
@@ -303,6 +304,255 @@ Let $X$ be a vector field as above. We say that $X \in C^\infty$ if each $a^i: U
 
 Notation: The set of $C^\infty$ vector spaces on $U$ is an $\mathbb{R}$-vector space. We denote this by $\mathcal{X}(U)$.
 
+\section{September 13th}
+
+Multilinear algebra:
+
+Recall some easy examples.
+
+The dot product $\langle u, v \rangle$ is a bilinear function that takes $V \times V \to k$.
+
+Dual spaces:
+
+Note that we like this point of view because we can always multiply functions, but we may not admit a multiplication on vectors. Cross products need not exist.
+
+\begin{definition}
+A covector of a vector space $V$ is a linear function $f: V \to \mathbb{R}$.
+\end{definition}
+
+\begin{definition}
+The dual space of $V$ is the set of all covectors of $V$. We denote this as $V^*$.
+\end{definition}
+
+\begin{theorem}
+Let $V$ be a vector space with basis $\{ e_i \}_{I=1}^n$, and we have $\alpha^i \in V^*$, where $\alpha^i(e_j) = \delta_i^j$. Then, $\{ \alpha^i \}$ form a basis for $V^*$. We call this the dual basis to $\{ e_j \}$.
+\end{theorem}
+
+\begin{proof}
+Suppose $\sum_{I=1}^n c_i \alpha^I = 0$. Since these are functions on $V$, consider their action on $e_j$. Then, of course, we find that $c_j = 0$. Repeating this argument, this tells us that $c_i = 0$ for all $I$. In a similar fashion, if we assume $f$ to be a functional, its action is completely determined on the basis vectors. Then, we may construct g such that $g = \sum_{I=1}^n d_i \alpha^I$. And we notice $f-g = 0$ everywhere, so $f = g$.
+\end{proof}
+
+\begin{corollary}
+The dimension of the dual space is the dimension of the vector space.
+\end{corollary}
+
+\begin{definition}
+Let $f$ is a function, k-linear on $V$. That is, a function from $V \times V ... \times V \to \mathbb{R}$, linear in each argument. We call this object a $k$-tensor on $V$. Further, we call $f$ symmetric if, for any permutation of the arguments, $f$ is constant. $$ f(v_{\sigma(1)}, ..., v_{\sigma(n)}) = f(v_1,...,v_n)$$ for any $\sigma \in S_n$. Call $f$ alternative if, instead:
+ $$ f(v_{\sigma(1)}, ..., v_{\sigma(n)}) = \text{sgn}(\sigma)f(v_1,...,v_n)$$
+\end{definition}
+
+\begin{definition}
+Let $\sigma \in S_n$. We say that: 
+
+$$ \text{sgn}(\sigma) = \begin{cases} 1 \text{ if } \sigma \text{ can be expressed as a product of an even number of transpositions} \\ -1 \text{ if } \sigma \text{ can be expressed as a product of an odd number of transpositions} \end{cases} $$
+
+Equivalently, we can count the inversions.
+\end{definition}
+
+It turns out, that the symmetric tensors will not be terribly interesting for this course, but the alternating ones will be.
+
+\begin{definition}
+Denote the $k$-tensors on $V$ as the set $L_k(V)$.
+Denote the alternating $k$-tensors on $V$ as the set $A_k(V)$
+\end{definition}
+
+\begin{definition}
+Let $f \in L_k(V), g \in L_l(V)$. Denote the tensor product of $f$ and $g$ as $f \otimes g \in L_{k+k}(V)$, where:
+
+$$ f \otimes g (v_1,...,v_{k+l}) = f(v_1,...,v_k)g(v_{k+1},...,v_{k+l}) $$
+
+Note that this is not commutative, but it is associative.
+\end{definition}
+
+\begin{definition}
+Let $f \in A_k(V), g \in A_l(V)$. We denote the wedge product of $f$ and $g$ as $f \wedge g$, computed as:
+$$ f \wedge g (v_1,...v_{k+l}) = \frac{1}{k!l!} \sum_{\sigma \in S_{k+l}} \text{sgn}(\sigma)
+f(v_{\sigma(1)},...,v_{\sigma(k)})g(v_{\sigma(k+1)},...,v_{\sigma(k+l)}) $$
+\end{definition}
+
+\begin{definition}
+Let $\sigma \in S_{k+l}$. If $\sigma(1) < ... < \sigma(k)$ and $\sigma(k+1) < ... < \sigma(k+l)$, we call $\sigma$ a $(k,l)$ shuffle. Note that we have $\binom{k+l}{k}$
+\end{definition}
+
+We notice that instead of summing over all permutations of $S_n$, we may simply define the wedge product over $(k,l)$ shuffles, and drop the fraction in front.
+
+\begin{definition}
+Let $\sigma\in S_k$, and let $f \in L_k(V)$. Then, we denote the permutation of the arguments as $\sigma f (v_1,..,v_k) = f(v_{\sigma(1)},...,v_{\sigma(k)})$.
+\end{definition}
+
+\begin{definition}
+Let $f \in L_k(V)$. We call the function:
+$$ A(f) = \sum_{\sigma \in S_k} \text{sgn} (\sigma) (\sigma f)$$
+
+the alternator of $f$.
+
+\end{definition}
+
+\begin{theorem}
+For $f \in L_k(V)$, $A(k)$ is alternating.
+\end{theorem}
+
+\begin{proof}
+Let $\tau \in S_n$. Then, we have that:
+$$ \tau A(f) = \tau \sum_{\sigma}\text{sgn} (\sigma) (\sigma f) = \sum_{\sigma} \text{sgn} (\sigma) (\tau \sigma f) = \sum_{\sigma} \text{sgn} (\sigma) (\tau \sigma f) = \text{sgn}(\tau) \sum_\sigma \text{sgn}(\tau \sigma) (\tau \sigma) f $$
+
+But, we see that summing over $\sigma$ is equivalent to summing over $\tau \sigma$ because it’s just a translation of the group. So, this is equal to $\text{sgn}(\tau) A(f)$, and we’re done.
+\end{proof}
+
+Thus, we notice that we can also write the wedge product:
+
+$$ f \otimes g = \frac{1}{k! l!} A(f \otimes g)$$
+
+Remark: The wedge product has the following properties:
+(i) $f \wedge g = (-1)^{d_f d_g} g \wedge f$ where $d_f$ is the degree of $f$ and same for $g$.
+(ii) It is associative, $(f \wedge g) \wedge h = f \wedge(g \wedge h)$.
+(iii) $f \wedge g \wedge h = \frac{1}{k! l! m!} A(f \otimes g \otimes h)$.
+(iv) For $\alpha^i \in V^*$, $(\alpha^1 \wedge...\wedge \alpha^k) (v_1,...,v_k) =
+\det[\alpha^i(v_j)]$
+
+\section{September 18th}
+
+Differential forms on $\mathbb{R}^n$
+
+Recall that a covector is a linear map from $V \to \mathbb{R}$, 1-tensor, alternating 1-tensor.
+
+Analogously then, a covector field on an open set $U \subseteq \mathbb{R}$ assigns a covector to each point $u \in U$.
+
+An alternative name for a covector field is a 1-form. 
+
+Differentials of $f$:
+
+\begin{definition}
+For $f \in C^\infty(U)$, define the 1-form $df$ on $U$ via, for $p \in U$:
+
+$$(df)_p (X_p) = D_{X_p} f := X_p f $$
+
+\end{definition}
+
+\begin{example}
+$$(dx^i)_p \left(\frac{\partial}{\partial x^j} \bigg|_p\right) = \frac{\partial}{\partial x^j} \bigg|_p x^i = \delta_j^i $$
+\end{example}
+
+We notice that $\left\{ \frac{\partial}{\partial x^i} \right\}$ is a basis, and the standard basis for $T_p(\mathbb{R}^n)$.
+
+Therefore, $\{ dx^i \}$ is the dual basis for $(T_p \mathbb{R}^n)^v : = T_p^*(\mathbb{R}^n)$, the cotangent space at $p$. 
+
+Then, of course, every covector $w_p$ at $p$ may be expressed in this basis as:
+
+$$ w_p = \sum b_i(p) dx^i_p $$
+
+Viewing $b_i$ as a function over $U$, then:
+
+$$ w = \sum b_i dx^i $$
+
+where $b_i : U \to \mathbb{R}$.
+
+\begin{definition}
+A 1-form $ w = \sum b_i dx^i $ is $C^\infty$ if all $b_i \in C^\infty$.
+\end{definition}
+
+\begin{example}
+
+Consider $\{ x, y, z\} \subset \mathbb{R}^3$ as the standard coordinates. 
+
+$dx$ is a 1-form on $\mathbb{R}^3$ such that
+
+$$ dx\left( a\frac{\partial}{\partial x} + b\frac{\partial}{\partial y} + c\frac{\partial}{\partial z} \right) = a$$
+
+that is, it extracts the $x$-coordinate of a vector.
+\end{example}
+
+If we consider extracting coordinates via the dual basis, it’s not hard to see that, for $f \in C^\infty$:
+
+$$ df = \sum \frac{\partial f}{\partial x^i} dx^i $$
+
+Extending to $k$ arguments, we have the following:
+
+\begin{definition}
+A $k$-form on $U$ is an alternating $k$-tensor $w_p$ defined at each point $p \in U$. 
+\end{definition}
+
+Recall the following theorem:
+
+\begin{theorem}
+If $\alpha^1,...,\alpha^n$ is a basis for $A_1(V)$, then a basis for $A_k(V)$ is $\alpha^{i_1} \wedge ... \wedge \alpha^{i_k}$ where $i_1 < .. < i_k$. 
+\end{theorem}
+
+\begin{example}
+In $\mathbb{R}^3$:
+
+A 0-form associates to each point a number, so is a linear function $f: U \to \mathbb{R}$. 
+
+A 1-form looks like:
+
+$$ w = f dx + gdy + h dz $$
+
+A 2-form looks like:
+
+$$ w = P dy \wedge dz + Q dz \wedge dx + R dx \wedge dy $$
+
+A 3-form looks like:
+
+$$ w = f dx \wedge dy \wedge dz $$
+
+In general, we define a $k$-form on $U \subset \mathbb{R}^n$ as:
+
+$$ w = \sum_{I} b_I dx^I$$ where $I$ is a multi-index such that $1 \leq i_1 < ... < i_k \leq n$.
+\end{example} 
+
+We can see that there exists a 1-1 correspondence between 1-forms/2-forms and vector fields.
+
+We can also see that these exists a 1-1 correspondence between 0-forms/3-forms and functions.
+
+Not too hard to see, we would just look at these as abstract vector fields.
+
+Exterior Derivative:
+
+Notationally, we will denote $\Omega^k(U)$ as the $C^\infty$ k-forms on $U$.
+
+\begin{definition}
+We define the exterior derivative as a map:
+
+$$d: \Omega^k(U) \to \Omega^{k+1}(U)$$
+
+where $d\left( \sum_{I} b_I dx^I \right) = \sum_I db_I \wedge dx^I = \sum_{I,j} \frac{\partial b_I}{\partial x^j} dx^j \wedge dx^I$
+\end{definition}
+
+\begin{proposition}
+(i) $d$ is an antiderivation of degree $1$:
+
+$$ d(\omega \wedge \tau) = (d\omega) \wedge \tau + (-1)^{\deg \omega} \omega \wedge d\tau $$
+
+(ii) $d \cdot c = 0$.
+
+(iii) If $f$ is a 0-form, then:
+
+$$ df(X) = Xf $$
+\end{proposition}
+
+See proof in book.
+
+Recall some basics from vector calculus.
+
+The gradient of $f$ may be viewed as:
+
+$$\nabla f = \begin{bmatrix} f_x \\ f_y \\ f_x  \end{bmatrix}$$
+
+We say this corresponds to the following 1-form:
+
+$$df = f_x dx + f_y dy + f_z dz $$
+
+Similarly, for the curl:
+
+$$ \nabla \times f = \begin{bmatrix} \frac{\partial}{\partial x} \\ \frac{\partial}{\partial y} \\ \frac{\partial}{\partial z} \end{bmatrix} \times \begin{bmatrix} P \\ Q \\ R \end{bmatrix} = \begin{bmatrix} R_y - Q_z \\ P_z - R_x \\ Q_x - P_y \end{bmatrix} $$
+
+This corresponds to the following 2-form:
+
+$$(R_y - Q_z) dy \wedge dz + (P_z - R_x) dz \wedge dx + (Q_x - P_y) dx \wedge dy = d(P dx + Q dy + R dz) $$
+
+Without writing it out, we can look at the divergence of a vector field, and we notice that it corresponds to the following 2-form:
+
+$$d(P dy \wedge dz + Q dz \wedge dx + R dx \wedge dy) $$
 
 
 \end{document}
