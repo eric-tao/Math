@@ -1,0 +1,251 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{float}
+\usepackage{bbm}
+
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+\newcommand{\vol}{{\text{Vol}}}
+
+\newenvironment{problem}[2][]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#2}
+\author{Eric Tao\\
+Math 285: Homework \#2}
+\maketitle
+
+\begin{problem}{Question 1}
+
+Let $\omega$ be the $1$-form $zdx - dz$ and let $X$ be the vector field $y \partial/\partial x + x \partial/\partial y$ on $\mathbb{R}^3$.
+
+Compute $\omega(X)$ and $d\omega$. 
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+We recall that $\omega(X)$, in coordinates, is simply $\sum_{i} a_i b^i$, where $\omega = \sum_i a_i dx^i$, and $X = \sum_j b^j \frac{\partial}{\partial x^j} $
+
+Thus, we have that:
+
+$$\omega(X) = \sum_{i} a_i b^i = z * y + 0 * x + -1 * 0 = yz $$
+
+In a similar fashion, recall that, by definition:
+
+$$ d\omega = \sum_{i,j} \frac{\partial a_i}{\partial x^j} dx^j \wedge dx^i$$
+
+Thus, we have that:
+
+$$ d\omega = 1 dz \wedge dx = dz \wedge dx $$
+
+since we notice that the only non-vanishing partial of $z dx$ is $\partial/\partial z$ and none of the partials of $-dz$ survive. 
+
+\end{proof}
+
+\begin{problem}{Question 2}
+
+Suppose the standard coordinates on $\mathbb{R}^3$ are called $\rho, \phi, \theta$. If we have that:
+
+$$ \begin{cases} x = \rho \sin \phi \cos \theta \\  x = \rho \sin \phi \sin \theta \\ z = \rho \cos \phi \end{cases} $$
+
+Compute the following quantities in terms of $d\rho, d\phi, d\theta$: $dx, dy, dz, dx\wedge dy \wedge dz$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+\end{proof}
+
+\begin{problem}{Question 3}
+
+Let $V$ be a vector space of dimension 3 with basis $e_1, e_2, e_3$ and dual basis $\alpha^1, \alpha^2, \alpha^3$. For a $1$-covector $\alpha = \sum_{i=1}^3 a_i \alpha^i$ on $V$, we associate the vector $v_\alpha = \langle a_1, a_2, a_3 \rangle \in \mathbb{R}^3$. For a $2$-covector
+
+$$ \gamma = c_1 \alpha^2 \wedge \alpha^3 + c_2 \alpha^3 \wedge \alpha^1 + c_3 \alpha^1 \wedge \alpha^2$$
+
+we assoicate the vector $v_\gamma = \langle c_1, c_2, c_3 \rangle \in \mathbb{R}^3$.
+
+Show that under this correspondence, the wedge product of $1$-covectors corresponds to the cross product of vectors in $\mathbb{R}^3$, that is:
+
+$$ v_{\alpha \wedge \beta} = v_\alpha \times v_\beta $$
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+Recall that if we have identifications of $1$-covectors: $\alpha = \sum_i a_i dx^i$ and $\beta = \sum_j b_j dx^j$, then we have that:
+
+$$ \alpha \wedge \beta = \sum_{i,j} (a_i b_j) dx^i \wedge dx^j$$
+
+Writing this out in terms of coordinates, with respect to the dual basis, i.e. $dx^i = \alpha^i$, we have that:
+
+$$\alpha \wedge \beta = a_1 b_2 \alpha^1 \wedge \alpha^2 + a_1 b_3 \alpha^1 \wedge \alpha^3 + a_2 b_1 \alpha^2\wedge \alpha^1 + a_2 b_3 \alpha^2 \wedge \alpha^3 + a_3 b_1 \alpha^3 \wedge \alpha^1 + a_3 b_2 \alpha^3 \wedge \alpha^2 =$$
+$$ (a_2b_3 - a_3b_2) \alpha^2 \wedge \alpha^3 + (a_3b_1 - a_1b_3) \alpha^3 \wedge \alpha^1 + (a_1b_2  - b_1a_2) \alpha^1\wedge \alpha^2 $$
+
+where we've used the fact that since $\alpha^i$ are covectors, $\alpha^i \wedge \alpha^i = 0$.
+
+So, we have that:
+
+$$ v_{\alpha\wedge\beta} = \langle a_2b_3 - a_3b_2, a_3b_1  - a_1b_3, a_1b_2 - b_1a_2 \rangle $$
+
+In contrast, let's consider the cross product of $v_\alpha \times v_\beta = \langle a_1, a_2, a_3 \rangle \times \langle b_1, b_2, b_3 \rangle $. Using matrix notation:
+
+$$v_\alpha \times v_\beta = \begin{vmatrix} \mathbf{i}& \mathbf{j}  & \mathbf{k} \\ a_1  &a_2 &a_3 \\ b_1 & b_2 & b_3 \end{vmatrix} =  (a_2b_3 - a_3b_2)i - (a_1 b_3 - a_3 b_1)j + (a_1b_2 - a_2b_1)k =$$
+$$ \langle a_2b_3 - a_3b_2, a_3b_1 - a_1b_3, a_1b_2 - a_2b_1 \rangle $$
+
+We notice these are the same, and we conclude that $ v_{\alpha \wedge \beta} = v_\alpha \times v_\beta $.
+
+
+\end{proof}
+
+\begin{problem}{Question 4}
+
+Let $A = \oplus_{k=-\infty}^\infty A^k$ be a graded algebra over a field $K$, with $A^k = 0$ for $k  < 0$. Let $m \in \mathbb{Z}$.
+
+Define a superderviation of $A$ with degree $m$ as a $K$-linear map $D: A \to A$ such that for all $k \in \mathbb{Z}$, we have that $D(A^k) \subset A^{k+m}$ and that for all $a \in A^k, b \in A^l$:
+
+$$D(ab) = (Da) b + (-1)^{km} a (Db) $$
+
+Let $D_1, D_2$ be superderivations of $A$ with degrees $m_1, m_2$ respectively. Define their commutator as:
+
+$$ [D_1, D_2] = D_1 \circ D_2 - (-1)^{m_1m_2} D_2 \circ D_1 $$
+
+Show that the commutator $[D_1, D_2]$ is a superderivation of degree $m_1 + m_2$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+
+
+\end{proof}
+
+\begin{problem}{Question 5}
+
+Consider the set $S = \mathbb{R} \setminus \{ 0 \} \cup \{ A, B \}$, the bug-eyed line or the line with two origins.
+
+For $c,d \in \mathbb{R}$, define the following notation:
+
+$$ \begin{cases} I_A(-c, d) = (-c, 0) \cup \{ A \} \cup (0, d) \\  I_B(-c, d) = (-c, 0) \cup \{ B \} \cup (0, d) \end{cases} $$
+
+Define a topology on $S$ as follows: On $\mathbb{R} \setminus \{ 0 \}$, use the subspace topology from $\mathbb{R}$ with open intervals as a basis. At the point $A$, use the collection of sets $\{ I_A(-c, d) : c,d  > 0 \}$ as a basis, and analogously at $B$.
+
+(a) Prove that the map $h: I_A(-c,d) \to (-c, d) \subseteq \mathbb{R}$ defined by:
+
+$$ \begin{cases} h(x) = x & \text{ when } x \not = A \\ h(A) = 0 & \text{ else } \end{cases} $$
+
+ is a homeomorphism.
+
+(b) Show that $S$ is locally Euclidean, second countable, but not Hausdorff.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+Take the map $h$ as defined in the statement above. We need only show that $h$ is a continous bijection that admits a continuous inverse.
+
+We will show that $g: (-c,d) \to I_A(-c,d)$ defined by:
+
+$$g(a) = \begin{cases} A & \text{ if } a= 0 \\ a & \text{ else } \end{cases}$$
+
+is a left inverse and a right inverse.
+
+First, consider the map $h \circ g: (-c,d) \to (-c,d)$.
+
+Fix an $ a \in (-c,d)$. If $a = 0$, then we have that:
+
+$$h \circ g(0) = h(g(0)) = h(A) = 0$$
+
+Else, suppose $a \not = 0$. Then, by definition, we have that:
+
+$$h \circ g(a) = h(g(a)) = h(a) = a$$
+
+Thus, $g$ is a right inverse.
+
+Similarly, looking at $g\circ h: I_A(-c,d) \to I_A(-c,d)$, fixing a $b \in I_A(-c,d)$, if $b = A$, then we have that:
+
+$$ g \circ h(A) = g(h(A)) = g(0) = A$$
+
+otherwise, for $b \not = A$, we have that:
+
+$$ g \circ h(b) = g(h(b)) = g(b) = b $$
+
+Thus, we have that $g$ acts as a left and right inverse, and thus $h$ is bijective, and $g$ is an inverse to $h$.
+
+Now, we wish to show that $h, g$ is continuous. To do so, we need only show that pre-images of basis elements are taken to basis elements. This is because, working in our image space, suppose $U = \cup_{B \in \mathcal{B}} B$ for a collection of basis elements $\mathcal{B}$. If we have that $h^{-1}(B)$ is a basis element in our codomain for every $B$, then of course, $\cup_{B \in \mathcal{B}} h^{-1}(B)$, being a union of basis elements is an open set, and thus $h^{-1}(U)$ is open.
+
+Then, it is enough to consider an open interval $(a,b) \subseteq (-c,d)$. If $0 \not \in (a,b)$, then $(a,b) \subseteq \mathbb{R} \setminus \{ 0 \}$. Since $S$ inherits the subspace topology on this set, then of course $(a,b)$ is a basis element of the topology on $S$. Furthermore, since $h$ acts via identity on $\mathbb{R} \setminus \{ 0 \}$, $h^{-1}((a,b)) = (a,b)$.
+
+Now, suppose $0 \in (a,b)$. In the notation we have established then, write this interval as $(-a,b)$. Then, from the action of $h$, we see that $h^{-1}((-a,b)) = (-a,0) \cup A \cup (0,b)$. But, from the definiton of $I_A$, this is exactly $I_A(-a,b)$, and from the definition of the topology on $S$, this is exactly a basis element for neighborhoods of $A$.
+
+Therefore, $h^{-1}(a,b)$ for any $a,b\in \mathbb{R}$ is taken to a basis element of $S$, and therefore $h$ is continuous.
+
+In a similar fashion, we may do the same for $g: (-c,d) \to I_A(-c,d)$.
+
+Take a basis element from $I_A(-c,d)$, and call it $C$. If $A \not \in C$, then of course $C$ comes from an open interval on $\mathbb{R} \setminus \{ 0 \}$, and thus $g^{-1}(C) = C$, as it acts via identity on $\mathbb{R} \setminus \{ 0 \}$.
+
+Now, suppose $A \in C$. Then, being a basis element, $C = I_A(-a,b)$ for $-c \leq -a <  b \leq d$. Looking at the action of $g^{-1}(I_A(-a,b))$, we see that this is exactly:
+
+$$ g^{-1}(I_A(-a,b)) = g^{-1}((-a, 0) \cup \{ A \} \cup (0, b)) =  g^{-1}((-a, 0)) \cup  g^{-1}(A)  \cup  g^{-1}(A)((0, b))=$$
+
+$$ (-a,0) \cup \{ 0 \} \cup (0,b) = (-a,b)$$
+
+Thus, for every basis element in  $I_A(-c,d)$, the inverse image under $g$ is a basis element of $(-c,d)$. Thus, $g$ is continuous.
+
+Therefore, since $h$ is a continuous bijection that admits a continuous inverse, $h$ is a homeomorphism.
+
+(b)
+
+Without too much trouble, it should be clear that $S$ is locally Euclidean. Fix a $c,d \in \mathbb{R} : c,d > 0$. From part (a), we already have a chart from $I_A(-c,d)$ to a neighborhood of $\mathbb{R}$, an open interval, via $h$. It should be easy to see that swapping $B$ for $A$ everywhere, this also extends to a similar chart for $I_B(-c,d)$. Furthermore, on $S \setminus \{ A, B \}$, we see that we may take $f: S \setminus \{ A, B \} \to \mathbb{R}$ via $f(x) = x$, the identity, and the image is exactly $\mathbb{R} \setminus \{ 0 \}$ an open set. It should be clear that the identity is continuous. Thus, between these three charts, $S$ is locally Euclidean (of dimension 1).
+
+Furthermore, $S$ is second countable. We may take our basis to be the union of:
+
+1) Open intervals with rational endpoints in $\mathbb{R}$ such that either both endpoints are positive or both are negative:
+
+$$ \{ (a,b) : a,b \in \mathbb{Q}, a \not = 0, ab > 0 \}$$
+
+2) Open intervals of the form $I_A(-c,d)$ where $c,d > 0, c,d \in \mathbb{Q}$.
+
+3) Open intervals of the form $I_B(-c,d)$ where $c,d > 0, c,d \in \mathbb{Q}$.
+
+Using the fact that open intervals with rational endpoints are a countable basis for $\mathbb{R}$, we see that (1) generates the open sets for $\mathbb{R} \setminus \{ 0 \}$. Further, by the definition of the topology for $S$, (2) and (3) generate the neighborhoods for $A, B$ respectively, since for any $c,d \in \mathbb{R}$, we may take a sequence of rational numbers approaching $c, d$ from above and below, respectively.
+
+Since each of these sets are countable, being at most $\mathbb{Q} \times \mathbb{Q}$, their union is also countable. Thus $S$ is second countable.
+
+However, it should be clear that $S$ is not Hausdorff. Take the points $A, B$. From the definition of our topology, we already know that the neighborhoods of $A$ can be generated by $I_A(-c,d)$ and analogously for $B, I_B(-e,f)$. 
+
+Fix any two neighborhoods $I_A(-c,d), I_B(-e,f)$. Pick any point:
+
+$$p \in (\max\{-c,-e\}, \min\{d, f\}) \setminus \{ 0 \}\subseteq \mathbb{R}$$
+
+Clearly, since $\max\{ -c, -e \} < p < \min\{ d,f \}$, we have that $p \in (-c,d) \setminus \{ 0 \}$ and that $p \in (-e,f) \setminus \{ 0 \}$. Thus, $p \in I_A(-c,d)$ and $p \in I_B(-e,f)$. Since this procedure may be done regardless of the choice of $c,d,e,f$, we can never find disjoint neighborhoods of $A,B$, and therefore $S$ is not Hausdorff.
+
+
+\end{proof}
+
+\begin{problem}{Question 6}
+
+Define $S^2 = \{ (x,y,z) : x^2 + y^2 + z^2 = 1 \} \subseteq \mathbb{R}^3$, the unit sphere in 3-D.
+
+Define the following charts:
+
+$$\begin{cases} U_1 = \{ (x,y,z) \in S^2 : x > 0 \}, & \phi_1(x,y,z) = (y,z) \\  U_2 = \{ (x,y,z) \in S^2 : x < 0 \}, & \phi_2(x,y,z) = (y,z) \\  U_3 = \{ (x,y,z) \in S^2 : y > 0 \}, & \phi_3(x,y,z) = (x,z) \\  U_4 = \{ (x,y,z) \in S^2 : y <  0 \}, & \phi_1(x,y,z) = (x,z) \\  U_5 = \{ (x,y,z) \in S^2 : z > 0 \}, & \phi_5(x,y,z) = (x,y) \\  U_6 = \{ (x,y,z) \in S^2 : z < 0 \}, & \phi_6(x,y,z) = (x,y) \end{cases}$$
+
+Describe the domain of $\phi_1 \circ \phi_4^{-1}$, and show that $\phi_1 \circ \phi_4^{-1}$ is a $C^\infty$ function on its domain. Do the same for $\phi_6 \circ \phi_1^{-1}$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+
+\end{proof}
+
+\end{document}
