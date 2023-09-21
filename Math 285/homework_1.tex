@@ -296,26 +296,136 @@ Show that $X_pY  - Y_pX$ satsifies the Leibniz rule on $C_p^\infty$. Hence, $[X,
 
 (c)
 
-Let $X = \sum_i a^i \frac{\partial}{\partial x^i}, Y =  \sum_j b^j \frac{\partial}{\partial x^j}$. /Find the coefficient $c_k$ in $[X,Y] = \sum_k c^k \frac{\partial}{\partial x^k}$.
+Let $X = \sum_i a^i \frac{\partial}{\partial x^i}, Y =  \sum_j b^j \frac{\partial}{\partial x^j}$. Find the coefficient $c_k$ in $[X,Y] = \sum_k c^k \frac{\partial}{\partial x^k}$.
 
 (d) 
 
-Show that if the vector fields $X,Y$ are smooth on $U$, then their Lie brakcet is also a smooth vector field on $U$.
+Show that if the vector fields $X,Y$ are smooth on $U$, then their Lie bracket is also a smooth vector field on $U$.
 \end{problem}
 
 \begin{proof}[Solution]
+
+(a)
+
+Let $f,g$ be arbitrary functions in $C_p^\infty$, and consider the expression:
+
+$$ Z_p(fg) = X_p(Y(fg)) $$
+
+Because vector fields act as derivations and satisfy the Leibniz rule, we have that $Y(fg)= (Yf)g + f(Yg)$. But here, we see that then, of course:
+
+$$ Z_p(fg) = X_p(Y(fg)) = X_p((Yf)g + f(Yg)) = X_p((Yf)g) + X_p (f(Yg)) = $$
+$$ (X_p(Yf))g(p) + (Yf)(p)(X_p(g)) + (X_p(f))(Yg)(p) + f(p)(X_p(Yg))$$
+
+which needs not coincide with $Z_p(f)g + f(Z_p(g)) =  (X_p(Y(f)))g(p) + f(p)(X_p(Y(g)))$ unless $ (Yf)(p)(X_p(g)) + (X_p(f))(Yg)(p)  = 0$. 
+
+Indeed, take $p = (1)$, $X = \langle 1 \rangle, Y = \langle x \rangle$, and consider $ f(x) = x^2 = x * x$.
+
+We have that:
+
+$$\begin{cases} Z_p(x^2) = X_p(Y(x^2)) = X_p (2x^2) = 4x \Big\rvert_{x=1} = 4 \\ Z_p(x) * x  \Big\rvert_{x=1} + x  \Big\rvert_{x=1} Z_p(x) =2 X_p(Y(x)) = 2 X_p(x) = 2  \end{cases}$$
+
+Thus, $Z_p$ needs not satisfy the Leibniz rule, and may not be a derivation at $p$.
+
+(b)
+
+Let $f,g$ be arbitrary functions in $C_p^\infty$, and consider the expression:
+
+ $$[X_pY  - Y_pX](fg) = X_pY(fg) - Y_pX(fg) = X_p(Yf)(g) +  X_p (f)(Yg) - Y_p(Xf)(g) - Y_p(f)(Xg) = $$
+
+$$ (X_pYf)g(p) + (Yf)(p) X_p(g) + X_p(f) (Yg)(p) + f(p) (X_p(Yg)) - $$
+$$(Y_p(Xf))g(p) -  (Xf)(p)(Y_p(g)) - Y_p(f) (Xg)(p) - f(p) (Y_p(Xg)) $$
+
+Here, we recognize that $X_p(f) = (Xf)(p)$ pretty much by definition, since:
+
+$$(Xf)(p) = \left(\sum a^i \frac{\partial}{\partial x^i} f\right)(p) = \sum a^i(p) \frac{\partial}{\partial x^i} f  \Big\rvert_{p} = X_p(f)$$
+
+Then, we notice that:
+
+$$\begin{cases} (Yf)(p) X_p(g) - Y_p(f) (Xg)(p) = 0 \\  X_p(f) (Yg)(p) -  (Xf)(p)(Y_p(g)) = 0 \end{cases}$$
+
+and we see that:
+
+$$[X_pY  - Y_pX](fg) = (X_pYf)g(p)+ f(p) (X_p(Yg)) -(Y_p(Xf))g(p) - f(p) (Y_p(Xg)) = [X_pY - Y_p X](f) g(p)  - f(p) [X_pY - Y_p X](g)$$
+
+that is, it satisfies the Leibniz rule.
+
+(c)
+
+Because derivations act linearly, we may consider the action of the bracket on each $x_l$ individually:
+
+$$ [X,Y] = (XY - YX)(x_l) =  \sum_i a^i \frac{\partial}{\partial x^i} \sum_j b^j \frac{\partial}{\partial x^j} (x_l) - \sum_j b^j \frac{\partial}{\partial x^j}   \sum_i a^i \frac{\partial}{\partial x^i}(x_l) = $$
+$$   \sum_i a^i \frac{\partial}{\partial x^i} b^l -  \sum_j b^j \frac{\partial}{\partial x^j} a^l $$
+
+Then, since we notice of course that the action looks like:
+
+$$ \sum_k c^k \frac{\partial}{\partial x^k} x_l = c^l $$
+
+We may identify 
+
+$$c^l =  \sum_i a^i \frac{\partial}{\partial x^i} b^l -  \sum_j b^j \frac{\partial}{\partial x^j} a^l = \sum_i  a^i \frac{\partial}{\partial x^i} b^l - b^i \frac{\partial}{\partial x^i} a^l $$
+
+(d)
+
+We may assume that $X, Y$ are smooth vector fields on an open set $U$. From part (c), we have the identification that:
+
+$$[X,Y] = \sum_k c^k \frac{\partial}{\partial x^k}$$
+
+with 
+
+$$c^l = \sum_i  a^i \frac{\partial}{\partial x^i} b^l - b^i \frac{\partial}{\partial x^i} a^l $$
+
+Fixing some $l$, let's look at any individual $a^i \partial/\partial x^i (b^l)  $. Since $Y$ is smooth, then $b^l$ is a smooth function as well. Then, so is its partial derivative. Further, since $X$ is smooth, so is $a^i$, so this is a product of two smooth functions, which is itself smooth.
+
+This same argument applies to the second term $b^i\partial/\partial x^i a^l $. Thus, each term in the summation is a difference of smooth functions, which is smooth, and a sum of smooth functions is also smooth. Therefore, $c^l$ is smooth.
+
+Since the choice were arbitrary, this argument applies to every coefficient function, and thus the Lie bracket itself is smooth.
 
 
 \end{proof}
 
 \begin{problem}{Question 5}
 
-Let $V$ be a vector space of dimension $n$, with basis $e_1,...,e_n$. Let $\alpha^1,...,\alpha^n$ be the dual basis for $V^*$. Show that a basis for the space of $k$-linear functions of $V$, $L_k(V)$ is $\{ \alpha^{i_1} \otimes ... \otimes \alpha^{i_k}$ for any multi-index $(i_1,...,i_k)$. In particular, conclude that $\dim(L_k(V)) = n^k$.  
+Let $V$ be a vector space of dimension $n$, with basis $e_1,...,e_n$. Let $\alpha^1,...,\alpha^n$ be the dual basis for $V^*$. Show that a basis for the space of $k$-linear functions of $V$, $L_k(V)$ is $\{ \alpha^{i_1} \otimes ... \otimes \alpha^{i_k} \}$ for any multi-index $(i_1,...,i_k)$. In particular, conclude that $\dim(L_k(V)) = n^k$.  
 
 \end{problem}
 
 \begin{proof}[Solution]
 
+First, we validate that this is well defined, that is, a sum of $\alpha^I = \alpha^{i_1} \otimes ... \otimes \alpha^{i_k}$ for $I = (i_1,...,i_k)$ is an actual $k$-linear function.
+
+Well, it suffices to show that this is true for some fixed $\alpha^{i_1} \otimes ... \otimes \alpha^{i_k}$, as the sum of linear functions and the product by scalars are still linear functions.
+
+So, let $v_1, v_2 \in V^k$, and assume that $(e_{i_1}\otimes ... \otimes e_{i_k}) * (\alpha^{i_1} \otimes ... \otimes \alpha^{i_k}) = m$, and that in the decomposition of $v_1, v_2$, that the coefficient of the basis vector $(e_{i_1}\otimes ... \otimes e_{i_k})$ is $a_1, a_2$, respectively. Well, we have then that:
+
+$$ \alpha^{i_1} \otimes ... \otimes \alpha^{i_k} (b v_1 + c v_2) =  a_1 m  b + a_2 m c =b  \alpha^{i_1} \otimes ... \otimes \alpha^{i_k} ( v_1) + c \alpha^{i_1} \otimes ... \otimes \alpha^{i_k} ( v_2)$$
+
+where we use the fact that for any $ (e_{j_1}\otimes ... \otimes e_{j_k})$ such that some $j_l \neq i_l$, then $  (e_{j_1}\otimes ... \otimes e_{j_k}) *  (\alpha^{i_1} \otimes ... \otimes \alpha^{i_k}) = 0$.
+
+Next, we wish to show that this is linearly independent. Suppose we have a collection of $c_l \alpha^{I_l}$ such that
+
+$$ \sum c_l \alpha^{I_l}(v) = 0$$
+
+for all $ v \in V^k$. Well, since this is true for all $v$, fix some $\alpha^{I_j} =   \alpha^{j_1} \otimes ... \otimes \alpha^{j_k}$, and choose $v = e_{j_1} \otimes ... \otimes e_{j_k}$. We have then that:
+
+$$ \sum c_l \alpha^{I_l}(e_{j_1} \otimes ... \otimes e_{j_k}) = c_j \alpha^{I_j} (e_{j_1} \otimes ... \otimes e_{j_k}) = 0$$
+
+However, by construction, we must have that $\alpha^{I_j} (e_{j_1} \otimes ... \otimes e_{j_k}) \neq 0$, because the $\alpha^i$ are a dual basis for $V^*$, and if this were 0, then at least one $e_{j_i} * \alpha^{j_i} = 0$. Thus, $c_j = 0$. Repeating this argument for each $\alpha^{I_l}$, we find that $c_j = 0$ for all $j$, and thus we have linear independence.
+
+Now, we need only show that this spans the space of $k$-linear functions.
+
+Let $f$ be a $k$ linear function. Because $f$ is linear, we need only describe it on the basis vectors for $V^k$, and this will describe it for all of $V^k$. Fix some $(e_{i_1}\otimes ... \otimes e_{i_k})$. Suppose that $f((e_{i_1}\otimes ... \otimes e_{i_k}) = f(e_I) = a_I$. Then, we define $b_I = a_I/ (e_{i_1}\otimes ... \otimes e_{i_k}) * (\alpha^{i_1} \otimes ... \otimes \alpha^{i_k})$.
+
+Repeat this construction for each multi-index $I$, and construct the function
+
+$$ g = \sum_I b_I \alpha^I$$
+
+We notice that this is a function that agrees with $f$ at each basis vector:
+
+$$ (g-f)(e_J) = g(e_J) - f(e_J) = a_J - a_J = 0$$
+
+and therefore, agrees with $f$ everywhere. Thus, the set of  $\{ \alpha^{i_1} \otimes ... \otimes \alpha^{i_k} \}$ over every multi-index $I$ both spans the set of $k$ linear functions and is linearly independent, therefore a basis.
+
+It is clear then, that the number of basis vectors is simply the number of multi-indices, which is exactly $\underbrace{n*...*n}_{k \text{ times }} = n^k $, as we have put no constraints over the values of $(i_1,...,i_k)$ other than $1 \leq i_j \leq n$. Therefore, we conclude that $\dim(L_k(V)) = n^k$.  
 
 \end{proof}
 
@@ -326,6 +436,18 @@ Let $V$ be a vector space. For $a,b \in \mathbb{R}, f \in A_k(V), g \in A_l(V)$,
 
 \begin{proof}[Solution]
 
+Letting $v_1,...,v_{k+l}$ being vectors in our underlying vector space, with $f$ a multilinear function of $k$ arguments and $g$ with $l$ arguments, we recall that the wedge product is defined as:
+
+$$ f \wedge g (v_1,...,v_{k+l}) = \frac{1}{k!l!} A(f \otimes g)(v_1,...,v_{k+l}) = $$
+$$  \frac{1}{k!l!} \sum_{\sigma \in S_{k+l}} (\text{sgn} \sigma) f(v_{\sigma(1)},...,v_{\sigma(k)}) g(v_{\sigma(k+1)},...,v_{\sigma(k+l)}) $$
+
+where we sum over the possible permutations of $k+l$ elements. Well, then:
+
+$$af \wedge bg = \frac{1}{k!l!} \sum_{\sigma \in S_{k+l}} (\text{sgn} \sigma) (af)(v_{\sigma(1)},...,v_{\sigma(k)}) (bg)(v_{\sigma(k+1)},...,v_{\sigma(k+l)}) = $$
+
+$$ (ab) \frac{1}{k!l!} \sum_{\sigma \in S_{k+l}} (\text{sgn} \sigma) f(v_{\sigma(1)},...,v_{\sigma(k)}) g(v_{\sigma(k+1)},...,v_{\sigma(k+l)}) = (ab) f \wedge g $$
+
+where we apply the distributive property to pull $(ab)$ from each term in the summation.
 
 \end{proof}
 
@@ -341,6 +463,29 @@ $$ \beta^1 \wedge ... \wedge \beta^k = \det(A) \gamma^1 \wedge ... \wedge \gamma
 
 \begin{proof}[Solution]
 
+First, since our domain is a vector space $V$, then we have that these are $1$-linear functions. Thus, by 3.30, we have that $\beta^l \wedge \beta^l = 0$ for any $1 \leq l \leq k$.
+
+Now, substituting, we see that:
+
+$$ \beta^1 \wedge ... \wedge \beta^k = \sum_{j=1}^k a_j^1 \gamma^j \wedge ... \wedge \sum_{j=1}^k a_j^k \gamma^j $$
+
+Here, using the bilinearity, graded commutativity, and associativity of the wedge product, we can see without too much trouble that for each term where $\gamma^l$ appears more than once, then the sum goes to 0. A small example goes like, for $k = 4$:
+
+$$ \gamma^1 \wedge \gamma^2 \wedge \gamma^3 \wedge \gamma^1 = -  \gamma^1 \wedge \gamma^2 \wedge \gamma^1 \wedge \gamma^3 =  \gamma^1 \wedge \gamma^1 \wedge \gamma^2 \wedge \gamma^3 = 0 \wedge \gamma^2 \wedge \gamma^3 = 0$$
+
+Then, we rewrite our original sum to:
+
+$$ \sum_{j=1}^k a_j^1 \gamma^j \wedge ... \wedge \sum_{j=1}^k a_j^k \gamma^j = \sum_{\sigma \in S_n}  a_{\sigma(1)}^1 \gamma^{\sigma(1)} \wedge ... \wedge a_{\sigma(k)}^k \gamma^{\sigma(1)} $$ 
+
+as these are exactly the choices such that we pick exactly one $\gamma^i$ per entry in the wedge product.
+
+Now, using the multilinearity, we may extract the coefficients, and we may use the fact that the wedge product is alternating to reorder our products to be of the form:
+
+$$ \sum_{\sigma \in S_n}  a_{\sigma(1)}^1 \gamma^{\sigma(1)} \wedge ... \wedge a_{\sigma(k)}^k \gamma^{\sigma(1)} = \sum_{\sigma \in S_n} \prod_{i=1}^k a_{\sigma(i)}^i (\text{sgn} \sigma) \gamma^1 \wedge ... \gamma^k  $$
+
+However, here, we notice that $ \sum_{\sigma \in S_n} \prod_{i=1}^k a_{\sigma(i)}^i (\text{sgn} \sigma)$ is exactly the Leibniz formula for determinants, where we identify $a_i^j$ as the entry in the $(i,j)$ entry of a matrix. (wlog, could choose $(j,i)$ since tranposition does not change the determinant). Thus, we have that, letting $A_{ij} = a_i^j$, that:
+
+$$ \beta^1 \wedge ... \wedge \beta^k = \det(A) \gamma^1 \wedge ... \wedge \gamma^k$$
 
 \end{proof}
 
