@@ -53,13 +53,39 @@ since we notice that the only non-vanishing partial of $z dx$ is $\partial/\part
 
 Suppose the standard coordinates on $\mathbb{R}^3$ are called $\rho, \phi, \theta$. If we have that:
 
-$$ \begin{cases} x = \rho \sin \phi \cos \theta \\  x = \rho \sin \phi \sin \theta \\ z = \rho \cos \phi \end{cases} $$
+$$ \begin{cases} x = \rho \sin \phi \cos \theta \\  y = \rho \sin \phi \sin \theta \\ z = \rho \cos \phi \end{cases} $$
 
 Compute the following quantities in terms of $d\rho, d\phi, d\theta$: $dx, dy, dz, dx\wedge dy \wedge dz$.
 
 \end{problem}
 
 \begin{proof}[Solution]
+
+Clearly, $x, y, z$ are $C^\infty$ functions on $\mathbb{R}$. Applying Proposition 4.3, which states that $df = \sum \partial f/ \partial x^i dx^i$, we see that:
+
+$$ \begin{cases} dx = \sin \phi \cos \theta d\rho + \rho \cos \phi \cos \theta  d\phi - \rho \sin \phi \sin \theta d\theta \\ dy = \sin \phi \sin \theta d\rho + \rho \cos \phi \sin \theta  d\phi + \rho \sin \phi \cos \theta d\theta \\ dz = \cos \phi d\rho - \rho \sin \phi d\phi  \end{cases}$$
+
+Now, we may compute the wedge product $dx \wedge dy \wedge dz$. We recall that odd degree multivectors vanish under the wedge product and that the wedge product distributes over addition, and since our 1-forms are exactly covector fields, hence covectors at each point, we need only consider elements that include some permutation of $d\rho \wedge d\phi \wedge d\theta$:
+
+$$ dx \wedge dy \wedge dz = (\sin \phi \cos \theta d\rho) \wedge (\rho \sin \phi \cos \theta d\theta) \wedge ( - \rho \sin \phi d\phi) + ( \rho \cos \phi \cos \theta  d\phi ) \wedge (\rho \sin \phi \cos \theta d\theta) \wedge (\cos \phi d\rho) +  $$
+
+$$ ( - \rho \sin \phi \sin \theta d\theta) \wedge (\sin \phi \sin \theta d\rho)  \wedge ( - \rho \sin \phi d\phi) +  ( - \rho \sin \phi \sin \theta d\theta) \wedge ( \rho \cos \phi \sin \theta  d\phi ) \wedge (\cos \phi d\rho) =  $$
+
+$$  -\rho^2 \sin^3 \phi \cos^2 \theta (d\rho \wedge d\theta \wedge d\phi) + \rho^2 \sin\phi \cos^2 \phi \cos^2 \theta (d\phi \wedge d\theta \wedge d\rho) + $$
+$$ \rho^2 \sin^3\phi \sin^2 \theta (d\theta \wedge d\rho \wedge d\phi) - \rho^2 \sin \phi \cos^2 \phi \sin^2 \theta (d\theta \wedge d\phi \wedge d\rho) $$ 
+
+Rewriting everything to be of the form $d \rho \wedge d\phi \wedge d\theta$ using graded commutativity, and pulling out $\rho^2$:
+
+$$\rho^2 (\sin^3 \phi \cos^2 \theta +  \sin\phi \cos^2 \phi \cos^2 \theta + \sin^3\phi \sin^2 \theta + \sin \phi \cos^2 \phi \sin^2 \theta) ( d \rho \wedge d\phi \wedge d\theta) $$
+
+Looking at the first two and last two terms, we notice that:
+$$\begin{cases} \sin^3 \phi \cos^2 \theta +  \sin\phi \cos^2 \phi \cos^2 \theta = \sin \phi \cos^2 \theta (\sin^2 \phi + \cos^2 \phi ) = \sin \phi \cos^2 \theta \\ \sin^3\phi \sin^2 \theta + \sin \phi \cos^2 \phi \sin^2 \theta  =  \sin \phi \sin^2 \theta(\sin^2 \phi + \cos^2 \phi) = \sin \phi \sin^2 \theta \end{cases}$$
+
+So, in the end, we have that:
+
+$$ dx \wedge dy \wedge dz = \rho^2 (\sin \phi \cos^2 \theta +  \sin \phi \sin^2 \theta) (d\rho \wedge d\phi \wedge d\theta) = \rho^2 \sin \phi  (d\rho \wedge d\phi \wedge d\theta) $$
+
+
 
 \end{proof}
 
@@ -110,7 +136,7 @@ Let $A = \oplus_{k=-\infty}^\infty A^k$ be a graded algebra over a field $K$, wi
 
 Define a superderviation of $A$ with degree $m$ as a $K$-linear map $D: A \to A$ such that for all $k \in \mathbb{Z}$, we have that $D(A^k) \subset A^{k+m}$ and that for all $a \in A^k, b \in A^l$:
 
-$$D(ab) = (Da) b + (-1)^{km} a (Db) $$
+$$D(ab) = (Da) b + (-1)^{km}a Db $$
 
 Let $D_1, D_2$ be superderivations of $A$ with degrees $m_1, m_2$ respectively. Define their commutator as:
 
@@ -121,6 +147,60 @@ Show that the commutator $[D_1, D_2]$ is a superderivation of degree $m_1 + m_2$
 \end{problem}
 
 \begin{proof}[Solution]
+
+Fix a $k \in \mathbb{Z}$, and suppose $x \in A^k$.
+
+First, we wish to show that $[D_1,D_2](x) \in A^{k+m_1 + m_2}$.
+
+It is enough to show that $D_1 \circ D_2(x), D_2 \circ D_1(x) \in A^{k+m_1 + m_2}$, because if that is true, then the sum and multiplication by scalars remains in $A^{k+m_1 + m_2}$ due to it being an algebra.
+
+Well, because $D_1,D_2$ are superderivations, we have that $D_2(x) \in A^{k+m_2}$, so $D_1(D_2(x)) \in A^{k+m_2 + m_1}$. Similarly, $D_1(x) \in A^{k + m_1}$, so $D_2(D_1(x)) \in A^{k + m_1 + m_2}$ for the same reason.
+
+Since algebras are closed under addition and scalar multiplication, this implies that $D_1 \circ D_2 - (-1)^{m_1m_2} D_2 \circ D_1 (x) \in A^{k+m_1 +m_2}$.
+
+Now, we need to check the condition on products. Fix $k,l \in \mathbb{Z}$, and suppose that $x \in A^k, y \in A^l$.
+
+Consider $[D_1,D_2](xy)$. We have that:
+
+$$[D_1,D_2](xy) =   D_1 \circ D_2 - (-1)^{m_1m_2} D_2 \circ D_1 (xy) = D_1(D_2(xy)) - (-1)^{m_1 m_2} D_2(D_1(xy))$$
+
+Because $D_1, D_2$ are superderivations, we have that:
+
+$$ D_i(xy) = (D_i(x)) y + (-1)^{km_i}x (D_iy)$$
+
+Therefore:
+
+$$[D_1,D_2](xy) = D_1( (D_2(x)) y + (-1)^{km_2}x (D_2y)) - (-1)^{m_1 m_2} D_2((D_1(x)) y + (-1)^{km_1}x (D_1y)) =$$
+$$ D_1(D_2(x)y) + (-1)^{km_2} D_1(xD_2(y)) -  (-1)^{m_1 m_2}[ D_2(D_1(x)y) + (-1)^{km_1} D_2(xD_1(y))] $$
+
+Recalling that $D_2(x) \in A^{k+m_2}, D_1(x) \in A^{k+m_1}$, applying the fact that $D_1, D_2$ are superderivations again, we reduce to:
+
+$$D_1 \circ D_2(x)y + (-1)^{(k+m_2) m_1} D_2(x) D_1(y) + (-1)^{km_2} [D_1(x) D_2(y) + (-1)^{km_1}x D_1 \circ D_2(y) ]  -  $$
+$$(-1)^{m_1 m_2}[D_2 \circ D_1(x) y + (-1)^{(k+m_1)m_2} D_1(x) D_2(y) + (-1)^{km_1}[ D_2(x)D_1(y) + (-1)^{km_2} x D_2 \circ D_1(y) ]]  $$
+
+First, we look at terms of the form $D_2(x) D_1(y)$. These are:
+
+$$  (-1)^{(k+m_2) m_1} D_2(x) D_1(y) - (-1)^{m_1m_2}[ (-1)^{km_1} D_2(x) D_1(y)] = (-1)^{km_1 + m_1m_2}[ D_2(x)D_1(y) - D_2(x) D_1(y)] = 0 $$
+
+Similarly, for $D_1(x)D_2(y)$, since $(-1)^{2p} = 1$ for $p \in \mathbb{Z}$:
+
+$$  (-1)^{km_2} D_1(x) D_2(y) - (-1)^{m_1 m_2} (-1)^{(k+m_1)m_2} D_1(x) D_2(y) = (-1)^{km_2} [ D_1(x) D_2(y) - D_1(x) D_2(y) ] = 0$$
+
+For terms with a $y$:
+
+$$ D_1 \circ D_2(x)y - (-1)^{m_1 m_2}D_2 \circ D_1(x) y  = [D_1, D_2](x) y $$
+
+And similarly, for terms with an $x$:
+
+$$  (-1)^{km_2} (-1)^{km_1}x D_1 \circ D_2(y) - (-1)^{m_1 m_2} (-1)^{km_1} (-1)^{km_2} x D_2 \circ D_1(y) =  $$
+
+$$ (-1)^{k(m_1 +m_2)} [ xD_1 \circ D_2(y) - (-1)^{m_1m_2} x D_2 \circ  D_1(y) ] = (-1)^{k(m_1 +m_2)}x [D_1, D_2](y)  $$
+
+Thus, this horrible mess shows us that:
+
+$$[D_1, D_2](xy) = [D_1, D_2](x) y +  (-1)^{k(m_1 +m_2)}x [D_1, D_2](y)$$
+
+Therefore, $[D_1,D_2]$ satsifies the conditions to be a superderivation of degree $m_1 + m_2$.
 
 
 
@@ -237,7 +317,7 @@ Define $S^2 = \{ (x,y,z) : x^2 + y^2 + z^2 = 1 \} \subseteq \mathbb{R}^3$, the u
 
 Define the following charts:
 
-$$\begin{cases} U_1 = \{ (x,y,z) \in S^2 : x > 0 \}, & \phi_1(x,y,z) = (y,z) \\  U_2 = \{ (x,y,z) \in S^2 : x < 0 \}, & \phi_2(x,y,z) = (y,z) \\  U_3 = \{ (x,y,z) \in S^2 : y > 0 \}, & \phi_3(x,y,z) = (x,z) \\  U_4 = \{ (x,y,z) \in S^2 : y <  0 \}, & \phi_1(x,y,z) = (x,z) \\  U_5 = \{ (x,y,z) \in S^2 : z > 0 \}, & \phi_5(x,y,z) = (x,y) \\  U_6 = \{ (x,y,z) \in S^2 : z < 0 \}, & \phi_6(x,y,z) = (x,y) \end{cases}$$
+$$\begin{cases} U_1 = \{ (x,y,z) \in S^2 : x > 0 \}, & \phi_1(x,y,z) = (y,z) \\  U_2 = \{ (x,y,z) \in S^2 : x < 0 \}, & \phi_2(x,y,z) = (y,z) \\  U_3 = \{ (x,y,z) \in S^2 : y > 0 \}, & \phi_3(x,y,z) = (x,z) \\  U_4 = \{ (x,y,z) \in S^2 : y <  0 \}, & \phi_4(x,y,z) = (x,z) \\  U_5 = \{ (x,y,z) \in S^2 : z > 0 \}, & \phi_5(x,y,z) = (x,y) \\  U_6 = \{ (x,y,z) \in S^2 : z < 0 \}, & \phi_6(x,y,z) = (x,y) \end{cases}$$
 
 Describe the domain of $\phi_1 \circ \phi_4^{-1}$, and show that $\phi_1 \circ \phi_4^{-1}$ is a $C^\infty$ function on its domain. Do the same for $\phi_6 \circ \phi_1^{-1}$.
 
@@ -245,6 +325,23 @@ Describe the domain of $\phi_1 \circ \phi_4^{-1}$, and show that $\phi_1 \circ \
 
 \begin{proof}[Solution]
 
+We recall that $\phi_1 \circ \phi_4^{-1}$ is a map from $\phi_4(U_1 \cap U_4)$. Since we know that $\phi_4$ acting on $U_4$ takes $(x,y,z) \mapsto (x,z)$, if we include the condition on $U_1$, where $x > 0$, this restricts us to the open half disk $\{ (x,z) \subseteq \mathbb{R}^2 : x^2 + z^2 < 1, x > 0 \}$. (Alternatively, relabelling the axes, this is the right half of the open disk).
+
+On this domain, $\phi_4^{-1}$ takes $(x,z) \mapsto (x,-\sqrt{1 - x^2 - z^2}, z)$ since $y < 0$, and $\phi_1$ takes $(x,y,z) \mapsto (y,z)$. Therefore, we have that:
+
+$$\phi_1 \circ \phi_4^{-1}: \phi_4(U_1 \cap U_4) \to \phi_1(U_1 \cap U_4) \text{ via } (x,z) \mapsto (-\sqrt{1 - x^2 - z^2}, z) $$
+
+Clearly, the coordinate function $z$ is the identity, thus polynomial and $C^\infty$. Meanwhile, we notice that via power rule on $-(1 - x^2 - z^2)^{1/2}$, and the product rule on higher order derivatives, since we have that $y < 0, y= - \sqrt{1 - x^2 - z^2}$ via rearrangment of the equation for $S^2$, we see that $1 - x^2 - z^2$ does not vanish on this domain, and therefore is also $C^\infty$.
+
+Doing the same thing for $\phi_6 \circ \phi_1^{-1}$, we see that the domain is the set  $\phi_1(U_1 \cap U_6)$. Of course, since $U_6$ restricts $U_1$ to additionally have $z < 0$, we see that this is exactly $\{ (y,z) \subseteq \mathbb{R} : y^2 + z^2 < 1, z < 0 \}$, a different half open disk. Relabelling axes again, we can visualize this as the lower half of the open disk.
+
+On this domain, we see that $\phi_1^{-1}$ has the action of taking $(y,z) \mapsto (\sqrt{1 - y^2 - z^2}, y,z)$ and $\phi_6$ takes $(x,y,z) \mapsto (x,y)$.
+
+Thus, we have that:
+
+$$\phi_6 \circ \phi_1^{-1}: \phi_1(U_1 \cap U_6) \to \phi_6(U_1 \cap U_6) \text{ via } (y,z) \mapsto (\sqrt{1 - y^2 - z^2}, y)$$
+
+Using the same argument, since on $U_1 \cap U_6$, $x > 0$, we must have that $1 - y^2 - z^2$ cannot vanish by rearranging $x = \sqrt{1 - y^2 - z^2}$, and therefore $\sqrt{1 - y^2 - z^2}$ is $C^\infty$ via the power rule and product rule. And, of course $y$ is polynomial, thus $C^\infty$. 
 
 \end{proof}
 
