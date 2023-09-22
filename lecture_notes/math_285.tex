@@ -554,5 +554,72 @@ Without writing it out, we can look at the divergence of a vector field, and we 
 
 $$d(P dy \wedge dz + Q dz \wedge dx + R dx \wedge dy) $$
 
+In particular then, we see that these are special cases of the exterior derivative. More generally, if we let $\mathfrak{X}(U)$ denote $C^\infty$ vector fields on $U$, we see that we have a sequence:
+
+$$ C^\infty(U) \to_{\text{grad}} \mathfrak{X}(U) \to_{\text{curl}} \mathfrak{X}(U) \to_{\text{div}} C^\infty(U) $$
+
+and we have a parallel sequence of isomorphic structures:
+
+$$ \Omega^0(U) \to_d  \Omega^1(U) \to_d  \Omega^2(U) \to_d \Omega^3(U)$$
+
+\begin{theorem}
+$$d^2 = 0 \iff \text{curl}(\text{grad } f) = 0, \text{div}(\text{curl } F) = 0 $$
+\end{theorem}
+
+Similar, we can look at Green’s theorem as a statement on differential forms:
+
+\begin{theorem}
+The Generalized Stokes’ Theorem
+$$ \int_{\partial D} \omega = \iint_D d\omega $$
+\end{theorem}
+
+\section{September 20}
+
+Topological Manifolds:
+
+\begin{definition}
+We call a topological space $M$ locally Euclidean if, for every $p \in M$, there exists a neighborhood $p \in U$ such that $U$ is homeomorphic to a neighborhood of a Euclidean space $\phi: U \to \phi(U) \subseteq \mathbb{R}^n$, for some $n$. For such an $n$, we say that $M$ is locally Euclidean of dimension $n$. We call a pair $(U, \phi)$ a chart, or a coordinate neighborhood of $M$.
+\end{definition}
+
+\begin{definition}
+If a topological space is locally Euclidean, Hausdorff, and second countable, we call it a topological manifold.
+\end{definition}
+
+Note that the idea here is that hope that topological manifolds can be embedded in some $\mathbb{R}^n$, and $\mathbb{R}^n$ is Hausdorff, second countable. Since topological subspaces remain Hausdorff, second countable, we restrict ourselves to the study of this class of manifolds.
+
+\begin{example}
+We want to show that the set $\{ (x,y) : xy = 0 \}$ is not locally Euclidean. Suppose it were around the origin $p = (0,0)$. Then, we note that we have a homeomorphism from $U \setminus p \to \phi(U \setminus p) \subseteq \mathbb{R}^n$. However, we notice that $U \setminus p$ has 4 connected components, but removing a single point from any Euclidean neighborhood gives us either 2 components in $\mathbb{R}$ and $1$ else. Thus, such a homeomorphism cannot exist.
+\end{example}
+
+\begin{definition}
+Let $U, V$ be open sets, locally Euclidean with charts $\varphi: U \to \mathbb{R}^n, \psi: V \to \mathbb{R}^n$. We call $\psi, \varphi C^\infty$ compatible if both:
+
+$$\begin{cases} \psi \circ \varphi^{-1}: \varphi(U \cap V) \to \psi(U \cap V)\\  \varphi \circ \psi^{-1}: \psi(U \cap V) \to \varphi(U \cap V) \end{cases}$$
+
+are $C^\infty$ maps.
+\end{definition}
+
+\begin{definition}
+Let $\{ (U_\alpha, \phi_\alpha) \}_{\alpha \in I}$ be a collection of $C^\infty$ charts, such that $M = \cup_\alpha U_\alpha$. We call this collection an atlas.
+
+\end{definition}
+
+\begin{definition}
+Let $\mathfrak{U}$ be a $C^\infty$ atlas. We call it maximal if it is not contained in any other $C^\infty $ atlas, that is, if $\mathfrak{U} \subseteq \mathfrak{M}$, then $\mathfrak{U} = \mathfrak{M}$.
+
+\end{definition}
+
+\begin{definition}
+We call a topological manifold equipped with a maximal $C^\infty$ atlas, a $C^\infty$ manifold.
+\end{definition}
+
+\begin{theorem}
+Every $C^\infty$ atlas on a locally Euclidean space is contained within a unique, maximal $C^\infty$ atlas.
+\end{theorem}
+
+\begin{theorem}
+If $M, N$ are $C^\infty$ manifolds, so too is $M \times N$.
+
+\end{theorem}
 
 \end{document}
