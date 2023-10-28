@@ -1,0 +1,359 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{float}
+\usepackage{bbm}
+\usepackage{dsfont}
+\usepackage{amsthm}
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+\newcommand{\vol}{{\text{Vol}}}
+\theoremstyle{nonumberplain}% default
+\newtheorem{theorem}{Theorem}
+\newtheorem*{lemma}{Lemma}
+
+\ExplSyntaxOn
+\NewDocumentCommand{\cycle}{ O{\;} m }
+ {
+  (
+  \alec_cycle:nn { #1 } { #2 }
+  )
+ }
+
+\seq_new:N \l_alec_cycle_seq
+\cs_new_protected:Npn \alec_cycle:nn #1 #2
+ {
+  \seq_set_split:Nnn \l_alec_cycle_seq { , } { #2 }
+  \seq_use:Nn \l_alec_cycle_seq { #1 }
+ }
+\ExplSyntaxOff
+
+\newenvironment{problem}[2][]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#6}
+\author{Eric Tao\\
+Math 285: Homework \#6}
+\maketitle
+
+\begin{problem}{Question 1}
+
+Show that the pullback of covectors by a linear map satisfies the two functorial properties:
+
+(i) If $\mathds{1}_{V}: V \to V$ is the identity map on $V$, then $\mathds{1}^*_V = \mathds{1}_{A_k(V)}$, the identity map on $A_k(V)$.
+
+(ii) If $K: U \to V$ and $L: V \to W$ are linear maps on vector spaces, then:
+
+$$(L \circ K)^* = K^* \circ L^*: A_k(W) \to A_k(U) $$
+
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(i)
+
+Let $v_1,...,v_k \in V, f \in A_k(V)$, and by definition then, we have that:
+
+$$ \mathds{1}^*_V(f)(v_1,...,v_k) = f(\mathds{1}_V(v_1),...,\mathds{1}_V(v_k)) = f(v_1,...,v_k)$$
+
+Then, since we have that $\mathds{1}^*_V(f)$ and $f$ act identically on arbitrary $v_1,...,v_k \in V$, this implies that $\mathds{1}^*_V(f) = f$. Since the choice of $f$ was arbitrary, this is true for all $f \in A_k(V)$, and therefore, $\mathds{1}^*_V$ acts as identity on $A_k(V)$, thus is equal to $\mathds{1}_{A_k(V)}$.
+
+(ii)
+
+Let $f \in A_k(V)$, and let $v_1,...,v_k \in V$. We may consider the action of $K^* \circ L^*$ on $f$:
+
+$$ K^* \circ L^*(f) (v_1,...,v_k) = K^*(L^*(f))(v_1,...,v_k) = L^*(f) (K(v_1),...,K(v_k)) =$$
+$$ f(L(K(v_1)),...,L(K(v_k))) = f(L\circ K(v_1),...,L \circ K(v_k)) = (L \circ K)^*(f) (v_1,...,v_k)$$
+
+Again, since this is true for all $v_1,...,v_k$, this is an equality of functions $K^* \circ L^* (f) = (L \circ K)^* (f)$. Since this is true for all $f \in A_k(V)$, this is an equality of maps $K^* \circ L^* = (L \circ K)^*$. 
+
+\end{proof}
+
+\begin{problem}{Question 2}
+
+Let $L: V \to V$ be a linear operator on a vector space with dimension $n$. Show that the pullback $L^*: A_n(V) \to A_n(V)$ acts as multiplication by the determinant of $L$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+We recall that from Proposition 3.36, that if $e_1,...,e_n$ is a basis for $V$, and $\alpha^1,...,\alpha^n$ is the dual basis in $V^\vee$, that for a multi-index $I = (i_1 < ... < i_k)$, the alternating $k$-linear functions have basis $\alpha^I$. Then, of course, we say that the $A_n(V)$ are scalar multiples of $\alpha^1 \wedge ... \wedge \alpha^n$. Since the pullback is linear, we need only show that $L^*$ acts as multiplication by its determinant on $\alpha^1 \wedge ... \wedge \alpha^n$.
+
+Now, as a $1$-linear function, consider the pullback $L*(\alpha^i)$. Considering an arbitrary vector $v = \sum_{j=1}^n v_j e_j \in V$, and writing $A$ as a matrix in the $e_j$ basis, we have that:
+
+$$ L^*(\alpha^i) (v) = \alpha^i(L(v)) = \alpha^i \left( \sum_{j=1}^n \left[\sum_{k=1}^n A_{jk}v_k \right] e_j \right) = \sum_{j=1}^n \left[\sum_{k=1}^n A_{jk}v_k \right] \alpha^i  e_j = \sum_{j=1}^n \left[\sum_{k=1}^n A_{jk}v_k \right] \delta_i^j =  \sum_{k=1}^n A_{ik}v_k$$
+
+We notice, that because $v_k = \alpha^k(v)$, that we may rewrite this as:
+
+$$ L^*(\alpha^i)(v) = \sum_{k=1}^n A_{ik}\alpha^k(v) $$
+
+Since the choice of $v$ were arbitrary, this is an equality of covectors:
+
+$$ L^*(\alpha^i) = \sum_{k=1}^n A_{ik}\alpha^k$$
+
+Then, we consider $L^*(\alpha^1 \wedge ... \wedge \alpha^n)(v_1,...,v_n)$, for arbitrary vectors $v_1,...,v_n \in V$. We see that:
+
+$$ L^*(\alpha^1 \wedge ... \wedge \alpha^n) (v_1,...,v_n) =(\alpha^1 \wedge ... \wedge \alpha^n) (L(v_1),...,L(v_n)) = A(\alpha^1 \otimes ... \otimes \alpha^n) (L(v_1),...,L(v_n))= $$ 
+
+$$ \sum_{\sigma \in S_n} \text{sgn}(\sigma) \alpha^1(L(v_{\sigma(1)}))...\alpha^n(L(v_{\sigma(n)})) = \sum_{\sigma \in S_n} \text{sgn}(\sigma) L^*(\alpha^1)(v_{\sigma(1)})...L^*(\alpha^n)(v_{\sigma(n)}) = $$
+
+$$  A(L^*(\alpha^1) \otimes ... \otimes L^*(\alpha^n))(v_1,...,v_n) = L^*(\alpha^1) \wedge ... \wedge L^*(\alpha^n)(v_1,...,v_n) $$
+
+Again, varying over all $v_1,...,v_n$, we see an equality of covectors:
+
+$$  L^*(\alpha^1 \wedge ... \wedge \alpha^n) =  L^*(\alpha^1) \wedge ... \wedge L^*(\alpha^n) $$
+
+Now, by homework 1, question 7, we have that if $ \beta^i  = \sum_{j=1}^k a_j^i \gamma^j$, for two sets of covectors $\{\beta^i\},\{ \gamma^j\}$, $1 \leq i,j \leq k$, we have that:
+
+$$ \beta^1 \wedge ... \wedge \beta^k = \det(A) \gamma^1 \wedge ... \wedge \gamma^k$$
+
+Taking $\beta^i = L^*(\alpha^i)$, and $\gamma^i = \alpha^i$, we see that because $ L^*(\alpha^i) = \sum_{k=1}^n A_{ik}\alpha^k$, we have that:
+
+$$  L^*(\alpha^1 \wedge ... \wedge \alpha^n) =  L^*(\alpha^1) \wedge ... \wedge L^*(\alpha^n) = \det(A) \alpha^1 \wedge ... \wedge \alpha^n $$
+
+Thus, $L^*$ acts on $A_n(V)$ by multiplication by $\det(A)$, from the linear and basis considerations before.
+
+\end{proof}
+
+\begin{problem}{Question 3}
+
+(a) Let $i: S^1 \to \mathbb{R}^2$ be the inclusion map of the unit circle. Denote the standard coordinates on $\mathbb{R}^2$ as $(x,y)$ and denote the restriction of these coordinates to $S^1$ as $(\overline{x}, \overline{y})$. Clearly, we have that $\overline{x} = i^*(x), \overline{y} = i^*(y)$. 
+
+On the upper semicircle $U = \{ (a,b) \in S^1 : b > 0 \}$, $\overline{x}$ is a local coordinate, so $\partial/\partial \overline{x}$ is well-defined. Prove that for $p\in U$, we have that:
+
+$$i_* \left( \frac{\partial}{\partial \overline{x}} \bigg|_p \right) = \left( \frac{\partial}{\partial x} + \frac{\partial \overline{y}}{\partial \overline{x}} \frac{\partial}{\partial y} \right)\bigg|_p$$
+
+(b) Let $C$ be a smooth curve in $\mathbb{R}^2$. Let $U$ be a chart on $C$ such that $\overline{x}$, the restriction of the coordinate $x$ on $\mathbb{R}^2$ is a local coordinate.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+Let $\epsilon > 0$.
+
+First, we start with a curve $c: (-\epsilon, \epsilon ) \to S^1 \cap U$ such that $c(0) = p, c'(0) = \frac{\partial}{\partial \overline{x}} $.
+
+\end{proof}
+
+\begin{problem}{Question 4}
+
+Let $f: GL_n(\mathbb{R}) \to \mathbb{R}$ be the determinant map $A \mapsto \det(A)$. Consider a matrix $B \in SL_n(\mathbb{R}) = \{ A \in GL_n(\mathbb{R}) : \det(A) = 1 \}$. By example 9.10 (note: numbering based off of Chapter 3, v1-1 in Canvas), for $A = [ a_{kl}]$, there exists a $(k, l)$ such that the partial dervative $\frac{\partial f}{ \partial a_{kl}}(A) \not = 0$. 
+
+Use Lemma 9.9 and the implicit function theorem (9.8) to prove the following:
+
+(a) There exists a neighborhood of $A$ in $SL_n(\mathbb{R})$ such that $a_{ij}$, $(i,j) \not = (k,l)$ forms a coordinate system, and $a_{kl}$ is a $C^\infty$ function of the other entries.
+
+(b) The group multiplication map:
+
+$$\overline{\mu}: SL_n(\mathbb{R}) \times SL_n(\mathbb{R}) \to SL_n(\mathbb{R})$$
+
+is $C^\infty$.
+
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+Without too much trouble, it is easy to see $f$ is a $C^\infty$ map of manifolds, as we can view it as a subset of $\mathbb{R}^{n^2}$, so we may take charts compatible with standard coordinates being each matrix entry. Since the determinant is a degree $n$ homogeneous polynomial in the matrix entries, it is $C^\infty$ on this chart. Since we may take the open set of this chart to be all of $GL_n(\mathbb{R})$, we see $f$ as a $C^\infty$ map.
+
+We notice that we can view $SL_n(\mathbb{R}) = f^{-1}(1)$. Thus, by Theorem 9.8, $SL_n(\mathbb{R})$ is a regular submanifold with dimension $n-1$.
+
+Fix some $A \in SL_n(\mathbb{R})$.
+
+Now, following example 9.12 with the special linear group, defining $m_{ij}$ as the determinant of the submatrix obtained by deleting the $i$-th row and the $j$-th column, we may rewrite the map $f$ as, for a selected row $1 \leq i \leq n$:
+
+$$f(A) = \sum_{j=1}^n (-1)^{i+j} a_{ij}m_{ij} $$
+
+Since $m_{ij}$, varying across $j$, is obtained by deleting the $i$-th row, $m_{ij}$ is not a function of $a_{il}$ for any $1 \leq j, l \leq n$. Further, since the determinant of matrices in $SL_n(\mathbb{R})$ is exactly 1, by the determinental rank being $n$, there must exist $(k,l)$ such that $m_{kl} \not = 0$
+
+Then, for such a $(k,l)$ we have that:
+
+$$ \frac{\partial f}{\partial a_{kl}} =  \sum_{j=1}^n  \frac{\partial}{\partial a_{kl}} (-1)^{k+j} a_{kj}m_{kj} = \sum_{j=1}^n   (-1)^{k+j} \delta_j^l m_{kj} =  (-1)^{k+j} m_{kl}$$
+
+Since this is itself a $C^\infty$, being a homogeneous polynomial of degree $n-1$ in $GL_n(\mathbb{R})$, it is in particular, continuous. Thus, we may find some neighborhood $U$ such that $A \in U$ and $ \frac{\partial f}{\partial a_{kl}} \not = 0 \implies m_{kl} \not = 0 $, by considering the open set $\mathbb{R} \setminus \{ 0 \}$, and looking at the inverse image of the derivative.
+
+Then, by Lemma 9.9, with a change of coordinates $F = f - 1$ and therefore $f^{-1}(1) = F^{-1}(0)$, but $\partial{F}{\partial a_{kl}} =  \frac{\partial f}{\partial a_{kl}}$, we see that since on $U$, the Jacobian $J(F) = \left[ \partial{F}{\partial a_{kl}} \right] \not = 0$, and therefore, we may replace the coordinate $a_{kl}$ with $F = \det(A) - 1$ to obtain an adapted chart for $GL_n(\mathbb{R})$ relative to $SL_n(\mathbb{R})$.
+
+Then, we have the chart $(U, a_{ij}, \det(A) - 1)$ with $1 \leq i, j \leq n, (i,j) \not = (k,l)$. Of course, due to the definition of $SL_n(\mathbb{R})$, we can see that $U \cap SL_n(\mathbb{R})$ is defined by the vanishing of $\det(A)-1$, and therefore, the other $a_{ij}$ coordinates form a coordinate system on this neighborhood.
+
+Now, we wish to just see that we may define $a_{kl}$ as a $C^\infty$ function of the other entries on $U$. With some algebraic manipulation:
+
+$$ f(A) = \det(A) = \sum_{j=1}^n (-1)^{k+j} a_{kj}m_{kj} \implies \det(A) - \sum_{j=1, j\not=l}^n   (-1)^{k+j} a_{kj}m_{kj} = (-1)^{k+l} a_{kl}m_{kl} \implies$$
+
+$$ a_{kl} = (-1)^{k+l} \frac{1}{m_{kl}} \left(  \det(A) - \sum_{j=1, j\not=l}^n   (-1)^{k+j} a_{kj}m_{kj} \right) $$
+
+Since $\det(A) = 1$ on $U \cap SL_n(\mathbb{R})$, we have that:
+
+$$  a_{kl} =  (-1)^{k+l} \frac{1}{m_{kl}} \left(  1 - \sum_{j=1, j\not=l}^n   (-1)^{k+j} a_{kj}m_{kj} \right)$$
+
+Of course, $m_{ij}$ is a polynomial without $a_{kl}$, hence $C^\infty$ in the other coordinates. Further, $m_{kl}$ is non-0 on $U$ here, and polynomial, hence $\frac{1}{m_{kl}}$ is $C^\infty$. Thus, this is a sum and product of $C^\infty$ functions, hence $C^\infty$ on this domain.
+
+(b)
+
+Fix a $(A, B) \in SL_n(\mathbb{R}) \times SL_n(\mathbb{R})$. 
+
+By part (a), we may find $U \in SL_n(\mathbb{R})$ such that $A \in U$, and is defined as a submanifold chart with coordinates $a_{ij}, (i,j) \not = (k,l)$. Similarly, we may find $V$ with $B \in V$ and with coordinates $b_{ij}, (i,j) \not =(k', l')$.
+
+We may look at the neighborhood $(A,B) \in U \times V \subseteq  SL_n(\mathbb{R}) \times SL_n(\mathbb{R})$. Further, for $C = A*B$, we may find a neighborhood $W \subseteq SL_n(\mathbb{R})$, such that $C \in W$ and $C$ takes on the coordinates $c_{i''j''}, (i'', j'') \not = (k'', l'')$. Using this to look at the components $\overline{\mu}$, on $U\times V$, the natural matrix multiplication has the form, for $A*B = C= [c_{ij}]$ and $(m,n) \not = (k'', l'')$:
+
+$$ \overline{\mu}^{mn}(A,B) =  c_{mn} = \sum_{p=1}^n a_{mp}b_{pn}$$
+
+For $m \not = k, n \not = l'$, we can see that $c_{mn}$ is familiarly a homogeneous polynomial of the coordinates, hence $C^\infty$. On the other hand, when either $m=k$ or $n=l'$ we have a sum of degree 2 polynomials, as well as a term of the form $a_{kl}b_{ln}$ or $a_{mk'}b_{k'l'}$. By the considerations of part (a), $a_{kl}$ is a $C^\infty$ function of the other $n^2-1$ coordinates, and so is $b_{k'l'}$. Thus, in these cases, the overall sum is a sum and product of $C^\infty$ functions, hence $C^\infty$.
+
+Thus, by this argument, each of the entries of $C$ is a $C^\infty$ function on the $a_{ij}, b_{i'j'}, (i,j) \not= (k,l), (i', j') \not=(k',l')$. Hence, each component of $\overline{\mu}$ is a $C^\infty$ function on these coordinates. Since these are a set of coordinates for $U \times V$, this implies that $\overline{\mu}$ is a $C^\infty$ function at $(A,B)$. Since we may repeat this procedure for any $(A,B) \in  SL_n(\mathbb{R}) \times SL_n(\mathbb{R})$, this implies that $\overline{\mu}$ is $C^\infty$ on the entire set.
+
+Note that technically, we don't need to exclude $k'', l''$ from the components $(m,n)$ but since we merely need to verify from a coordinate neighborhood of $ SL_n(\mathbb{R}) \times SL_n(\mathbb{R})$ to a suitable coordinate neighborhood of $ SL_n(\mathbb{R})$, it is enough to look at the relevant coordinate functions.
+
+\end{proof}
+
+\begin{problem}{Question 5}
+
+Let $M$ be a manifold, and let $(U, \phi) = (U, x^1,...,x^m), (V, \psi) = (V, y^1,...,y^m)$ be charts such that $U \cap V \not = \emptyset$.
+
+Consider the induced charts $(TU, \tilde{\phi}),(TV, \tilde{\psi})$ on $TM$, the total space of the tangent bundle, with transition map $\tilde{\psi} \circ \tilde{\phi}^{-1}$ that sends:
+
+$$ (x^1,...,x^m, a^1,...,a^m) \mapsto (y^1,...,y^m, b^1,...,b^m)$$
+
+(a) Compute the Jacobian matrix of the transition map at $\phi(p)$.
+
+(b) Show that the determinant of the transition map at $\phi(p)$ takes on the value:
+
+$$ \left( \det\left[\frac{\partial y^i}{\partial x^j}\right]\right)^2 $$
+
+\end{problem}
+
+\begin{proof}
+
+(a) 
+
+By definition, the Jacobian matrix of a map $F: N \to M$ relative to a chart $(x^1,...,x^n)$ of $N$ is simply $J(F) = \left[ \frac{\partial F^i }{\partial x^j} \right]$, where $F^i$ is the $i$-th component of $F$ in a chart of $M$.
+
+Then, recalling section 12.2, we have that the action of the transition map $\tilde{\psi} \circ \tilde{\phi}^{-1}$ has the following form, where we recall that $x^i = r^i \circ \phi$ is the $i$-th component of $\phi$ and similar for $y^j$ and $\psi$:
+
+$$ (\phi(p), a^1,...,a^m)  = (x^1(p),...,x^m(p), a^1,...,a^m) \mapsto (y^1(p),...,y^m(p), b^1,...,b^m) = (\psi \circ \phi^{-1}(\phi(p)), b^1,...,b^n) $$
+
+To compute the transformation that takes the $a^i$ to a specified $b^j$, we recall that at a point $p \in U \cap V$, we may describe a fixed tangent vector $v \in T_pM$ by the bases $\left\{ \frac{\partial}{\partial x^i} \right \}$ or equivalently by $\left\{ \frac{\partial}{\partial y^j} \right \}$. Thus, we have the equality:
+
+$$ \sum_i a^i \frac{\partial}{\partial x^i} =  \sum_j b^j \frac{\partial}{\partial y^j}$$
+
+Using the standard trick and applying both sides onto $y^k$, we see that:
+
+$$\sum_i a^i \frac{\partial y^k}{\partial x^i}  =  \sum_j b^j \frac{\partial y^k}{\partial y^j} =  \sum_j b^j\delta_j^k = b^k$$
+
+Thus, we have that:
+
+$$ (x^1(p),...,x^m(p), a^1,...,a^m) \mapsto \left(y^1(p),...,y^m(p),\sum_i a^i \frac{\partial y^1}{\partial x^i},...,\sum_i a^i \frac{\partial y^m}{\partial x^i}\right)$$
+
+Now, we are equipped to describe the Jacobian of this map. We see that for $1 \leq i \leq m$, $F^i = y^i$, and so, for $1 \leq j \leq m$, the derivatives correspond to the $x^i$, and so we have that via this numbering and denoting $\frac{\partial}{\partial x^i} y^j = y^j_i$, the upper left $m\times m$ submatrix $A$ has the form:
+
+$$ A = \begin{bmatrix} y^1_1 & \hdots & y^1_m\\ \vdots & \ddots & \vdots \\ y^m_1 & \hdots &y^m_m   \end{bmatrix} $$
+
+On the other hand, the coordinates from $m+1$ to $2m$ represent the $a^i$. Since the transition map  $\tilde{\psi} \circ \tilde{\phi}^{-1}$ is induced via the transition map  $\psi \circ \phi^{-1}$, we must have that the $y^i$ are independent of the $a^j$. Thus, the Jacobian matrix has a $m \times m$ zero matrix in the top right.
+
+Now, using the explicit description of the $b^j$, we may compute each block matrix of the lower $m+1,...,2m$ rows. In the first $m$ coordinates, we see that for $b^j$, and denoting $\frac{\partial}{\partial x^i} \frac{\partial}{\partial x^j} y^k = y^k_{ji}$:
+
+$$\frac{\partial}{\partial x^k} \sum_i a^i y^j_i = \sum_i a^i \frac{\partial}{\partial x^k} y^j_i =\sum_i a^i y^j_{ik} $$
+
+Thus, the lower left $m\times m$ block matrix has the form:
+
+$$ C = \begin{bmatrix} \sum_i a^i y^1_{i1} & \hdots & \sum_i a^i y^1_{im}\\ \vdots & \ddots & \vdots \\  \sum_i a^i y^m_{i1} & \hdots &  \sum_i a^i y^m_{im}   \end{bmatrix}$$
+
+Lastly, with the same argument that $y^j$ is independent of $a^i$ for all $i,j$ the lower right block matrix has the form, for $b^j$:
+
+$$ \frac{\partial}{\partial a^k} b^j =  \frac{\partial}{\partial a^k}  \sum_i a^i y^j_i =  \sum_i\frac{\partial a^i}{\partial a^k}y^j_i  = \sum_i \delta^i_k y^j_i = y^j_k $$
+
+Thus, we have the lower right matrix takes on the form:
+
+$$ D =  \begin{bmatrix} y^1_1 & \hdots & y^1_m\\ \vdots & \ddots & \vdots \\ y^m_1 & \hdots &y^m_m   \end{bmatrix}$$
+
+Thus, the Jacobian has the following block form:
+
+$$ J(F) = \begin{bmatrix} A & 0 \\ C & D \end{bmatrix}$$
+
+with $0$ denoting a $m \times m$ matrix with entries identically $0$, and $A, C, D$ as computed above. In particular, we notice that $A = D$, and thus, we may rewrite this as:
+
+$$ J(F) = \begin{bmatrix} A & 0 \\ C & A \end{bmatrix}$$
+
+with:
+
+$$ \begin{cases} A = \left[\frac{\partial y^i}{\partial x^j}\right]_{i,j} \\ C = \left[ \sum_l a^l y^i_{lj} \right]_{i,j} \end{cases} $$
+
+(b)
+
+First, we will prove the following lemma:
+
+\begin{lemma}
+Let $M$ be a $n \times n$ matrix, $n \geq 2$. Suppose that in block matrix form, we have that:
+
+$$M =  \begin{bmatrix} A & 0 \\ C & D \end{bmatrix}$$
+
+where $A, D$ are square submatrices, $i\times i, j \times j$ respectively, $i +j = n$ and $C$ is a $j \times i$ submatrix, and $0$ a $i \times j$ submatrix with entries identically 0.
+
+Then, $\det(M) = \det(A) \det(D)$.
+
+\end{lemma}
+
+\begin{proof}
+
+Proceed by induction on $n$.
+
+In the base case, $n = 2$. Then, the only case is that $A, C, D$ are exactly scalar values, and we have that:
+
+$$M =  \begin{bmatrix} a & 0 \\ c & d \end{bmatrix} $$ for $a, c, d \in k$, our base field.
+
+Then, by direct computation, $\det(M) = ad - c0 = ad = \det(A) \det(D)$.
+
+Now, suppose this is true for all $n \leq k-1$, and consider $M$ a $k\times k$ matrix. Let $A$ be square of shape $i \times i$ and $D$ be square of shape $j \times j$. 
+
+First, suppose $i= 1$. Then, $A = [a]$, and we have that:
+
+$$ M = \begin{bmatrix} a & 0 \\ C & D \end{bmatrix}$$
+
+Computing the determinant by expanding along the first row and denoting the determinant of the submatrix obtained by deleting the $i$-th row and $j$-th column by $m_{ij}$, we find that since the only non-0 term in the first row is $a$, that:
+
+$$ \det(M) = a m_{11} = a \det(D) = \det(A) \det(D)  $$
+
+Now, suppose $i > 1$.
+
+Computing the determinant by expanding along the first row and denoting the determinant of the submatrix obtained by deleting the $i$-th row and $j$-th column by $m_{ij}$, we find that since the $i+1,...,k$ entries in the first row are 0:
+
+$$ \det(M) = \sum_{l=1}^i (-1)^{l+1} a_{1l} m_{1l}$$
+
+However, we notice, the submatrix $S_{1l}$ obtained by deleting the first row and $l$-th column of $M$ is a matrix of dimension $k-1 \times k-1$, and has the shape
+
+$$ S_{1l} =  \begin{bmatrix} A_{1l} & 0 \\ C_{l} & D \end{bmatrix}$$
+
+where we denote $A_{1l}$ as the submatrix of $A$ obtained by deleting the first row, and $l$-th column, and $C_l$ from deleting the $l$-th column. In particular, by the induction hypothesis, we have that:
+
+$$ m_{1l} = \det(S_{1l}) = \det(A_{1l}) \det(D)$$
+
+Therefore, we may rewrite $\det(M)$ as  
+
+$$ \det(M) = \sum_{l=1}^i (-1)^{l+1} a_{1l} m_{1l} = \sum_{l=1}^i (-1)^{l+1} a_{1l}  \det(A_{1l}) \det(D) = \det(D) \left(\sum_{l=1}^i (-1)^{l+1} a_{1l}  \det(A_{1l}) \right) $$
+
+However, we recognize the sum as exactly the expansion computation for $\det(A)$, viewed as an $i \times i$ square matrix and expanded along its first row. Thus, we have that:
+
+$$ \det(M) =  \det(D) \left(\sum_{l=1}^i (-1)^{l+1} a_{1l}  \det(A_{1l}) \right) = \det(D)\det(A)$$
+
+as desired.
+
+\end{proof}
+
+Now, using this lemma and the results from part (a), we have that
+
+$$\det(J(F)) = \det(A) \det(A) = \left( \det\left[\frac{\partial y^i}{\partial x^j}\right]\right)^2$$
+
+as desired.
+\end{proof}
+
+\end{document}

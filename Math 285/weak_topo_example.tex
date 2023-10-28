@@ -1,0 +1,99 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{float}
+\usepackage{bbm}
+\usepackage{dsfont}
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+\newcommand{\vol}{{\text{Vol}}}
+
+
+\ExplSyntaxOn
+\NewDocumentCommand{\cycle}{ O{\;} m }
+ {
+  (
+  \alec_cycle:nn { #1 } { #2 }
+  )
+ }
+
+\seq_new:N \l_alec_cycle_seq
+\cs_new_protected:Npn \alec_cycle:nn #1 #2
+ {
+  \seq_set_split:Nnn \l_alec_cycle_seq { , } { #2 }
+  \seq_use:Nn \l_alec_cycle_seq { #1 }
+ }
+\ExplSyntaxOff
+
+\newenvironment{problem}[2][]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+
+
+\title{Weak Topology Examples}
+\author{Eric Tao}
+\maketitle
+
+\begin{abstract}
+In class, we discussed the weak topology on a set $X$ induced by a collection of subspaces $ \{ X_\alpha \}_{\alpha \in A}$ for some indexing set $A$, each equipped with a topology $\tau_\alpha$. In particular, the conditions for compatibility were that (i): for any $\alpha, \beta \in A$, $X_\alpha, X_\beta$ induce the same topology on $X_\alpha \cap X_\beta$ under the subspace topology and (ii): $X_\alpha \cap X_\beta$ is an open set in both $X_\alpha, X_\beta$. We exhibit examples to show that these conditions are independent of each other and, therefore, we need both conditions to be satisifed to conclude that the weak topology is indeed a topology. 
+\end{abstract}
+
+\begin{problem}{Question 1}
+
+
+
+Let $X$ be a set equipped with a collection of subsets $\{ X_\alpha \}_{\alpha \in A}$ for some index set $A$, possibly uncountably infinite.
+
+Let $\alpha, \beta \in A$, and suppose that $X_\alpha, X_\beta$ induce the same topology for $X_\alpha \cap X_\beta$ under the subspace topology.
+
+Is it true that $X_\alpha \cap X_\beta$ is an open set of $X_\alpha$ and $X_\beta$?
+
+\end{problem}
+
+\begin{proof}[Example]
+
+We exhibit an example to answer this question in the negative.
+
+Consider the 3 point set $X = \{ a, b, c \}$, and consider the following subsets equipped with their respective topologies:
+
+$$\begin{cases} X_1 = \{ a, b \} & \tau_1 = \{ \emptyset, \{ a \}, \{ a, b \} = X_1 \} \\  X_2 = \{ b,c \} & \tau_2 = \{ \emptyset, \{ c \}, \{ b,c \} = X_2 \} \end{cases} $$
+
+Without too much trouble, we can see that $\tau_1, \tau_2$ satisfy the properties of a topology, containing the entire set, the empty set, and being closed under both unions and finite intersections.
+
+Now, denote $X_{3}= X_1 \cap X_2$. We have that $X_{3} = \{ b \}$. In particular, we can see that the subspace topologies $\tau_{13}, \tau_{23}$ induced by $X_1, X_2$ respectively are exactly:
+
+$$ \begin{cases} \tau_{13} =  \{ \emptyset \cap X_3, \{ a \} \cap X_3, \{ a, b \} \cap X_3\} = \{ \emptyset, \{ b \} = X_3 \} \\  \tau_{23} =  \{ \emptyset \cap X_3, \{ c \} \cap X_3, \{ b,c \} \cap X_3\} = \{ \emptyset, \{ b \} = X_3 \} \end{cases} $$
+
+And thus, $\tau_{13} = \tau_{23}$, that is, they induce the same subspace topology on $X_3$.
+
+However, looking at the topologies, $X_3 = \{ b \}$ is not an element of either $\tau_1, \tau_2$, and thus is not open in either $X_1, X_2$.
+
+\end{proof}
+
+\begin{problem}{Question 2}
+
+Now, we wish to look at the converse:
+
+With the same setting, suppose that $X_\alpha \cap X_\beta$ is an open set of both $X_\alpha, X_\beta$.
+
+Is it true that $X_\alpha, X_\beta$ induce the same topology for $X_\alpha \cap X_\beta$ under the subspace topology?
+
+\end{problem}
+
+Again, we exhibit two examples to answer this question in the negative.
+
+Generically, we may imagine letting the underlying sets $X_\alpha = X_\beta = \mathbb{R}$, but endowing $X_\alpha$ with the standard topology on $\mathbb{R}$, and $X_\beta$ with the trivial topology. Then, of couse $X_\alpha \cap X_\beta = \mathbb{R}$, which is an open set in both topological spaces, however, it is clear that the intersection inherits different topologies as a subspace of $X_\alpha$ and $X_\beta$.
+
+With a concrete example, in the same vein as the first question, we may look at the 4 point set $X = \{ a,b,c,d \}$ and consider the following subsets equipped with the respective topologies:
+
+$$\begin{cases} X_1 = \{ a, b, c \} & \tau_1 = \{ \emptyset, \{ b \}, \{ b,c \}, \{a, b, c\} = X_1 \} \\  X_2 = \{ b,c, d \} & \tau_2 = \{ \emptyset, \{ c \}, \{ b,c \}, \{ b,c,d \} = X_2 \} \end{cases} $$
+
+Again, it is not hard to see that $\tau_1, \tau_2$ satisfy the conditions of being a topology on their respective spaces.
+
+Now, denote $X_3 = X_1 \cap X_2 = \{ b,c\}$, which, by construction, is an open set in each topological space. However, as a subspace of $X_1, X_2$, it is clear that $\{ b \}$ is an open set in $X_3$ endowed with the subspace topology of $X_1$ but not of $X_2$, and similarly, $\{ c \}$ is an open set in the  subspace topology of $X_2$ but not of $X_1$. Thus, we may have that $X_\alpha \cap X_\beta$ as an open set in both the topologies of $X_\alpha, X_\beta$ without inducing the same topology as a subspace.
+
+\end{document}

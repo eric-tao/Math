@@ -1,0 +1,230 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{float}
+\usepackage{bbm}
+\usepackage{dsfont}
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+\newcommand{\vol}{{\text{Vol}}}
+
+
+\ExplSyntaxOn
+\NewDocumentCommand{\cycle}{ O{\;} m }
+ {
+  (
+  \alec_cycle:nn { #1 } { #2 }
+  )
+ }
+
+\seq_new:N \l_alec_cycle_seq
+\cs_new_protected:Npn \alec_cycle:nn #1 #2
+ {
+  \seq_set_split:Nnn \l_alec_cycle_seq { , } { #2 }
+  \seq_use:Nn \l_alec_cycle_seq { #1 }
+ }
+\ExplSyntaxOff
+
+\newenvironment{problem}[2][]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#3}
+\author{Eric Tao\\
+Math 285: Homework \#3}
+\maketitle
+
+\begin{problem}{Question 1}
+
+Let $\sigma$ be the permutation $\cycle{1,3,2}$ and let $\tau$ be the permutation $\cycle{1,2}$. If $f$ is a $3$-linear function on the vector space $V$, compute using the definition of the permutation action $(\sigma(\tau f))(v_1, v_2, v_3)$ and $((\sigma \tau)f)(v_1, v_2, v_3)$, for $v_i \in V$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+We recall, that by definition, we have that $(\sigma f)(v_1, v_2, v_3) = f(v_{\sigma(1)}, v_{\sigma(2)}, v_{\sigma(3)})$. Thus, we have that:
+
+$$(\sigma(\tau f))(v_1, v_2, v_3) = (\sigma f) (v_2, v_1, v_3) = f(v_1, v_3, v_2)$$
+
+On the other hand, we can see that by computation, that $(\sigma \tau) = \cycle{2,3}$. Therefore, we have that:
+
+$$ ((\sigma \tau)f)(v_1, v_2, v_3) = f(v_1, v_3, v_2)$$
+
+And we see that we may compute the composition in $S_3$ of $\sigma \tau$ first or apply them onto $f$ one by one, and the result aligns.
+
+\end{proof}
+
+\begin{problem}{Question 2}
+
+Prove Proposition 5.14:
+
+Let $\{ (U_\alpha, \phi_\alpha) \}$ and $\{ (V_\beta, \psi_\beta) \}$ be $C^\infty$ atlases for manifolds $M,N$ of dimension $m,n$ respectively. Prove that the collection
+
+$$ \{ U_\alpha \times V_\beta, \phi_\alpha \times \psi_\beta: U_\alpha \times V_\beta \to \mathbb{R}^m \times \mathbb{R}^n \}$$
+
+of charts is a $C^\infty$ atlas on $M \times N$, making this a $C^\infty$ manifold of dimension $m+n$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+Denote $\mathfrak{U} = \{ (U_\alpha, \phi_\alpha) \}$, $\mathfrak{V} = \{ (V_\beta, \psi_\beta) \}, \mathfrak{U} \times \mathfrak{V} =  \{ U_\alpha \times V_\beta, \phi_\alpha \times \psi_\beta: U_\alpha \times V_\beta \to \mathbb{R}^m \times \mathbb{R}^n \}$.
+
+First, we wish to show that for any $(p,q) \in M \times N$, there exists a $U_\alpha \times V_\beta$ in the charts of $\mathfrak{U} \times \mathfrak{V}$ such that $(p,q) \in U_\alpha \times V_\beta$. But this is clear. Since $\mathfrak{U}$ is a $C^\infty$ atlas on $M$, there exists a $U_{p}$ such that $m \in U_p$. Similarly, we may make the same argument to find a $V_q \subseteq N$ such that $q \in V_q$. Then, of course, $(p,q) \in U_p \times V_q$, and by the construction of $\mathfrak{U} \times \mathfrak{V}$, $ U_p \times V_q$ is an open set for one of the charts in this atlas. Thus, this collection of open sets and maps covers all of $M \times N$.
+
+Now, we wish to show that these pairs are truly charts for $M \times N$. From the above, for a point $(p,q)$, we already know that we may find a $(U_p \times V_q, \phi_p \times \psi_q)$ such that $(p,q) \in U_p \times V_q$. We need only show then that $\phi_p \times \psi_q$ is a homeomorphism from $U_p \times V_q$ to some open subset of $\mathbb{R}^{m+n}$. Since $\mathfrak{U}$ is an atlas, $(U_p, \phi_p)$ is a chart, and we may consider the open set $\phi_p(U_p) \subseteq \mathbb{R}^m$. Similarly for $\mathfrak{V}$, we may consider the open set $\psi_q(V_q) \subseteq \mathbb{R}^n$. Then, we may consider the open set $\phi_p(U_p) \times \psi_q(V_q) \subseteq \mathbb{R}^m \times \mathbb{R}^n$. 
+
+We claim that $\phi_p \times \psi_q$ is a homeomorphism from $U_p \times V_q$ to $\phi_p(U_p) \times \psi_q(V_q)$. Here, we use without proof that $f: X \to X'$ and $g: Y \to Y'$ if and only if $f \times g: X \times Y \to X' \times Y'$ is continuous. Since $\phi_p$ is continous, and $\psi_q$ is contiuous, so must be $\phi_p \times \psi_q$. Further, we will show that this is bijective by showing that $\phi_p^{-1} \times \psi_q^{-1}$ acts as a left and a right inverse.
+
+Let $x \in U_p, y \in V_p$.
+
+$$ (\phi_p^{-1} \times \psi_q^{-1}) \circ (\phi_p \times \psi_q)(x,y) =  (\phi_p^{-1} \times \psi_q^{-1})(\phi_p(x), \psi_q(y)) = (\phi_p^{-1}(\phi_p(x)),  \psi_q^{-1}(\psi_q(y))) = (x,y)$$
+
+where we have used the fact that $\phi_p, \psi_q$ are homemorphic, and thus bijective.
+
+Let $a \in \phi_p(U_p), b \in \psi_q(V_q)$:
+
+$$  (\phi_p \times \psi_q) \circ  (\phi_p^{-1} \times \psi_q^{-1}) (a,b) = (\phi_p \times \psi_q)(\phi_p^{-1}(a), \psi_q^{-1}(b)) = (\phi_p(\phi_p^{-1}(a)),  \psi_q(\psi_q^{-1}(b))) = (a,b)$$
+
+where, again, we've used the bijectivity of $\phi_p, \psi_q$. 
+
+Thus, we have shown that $\phi_p \times \psi_q$ is a continuous bijection, with $\phi_p^{-1} \times \psi_q^{-1}$ acting as $(\phi_p \times \psi_q)^{-1}$, and by the same argument on $\phi_p^{-1}, \psi_q^{-1}$ being continous implying that $\phi_p^{-1} \times \psi_q^{-1}$ being continuous, we can conclude that $\phi_p \times \psi_q$ is a homeomorphism.
+
+Further, if we map $\mathbb{R}^m \times \mathbb{R}^n \to \mathbb{R}^{m+n}$ by sending $[(x^1,....,x^m),(y^1,...,y^n)] \mapsto (x^1,...,x^m,y^1,...,y^n)$, we can see that these are isomorphic as topological spaces, and we can identify $\phi_p(U_p) \times \psi_q(V_q)$ as an open set in $\mathbb{R}^{m+n}$. Since we may do this procedure for each $(p,q) \in M \times N$, we can conclude that each $(U_\alpha \times V_\beta, \phi_\alpha \times \psi_\beta)$ forms a chart on $M \times N$, with dimension $m+n$. Thus, our pairs of open neighborhoods and maps form charts on $M \times N$. 
+
+We have already shown that these are charts that cover $M \times N$, and that $M \times N$ is a locally Euclidean space of dimension $m +n$. We need only show then that these charts are pairwise $C^\infty$ compatible. 
+
+Let $U_a \times V_b, U_{a'} \times V_{b'}$ be open sets of charts such that their intersection is not empty. 
+
+Let $(u,v) \in U_a \times V_b \cap U_{a'} \times V_{b'}$ such that $u \in U_a \cap U_{a'}, v \in V_b \cap V_{b'}$. 
+
+Consider:
+
+$$(\phi_a \times \psi_b) \circ (\phi_{a'}^{-1} \times \psi_{b'}^{-1}) ( (\phi_{a'} \times \psi_{b'})(u,v) = (\phi_a \circ \phi_{a'}^{-1} (\phi_{a'}(u)), \psi_b \circ \psi_{b'}^{-1}(\psi_{b'}(v)))$$
+
+Because $\mathfrak{U}$ is a set of $C^\infty$ compatible maps, we must have that $\phi_a \circ \phi_{a'}^{-1}$ is $C^\infty$ at $\phi_{a'}(u)$. Similarly, since $\mathfrak{V}$ is also $C^\infty$ pairwise compatible, $\psi_b \circ \psi_{b'}^{-1}$ must be $C^\infty$ at $\psi_{b'}(v)$. Thus, since the components are $C^\infty$, so must be $(\phi_a \times \psi_b) \circ (\phi_{a'}^{-1} \times \psi_{b'}^{-1})$ at $(\phi_{a'} \times \psi_{b'})(u,v) = (\phi_{a'}(u), \psi_{b'}(v))$.
+
+Without too much trouble, we can see the same will occur with:
+
+$$ (\phi_{a'} \times \psi_{b'}) \circ (\phi_a^{-1} \times \psi_b^{-1}) ((\phi_a \times \psi_b)(u,v)) =  (\phi_{a'} \circ \phi_{a}^{-1} (\phi_{a}(u)), \psi_{b'} \circ \psi_{b}^{-1}(\psi_{b}(v)))$$
+
+and with the same argument, because each coordinate transition map $\phi_{a'} \circ \phi_{a}^{-1}, \psi_{b'} \circ \psi_{b}^{-1}$ is $C^\infty$ at $\phi_{a}(u), \psi_{b}(v)$ respectively, due to the $C^\infty$ compatibility of $\mathfrak{U}, \mathfrak{V}$, so too must be $(\phi_{a'} \times \psi_{b'}) \circ (\phi_a^{-1} \times \psi_b^{-1})$. 
+
+Thus, $(U_a \times V_b, \phi_a \times \psi_b)$ and $(U_{a'} \times V_{b'}, \phi_{a'} \times \psi_{b'}) $ are $C^\infty$ compatible maps, and since the choice of charts were arbitrary, other than having non-empty intersection, this is true for all charts with non-empty intersection. Since we say that if the intersection is empty, that the charts are automatically compatible, this implies that every pair of charts is $C^\infty$ compatible. Thus, this collection named $\mathfrak{U} \times \mathfrak{V}$ is a collection of $C^\infty$ compatible charts on $M \times N$, a locally Euclidean space of dimension $m+n$, such that the charts cover $M \times N$. Therefore, this collection is a $C^\infty$ atlas on $M \times N$, and we can find a maximal atlas, compatible with $\mathfrak{U} \times \mathfrak{V}$ endowing $M \times N$ with the structure of a $C^\infty$ manifold with dimension $m+n$.
+
+
+
+Note that without too much extra trouble, it is clear that this is Hausdorff and second countable:
+
+Let $(p,q), (p',q') \in M \times N$ such that at least one of $p \not = p', q \not = q'$ is true. WLOG, suppose $p \not = p'$. Since $M$ is a manifold, $M$ is Hausdorff, so we may find neighborhoods $U_p, U_{p'}$ such that $p \in U_p, p' \in U_{p'}$ and $U_p \cap U_{p'} = \emptyset$. Then, consider the sets $U_p \times N, U_{p'} \times N$. Of course, this is an open set in the product topology, and further, due to construction, it should be clear that $(p,q) \in U_p \times N, (p',q') \in U_{p'} \times N$ and the intersection being trivial implies that $(U_p \times N) \cap (U_{p'} \times N) = \emptyset$. Since we can see that this works similar if $p = p'$ and $q \not = q'$ we can do this for every point, and thus $M \times N$ is Hausdorff.
+
+Similarly, due to the construction of the product topology, we can find second countable to be true because take a countable basis of $M$ as $U_i$ and a countable basis of $N$ as $V_j$. Then, $\{ U_i \times V_j \}_{i,j \in \mathbb{N}}$ is a basis for $M \times N$, and $\mathbb{N} \times \mathbb{N}$ is still countable. 
+
+% We may identify $\mathbb{R}^{m+n} \cong \mathbb{R}^{m} \times \mathbb{R}^{n}$ as $C^\infty$ manifolds by, for $x = (x^1,...,x^m) \in \mathbb{R}^m, y = (y^1,...,y^n) \in \mathbb{R}^n, (x,y) \mapsto (x^1,...,x^m, y^1,...,y^n) \in \mathbb{R}^{m+n}$. 
+
+%First, we wish to show this for $M = \mathbb{R}^m, N = \mathbb{R}^n$. Let $(x^1,...,x^{m+n}) \in \mathbb{R}^{m+n}$. Looking at the first $m$ coordinates, we may find a $U_x$ in the atlas on $M$ such that $(x^1,...,x^m) \in U_x$. Similarly, for the last $n$ coordinates, we may find a $U_y$ 
+
+ 
+
+\end{proof}
+
+\begin{problem}{Question 3}
+
+Let $\mathbb{R}$ be the real line with the differentiable structure given by the maximal atlas of the chart $\{ \mathbb{R}, \phi = \mathds{1}: \mathbb{R} \to \mathbb{R} \}$. Let $\mathbb{R}'$ be the real line with the differentiable structure given by the maximal atlas of the chart $\{ \mathbb{R}, \psi: \mathbb{R} \to \mathbb{R} \}$ via $\psi(x) = x^{1/3}$.
+
+(a) Show that these two differentiable structures are distinct.
+
+(b) Show that there exists a diffeomorphism from $\mathbb{R} \to \mathbb{R}'$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+If these charts are not $C^\infty$ compatible, then the maximal atlas for $\mathbb{R}, \mathbb{R}'$ must differ. So, we need only show that $(\mathbb{R}, \mathds{1})$ is not compatible with $(\mathbb{R}, \psi)$ with $\psi(x) = x^{1/3}$. 
+
+In particular, for $x\in \mathbb{R}$, consider the function $\psi \circ \mathds{1}^{-1}: \mathbb{R} \to \mathbb{R}$. We have that:
+
+$$ \psi \circ \mathds{1}^{-1} (x) =  \psi((\mathds{1}^{-1})(x)) =  \psi(x) = x^{1/3}$$
+
+However, this map is not $C^\infty$ at $x = 0$. Taking the familiar derivative via the power rule, we see that $\frac{d}{dx} x^{1/3} = 1/3 x^{-2/3}$, which is undefined at $x = 0$. Thus, these charts are not compatible, and must belong to different maximal atlases, and thus have distinct differentiable structures.
+
+(b)
+
+Consider the map $F: \mathbb{R} \to \mathbb{R}'$ that sends $x \to x^3$. We recall that we say $F$ is $C^\infty$ at a point $y \in \mathbb{R}$ if for generic charts $(U, \phi)$ of $p \in M$, and $(V, \psi)$ of $F(p) \in N$, that $\psi \circ F \circ  \phi^{-1}$ is $C^\infty$ at $\phi(p)$.
+
+Applying this for $(U, \phi) = (\mathbb{R}, \mathds{1})$, $(V, \psi) = (\mathbb{R}, \psi)$, we consider the following for an arbitrary $p \in \mathbb{R}$, since $\mathds{1} (\mathbb{R}) = \mathbb{R}$:
+
+$$ \psi \circ F \circ \mathds{1}^{-1} (p) = \psi \circ F (\mathds{1}^{-1}(p)) = \psi(F(p)) = \psi(p^3) = p $$
+
+Since this acts as identity on $p$ on $\mathbb{R} \to \mathbb{R}$, certainly this is $C^\infty$, so we call $F$ a $C^\infty$ at $p$. Since $p$ was an arbitrary point, we can say that $F$ is a $C^\infty$ map.
+
+Then, we consider the map $F^{-1}: \mathbb{R}' \to \mathbb{R}$ that sends $y \to y^{1/3}$. Without too much trouble, we can see that this function acts as a left and right inverse:
+
+$$F \circ F^{-1}: \mathbb{R}' \to \mathbb{R}' \text{ has the action of } F \circ F^{-1}(y) = F(y^{1/3}) = (y^{1/3})^3 = y$$
+
+and
+
+$$ F^{-1} \circ F: \mathbb{R} \to \mathbb{R} \text{ has the action of } F^{-1} \circ F(x) = F^{-1}(x^3) = (x^3)^{1/3} = x$$
+
+where we use the fact that the cube root and cubing a real number are bijective functions and inverses of each other on $\mathbb{R} \to \mathbb{R}$.
+
+Now, we wish only to show that $F^{-1}$ is also $C^\infty$. Since $\psi(\mathbb{R}) = \mathbb{R}$, consider, for some arbitrary $q \in \mathbb{R}$, the function:
+
+$$\mathds{1} \circ F^{-1} \circ \psi^{-1} (q) =  \mathds{1} \circ F^{-1} (q^3) = \mathds{1} (q^3)^{1/3} = \mathds{1} (q) = q$$
+
+Thus, since $\mathds{1} \circ F^{-1} \circ \psi^{-1}$ acts as identity on $\mathbb{R}$, we can also claim that $F^{-1}$ is $C^\infty$ at $q$. Since the choice of $q$ were arbitrary, we can actually say that $F^{-1}$ is $C^\infty$.
+
+Thus, $F$ is a bijective $C^\infty$ map such that its inverse is also $C^\infty$. Therefore, $F$ is a diffeomorphism from $\mathbb{R} \to \mathbb{R}'$. 
+
+
+
+
+\end{proof}
+
+\begin{problem}{Question 4}
+
+Let $M, N$ be manifolds, and fix some $q_0 \in N$. Prove that the inclusion map $i_{q_0}: M \to M \times N$ via $p \mapsto (p,q_0)$ is $C^\infty$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+Fix an arbitrary point $p \in M$.  Let $(U, \phi) = (U, x^1,...,x^m)$ be a chart of $M$ about $p$. Let $(V, \psi) = (V, y^1,...,y^n)$ be any chart about $q_0 \in N$. 
+
+By Proposition 5.14, or problem 2, we have that $(U \times V, \phi \times \psi) = (U \times V, x^1,...,x^m, y^1,...,y^n)$ is a chart of $M \times N$ about the point $(p, q_0)$. Then, we have that:
+
+$$ ((\phi \times \psi) \circ i_{q_0} \circ \phi^{-1})(a^1,...,a^m)  = (a^1,...,a^m,b^1,...,b^n)$$
+
+for $\psi(q_0) = (b^1,...,b^n), \phi(p) = (a^1,...,a^m)$.
+
+We can see that each coordinate map is $C^\infty$, as it acts as identity on the $x^i$ coordinates and is constant on the $y^j$ coordinates. Thus, the composite map is $C^\infty$ at the point $(a^1,...,a^m)$, which by definition, says that $i_{q_0}$ is $C^\infty$ at the point $p = \phi^{-1}(a^1,...,a^m)$. Since the choice of $p$ were arbitrary, this implies that $i_{q_0}$ is $C^\infty$ on all of $M$, and thus this choice of inclusion map is $C^\infty$. Since of course, $q_0 \in N$ was arbitrary, we can more generally conclude that inclusion maps for any fixed $q_0$ are $C^\infty$.
+
+\end{proof}
+
+\begin{problem}{Question 5}
+
+Let $f: X \to Y$ be a map of sets, and let $B \subseteq Y$. Prove that $f(f^{-1}(B)) = B \cap f(X)$. Conclude that if $f$ is surjective, then $f(f^{-1}(B)) = B$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+First, we wish to show that $f(f^{-1}(B)) \subseteq B \cap f(X)$. We recall that by definition, $f^{-1}(B) = \{ x \in X : f(x) \in B \}$. Then, of course, $f^{-1}(B) \subseteq X$, because for any $y \in f(f^{-1}(B))$, by definition, there exists an $x_b \in f^{-1}(B)$ such that $f(x_b) = y$. But, since $f^{-1}(B) \subseteq X$, $x_b \in X$, and thus $y \in f(X)$. Since $y$ was arbitrary, we must have that $f(f^{-1}(B)) \subseteq f(X)$. Further, let $x \in f^{-1}(B)$. Then, by definition, we have that $f(x) \in B$. Since this is true for an arbitrary element of $x \in f^{-1}(B)$, this is true for the entire set, and we have that $f(f^{-1}(B)) \subseteq B$. Therefore, we have the desired conclusion $f(f^{-1}(B)) \subseteq B \cap f(X)$.
+
+Next, we show that $B \cap f(X) \subseteq f(f^{-1}(B))$. Let $y \in B \cap f(X) \subseteq Y$. Since $y \in f(X)$, there exists a $x \in X$ such that $f(x) = y$. Furthermore, since $y \in B$, by the definition of $f^{-1}(B) =  \{ x \in X : f(x) \in B \}$, $x \in f^{-1}(B)$. Then, of course, $y \in  f(f^{-1}(B))$, since we have found an $x \in f^{-1}(B)$, such that $f(x) = y$.
+
+Since the choice of $y$ was arbitrary, this applies to all of the elements of the intersection, and thus we conclude that $B \cap f(X) \subseteq f(f^{-1}(B))$.
+
+Thus, since we have subsets in both directions, we have equality, and we conclude that $f(f^{-1}(B)) = B \cap f(X)$.
+
+Of course, then, if $f$ is surjective, then $f(X) = Y$, and since $B \subseteq Y$, of course $B \cap Y = B$. In such a case then, we have that $f(f^{-1}(B)) = B \cap f(X) = B \cap Y = B$.
+
+\end{proof}
+
+
+\end{document}

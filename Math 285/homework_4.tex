@@ -1,0 +1,381 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{float}
+\usepackage{bbm}
+\usepackage{dsfont}
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+\newcommand{\vol}{{\text{Vol}}}
+
+
+\ExplSyntaxOn
+\NewDocumentCommand{\cycle}{ O{\;} m }
+ {
+  (
+  \alec_cycle:nn { #1 } { #2 }
+  )
+ }
+
+\seq_new:N \l_alec_cycle_seq
+\cs_new_protected:Npn \alec_cycle:nn #1 #2
+ {
+  \seq_set_split:Nnn \l_alec_cycle_seq { , } { #2 }
+  \seq_use:Nn \l_alec_cycle_seq { #1 }
+ }
+\ExplSyntaxOff
+
+\newenvironment{problem}[2][]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#4}
+\author{Eric Tao\\
+Math 285: Homework \#4}
+\maketitle
+
+\begin{problem}{Question 1}
+
+Omitting the full context of this question:
+
+(a) Show that the equivalence relationship on $F(k,n)$, the set of $n \times k$ matrices of rank $k$ where $A \sim B$ if and only if there exists a change of basis matrix $g \in GL_n(\mathbb{R})$ such that $B = Ag$ is open.
+
+(b) Prove that the Grassmannian $G(k,n)$ defined as the set of all $k$-planes through the origin in $\mathbb{R}^n$ is second countable.
+
+(c) Let $S = F(k,n)$, that is, the set of all $n \times k$ matrices of rank $k$, with the subspace topology of $\mathbb{R}^{n \times k}$. Prove that the graph of $\sim$, that is, the set $\{ (x,y) : x \sim y \} \subseteq S \times S$ is closed.
+
+(d) Prove that the Grassmannian $G(k,n)$ is Hausdorff.
+
+Specialize to $G(2,4)$ and for a $4 \times 2$ matrix $A$, define $A_{ij}$ as the $2 \times 2$ submatrix consisting of its $i$-th row and $j$-th row.
+
+(e) Prove that if $A \in V_{ij} = \{ A \in F(2,4) : A_{ij}$ is nonsingular $\}$, then $Ag \in V_{ij}$ for any nonsingular matrix $g \in GL_(2, \mathbb{R})$. 
+
+Define $U_{ij} = V_{ij} / \sim$. We remark that for $A \in V_{12}$ that:
+
+$$ A \sim A A^{-1}_{12} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \\ * &* \\ *&*\end{bmatrix} = \begin{bmatrix} I \\ A_{34}A^{-1}_{12} \end{bmatrix} $$
+
+(f) Show that the map $\tilde{\phi}_{12}: V_{12} \to \mathbb{R}^{2 \times 2}$ that sends $A \mapsto A_{34} A^{-1}_{12}$ induces a homeomorphism $\phi_{12}: U_{12}\to\mathbb{R}^{2\times 2} $
+
+(g) In an analogous way, define the similar homeomorphisms $\phi_{ij}$. Compute $\phi_{12} \circ \phi_{23}^{-1}$ and show that it is $C^\infty$. 
+
+(h) Show that $\{ U_{ij} : 1 \leq i < j \leq 4 \}$ is an open cover of $G(2,4)$ and thus, $G(2,4)$ is a smooth manifold.
+
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+Let $U \subseteq F(k,n)$ be open. We wish to show that the image under the projection map $\pi: F(k,n) \to F(k,n)/\sim$, $\pi(U)$ is open.
+
+We recall by the definition of the quotient topology then, that $\pi(U)$ is open if and only if its preimage $\pi^{-1}(\pi(U))$ is open in $F(k,n)$. In particular, we notice that by the definition of $\sim$, that:
+
+$$\pi^{-1}(\pi(U)) = \cup_{g \text{ invertible }} gU $$
+
+because of course, for any $u \in U$, if, for a $g \in GL_n(\mathbb{R})$, $h  = ug$, then by the definition of $\sim$, $h \sim u$, and thus $\pi(h) \in \pi^{-1}(\pi(U))$, implies that $\cup_{g \text{ invertible }} gU \subseteq \pi^{-1}(\pi(U)$. Similarly, in reverse, for $h \in \pi^{-1}(\pi(U))$, then $\pi(h) \in \pi(U)$, and thus, $h \in [u]$ for some $u \in U$. Thus, we can find a change of basis $g$ such that $h = ug$, and therefore $h \in \cup_{g \text{ invertible }} gU$. Thus, the sets are equal.
+
+Further, for any fixed invertible $g$, if we look at each matrix entry, $B = Ag$, we see that we get $B_{ij} = \sum_{l=1}^k A_{il}g_{lj}$, that is, a degree one polynomial in the matrix entries of $A$. This implies that $g$ is continuous in each matrix entry, hence continuous. Since $g^{-1}$ exists, and we may make the same argument for $g^{-1}$ acting on a matrix $A$, $g$ is a homeomorphism. Thus, $gU$ is open itself.
+
+Then, $\cup_{g \text{ invertible }} gU$ is an arbitrary union of open sets, hence open. Therefore, we have that $\pi^{-1}(\pi(U))$ is open, and therefore $\pi(U)$ is open. Since the choice of $U$ was arbitrary, we conclude that $\pi$ is an open map. Hence, $\sim$ is a open equivalence relationship.
+
+(b)
+
+By the context of the problem, we are given that there exists a bijection between $G(k,n)$ and $F(k,n)/\sim$, which comes from the fact that 2 sets of $k$ linearly independent vectors with $n$ entries define the same plane if they are related by an invertible matrix. So, we can exactly identify a $k$-plane with some basis, which determines the columns of some $F(k,n)$ matrix, and $\sim$ relates matrices that represent the same plane.
+
+Furthermore, from part (a), since $\sim$ is open, and $F(k,n) \subseteq \mathbb{R}^{k \times n} \cong \mathbb{R}^{nk}$ is second countable as it is a subspace of  the second countable space $\mathbb{R}^{nk}$, by Corollary 7.13 we must have that $F(k,n)/\sim$ is second countable. Hence, under the identification of open sets via some bijection between $F(k,n)/\sim$ and $G(k,n)$, $G(k,n)$ is second countable.
+
+(c)
+
+Recall that we define the graph $R$ of $\sim$ in $S \times S$ as the set  $\{ (x,y) : x \sim y \} \subseteq S \times S$ .
+
+By the hint, we have that $A \sim B$ if and only if every column in $B$ is a linear combination of the columns of $A$. This is clear, because we can see that if we have that $B = Ag$, then the $i$-th column of $B$ is exactly given by $\sum_{m=1}^n A_{m}g_{mi}$ where $A_m$ denotes the $m$-th column of $A$, and $g_{mi}$ is the $m,i$ entry in $g$.
+
+But this is if and only if that the $n \times 2k$ matrix given by $[ A B ]$, the columns of $A$ appended with the columns of $B$ has rank at most $k$, since $A,B$ have rank $k$. We see the and only if part by collecting a collection of set of $k$ independent vectors in a $n \times 2k$ matrix, declaring that $A$, and then using the linear dependence to construct $g$, and thus $B = Ag$, where we restrict ourselves to $A, B \in F(k,n)$ to begin with, not generic $n \times 2k$ matrices. Technically, we have exactly rank $k$, but treating $S \times S$ as a subspace of all $n \times 2k$ matrices (and thus, $\mathbb{R}^{2nk}$), the intersection with rank less than $k$ is empty, so we can say at most $k$.
+
+From a fact in linear algebra, via the determinantal rank, this is true if and only if the determinant of every $k+1 \times k+1$ minor vanishes. Since each determinant is a $k+1$-degree homogeneous polynomial, hence a continuous function in each matrix entry, and $\{ 0 \}$ is a singleton in $\mathbb{R}$, a Hausdorff set, and thus closed, the preimage under each determinant of $\{ 0 \}$ is closed. By our chain of biconditionals, we have that $R$ is exactly the zero set of all of our determinants, hence the intersection of closed sets. Since the intersection of an arbitrary number of closed sets is still closed, this implies that $R$ itself is closed.
+
+(d)
+
+By Theorem 7.10, since the graph of $\sim$ is closed in the product $F(k,n) \times F(k,n)$, and $\sim$ is an open equivalence relationship by (a), we must have that $F(k,n)/ \sim$ is Hausdorff. By our bijection then, $G(k,n)$ is Hausdorff with the topology induced from the bijection.
+
+(e)
+
+Let $A \in V_{ij}, g \in GL_n(\mathbb{R})$. We wish to show that $Ag \in V_{ij}$. We recall that if we call $B = Ag$, that we may compute each matrix entry $B_{m,n} =  \sum_{l=1}^k A_{m,l}g_{l,n}$, where $m,n$ denotes the row, column of the matrix entry, in contrast of the submatrix defined in the question. Then, if we look at $B_{ij}$, we notice that it has the following form:
+
+$$ B_{ij} = \begin{bmatrix}A_{i,1}g_{1,1} + A_{i,2}g_{2,1} & A_{i,1}g_{2,1} + A_{i,2}g_{2,2} \\  A_{j,1}g_{1,1} + A_{j,2}g_{2,1} & A_{j,1}g_{2,1} + A_{j,2}g_{2,2} \end{bmatrix} $$
+
+But, using that formula again, we notice that this is exactly equal to $A_{ij} g$. Then, since $A_{ij}$ is invertible and $g$ is invertible, so must be $B_{ij}$. Thus, $B = Ag \in V_{ij}$. Since the choice of $A, g$ were arbitrary, this is true for any choices of $A \in V_{ij}, g \in GL_n(\mathbb{R})$.
+
+(f)
+
+Firstly, we wish to show that $\tilde{\phi}_{12}$ acts the same way on distinct members of the equivalence classes under $\sim$, and so extends to a map on the quotient space.
+
+Let $A, B \in V_{12}$. By the consideration in the question, since $A, B \in V_{12}$ is invertible, we have that:
+
+$$ B \sim BB^{-1}_{12} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \\ * &* \\ *&*\end{bmatrix} = \begin{bmatrix} I \\ B_{34}B^{-1}_{12} \end{bmatrix} $$
+
+and the same for $A$. Since these belong to the same equivalence class as well via transitivity, we must have then that there exists $g \in GL_2(\mathbb{R})$ such that:
+
+$$  \begin{bmatrix} I \\ B_{34}B^{-1}_{12} \end{bmatrix} =  \begin{bmatrix} I \\ A _{34}A^{-1}_{12} \end{bmatrix} g $$
+
+Doing the multiplication, we find that:
+
+$$  \begin{bmatrix} I \\ B_{34}B^{-1}_{12} \end{bmatrix} =  \begin{bmatrix} I \\ A _{34}A^{-1}_{12} \end{bmatrix} g  = \begin{bmatrix} g \\ A _{34}A^{-1}_{12}g \end{bmatrix}$$
+
+Then, looking at the upper block matrix, we see that this forces $g = I$. Thus, we have that $ B_{34}B^{-1}_{12} =  A _{34}A^{-1}_{12}$, and therefore, that $\tilde{\phi}_{12}(A) = \tilde{\phi}_{12}(B)$.
+
+Thus, this map extends to a well-defined map $\phi_{12}$ on $U_{12} = V_{12}/ \sim$.
+
+Now, consider the action of the map $A \mapsto A_{34}A^{-1}_{12}$. We notice that, in each entry for the resulting $2 \times 2$ matrix, that it is given as a degree 2 homogeneous polynomial of the entries of the $4 \times 2$ matrix $A$. Thus, $\tilde{\phi}_{12}$ is continuous. By the universal property of the quotient, we must then have that $\phi_{12}$ is also continuous. 
+
+In a similar fashion, we may characterize $F: \mathbb{R}^{2 \times 2} \to V_{12}$ that takes $C \to \begin{bmatrix} I \\ C \end{bmatrix}$ for $C \in \mathbb{R}^{2 \times 2}$. Clearly, this is continuous, acting as identity on each entry of $C$. Then, we claim that $\pi \circ F$, for $\pi: V_{12} \to U_{12}$ the projection map, acts as the inverse to $\phi_{12}$. Indeed, we see that:
+
+$$ \phi_{12}(\pi \circ F(C)) = \phi_{12}(\pi( \begin{bmatrix} I \\ C \end{bmatrix})) = \phi_{12}[\begin{bmatrix} I \\ C \end{bmatrix}] = C$$
+
+Similarly, for an $[A] \in U_{12}$:
+
+$$ \pi \circ F(\phi_{12}([A]))  =  \pi \circ F( A _{34}A^{-1}_{12}) = \pi( \begin{bmatrix} I \\ A _{34}A^{-1}_{12} \end{bmatrix})  = [\begin{bmatrix} I \\ A _{34}A^{-1}_{12} \end{bmatrix}]$$
+
+And since we have that $AA^{-1}_{12} =  \begin{bmatrix} I \\ A _{34}A^{-1}_{12} \end{bmatrix}$, we have that $[A] = [\begin{bmatrix} I \\ A _{34}A^{-1}_{12} \end{bmatrix}]$. 
+
+Thus, we have a continuous function $\phi_{12}$, with a continuous function that acts as left and right inverse. Therefore, $\phi_{12}$ is a homeomorphism.
+
+(g)
+
+So here, we wish to act on the intersection $U_{12} \cap U_{23}$. From parts (e) and (f), we can characterize this as matrices that satisfy the following equivalence:
+
+$$ A \sim AA^{-1}_{12} = \begin{bmatrix} I \\ A _{34}A^{-1}_{12} \end{bmatrix} \sim AA^{-1}_{23} = \begin{bmatrix} A_{1}A^{-1}_{23} \\ I \\  A_{4}A^{-1}_{23} \end{bmatrix}$$
+
+Then, let $C \in \mathbb{R}^{2 \times 2} \cap \phi_{23}(U_{12} \cap U_{23})$. Then:
+
+$$\phi^{-1}_{23}(C) =  [\begin{bmatrix} C_{1} \\ I \\  C_{2} \end{bmatrix}]$$
+
+where we denote $C_i$ as the $i$-th row of $C$. Then:
+
+$$\phi_{12}(  [\begin{bmatrix} C_{1} \\ I \\  C_{2} \end{bmatrix}]) = \begin{bmatrix} 0 & 1 \\ C_{2,1} & C_{2,2} \end{bmatrix} \begin{bmatrix} C_{1,1} & C_{1,2} \\ 1 & 0 \end{bmatrix}^{-1} = \frac{-1}{C_{1,2}} \begin{bmatrix} 0 & 1 \\ C_{2,1} & C_{2,2} \end{bmatrix} \begin{bmatrix} 0 & -C_{1,2} \\ -1 & C_{1,1} \end{bmatrix} =$$
+
+$$ \frac{-1}{C_{1,2}} \begin{bmatrix} -1 & C_{1,1} \\ -C_{2,2} & (C_{1,1}C_{2,2} - C_{1,2}C_{2,1}) \end{bmatrix} $$
+
+In particular, we notice that because this belongs to $U_{12}$ we must have that $C_{1,2}$ is non-0, as $\begin{bmatrix} C_{1,1} & C_{1,2} \\ 1 & 0 \end{bmatrix}$ must be invertible. Thus, each entry is a rational function of the entries of $C$, such that the denominator never vanishes on our domain, and hence is $C^\infty$.
+
+(h)
+
+Firstly, we notice that $V_{ij}$ is an open condition on $F(2,4)$. Let $A \in V_{ij}$ and focus on the the submatrix $A_{ij}$. Then, we have that the determinant of $A_{ij}$ is non-0. In particular then, this must be the complement of the preimage of $\det^{-1}(\{ 0 \})$, a closed set, and hence $V_{ij}$ is open. Now, since we proved that $\sim$ is an open equivalence relationship for every $F(k,n)$ in $(a)$, we have that $U_{ij} = V_{ij} / \sim$ is open.
+
+Now, let $A \in F(2,4)$. By definition, $A$ has rank 2, and hence, there exists a $2 \times 2$ minor in $A$ that does not vanish. Suppose this minor is composed of rows $i, j$ of the matrix $A$. However, if the determinant of that minor does not vanish, then it is invertible, and hence $A \in V_{ij}$ for some $i,j$. Therefore, we have that $F(2,4) = \cup_{1 \leq i < j \leq 4} V_{ij}$, since by definition, $V_{ij} \subseteq F(2,4)$. Since $\pi$ is surjective, being a quotient map, it follows that:
+
+$$G(2,4) \cong F(2,4)/\sim = \pi(F(2,4)) = \pi(\cup_{1 \leq i < j \leq 4} V_{ij}) = \cup_{1 \leq i < j \leq 4} U_{ij}$$
+
+Hence, under the identification provided by the bijection between $G(2,4), F(2,4)/\sim$, the $U_{ij}$ form an open cover of $G(2,4)$ and with part (g) as homeomorphism, charts of a $C^\infty$ atlas. This implies that $G(2,4)$ with the charts $(U_{ij}, \phi_{ij})$ forms a $C^\infty$ manifold as (b) and (d) give us Hausdorff and second countability, and every $C^\infty$ atlas gives rise to a maximal one.
+
+\end{proof}
+
+\begin{problem}{Question 2}
+
+Fix an $\alpha \in \mathbb{R}$, and define the map $F: \mathbb{R}^2 \to \mathbb{R}^2$ via:
+
+$$ \begin{bmatrix} x \\ y \end{bmatrix} \mapsto  \begin{bmatrix} \cos\alpha & -\sin \alpha \\ \sin\alpha & \cos\alpha \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} u \\ v \end{bmatrix}$$
+
+Let $X = -y \frac{\partial}{\partial x}+ x \frac{\partial}{\partial y}$ be a vector field on $\mathbb{R}^2$. Let $p = (x,y) \in \mathbb{R}^2$ be a generic point.
+
+In the basis of the coordinates $u,v$, write:
+
+$$F_*(X_p) = \left( a \frac{\partial}{\partial u}+ b \frac{\partial}{\partial v} \bigg|_{F(p)} \right) $$
+
+Determine the values of $a,b$ in terms of $x,y, \alpha$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+We look to Example 8.6 as our prototypical concept. From the example, we have that:
+
+$$ F_*\left( \frac{\partial}{\partial x^j} \bigg|_p \right) = \sum_{i} \frac{\partial F^i}{ \partial x^j}(p) \frac{\partial}{\partial y^i} \bigg|_{F(p)} $$
+
+Then, identifying $y^1 = u, y^2 = v$ as coordinates in the image and $x^1 = x, x^2 = y$ as the coordinates of our codomain, we identify:
+
+$$ \begin{cases} F^1(x,y) = u(x,y) = x \cos \alpha - y \sin \alpha \\ F^2(x,y) = v(x,y) = x \sin \alpha + y \cos \alpha \end{cases}$$
+
+Thus we may compute the following quantities:
+
+$$ \begin{cases} \frac{\partial F^1}{ \partial x^1}(p) = \cos \alpha \\ \frac{\partial F^1}{ \partial x^2}(p) = - \sin \alpha \\ \frac{\partial F^2}{ \partial x^1}(p) = \sin \alpha \\ \frac{\partial F^2}{ \partial x^2}(p) = \cos \alpha \end{cases} $$
+
+Thus, we may compute:
+
+$$\begin{cases}  F_*\left( \frac{\partial}{\partial x^1} \bigg|_p \right) = \sum_{i} \frac{\partial F^i}{ \partial x^1}(p) \frac{\partial}{\partial y^i} \bigg|_{F(p)} = \cos \alpha \frac{\partial}{\partial u}  + \sin \alpha \frac{\partial}{\partial v}  \bigg|_{F(p)} \\  F_*\left( \frac{\partial}{\partial x^2} \bigg|_p \right) = \sum_{i} \frac{\partial F^i}{ \partial x^2}(p) \frac{\partial}{\partial y^i} \bigg|_{F(p)} = -\sin \alpha \frac{\partial}{\partial u}  + \cos \alpha \frac{\partial}{\partial v}  \bigg|_{F(p)} \end{cases}$$
+
+Using the fact that $F_*$ is linear then, we compute that:
+
+$$ F_*(X_p) = F_*\left(  -y \frac{\partial}{\partial x}+ x \frac{\partial}{\partial y} \bigg|_p\right) = -y \left(  \cos \alpha \frac{\partial}{\partial u}  + \sin \alpha \frac{\partial}{\partial v}  \bigg|_{F(p)} \right) + x \left(-\sin \alpha \frac{\partial}{\partial u}  + \cos \alpha \frac{\partial}{\partial v}  \bigg|_{F(p)} \right)= $$
+
+$$ \left[ (-y \cos\alpha - x \sin \alpha)  \frac{\partial}{\partial u}  + (-y \sin \alpha + x \cos \alpha)  \frac{\partial}{\partial v} \right]  \bigg|_{F(p)}$$
+
+Thus, reading off coordinates, we identify:
+
+$$\begin{cases} a = -y \cos\alpha - x \sin \alpha \\ b = -y \sin \alpha + x \cos \alpha \end{cases} $$
+  
+
+\end{proof}
+
+\begin{problem}{Question 3}
+
+Let $x,y$ be the standard coordinates on $\mathbb{R}^2$, and let $U$ be the open set:
+
+$$ U = \mathbb{R} \setminus \{ (x,0) : x \geq 0  \}$$
+
+On $U$, we may uniquely define polar coordinates as:
+
+$$ \begin{cases} x = r \cos \theta \\ y = r \sin \theta \end{cases} $$
+
+with $r > 0$ and $0 < \theta < 2\pi$.
+
+Compute $\frac{\partial}{\partial r}$, $\frac{\partial}{\partial \theta}$ in terms of $\frac{\partial}{\partial x}$ and $\frac{\partial}{\partial y}$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+In the same vein as question 2, we will view this as a map of $C^\infty$ manifolds. Define $V = \{ (r, \theta) : r > 0, 0 < \theta < 2\pi \}$ with the subspace topology, and a $C^\infty$ atlas compatible with the chart on the whole space with the identity map to $\mathbb{R}^2$, and view $U$ in the same way.
+
+Define $F: V \to U$ as above, sending $(r, \theta) \mapsto (r \cos \theta, r \sin \theta)$. Clearly, this is injective on $V$ due to $\theta \mapsto (\cos\theta, \sin \theta)$ being injective on $(0,2\pi)$, and without full proof, this is surjective, because we can always find an $r = \sqrt{x^2 + y^2}$ as well as $\theta$ via $\arccos(x/r)$ expanded to $(0,2\pi)$ adjusted for the correct quadrant of the point $(x,y)$.
+
+Then, we can consider $F_*$ acting on  $\frac{\partial}{\partial r}, \frac{\partial}{\partial \theta}$. First, we compute the partial derivatives, identifying $x^1 = r, x^2 = \theta$ and $y^1 = x, y^2 = y$, at an arbitrary point $p = (r,\theta)$:
+
+$$ \begin{cases} \frac{\partial F^1}{ \partial x^1}(p) = \cos \theta \\ \frac{\partial F^1}{ \partial x^2}(p) = - r\sin \theta \\ \frac{\partial F^2}{ \partial x^1}(p) = \sin \theta \\ \frac{\partial F^2}{ \partial x^2}(p) = r \cos \theta \end{cases} $$
+
+Thus, we have that:
+
+$$\begin{cases}  F_*\left( \frac{\partial}{\partial r} \bigg|_p \right) =  F_*\left( \frac{\partial}{\partial x^1} \bigg|_p \right) = \sum_{i} \frac{\partial F^i}{ \partial x^1}(p) \frac{\partial}{\partial y^i} \bigg|_{F(p)} = \cos \theta \frac{\partial}{\partial x}  + \sin \theta \frac{\partial}{\partial y}  \bigg|_{F(p)} \\ F_*\left( \frac{\partial}{\partial \theta} \bigg|_p \right) =  F_*\left( \frac{\partial}{\partial x^2} \bigg|_p \right) = \sum_{i} \frac{\partial F^i}{ \partial x^2}(p) \frac{\partial}{\partial y^i} \bigg|_{F(p)} = -r\sin \theta \frac{\partial}{\partial x}  + r\cos \theta \frac{\partial}{\partial y}  \bigg|_{F(p)} \end{cases}$$
+
+If we want this in terms of $(x,y) = F(p)$, we can then write:
+
+$$\begin{cases} \cos \theta = \frac{r \cos \theta}{r} = \frac{x}{\sqrt{x^2 + y^2}} \\  \sin \theta = \frac{r \sin \theta}{r} = \frac{y}{\sqrt{x^2 + y^2} } \end{cases} $$
+
+and so we have that:
+
+$$\frac{\partial}{\partial r} = \frac{x}{\sqrt{x^2 + y^2}} \frac{\partial}{\partial x} + \frac{y}{\sqrt{x^2 + y^2}} \frac{\partial}{\partial y} $$
+
+$$ \frac{\partial}{\partial \theta} = -y \frac{\partial}{\partial x} + x  \frac{\partial}{\partial y}$$
+
+where it should be understood that the left-hand side is evaluated at a point $(r,\theta)$ and the right-hand side evaluated at a point $(x,y) = F((r,\theta)) = (r \cos \theta, r \sin \theta)$.
+
+\end{proof}
+
+\begin{problem}{Question 4}
+
+Let $p = (x,y)$ be a point in $\mathbb{R}^2$. Define a curve with initial point $p$ as:
+
+$$c_p(t) = \begin{bmatrix} \cos(2t) & -\sin(2t) \\ \sin(2t) & \cos(2t) \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix} $$
+
+Compute the velocity vector $c'_p(0)$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+We recall in Proposition 8.17, where we may express:
+
+$$c_p'(0) = \sum_{i=1}^n \frac{d}{dt} (c^i(0)) \frac{\partial}{\partial x^i} \bigg|_{c(p)} $$
+
+Then, without too much trouble, we notice that:
+
+$$ \begin{cases} c^1(t) =  x\cos(2t)  -y\sin(2t)  \\   c^2(t) = x\sin(2t) +y \cos(2t) \end{cases} $$
+
+and therefore, we have that:
+
+$$ \begin{cases} \frac{d}{dt}  c^1(0) =  -2x\sin(2t)  -2y\cos(2t)\bigg|_{t=0} = -2y  \\  \frac{d}{dt}  c^2(0) = 2x\cos(2t) - 2y \sin(2t)\bigg|_{t=0} = 2x \end{cases} $$
+
+Thus, relative to the basis $\frac{\partial}{\partial x^i}\bigg|_p$ for $T_p(\mathbb{R}^2)$, we can represent the velocity as the vector:
+
+$$ c'_p(0) =  \begin{bmatrix} -2y \\ 2x \end{bmatrix} $$
+
+\end{proof}
+
+\begin{problem}{Question 5}
+
+Let $G$ be a Lie group, that is, the following maps are $C^\infty$ maps on $C^\infty$ manifolds:
+
+$$ \mu: G \times G \to G \text{ via } (g,h) \mapsto gh $$
+
+$$ i: G \to G \text{ via } g \mapsto g^{-1} $$
+
+Denote $e$ as the identity element.
+
+(a) Show that the differential of the multiplication map at the identity element acts as addition:
+
+$$ \mu_{*, (e,e)}: T_e G \times T_e G \to T_e G \text{ via } (X_e, Y_e) \mapsto X_e + Y_e $$
+
+(b) Show that the differential of the inverse map at the identity element acts as negation:
+
+$$ i_{*, e} T_e G \to T_e G \text{ via } X_e \mapsto -X_e $$
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+Let $X_e \in T_e G$. By Theorem 8.18, we may find a curve $c: (-\epsilon, \epsilon) \to G \times G$ such that $c(0) = (e,e), c'(0) = (X_e, \overline{0})$, where $\overline{0}$ is the $\overline{0}$ vector of the tangent space viewed as a vector space. In particular, we may enforce that the second coordinate is constant to satisfy these conditions. We notice that since $\mu$ takes $(g,h) \to gh$, it will take $c(t) \mapsto c_1(t) c_2(t)$ where $c_i(t)$ denotes the components of $c(t)$. But, since we chose $c_2(t)$ as a constant, we see that $c(t) \mapsto c_1(t) c_2(t) = c_1(t)e = c_1(t)$. 
+
+Then, by an application of Theorem 8.20, we see that:
+
+$$\mu_{*, (e,e)}(X_e, \overline{0}) = (\mu \circ c)'(0)  = (c_1c_2)'(0) = c_1'(0)= X_e$$
+
+Without too much difficulty, we can see that if we have another curve in the same way, with $d(0) = (e,e), d'(0) = (\overline{0}, Y_e)$ and constant in the first coordinate, that $\mu$ takes $d(t) \mapsto d_1(t)d_2(t) = ed_2(t) = d_2(t)$, and thus:
+
+$$ \mu_{*, (e,e)}(\overline{0}, Y_e) = (\mu \circ d)'(0)  = (d_1d_2)'(0) = d_2'(0)= Y_e$$
+
+Then, by the linearity of the differential, we have that in generality:
+
+$$\mu_{*, (e,e)}(X_e, Y_e) = \mu_{*, (e,e)}(X_e, \overline{0}) + \mu_{*, (e,e)}(\overline{0}, Y_e) = X_e + Y_e$$
+
+as desired.
+
+(b)
+
+Let $c(t)$ be any curve such that $c(0) = e$ and $c'(0) = X_e$, with existence from 8.18 again.
+
+Consider the following sequence of maps:
+
+$$ G \xrightarrow{(\text{id}, i)} G \times G \xrightarrow{\mu} G $$
+
+where $(\text{id}, i): G \to G \times G$ by sending $g \mapsto (g, g^{-1})$.
+
+Clearly, since the identity is smooth, and the inversion is smooth by virtue of being a Lie group, since the components are smooth, the overall function is smooth.
+
+Then, since we know that $\mu$ is smooth, the composition of these functions are smooth.
+
+Now,  $(\text{id}, i)$ takes $c(t) \to (c(t), c(t)^{-1})$, so applying Theorem 8.20 on the composition:
+
+$$ (\mu \circ (\text{id}, i))_{*, e}(X_e)  = (mu \circ (\text{id}, i) \circ c)'(0) = \frac{d}{dt}\bigg|_{t=0} (\mu(c(t), c(t)^{-1})) =\frac{d}{dt}\bigg|_{t=0} c(t)c(t)^{-1} =  \frac{d}{dt}\bigg|_{t=0} e = \overline{0} $$
+
+Furthermore, it should be clear that $\text{id}_{*, e}(X_e) = X_e$:
+
+$$ \text{id}_{*, e}(X_e) = (\text{id} \circ c)'(0) = c'(0) = X_e $$
+
+as $\text{id}$ sends $c(t) \mapsto c(t)$ of course.
+
+Furthermore, for generic smooth maps $f,g$, we see that their product behaves in the expected way:
+
+$$ (f,g)_{*,e}(X_e) = ( (f,g) \circ c )'(0) =  ( (f \circ c)'(0), (g \circ c)'(0) ) = (f_{*, e}(X_e), g_{*, e}(X_e))$$
+
+So therefore, we have that by Theorem 8.7, the chain rule and the above observations with part (a):
+
+$$  (\mu \circ (\text{id}, i))_{*, e}(X_e) =\mu_{*, \mu(e,e^{-1}) = e} \circ  (\text{id}, i)_{*, e}(X_e) = \mu_{*, e}(X_e, i_{*, e}(X_e)) = X_e + i_{*, e}(X_e)  $$
+
+But, from the application on the composition, we have that this is equal to the zero vector $\overline{0}$, thus:
+
+
+$$ X_e + i_{*, e}(X_e) = \overline{0} \implies i_{*, e}(X_e) = - X_e $$
+
+as desired.
+
+\end{proof}
+
+
+\end{document}
