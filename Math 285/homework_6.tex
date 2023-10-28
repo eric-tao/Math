@@ -129,7 +129,7 @@ On the upper semicircle $U = \{ (a,b) \in S^1 : b > 0 \}$, $\overline{x}$ is a l
 
 $$i_* \left( \frac{\partial}{\partial \overline{x}} \bigg|_p \right) = \left( \frac{\partial}{\partial x} + \frac{\partial \overline{y}}{\partial \overline{x}} \frac{\partial}{\partial y} \right)\bigg|_p$$
 
-(b) Let $C$ be a smooth curve in $\mathbb{R}^2$. Let $U$ be a chart on $C$ such that $\overline{x}$, the restriction of the coordinate $x$ on $\mathbb{R}^2$ is a local coordinate.
+(b) Let $C$ be a smooth curve in $\mathbb{R}^2$. Let $U$ be a chart on $C$ such that $\overline{x}$, the restriction of the coordinate $x$ on $\mathbb{R}^2$ is a local coordinate. Generalize the result of part (a) to $C$.
 
 \end{problem}
 
@@ -137,9 +137,53 @@ $$i_* \left( \frac{\partial}{\partial \overline{x}} \bigg|_p \right) = \left( \f
 
 (a)
 
-Let $\epsilon > 0$.
+%Let $\epsilon > 0$.
 
-First, we start with a curve $c: (-\epsilon, \epsilon ) \to S^1 \cap U$ such that $c(0) = p, c'(0) = \frac{\partial}{\partial \overline{x}} $.
+%First, we start with a curve $c: (-\epsilon, \epsilon ) \to S^1 \cap U$ such that $c(0) = p, c'(0) = \frac{\partial}{\partial \overline{x}} $.
+
+%We notice on $U$, since $\overline{x}$ is a local coordinate, we can take the curve $c(t) = t + \overline{x}(p)$ measured in terms of $\overline{x}$. We see here that $\frac{\frac{\partial}{\partial \overline{x}}
+
+%We also notice that the map $(x \circ i, y \circ i)$ brings a point $\overline{x}(p) \mapsto (p, \sqrt{1 - p^2})$ in terms of the standard coordinates on $\mathbb{R}^2$.
+
+%Then, we compute:
+
+%$$i_{*, p} \left( \frac{\partial}{\partial \overline{x}} \right) =  \frac{\partial}{\partial t} \bigg|_{t = 0} (i \circ c)(t) =  \frac{\partial}{\partial t} \bigg|_{t = 0} ( t + p,\sqrt{1 - (t+p)^2}) = (1,\frac{\partial}{\partial t} \bigg|_{t = 0}\sqrt{1 - (t+p)^2})   $$
+
+Let $p \in U$. First, we want to show that the inclusion is smooth on $(U, \overline{x})$. Let $\overline{x}(p) = x_0 \in V \subseteq \mathbb{R}$
+
+Clearly, following the chart then, we have that:
+
+$$ i \circ \overline{x}^{-1} = \left(x_0, \sqrt{1 - x_0^2} \right) $$
+
+With respect to $x_0$, the coordinate value for $\overline{x}$, this is smooth in both of the standard coordinate functions of $i \circ \overline{x}^{-1}$ as $x_0$ is polynomial, being identity, and $\sqrt{1-x_0^2}$ being $C^\infty$ since on $U$, $\overline{x}(p) \geq 0 $. Since the choice of $p \in U$ were arbitrary, $i$ is smooth on every point in $U$.
+
+Here, we recall Propostion 8.13, that the differential $i_*$ is represented by the following matrix on $U$:
+
+$$\begin{bmatrix} \frac{\partial (x \circ i)}{\partial \overline{x}}\bigg|_p & \frac{\partial (y \circ i)}{\partial \overline{x}}\bigg|_p \end{bmatrix} $$
+
+Then, by the setting of the problem, we have that $\overline{x} = i^*(x) = x \circ i$ and similarly for $\overline{y}$. Thus, we may rewrite this as:
+
+$$\begin{bmatrix} \frac{\partial \overline{x}}{\partial \overline{x}}\bigg|_p & \frac{\partial \overline{y}}{\partial \overline{x}}\bigg|_p \end{bmatrix} = \begin{bmatrix} 1\bigg|_p & \frac{\partial \overline{y}}{\partial \overline{x}}\bigg|_p \end{bmatrix} $$
+
+Unpacking this statement relative to the basis $\{ \frac{\partial}{\partial x}_{i(p)}, \frac{\partial}{\partial y}_{i(p)} \}$, and identifying $i(p)$ with $p$ as $i$ acts via inclusion, we see that:
+
+$$i_* \left( \frac{\partial}{\partial \overline{x}} \bigg|_p \right) = \left( \frac{\partial}{\partial x} + \frac{\partial \overline{y}}{\partial \overline{x}} \frac{\partial}{\partial y} \right)\bigg|_p$$
+
+as desired. 
+
+(b)
+
+Generically then, let $C: (a,b) \to \mathbb{R}^2$ be a smooth map sending $t \mapsto (C_1(t), C_2(t))$. Fix a chart such that $\overline{x}$, the restriction of $\mathbb{R}^2$ to the image of $C_1$ is a local coordinate.
+
+Clearly, on $U$, $C_1$ is smooth with respect to itself, being the identity. So it remains to show that $C_2$ is smooth with respect to $C_1$ on $U$.
+
+However, this must be true because $U$ is a $C^\infty$ chart, and thus, looking at any chart that admits $\overline{y}$ as a local coordinate, $\overline{y} = y \circ \overline{x}^{-1}$ must be $C^\infty$ with respect to $\overline{x}$, and thus, since we may identify $C_1, C_2$ with $\overline{x}, \overline{y}$ on a suitable chart, this implies that $C_2$ is $C^\infty$ with respect to $C_1$ on $U$.
+
+Therefore, we may go through the same procedure as part (a) since we do not use any properties of the circle there, and use Proposition 8.13 again to obtain:
+
+$$i_* \left( \frac{\partial}{\partial \overline{x}} \bigg|_p \right) = \left( \frac{\partial}{\partial x} + \frac{\partial \overline{y}}{\partial \overline{x}} \frac{\partial}{\partial y} \right)\bigg|_p$$
+
+We note because we are a smooth curve, by the chain rule, we may use $\frac{\partial \overline{y}}{\partial \overline{x}} = \frac{\partial C_2}{\partial t} \left( \frac{\partial C_1}{\partial t} \right)^{-1}$ to help compute this.
 
 \end{proof}
 
