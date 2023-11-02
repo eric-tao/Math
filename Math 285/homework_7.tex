@@ -1,0 +1,227 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{float}
+\usepackage{bbm}
+\usepackage{dsfont}
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+\newcommand{\vol}{{\text{Vol}}}
+
+
+\ExplSyntaxOn
+\NewDocumentCommand{\cycle}{ O{\;} m }
+ {
+  (
+  \alec_cycle:nn { #1 } { #2 }
+  )
+ }
+
+\seq_new:N \l_alec_cycle_seq
+\cs_new_protected:Npn \alec_cycle:nn #1 #2
+ {
+  \seq_set_split:Nnn \l_alec_cycle_seq { , } { #2 }
+  \seq_use:Nn \l_alec_cycle_seq { #1 }
+ }
+\ExplSyntaxOff
+
+\newenvironment{problem}[2][]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#7}
+\author{Eric Tao\\
+Math 285: Homework \#7}
+\maketitle
+
+\begin{problem}{Question 1}
+
+(a)
+
+Let $A$, $B$ be disjoint, closed sets on a manifold $M$. Find a $C^\infty$ function $f$ such that $f |_A = 1$ and $f |_B = 0$.
+
+(b)
+
+Let $M$ be a manifold, and let $A \subset M$ be closed, $U \subset M$ be open, such that $A \subset U$. Show that there exists a $C^\infty$ function $f$ on $M$ such that $f|_A = 1 $ and that the support of $f$ is contained within $U$.
+
+
+\end{problem}
+
+\begin{proof}[Solution]
+(a)
+
+Firstly, by Theorem 13.6, we know that relative to the open sets $\{ M_A = M \setminus A, M_B = M \setminus B \}$, there exists a $C^\infty$ partition of unity$\{ \rho_A, \rho_B \}$ where $\rho_A$ is subordinate to $M_A$, and analogously for $\rho_B$.
+
+Clearly then, since the support of $\rho_B$ is a subset of $M_B$, we have that $\rho_B \big|_B = 0$, as $B \cap M_B = \emptyset$. Furthermore, we can say that on $A$, we have the analogous result that $\rho_A \big|_A = 0$. 
+
+Then, we notice that due to these results, that because this is a partition of unity, we have that:
+
+$$ (\rho_A + \rho_B)\big|_{A} = 1 \implies  \rho_A \big|_A + \rho_B \big|_A = 1 \implies \rho_B \big|_A = 1$$
+
+Thus, $\rho_B$ is a $C^\infty$ function that is identically 0 on $B$ and identically $1$ on $A$, as desired.
+
+(b)
+
+Take the disjoint closed sets $M \setminus U$ and $A$. Then, by part (a), there exists a $C^\infty$ function $f$ such that $f\big|_{M \setminus U} = 0$ and $f \big|_{A} = 1$.
+
+Furthermore, from construction of $f$ being a partition of unity subordinate to $M \setminus (M \setminus U)$, by deMorgan's laws, we have that 
+$$M \setminus (M \setminus U) = M \cap (M \setminus U)^c = M \cap (M \cap U^c)^c = M \cap (M^c \cup U^{c^c}) = M \cap (\emptyset \cup U) = M \cap U = U$$
+
+Thus, by definition, since $f$ is subordinate to $U$, the support of $f$ is contained within $U$, as requested. 
+
+\end{proof}
+
+\begin{problem}{Question 2}
+
+Let $F:N \to M$ be a $C^\infty$ map of manifolds. Let $h: M \to \mathbb{R}$ be a $C^\infty$ function. Show that the support of $F^*(h)$ is a subset of $F^{-1}(\text{supp}(h))$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+First, we recall that the pullback is exactly $F^*(h) = h \circ F$.
+
+Now, first, we want to show that $(F^*h)^{-1}(\mathbb{R}^\times) \subset F^{-1}(\text{supp}(h))$.
+
+So, suppose $p \in N$, such that $F^*h(p) \not = 0$. Then, we have that $h \circ F(p) = h(F(p)) \not = 0$, which implies that $F(p) \in \text{supp}(h)$. Thus, $p \in F^{-1}(\text{supp}(h))$. Since the choice of $p$ were arbitrary, this implies that $(F^*h)^{-1}(\mathbb{R}^\times) \subset F^{-1}(\text{supp}(h))$.
+
+Now, by definition, we know that $\text{supp}(F^*h) = \text{cl}[(F^*h)^{-1}(\mathbb{R}^\times)]$, that is, it is the closure of the preimage. Furthermore, we notice that because $F$ is $C^\infty$, $F$ is continuous. Since the $\text{supp}(h)$ is a closed set in $M$, being a closure, then $F^{-1}(\text{supp}(h))$ is a closed set in $N$, by continuity.
+
+Hence, since $(F^*h)^{-1}(\mathbb{R}^\times) \subseteq F^{-1}(\text{supp}(h))$ and $F^{-1}(\text{supp}(h))$ is closed, we have that $\text{supp}(F^*h) = \text{cl}[(F^*h)^{-1}(\mathbb{R}^\times)] \subseteq F^{-1}(\text{supp}(h))$, via the characterization of the closure of a set $S$ being the smallest closed set containing $S$.
+
+\end{proof}
+
+\begin{problem}{Question 3}
+
+Define $x^1, y^1,....,x^n, y^n$ as the standard coordinates of $\mathbb{R}^{2n}$. Define the unit sphere $S^{2n-1}$ in an ambient $\mathbb{R}^{2n}$ cut out by the equation $\sum_{i=1}^n (x^i)^2 + (y^i)^2 = 1$.
+
+Show that 
+
+$$ X= \sum_{i=1}^n -y^i \frac{\partial}{\partial x^i} + x^i \frac{\partial}{\partial y^i} $$ does not vanish anywhere on $S^{2n-1}$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+
+\end{proof}
+
+\begin{problem}{Question 4}
+
+Let $M = \mathbb{R} \setminus \{ 0 \}$. Let $X = \frac{d}{dx}$ on $M$. Find the maximal integral curve of $X$ with initial point $x = 1$.
+
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+Clearly, if we have that $c(t) = x(t)$, in order to be an integral curve, we must have that:
+
+$$ x'(t) = 1 \implies x(t) = t + a$$
+
+for indeterminant $a\in \mathbb{R}$.
+
+Clearly, to satisfy the initial condition, we then must have:
+
+$$x(0) = 0 + a = 1 \implies a = 1$$
+
+And thus, our integral curve desired has equation $c(t) = x(t) = t + 1$.
+
+Now, here, we want to determine what the domain should be.
+
+We notice that since $c$ is a smooth curve, in particular, it is continuous. Thus, because the domain of the curve is an interval in $\mathbb{R}$, hence connected, because the continous image of a connected set is also connected (Proposition A.42), we must have that the image of the curve is connected.
+
+Thus, since we notice that we may find connected components on $M$ under the subspace topology as $(-\infty, 0), (0, \infty)$, the natural maximal integral curve is simply the preimage of the connected component containing our initial point.
+
+Thus, we see that our desired domain is:
+
+$$c^{-1}((0, \infty)) = (-1, \infty)$$
+
+Hence, our maximal curve is:
+
+$$c: (-1, \infty) \to M \text{ via } t \mapsto t+1 $$
+
+A remark,  if we consider curves to only have finite endpoints, we may not find a maximal curve. Since, suppose $c_0: (a,b) \to \mathbb{R}$ were a maximal candidate, that sends $t \mapsto t+1$.
+
+The problem here is that we can always construct $c_1: (a, b+1) \to \mathbb{R}$ with the same map. Since we can do this for any finite $b$, there is no maximal integral curve with finite endpoints as its domain for such a manifold, initial point, and vector field.
+
+
+
+\end{proof}
+
+\begin{problem}{Question 5}
+
+Find the integral curves of the vector field:
+
+$$X_{(x,y)} = x \frac{\partial}{\partial x} - y \frac{\partial}{\partial y}  $$
+
+in an ambient $\mathbb{R}^2$.
+\end{problem}
+
+
+\begin{proof}
+
+Define the initial condition as the point $x_0, y_0$.
+
+For $c(t)$ to be an integral curve, if we define $c(t) = (x(t), y(t))$, and denoting a derivative with respect to only time with a $'$ we have the following system of equations:
+
+$$\begin{cases} x'(t) = x \\ y'(t) = -y \end{cases}$$
+
+We recognize this as first order differential equations, with the following solution set:
+
+$$ \begin{cases} x(t) = Ae^{t} \\ y(t) = Be^{-t} \end{cases} $$
+
+for indeterminants $A, B \in \mathbb{R}$.
+
+Using our initial conditions, we see that:
+
+$$c(0) = (x(0), y(0)) = (x_0, y_0) \implies A = x_0, B = y_0$$
+
+Thus, relative to the initial point $p = (x_0, y_0)$, we see that integral curves for the vector field $X = \langle x, -y \rangle$ take on the form:
+
+$$ c(t) = c_t(p) = (x_0 e^{t}, y_0 e^{-t}) $$
+
+Here, we note that the interval curve can take on arbitrary intervals of $\mathbb{R}$ as its domain.
+
+\end{proof}
+
+\begin{problem}{Question 6}
+
+Let $f, g$ be $C^\infty$ functions and $X, Y$ be $C^\infty$ vector fields, all on a manifold $M$. Show that:
+
+$$ [fX, gY] = fg[X,Y] + f(Xg)Y - g(Yf)X$$
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+Fix some $h \in C^\infty(M)$, and consider the action of $[fX, gY]h$. We have that:
+
+$$ [fX, gY]h = fX(gY(h)) - gY(fX(h)) $$
+
+Now, using the fact that a vector field is a derivation, we can use the Leibniz rule on $X(g*[Y(h)])$ and $Y(f*X(h))$:
+
+$$ fX(gY(h)) - gY(fX(h)) = f(Xg)(Yh)+ fg(XY(h)) - g(Yf)(Xh) - gf(YX(h)) $$
+
+Regrouping a little, we can see that because $[X,Y] := XY - YX$, and $fg = gf$ being scalar functions:
+
+$$ f(Xg)(Yh)+ fg(XY(h)) - g(Yf)(Xh) - gf(YX(h))  = ( fg(XY(h))  - gf(YX(h))) +  f(Xg)(Yh) - g(Yf)(Xh) =$$
+$$ fg(XY - YX)h +  f(Xg)(Yh) - g(Yf)(Xh) = fg[X,Y]h +  f(Xg)(Yh) - g(Yf)(Xh)$$
+
+Thus, we see that:
+
+$$  [fX, gY]h =  fg[X,Y]h +  f(Xg)(Yh) - g(Yf)(Xh) $$
+
+Since the choice of $h$ was arbitrary, varying over $h$, we obtain an equality of vector fields:
+
+$$  [fX, gY] =  fg[X,Y] +  f(Xg)Y - g(Yf)X$$
+
+as desired.
+
+\end{proof}
+
+\end{document}
