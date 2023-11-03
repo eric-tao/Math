@@ -592,7 +592,7 @@ We want to show that the set $\{ (x,y) : xy = 0 \}$ is not locally Euclidean. Su
 \end{example}
 
 \begin{definition}
-Let $U, V$ be open sets, locally Euclidean with charts $\varphi: U \to \mathbb{R}^n, \psi: V \to \mathbb{R}^n$. We call $\psi, \varphi C^\infty$ compatible if both:
+Let $U, V$ be open sets, locally Euclidean with charts $\varphi: U \to \mathbb{R}^n, \psi: V \to \mathbb{R}^n$. We call $\psi, \varphi$  $C^\infty$ compatible if both:
 
 $$\begin{cases} \psi \circ \varphi^{-1}: \varphi(U \cap V) \to \psi(U \cap V)\\  \varphi \circ \psi^{-1}: \psi(U \cap V) \to \varphi(U \cap V) \end{cases}$$
 
@@ -621,5 +621,175 @@ Every $C^\infty$ atlas on a locally Euclidean space is contained within a unique
 If $M, N$ are $C^\infty$ manifolds, so too is $M \times N$.
 
 \end{theorem}
+
+\section{September 25}
+
+We want to define smooth maps, the morphisms in the category of topological manifolds.
+
+First, let’s talk about smooth functions, that is, for $M$ a topological manifold, $f: M \to \mathbb{R}$.
+
+\begin{definition}
+Let $M$ be a topological manifold. We say that a map $f: M \to \mathbb{R}$ is $C^\infty$ at a point $p \in M$ if there exists a chart $(U, \phi)$ of $M$ about $p$ such that:
+
+$$ f \circ \phi^{-1}: \phi(U) \to \mathbb{R} $$ is $C^\infty$ at $\phi(p)$.
+
+\end{definition}
+
+First, is this well-defined? Is this independent of the choice of chart?
+
+Suppose that we have another chart about $p$: $(V, \psi)$. Of course, $p \in U \cap V$, so we may use the transition maps:
+
+$$ f \circ \psi^{-1} = (f \circ \phi^{-1}) \circ ( \phi \circ \psi^{-1}) $$
+
+We have a priori that $f \circ \phi^{-1}$, is $C^\infty$. And, because these charts belong to the same maximal atlas, they must be $C^\infty$ compatible, hence $ \phi \circ \psi^{-1}$ is $C^\infty$. And the composition of two $C^\infty$ functions is $C^\infty$. 
+
+\subsection{Smooth maps}
+
+First, a technical note:
+
+\begin{theorem}
+If $F: M \to N$ and $G: N \to P$ are $C^\infty$ maps, then $G \circ F$ is a $C^\infty$ map
+\end{theorem}
+
+\begin{definition}
+Let $M, N$ be topological manifolds, and let $F: M \to N$.
+
+We say that $F$ is $C^\infty$ at a point $p\in M$ if there exists charts $(U, \phi)$ of $p \in M$ and $(V, \psi)$ of $F(p)\in N$ such that $  \psi \circ F \circ \phi^{-1} $ is $C^\infty$ at $\phi(p)$.
+
+\end{definition}
+
+Without too much trouble, you can see that every coordinate map of a chart is $C^\infty$ by following the definition, and picking $\phi^{-1}$ to pull from $\mathbb{R}^n$, and taking the identity on the target $\mathbb{R}^n$. This also applies to the inverse of the coordinate map.
+
+\begin{definition}
+Let $F: M \to N$ be an bijective, $C^\infty$ map. If $F^{-1}$ is also $C^\infty$, then we call $F$ a diffeomorphism.
+
+\end{definition}
+
+\begin{example}
+Let $(U, \phi)$ be a chart of $M$. Then, $\phi, \phi^{-1}$ are diffeomorphisms between $U, \phi(U) \subseteq \mathbb{R}^n$
+\end{example}
+
+\begin{theorem}
+Let $F: U \to F(U)$ be a diffeomorphism from an open subset $U \subseteq M$ to a subset of $\mathbb{R}^n$ for some $n$. Then, $(U, F)$ defines a chart of $M$. In particular, this chart is compatible with the maximal atlas fixed by the choice of $M$. 
+
+\end{theorem}
+
+\begin{proof}
+First, we want to see that $F$ is a homeomorphism. Without too much trouble, we look at $\psi \circ F \circ \phi^{-1}$, where $\psi$ is a chart for $\mathbb{R}^n$, and $\phi$ is a chart for $U$. Since this is a $C^\infty$ map, it is continuous, and since $\psi, \phi^{-1}$ are continuous, so too must be $F$. Therefore, $F$ is a homeomorphism, since we can play the same game with $F^{-1}$.
+
+Next, suppose $(U_\alpha, \phi_\alpha)$ is a member of the maximal atlas on $M$. Well, since $F, \phi_\alpha$ are $C^\infty$ maps, we have that $F \circ \phi_\alpha^{-1}$ and $\phi_\alpha\circ F^{-1}$ are $C^\infty$. Thus, $(U, F)$ is $C^\infty$ compatible with $(U_\alpha, \phi_\alpha)$. Since the choice of $(U_\alpha, \phi_\alpha)$ were arbitrary, $(U,F)$ is compatible with every chart in your maximal atlas, and by the definition of the maximal atlas, it must belong to the maximal atlas.
+\end{proof}
+
+Therefore, since we have an association with diffeomorphisms and charts, we can say that each diffeomorphism gives rise to a choice of coordinate system.
+
+\subsection{Partial Derivatives on a Chart}
+
+Let $(U, \phi)$ be a chart of $M$. We define the partial derivatives on a chart as follows, where we define $x^i = r^i \circ \phi$.
+
+\begin{definition}
+
+$$ \frac{\partial f}{\partial x^i} (p) = \frac{\partial}{\partial x^i} \bigg|_p f = \frac{\partial f \circ \phi^{-1}}{\partial r^i} (\phi(p)) $$
+\end{definition}
+
+\begin{theorem}
+
+$$ \frac{\partial x^i}{\partial x^j}(p) = \delta_j^i $$
+
+\end{theorem}
+
+\begin{proof}
+Clear, by using the definition of $x^i$ as combined with the definition of partial derivatives.
+
+\end{proof}
+
+\subsection{Inverse Function Theorem}
+
+\begin{definition}
+We call a map $F: M \to N$ locally invertible at $p \in M$ (equivalently, a local diffeomorphism at $p$) if there exists $U$, a neighborhood of $p$ and $V$, a neighborhood of $F(p) \in N$ such that $F: U \to V$ is a diffeomorphism.
+\end{definition}
+
+\begin{theorem}
+Let $F: W \subseteq \mathbb{R}^n \to \mathbb{R}^n$ be $C^\infty$ on an open set $W$. Then, $F$ is locally invertible at $p$ if and only if, for $r^i$ the standard coordinates on $\mathbb{R}^n$, the determinant of the matrix with $i,j$-th entry: $\partial F^i /\partial r^j$ does not vanish at $p$.
+\end{theorem}
+
+\begin{theorem}
+Let $(U, \phi) = (U, (x^1...,x^n))$ be a chart of $M$ around a point $p$, and let $(V, \psi) = (V, (y^1,...,y^n))$ be a chart of $N$ around $F(p)$, where $F: U \to V$ is a $C^\infty$ map.
+
+Define $F^i = y^i \circ F$, that is, the $i$-th component function of $F$. Then, we have that $F$ is locally invertible at $p \in U$ if and only if the determinant of the matrix with $i,j$-th entry: $\partial F^i /\partial x^j$ does not vanish at $p$.
+\end{theorem}
+
+\begin{proof}
+Using the definition of partial derivatives on a chart, we can instead say then that $F$ is a local diffeomorphism at $p \in U \subseteq M$ if and only if $\psi \circ F \circ \phi^{-1}$ is a local diffeomorphism at $\phi(p) \in \mathbb{R}^n$ if and only if the matrix with entries:
+
+$$\left[ \frac{\partial(\psi \circ F \circ \phi^{-1})^i}{\partial r^j} \right]_{i,j} $$
+
+has non vanishing determinant at $\phi(p)$
+
+However, we notice that:
+
+$$(\psi \circ F \circ \phi^{-1})^i = \psi^i \circ F \circ \phi^{-1} = y^i \circ F \circ \phi^{-1} = F^i \circ \phi^{-1}$$
+
+Thus, we recover the statement in the theorem.
+\end{proof}
+
+\section{September 27th}
+
+So we can discuss some examples of $C^\infty$ manifolds by exhibiting an atlas explicitly. However, we have other ways to construct manifolds.
+
+We think of this via gluing edges. The classic example is identifying opposite edges of a square to make a torus. But, how do we formalize this?
+
+Start with the unit square as an example. First, define $(x,0) \sim (x,1)$ and $(0,y) \sim (1,y)$. From here, we wish to generate an equivalence relationship by enforcing the reflexivity, symmetric, and transitive properties. 
+
+In general, suppose $\sim$ is an equivalence relationship on a topological space $S$. Denote $[x]$ as the equivalence class of $x$. Define the quotient of $S$ by $\sim$ as the set of equivalence classes $[x]$. We denote this quotient as $S/\sim$.
+
+We may naturally endow this space with the quotient topology from $S$, that is, we say $U \subseteq S/\sim$ is open if, for the projection $\pi: S \to S/\sim$ which sends $x \mapsto [x]$, $\pi^{-1}(U)$ is open. Equivalently, we take the finest topology such that the projection is continuous.
+
+Another example: Take $S = \mathbb{R}$, and take the equivalence relationship that only associates $0 \sim 1$. Then, of course, this is not a manifold because it is not locally Euclidean.
+
+\subsection{A necessary condition for a quotient to be Hausdorff}
+
+\begin{proposition}
+Let $X$ be a Hausdorff topological space. Let $\{ x \} \subset X$ be any singleton set. Then, $\{ x \}$ is closed.
+\end{proposition}
+
+\begin{theorem}
+If $S / \sim$ is Hausdorff, then for all $x \in S$, the equivalence class $[x] \subseteq S$ is a closed set in $S$.
+\end{theorem}
+
+So of course, now we can say when a quotient is not Hausdorff. However, we would like a sufficient condition as well.
+
+\subsection{Open maps}
+
+\begin{definition}
+Let $f : X \to Y$ be a map between topological spaces. We call $f$ open if, for any open set $U \subset X$, $f(U)$ is open in $Y$.
+\end{definition}
+
+Non-example: $f: \mathbb{R} \to \mathbb{R}$ that sends $x \to x^2$ is not an open map.
+
+\begin{definition}
+Suppose $\pi: S \to S/\sim$, the projection, is an open map. Then, we call $\sim$ an open equivalence relation.
+\end{definition}
+
+\begin{definition}
+If $\sim$ is an equivalence relation on $S$, define $R = \{ (x,y) \in S \times S : x \sim y \}$.
+\end{definition}
+
+\begin{theorem}
+If $\pi: S \to S/\sim$ is an open map, and $R$ is closed in $S \times S$, then the quotient space $S/\sim$ is Hausdorff.
+\end{theorem}
+
+\begin{proof}
+Let $[x] \not = [y] \in S/\sim$. Then, we must have that $x \not \sim y$ and therefore $(x,y) \not \in R$. Then, since $R$ is closed, we may find an open rectangle $U \times V$ that contains $(x,y)$ such that $(U \times V) \cap R$ is trivial.
+
+Of course then, we have that $x \in U$, $y \in V$. By the condition that the intersection is trivial, we must have that for all $u \in U, v \in V$, $u \not \sim v$.
+
+We may look then at $\pi(U), \pi(V)$. Of course, since $U, V$ are open sets in $S$, we must have that these are open sets in the quotient. Furthermore, of course $[x] \in \pi(U), [y] \in \pi(V)$. Lastly, their intersection must be trivial as if we may find a $[z] \in \pi(U) \cap \pi(V)$, then, we would have a $(z,z) \in R$. But that is a contradiction. Therefore, we can find disjoint neighborhoods of $[x], [y]$. Since $[x], [y]$ were arbitrary, this can be done for any $[x],[y]$, and therefore, $S/\sim$ is Hausdorff.
+\end{proof}
+
+\begin{corollary}
+If the diagonal $\Delta$ is a closed set in $S \times S$, then $S$ is Hausdorff. 
+\end{corollary}
+
+In fact, the converse is also true.
 
 \end{document}
