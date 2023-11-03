@@ -10,6 +10,8 @@
 \newcommand{\bv}{{\text{BV}}}
 \newcommand{\ac}{{\text{AC}}}
 \newcommand{\vol}{{\text{Vol}}}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
 
 
 \ExplSyntaxOn
@@ -101,12 +103,58 @@ Define $x^1, y^1,....,x^n, y^n$ as the standard coordinates of $\mathbb{R}^{2n}$
 
 Show that 
 
-$$ X= \sum_{i=1}^n -y^i \frac{\partial}{\partial x^i} + x^i \frac{\partial}{\partial y^i} $$ does not vanish anywhere on $S^{2n-1}$.
+$$ X= \sum_{i=1}^n -y^i \frac{\partial}{\partial x^i} + x^i \frac{\partial}{\partial y^i} $$ is a smooth vector field that does not vanish anywhere on $S^{2n-1}$.
 
 \end{problem}
 
 \begin{proof}[Solution]
 
+First, we prove part of problem 11.1, that is:
+
+\begin{lemma}
+
+Define the unit sphere $S^n \subset \mathbb{R}^{n+1}$ as being cut out by the equation $\sum_{i=1}^{n+1} (x^i)^2 = 1$. For a point $p  = (p^1,...,p^{n+1}) \in S^n$, and a tangent vector at $p$,
+
+$$ X_p = \sum a^i \frac{\partial}{\partial x^i} \bigg|_p \in T_p(\mathbb{R}^{n+1}) $$
+
+show that $\sum a^i p^i = 0$ if and only if $X_p$ is tangent to $S^n$ at $p$.
+
+\end{lemma}
+
+\begin{proof}
+
+We follow the discussion in Section 11.5.
+
+Since we have the equation for an $n$-sphere, we have then an equation for the tangent space for $S^n$ at a point $p$ as being, in terms of a tangent vector $a = \langle a^1,...,a^{n+1} \rangle$ for $TS^n$:
+
+$$ \sum_{j=1}^{n+1} \frac{\partial}{\partial x^j} \left( \sum_{i=1}^{n+1} (x^i)^2  \right)(p)a^j  = 0 \iff$$
+
+$$\sum_{j=1}^{n+1}  \sum_{i=1}^{n+1} \delta^i_j 2x^i (p) a^j  = 0  \iff$$
+
+$$\sum_{j=1}^{n+1} 2p^j a^j = 0 \iff \sum_{j=1}^{n+1} p^j a^j = 0 $$
+
+So, we have that if $\sum_{j=1}^{n+1} p^j a^j = 0$, then $a = \langle a^1,...,a^{n+1} \rangle$ is the image of some tangent vector in $TS^{n}$ under the differential of the inclusion, and thus $X_p$ is tangent to $S^n$ at $p$ as desired. Note that to be clear, the tangent vector $a$ should be thought of the image of the differential of the inclusion of the $n$ sphere into $\mathbb{R}^{n+1}$, and so we may identify it with its image in $T\mathbb{R}^{n+1}$.
+
+\end{proof}
+
+
+Thus, we fix a point $p = (p^1,...,p^{2n}) \in S^{2n-1}$, and we wish to show that the vector field
+
+$$ X =  \sum_{i=1}^n -y^i \frac{\partial}{\partial x^i} + x^i \frac{\partial}{\partial y^i} $$
+
+is tangent to $S^{n-1}$.
+
+By the lemma above, we need only check if $\sum_{j=1}^{n} -y^i\big|_p p^{2i-1} + x^i\big|_p p^{2i} = 0$ at a point $p$. However, this is clear:
+
+$$\sum_{j=1}^{n} -y^i\big|_p p^{2i-1} + x^i\big|_p p^{2i} =\sum_{j=1}^{n} -p^{2i} p^{2i-1} + p^{2i-1} p^{2i} = \sum_{j=1}^n 0 = 0$$
+
+Since the choice of $p$ was arbitrary, this works for all $p$, and since $X$ is tangent at every point $p\in S^{2n-1}$, it defines a vector field on $S^{2n-1}$, where we see smoothness as the lift from $\mathbb{R}^{2n} \to T\mathbb{R}^{2n}$ is smooth by being polynomial in each coordinate, and taking an appropriate restriction.
+
+However, it is clear that it is nowhere vanishing, as at any point $p$, we have that:
+
+$$X_p = \sum_{i=1}^n -y^i \frac{\partial}{\partial x^i}\bigg|_p + x^i \frac{\partial}{\partial y^i}\bigg|_p = \sum_{i=1}^n -p^{2n} \frac{\partial}{\partial x^i}\bigg|_p + p^{2n-1} \frac{\partial}{\partial y^i}\bigg|_p$$
+
+Therefore, $X_p = 0$ if and only if $p^i = 0$ for all $i$. However, the point $(0,...,0) \not \in S^{2n-1}$, and thus $X$ does not vanish on $S^{2n-1}$.
 
 \end{proof}
 
