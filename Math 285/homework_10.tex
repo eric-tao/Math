@@ -1,0 +1,318 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{float}
+\usepackage{bbm}
+\usepackage{dsfont}
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+\newcommand{\vol}{{\text{Vol}}}
+\theoremstyle{nonumberplain}% default
+\newtheorem{theorem}{Theorem}
+\newtheorem*{lemma}{Lemma}
+
+\ExplSyntaxOn
+\NewDocumentCommand{\cycle}{ O{\;} m }
+ {
+  (
+  \alec_cycle:nn { #1 } { #2 }
+  )
+ }
+
+\seq_new:N \l_alec_cycle_seq
+\cs_new_protected:Npn \alec_cycle:nn #1 #2
+ {
+  \seq_set_split:Nnn \l_alec_cycle_seq { , } { #2 }
+  \seq_use:Nn \l_alec_cycle_seq { #1 }
+ }
+\ExplSyntaxOff
+
+\newenvironment{problem}[2][]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#10}
+\author{Eric Tao\\
+Math 285: Homework \#10}
+\maketitle
+
+\begin{problem}{Question 1}
+
+Let $f: \mathbb{R}^{n+1} \to \mathbb{R}$ be a $C^\infty$ function such that $0$ is a regular value. Show that the zero set of $f$ is a orientable submanifold of $\mathbb{R}^{n+1}$. In particular, conclude that the unit n-sphere $S^n$ in $\mathbb{R}^{n+1}$ is orientable.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+We start by proving a lemma:
+
+\begin{lemma}
+
+Let $f: \mathbb{R}^{n+1} \to \mathbb{R}$ be a $C^\infty$ function, and let $f^{-1}(0)$ be a regular level set. Denote the partial derivative of $f$ with respect to $x^k$ as $f_k$. We will show that 
+
+$$\begin{cases} \frac{\bigwedge_{i=1, i \not = k}^{n+1} dx^i}{ f_k} = \frac{\bigwedge_{i=1, i \not = k'}^{n+1} dx^i}{ f_{k'}} & \text{ for } k + k' \equiv 0 \; (\bmod \; 2)  \\ \frac{\bigwedge_{i=1, i \not = k}^{n+1} dx^i}{f_k} = -\frac{\bigwedge_{i=1, i \not = k'}^{n+1} dx^i}{  f_{k'}} & \text{ for } k + k' \equiv 1  \; (\bmod \; 2) \end{cases} $$
+
+where $\bigwedge_{i=1}^m dx^m = dx^1 \wedge ... \wedge dx^m$, in order, for all $k, k'$. Thus, since this defines two consistent classes for all $k, k'$, by the introduction of a negative sign for the odd $x^i$ WLOG, we can have these be equal for all $k, k'$ and thus, we can patch these together to form a non-vanishing $n$-form on all of $f^{-1}(0)$.
+
+\end{lemma}
+
+\begin{proof}
+
+For notation, denote $ \frac{\partial}{\partial x^k} f = f_{x^k}$. Fix a $1 \leq k, k' \leq n+1$ such that $k \not = k'$. Without loss of generality, suppose $k < k'$.
+
+%Evidently, we see that since $  f_{x^k}$ is continous for each $k$, then the set on which this vanishes is closed, being the preimage of a singleton. Hence, the sets where $  f_{x^k} \not = 0$ are open sets. 
+
+Restrict ourselves then to the (open) set on which $ f_{x^k},  f_{x^{k'}}$ both do not vanish. 
+
+Consider the $n-1$ form: $f \bigwedge_{i=1, i\not=k, k'}^{n+1} dx^i$. Clearly, since we live on the zero set of $f$, this $n-1$ form vanishes everywhere. Taking the exterior derivative of both sides, we see that:
+
+$$ d\left(  f \bigwedge_{i=1, i\not=k, k'}^{n+1} dx^i \right) = 0 \implies f_k dx^k \wedge  \bigwedge_{i=1, i\not=k, k'}^{n+1} dx^i + f_{k'} dx^{k'} \bigwedge_{i=1, i\not= k, k'}^{n+1} dx^i = 0 \implies$$
+
+$$ f_k (-1)^{k-1} \wedge  \bigwedge_{i=1, i\not= k'}^{n+1} dx^i + f_{k'} (-1)^{k'-2} \bigwedge_{i=1, i\not= k'}^{n+1} dx^i = 0 \implies f_k (-1)^{k-1}   \bigwedge_{i=1, i\not= k'}^{n+1} dx^i = -  f_{k'} (-1)^{k'-2} \bigwedge_{i=1, i\not= k'}^{n+1} dx^i  \implies  $$
+
+$$  \frac{\bigwedge_{i=1, i\not= k'}^{n+1} dx^i}{f_{k'}} = (-1)^{k'-2 + k + 1 + 1} \frac{\bigwedge_{i=1, i\not= k'}^{n+1} dx^i}{f_k} \implies  \frac{\bigwedge_{i=1, i\not= k'}^{n+1} dx^i}{f_{k'}} = (-1)^{k' + k} \frac{\bigwedge_{i=1, i\not= k'}^{n+1} dx^i}{f_k}$$
+
+And here, we see that $(-1)^{k + k'}$ is $1$ if $k + k'$ is even, and $-1$ if odd, as desired. Thus, with the introduction of a negative sign arbitrarily on either the even or odd terms, we may find a consistent $n$-form as at least one of $f_k$ must be non-0 at each point in $f^{-1}(0)$ due to being a regular level set.
+
+Now, further, we see that this is non-vanishing because take a chart on where $f_k$ is non-0, and look at the form
+
+$$ \frac{\bigwedge_{i=1, i \not = k}^{n+1} dx^i}{ f_k} $$
+
+Clearly, $\frac{1}{f_k}$, as a component function, is $C^\infty$, being the quotient of 2 $C^\infty$ functions. Moreover, it is clearly non-0. Since this function agrees with the value of each of the other forms, up to a sign, it can be taken as a representative of our patched $n$ form on all of the zero set. Since the choice of $k$ was arbitrary, we may repeat this argument for each $k$, and since $f^{-1}(0)$ is a regular level set, the sets $\{ f_k \not = 0 \}_{k=1}^{n+1}$ cover all of $f^{-1}(0)$. Hence, the patched $n$ form is $C^\infty$ and non-vanishing on all of $f^{-1}(0)$.
+\end{proof}
+
+Well, now this is clear. Let $M$ be the regular submanifold traced out by $f^{-1}(0)$, by the regular level set theorem. Then, $M$ has codimension 1, hence is of dimension $n$. From our lemma, we may construct a non-vanishing $C^\infty$ $n$-form on all of $M$. Then, by Theorem 21.8, since we know there exists a $C^\infty$ nowhere vanishing $n$-form on $M$, $M$ admits an oriented atlas, and hence is orientable.
+
+In particular, we see that we may describe $S^n \subseteq \mathbb{R}^{n+1}$ as the zero set of the function:
+
+$$ f(x^1,...,x^{n+1}) = \sum_{i=1}^{n+1} (x^i)^2 - 1 $$
+
+Being polynomial in $x^i$, this is clearly $C^\infty$. Furthermore, looking at the partial derivatives, the only point which is not a regular point is the origin, which is not part of the zero set. Hence, $0$ is a regular value, and thus $S^n$ is orientable.
+\end{proof}
+
+\begin{problem}{Question 2}
+
+Let $M$ be a smooth manifold, and $\pi: TM \to M$ its tangent bundle. Show that for any atlas $\{ (U, \phi ) \}$ on $M$, the corresponding atlas $\{ (TU, \tilde{\phi}) \}$ on $TM$ is oriented.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+We recall question 5 from homework 6, where, for charts $(U, \phi), (V, \psi)$ on $M$, we computed the determinant of the transition map between the induced charts $(TU, \tilde{\phi}),(TV, \tilde{\psi})$ on $TM$ as:
+
+$$ \left( \det\left[\frac{\partial y^i}{\partial x^j}\right]\right)^2 $$
+
+where the transition map $\tilde{\psi} \circ \tilde{\phi}^{-1}$ sends:
+
+$$ (x^1,...,x^m, a^1,...,a^m) \mapsto (y^1,...,y^m, b^1,...,b^m)$$
+
+So first, we deal with the edge case where $m = 0$. Clearly, then, the constant functions are $C^\infty$ nowhere vanishing $0$-forms defined on the manifold. Thus, there exists a oriented atlas on $M$. This oriented atlas induces an oriented atlas on the tangent space, hence the induced atlas on the tangent bundle is oriented, being composed of an induced atlas on the manifold and on the tangent bundle.
+
+Else, suppose $m \not = 0$. Then, we use the result from 6.5. Looking at an arbitrary transition function, we see that it takes on Jacobian determinant:
+
+$$  \left( \det\left[\frac{\partial y^i}{\partial x^j}\right]\right)^2 $$
+
+However, here, we recall that transition functions are diffeomorphisms, hence have bijective differentials. Then, the determinant must be non-0.
+
+Assuming we're working in terms of real manifolds, then, the square of any value is non-negative, and thus, we have that:
+
+$$  \left( \det\left[\frac{\partial y^i}{\partial x^j}\right]\right)^2  \geq 0 \implies \left( \det\left[\frac{\partial y^i}{\partial x^j}\right]\right)^2  > 0 $$
+
+Since this is true for arbitrary charts, this must be true for every chart. Hence, the Jacobian determinant for every transition function on the tangent bundle $TM$ is strictly positive. Further, the choice of atlas on $M$ was arbitrary. Hence, any induced atlas on $TM$ is oriented.
+
+
+\end{proof}
+
+\begin{problem}{Question 3}
+
+Recall the atlas we defined on the unit circle $S^1$. Is $\mathfrak{U}$ an oriented atlas? If not, alter the coordinate functions $\phi_i$ such that $\mathfrak{U}$ is an oriented atlas.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+First, let us write out the atlas:
+
+$$\begin{cases}  U_1 = \{ (x,y) \in \mathbb{R}^2 : x^2 + y^2 = 1, y > 0 \}, & \phi_1(x,y) = x \\ U_2 = \{ (x,y) \in \mathbb{R}^2 : x^2 + y^2 = 1, y < 0 \}, & \phi_2(x,y) = x \\  U_3 = \{ (x,y) \in \mathbb{R}^2 : x^2 + y^2 = 1, x > 0 \}, & \phi_3(x,y) = y \\ U_4 = \{ (x,y) \in \mathbb{R}^2 : x^2 + y^2 = 1, x < 0 \}, & \phi_4(x,y) = y \end{cases} $$
+
+Now, we may compute the transition functions explicitly:
+
+$$\begin{cases} \phi_1 \circ \phi_4^{-1}(y) = -\sqrt{1 - y^2} & \phi_1 \circ \phi_3^{-1}(y) = \sqrt{1 - y^2} \\  \phi_2 \circ \phi_4^{-1}(y) = -\sqrt{1 - y^2} & \phi_2 \circ \phi_3^{-1}(y) = \sqrt{1 - y^2}\\ \phi_3 \circ \phi_1^{-1}(x) =\sqrt{1 - x^2} & \phi_3 \circ \phi_2^{-1}(x) =- \sqrt{1 - x^2} \\ \phi_4 \circ \phi_1^{-1}(x) =\sqrt{1 - x^2} & \phi_4 \circ \phi_2^{-1}(x) =- \sqrt{1 - x^2} \end{cases} $$
+
+Thus, we can see that the Jacobian determinant here, being $1$-dimensional, is simply $\mp x^i(1-(x^i)^2)^{-1/2}$, where we have a minus if the original transition function were positive, and plus if there is a negative sign.
+
+Thus, we see that this atlas is not an oriented atlas, since we can look at, for example:
+
+$$ \frac{d}{dy}  \phi_1 \circ \phi_3^{-1}(y) =  \frac{d}{dy} \sqrt{1 - y^2} = - y(1-y^2)^{-1/2} < 0$$
+
+Since, on $U_1 \cap U_3$, $y > 0$, so $y(1-y^2)^{-1/2} > 0$.
+
+On the other hand, if we modify the atlas in the following way:
+
+$$\begin{cases}  V_1 = \{ (x,y) \in \mathbb{R}^2 : x^2 + y^2 = 1, y > 0 \}, & \psi_1(x,y) = x \\ V_2 = \{ (x,y) \in \mathbb{R}^2 : x^2 + y^2 = 1, y < 0 \}, & \psi_2(x,y) = -x \\  V_3 = \{ (x,y) \in \mathbb{R}^2 : x^2 + y^2 = 1, x > 0 \}, & \psi_3(x,y) = -y \\ V_4 = \{ (x,y) \in \mathbb{R}^2 : x^2 + y^2 = 1, x < 0 \}, & \psi_4(x,y) = y \end{cases} $$
+
+We have the following transition functions:
+
+$$\begin{cases} \psi_1 \circ \psi_4^{-1}(y) = -\sqrt{1 - y^2} & \psi_1 \circ \psi_3^{-1}(y) = \sqrt{1 - y^2} \\  \psi_2 \circ \psi_4^{-1}(y) = \sqrt{1 - y^2} & \psi_2 \circ \psi_3^{-1}(y) = -\sqrt{1 - y^2}\\ \psi_3 \circ \psi_1^{-1}(x) =-\sqrt{1 - x^2} & \psi_3 \circ \psi_2^{-1}(x) =\sqrt{1 - x^2} \\ \psi_4 \circ \psi_1^{-1}(x) =\sqrt{1 - x^2} & \psi_4 \circ \psi_2^{-1}(x) =- \sqrt{1 - x^2} \end{cases} $$
+
+and the following derivatives:
+
+$$\begin{cases} (\psi_1 \circ \psi_4^{-1})'(y) = y\sqrt{1 - y^2}^{-1} & y > 0 \\ (\psi_1 \circ \psi_3^{-1})'(y) = -y\sqrt{1 - y^2}^{-1} & y < 0 \\  (\psi_2 \circ \psi_4^{-1})'(y) = -y\sqrt{1 - y^2} & y < 0 \\ (\psi_2 \circ \psi_3^{-1})'(y) = y\sqrt{1 - y^2}^{-1} & y > 0 \\ (\psi_3 \circ \psi_1^{-1})'(x) =x\sqrt{1 - x^2}^{-1} & x > 0 \\ (\psi_3 \circ \psi_2^{-1})'(x) =-x\sqrt{1 - x^2}^{-1} & x < 0 \\ (\psi_4 \circ \psi_1^{-1})'(x) =-x\sqrt{1 - x^2}^{-1} & x < 0 \\ (\psi_4 \circ \psi_2^{-1})'(x) =x\sqrt{1 - x^2} & x > 0 \end{cases} $$
+
+where we note the domains as due to the sign flip, for the local coordinate to land in the proper intersection of open sets, we need to enforce conditions on the local coordinate, which doesn't necessarily align with the coordinates on $\mathbb{R}^2$. Here, we can see on these domains, all of these are positive, and thus, $\{ (V_i, \psi_i) \}$ is an oriented atlas on $S^1$.
+
+\end{proof}
+
+\begin{problem}{Question 4}
+
+Let $M$ be an oriented manifold with boundary, $\omega$ an orientation form for $M$, and $X$ a $C^\infty$ outward pointing vector field along $\partial M$.
+
+(a) Prove that if $\tau$ is another orientation form on $M$, then $i_X \tau \sim i_X \omega$ on $\partial M$.
+
+(b) Prove that if $Y$ is another $C^\infty$ outward pointing vector field along $\partial M$, then $i_X \omega \sim i_Y \omega$ on $\partial M$.
+
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a) 
+
+First, we recall that the equivalence relationship for two nowhere vanishing $n$ forms, where $\dim(M) = n$, is that $\omega \sim \omega' \iff \omega = f \omega', f > 0$.
+
+Now, looking at the action of $i_X$ on $\tau, \omega$, we see that $i_X(\tau)(X_2,...,X_n) = \tau(X, X_2,...,X_n)$, that is, $i_X(\tau)$ is a $n-1$ form on $\partial M$, and same for $i_X(\omega)$.
+
+Now, take a chart around a point $p \in \partial M$. On such a chart, take a repesentation of the orientation $(v_1,...,v_{n-1}) \in T_p(\partial M)$. Since $X$ is outward pointing, it is perpendicular to each of these vectors, and so $X, v_1,...,v_{n-1}$ is evidently a basis for $T_p(M)$. But, $\omega$ is an orientation form, and so we have that:
+
+$$ i_X(\omega)(v_1,...,v_{n-1}) = \omega(X,v_1,...,v_{n-1}) > 0 \text{ if  } (X, v_1,...,v_{n-1}) \text{ is a postively oriented set of ordered bases and negative otherwise } $$
+
+Via the same argument, we conclude that $i_X(\tau)$ also follows the sign of the ordered bases in $T_p(M)$. But, this implies that if $i_X(\tau) = f dx^1 \wedge ... \wedge dx^{n-1}$ and $i_X(\omega) = g dx^1 \wedge ... \wedge dx^{n-1}$, then $f, g$ have the same sign. Since these are non-vanishing, we may related $i_X(\tau) = i_X(\omega) * f/g$, and since $f, g$ have the same sign, we have the desired outcome.
+
+Since the choice of chart was arbitrary, this can be done for every point on the boundary, and thus, we can extend this to a global, non-negative function that relates $i_X(\omega), i_X(\tau)$. Thus, we have that  $i_X \tau \sim i_X \omega$ on $\partial M$.
+
+(b)
+
+We proceed similarly to part (a).
+
+Fix a point $p \in \partial M$, and take some chart around it. On such a chart, take an orentation for the tangent space $(v_1,...,v_{n-1})$. Then, we see that because $X, Y$ are outward pointing, we have that both $(X, v_1,...,v_{n-1}),(Y, v_1,...,v_{n-1})$ are orientations on $M$. In particular, since $X, Y$ outward pointing, they are actually part of the same equivalence class of orientations.
+
+Since $\omega$ is an orientation form, it brings both to either positive or negative values. Then, by the same trick in part (a), looking in terms of $dx^1 \wedge ... \wedge dx^{n-1}$, the coefficient functions must have the same sign, and so we may relate by the quotient, which must be positive. Thus, $i_X(\omega) \sim i_Y(\omega)$ if $X, Y$ both outward pointing.
+\end{proof}
+
+\begin{problem}{Question 5}
+
+Orient the unit sphere $S^n \subseteq \mathbb{R}^{n+1}$ as the boundary of the closed unit ball. Let $U = \{ x \in S^n : x^{n+1} > 0 \}$, that is, the upper hemisphere.
+
+We notice that this is a coordinate chart on the sphere, with coordinates $x^1,...,x^n$. 
+
+(a) Find the orientation form $\omega$ as in problem 22.9 on $U$ in terms of $dx^1,...,dx^n$.
+
+(b) Show that the projection $\pi: U \to \mathbb{R}^n$, that takes:
+
+$$ (x^1,...,x^n, x^{n+1}) \mapsto ( x^1,...,x^n) $$
+
+is orientation preserving if and only if $n$ is even.
+
+(c) Orient the closed upper hemisphere $M = \{ x \in S^n : x^{n+1} \geq 0 \}$ using the following nowhere vanishing $n$-form:
+
+$$ \omega = \sum_{i=1}^{n+1} (-1)^{n-1} x^i dx^1 \wedge ... \wedge \widehat{dx^i} \wedge ... \wedge dx^{n+1} $$
+
+where the caret denotes that the $1$-form is omitted from the wedge product. Describe the boundary orientation on $\partial M$ as a differential form.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+We notice that an orientation form on the closed unit ball is a top form on $\mathbb{R}^{n+1}$, so we may take this to be $\omega = dx^1 \wedge ... \wedge dx^{n+1}$.
+
+One choice of outward pointing vector field on $U$, is $X = \frac{\partial}{\partial x^{n+1}}$.
+
+Then, we know that an orientation form on $U$ is given by $i_X(\omega)$. It should be clear that on the $1$-forms:
+
+$$ i_X(dx^i) = dx^i \left( \frac{\partial}{\partial x^{n+1}} \right) = \delta^i_{n+1} $$
+
+Thus, we have that:
+
+$$ i_X(\omega) = i_X(dx^1) \wedge \dots \wedge dx^{n+1} + dx^1 \wedge (-1) i_X(dx^2) \wedge \dots \wedge dx^{n+1} + \dots+ dx^1 \wedge \dots \wedge (-1)^{n} i_X(dx^{n+1} = (-1)^n dx^1 \wedge \dots \wedge dx^n $$
+
+as our orientation form on $U$.
+
+(b)
+
+From (a), we can compute directly the action of $F^*( (-1)^n dx^1 \wedge \dots \wedge dx^n)$, using the fact that the differential commutes with the wedge product:
+
+$$F^*( (-1)^n dx^1 \wedge \dots \wedge dx^n) = (-1)^n dF^*(x^1) \wedge \dots \wedge dF^*(x^n) = (-1)^n dx^1 \wedge \dots \wedge dx^n $$
+
+Then, it is clear now that $n$ is odd, $(-1)^n = -1$ if and only if $F$ is orientation-reversing, and $n$ being even, $(-1)^n = 1$ if and only if $F$ is orientation-preserving.
+
+(c)
+
+In a similar fashion to part (a), looking at the boundary, evidentally, $X= -\frac{\partial}{\partial x^{n+1}}$ is an outward pointing vector field.
+
+Then, we may look at $i_X(\omega)$. Again, as part (a) showed, we see that:
+
+$$ i_X(dx^i) = dx^i \left( -\frac{\partial}{\partial x^{n+1}} \right) = -\delta^i_{n+1}$$
+
+Then, clearly, the $n$-form that omits $dx^{n+1}$ vanishes. For the other ones, we see that:
+
+$$ i_X(dx^1 \wedge \dots \wedge \widehat{dx^j} \wedge \dots \wedge dx^{n+1}) = dx^1 \wedge \dots \wedge \widehat{dx^j} \wedge \dots \wedge dx^{n} \wedge (-1)^{n-1} i_X(dx^{n+1}) = $$
+
+$$ (-1)^n dx^1 \wedge \dots \wedge \widehat{dx^j} \wedge ... \wedge dx^n $$
+
+Now, applying linearity and the fact that for $C^\infty$ functions $f$, $i_X(f \omega) = f i_X(\omega)$, we see that:
+
+$$i_X(\omega) = \sum_{i=1}^{n+1} (-1)^{n-1} x^i i_X(dx^1 \wedge \dots \wedge \widehat{dx^i} \wedge \dots \wedge dx^{n+1} = $$
+
+$$ \sum_{i=1}^{n} (-1)^{n-1} x^i (-1)^n dx^1 \wedge \dots \wedge \widehat{dx^i} \wedge \dots \wedge dx^n = $$
+
+$$ \sum_{i=1}^{n} (-1)^{2n-1} x^i dx^1 \wedge \dots \wedge \widehat{dx^i} \wedge \dots \wedge dx^n $$
+
+
+
+
+
+\end{proof}
+
+
+
+\begin{problem}{Question 6}
+
+Prove that the area form $\omega$ on $S^2$ is equal to the orientation form:
+
+$$\tau =  x dy \wedge dz -y dx \wedge dz + z dx \wedge dy $$
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+First, we recall that the area form given has the following form:
+
+$$ \omega = \begin{cases} \frac{dy \wedge dz }{x} & \text{ when } x \not = 0 \\ \frac{dz \wedge dx }{y} & \text{ when } y \not = 0 \\  \frac{dx \wedge dy }{z} & \text{ when } z \not = 0\end{cases} $$
+
+Here, we first look at the defining equation for $S^2: x^2 + y^2 + z^2 = 1$. Taking the exterior derivative of both sides, we see that:
+
+$$ 2x dx + 2y dy + 2z dz = 0 $$
+
+Then, suppose $x \not = 0$, we may solve for $dx$ and find that:
+
+$$ dx = \frac{ -y dy - z dz}{x}$$
+
+Now, replacing $dx$ in $\tau$ everywhere, we see that if $x \not = 0$:
+
+$$ \tau =  x dy \wedge dz +y \frac{y}{x} dy \wedge dz - z \frac{z}{x} dz \wedge dy  = \frac{x^2}{x} dy \wedge dz + \frac{y^2}{x} dy \wedge dz + \frac{z^2}{x} dy \wedge dz = \frac{1}{x} dy \wedge dz $$
+
+as desired. Note that we omit terms where, when substituting for $dx$, we would end up with $dy \wedge dy = 0 = dz \wedge dz$, and we use the identity on $S^2$ that $x^2 + y^2 + z^2 = 1$.
+
+It should not be too hard to see that solving for $dy, dz$ on the condition that $y \not = 0, z \not = 0$, respectively, that we will see that these forms align.
+
+Thus, we have that $\omega = \tau$. 
+
+\end{proof}
+
+\end{document}

@@ -1,0 +1,417 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{float}
+\usepackage{bbm}
+\usepackage{dsfont}
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+\newcommand{\vol}{{\text{Vol}}}
+
+
+\ExplSyntaxOn
+\NewDocumentCommand{\cycle}{ O{\;} m }
+ {
+  (
+  \alec_cycle:nn { #1 } { #2 }
+  )
+ }
+
+\seq_new:N \l_alec_cycle_seq
+\cs_new_protected:Npn \alec_cycle:nn #1 #2
+ {
+  \seq_set_split:Nnn \l_alec_cycle_seq { , } { #2 }
+  \seq_use:Nn \l_alec_cycle_seq { #1 }
+ }
+\ExplSyntaxOff
+
+\newenvironment{problem}[2][]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#8}
+\author{Eric Tao\\
+Math 285: Homework \#8}
+\maketitle
+
+\begin{problem}{Question 1}
+
+Let $G$ be a Lie group. Define the identity component $G_0 \subset G$ as the connected component that contains the identity element $e$. Let $\mu, i$ be the multiplication and inverse maps on $G$, respectively.
+
+(a) For any $x \in G_0$, prove that $\mu(\{ x \} \times G_0 ) \subseteq G_0 $.
+
+(b) Show that $i(G_0) \subset G_0$. 
+
+(c) Show that $G_0$ is an open subset of $G$.
+
+(d) Prove that $G_0$ is a Lie group.
+
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+(a)
+
+First, we prove $\{ x \} \times G_0$ is connected. Suppose to the contrary, there exists $U, V$ open sets such that $U \cap V = \emptyset$ and $U \cup V = \{ x \} \times G_0 \subseteq G \times G$. Then, of course, we have that $U = \{ x \} \times \overline{U}, V = \{ x \} \times \overline{V}$, since it consists of points $(x,g)$ for any $g \in G_0$. Then, taking the projection in the second coordinate, we recover open sets $\overline{U}, \overline{V}$ such that $\overline{U} \cap \overline{V} = \emptyset$ and $\overline{U} \cup \overline{V} = G_0$. But, this contradicts the connectedness of $G_0$. Thus, $\{ x \} \times G_0$ is connected.
+
+Now, from Proposition A.42 (numbering based off of appendix A from Canvas, not the book), we have that for $f$ a connected map, $X$ a connected domain, that $f(X)$ is connected. Since $\mu$ is a $C^\infty$ map on $G \times G$, hence continuous, and $\{ x \} \times G_0$, we have that  $\mu(\{ x \} \times G_0 )$ is connected. Furthermore, since $x \in G_0$ and $e\in G_0$, we find that $\mu(x, e) = x$ is contained within $\mu(\{ x \} \times G_0 )$. Thus, since $G_0$, by definition, is the largest connected subset of $G$ for all points in $G_0$ (Corollary A.45), we must have that  $\mu(\{ x \} \times G_0 ) \subseteq G_0$.
+
+(b)
+
+In the same style as part (a), we see that $i(G_0)$ is connected. Furthermore, by definition, $i(e) = e^{-1} = e$. Thus, $e \in i(G_0)$, and because $G_0$ by definition contains all connected sets containing $e$, we must have that $i(G_0) \subseteq G_0$.
+
+(c)
+
+First, we prove that if a topological space $S$ is locally connected, then the connected components of $S$ are open.
+
+This should be clear by a combination of the definition with the local criterion for being open. Let $T \subset S$ be a connected component, and fix some point $t \in T$. Let $t \in U$ be any neighborhood containing $t$. By definition of being locally connected, there exists a connected neighborhood $V$ such that $t \in V$ and $V \subseteq U$. However, since $T$ is a connected component, we must have that $V \subseteq T$. Thus, we have found a neighborhood of $t$ completely contained within $T$. Since the choice of $t$ were arbitrary, we conclude that $T$ is open.
+
+Since we may do this for each connected component, we conclude that every connected component is open.
+
+Now, we wish to show that for an abstract Lie group $G$, $G$ is locally connected. First, we recall that $G$ is also a manifold. So fix a $g \in G$. Since $G$ is a manifold, we may find a chart $(U, \phi)$ such that $g \in U$ and such that $\phi$ is a homeomorphism to some $\mathbb{R}^n$, $n \in \mathbb{N}^+$. In particular then, looking at $\phi(U)$, we may find the connected component of $\phi(U) \subseteq \mathbb{R}^n$ that contains $\phi(g)$. Denote this component $V$. Then, because $\phi$ is a homeomorphism, $\phi^{-1}(V)$ is a connected open set that contains $g$, as requested. Since the choice of $g$ was arbitrary, this implies that $G$ is locally connected.
+
+Then, by the earlier lemma, since $G_0$ is a connected component, and $G$ is locally connected, $G_0$ is open.
+
+(d)
+
+First, we note that by (a), (b), we have that $G_0$ is an abstract subgroup of $G$. Let $x, y \in G_0$. Then, by part (b), we have that $y^{-1} \in G_0$. Then, by part (a), we have that $\mu(x, y^{-1}) = xy^{-1} \in G_0$. Since the choice of $x, y$ was arbitrary, by the subgroup criterion, $G_0$ is an abstract subgroup, and hence an abstract group.
+
+Now, by part (c), we have that since $G_0$ is an open subset of $G$, it is automatically a $C^\infty$ manifold via the subspace topology.
+
+Hence, we need only show that $\mu, i$ restricted onto $G_0$ remain $C^\infty$ maps. However, because we may realize these as compositions of the following form, where $j: G_0 \to G$ is the inclusion map:
+
+$$\begin{cases} \mu\big|_{G_0} & = \mu \circ (j, j):  G_0 \times G_0 \to G \times G \to G \\ i\big|_{G_0} & = i \circ j: G_0 \to G \to G \end{cases} $$
+
+Since inclusion is certainly smooth, these are the composition of smooth maps, hence the restrictions are smooth.
+
+Therefore, since $G_0$ is an abstract subgroup, with $C^\infty$ manifold structure as a subset of $G$, and $C^\infty$ multiplication and inverse maps, $G_0$ is a Lie group.
+
+
+\end{proof}
+
+\begin{problem}{Question 2}
+
+Let $G$ be a Lie group with $\mu: G \times G \to G$ as its multiplication map. Let $l_a: G \to G$ and $r_b: G \to G$ denote left multiplication by $a$ and right multiplication by $b$ for $a,b \in G$, respectively.
+
+Show that the differential of $\mu$ at a point $(a,b) \in G \times G$ has the form:
+
+$$ \mu_{*, (a,b)} (X_a, Y_b) = (r_b)_{*}(X_a) + (l_a)_{*}(Y_b)$$
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+As always, let $c(t) = (c_1(t), c_2(t))$ where, denoting a derivative with respect to $t$ by $'$, we have the following:
+
+$$ \begin{cases} c_1(0) = a & c_1'(0) = X_a \\ c_2(0) = b & c_2'(0) = Y_b\end{cases}$$
+
+Then, using this curve to compute the differential, we have that via the product rule:
+
+$$ \mu_{*, (a,b)} (X_a, Y_b) = \frac{d}{dt}\bigg|_{t = 0} (\mu \circ c)(t) = \frac{d}{dt}\bigg|_{t = 0} (c_1(t) c_2(t)) = c_1'(t)c_2(t) + c_1(t) c_2'(t) \big|_{t=0} =$$
+
+$$ c_1'(0)c_2(0) + c_1(0) c_2'(0) = X_a b + a Y_b$$
+
+Now, we may do the same procedure for $ (r_b)_{*}(X_a), (l_a)_{*}(Y_b)$, using the following curves:
+
+$$ \begin{cases} d(0) = a & d'(0) = X_a \\ e(0) = b & e'(0) = Y_b \end{cases}$$
+
+We find that: 
+
+$$\begin{cases} (r_b)_{*}(X_a) = \frac{d}{dt}\bigg|_{t = 0} (r_b \circ d)(t) =  \frac{d}{dt}\bigg|_{t = 0} d(t) b = d'(0)b = X_a b \\  (l_a)_{*}(Y_b) = \frac{d}{dt}\bigg|_{t = 0} (l_a \circ e)(t) = \frac{d}{dt}\bigg|_{t = 0} a e(t) = ae'(0) = aY_b \end{cases} $$
+
+Thus, we see that $\mu_{*, (a,b)} (X_a, Y_b)  =  X_a b + a Y_b =  (r_b)_{*}(X_a) +  (l_a)_{*}(Y_b)$ as desired.
+
+\end{proof}
+
+\begin{problem}{Question 3}
+Let $G$ be a Lie group with $\mu: G \times G \to G$ as its multiplication map and $i: G \to G$ as its inverse map, and denote the identity element as $e$. Let $l_a: G \to G$ and $r_b: G \to G$ denote left multiplication by $a$ and right multiplication by $b$ for $a,b \in G$, respectively.
+
+Show that the differential of $i$ at a point $a \in G$ has the form:
+
+$$ i_{*, a}(Y_a) = -(r_{a^{-1}})_{*}(l_{a^{-1}})_{*} Y_a$$
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+Let $c$ be a curve such that $c(0) = a, c'(0) = Y_a$. We may then look at the following composition of maps:
+
+$$ G \xrightarrow{(i,\text{id})} G \times G \xrightarrow{\mu} G $$
+
+Firstly, we notice that:
+
+$$  ( \mu \circ (i,\text{id}) )_{*, a}(Y_a) =  (\mu \circ (i,\text{id}) \circ c)'(0) =  \frac{d}{dt}\bigg|_{t=0} (\mu(c(t), c(t)^{-1})) =\frac{d}{dt}\bigg|_{t=0} c(t)c(t)^{-1} =  \frac{d}{dt}\bigg|_{t=0} e = \overline{0}  $$
+
+where we denote $\overline{0}$ as the 0 vector.
+
+But also, by the chain rule, we have that:
+
+$$ ( \mu \circ (i,\text{id}) )_{*, a} =  \mu_{*, (a^{-1}, a)} \circ (i,\text{id}) )_{*, a} = \mu_{*, (a^{-1}, a)} \circ ( i_{*, a}\text{id}_{*, a}) )$$
+
+and therefore:
+
+$$ \mu_{*, (a^{-1}, a)} \circ ( i_{*, a}\text{id}_{*, a}) ) (Y_a) =  \mu_{*, (a^{-1}, a)} ( i_{*, a}(Y_a), Y_a)$$
+
+By question 2, we have that:
+
+$$  \mu_{*, (a^{-1}, a)}( i_{*, a}(Y_a), Y_a) = (r_a)_*  (i_{*, a}(Y_a)) + (l_{a^{-1}})_*( Y_a)$$
+
+Thus, we have that:
+
+$$ (r_a)_*  (i_{*, a}(Y_a)) + (l_{a^{-1}})_*( Y_a) = 0 \implies  (r_a)_*( i_{*, a}(Y_a)) ) = -(l_{a^{-1}})_*(Y_a) $$
+
+Here, we notice that $ r_{a^{-1}} \circ r_a = \text{id}$. This should be easy to see as for any $g \in G$, we have that:
+
+$$ r_{a^{-1}} \circ r_a(g) =  r_{a^{-1}}( r_a(g)) =  r_{a^{-1}} (ga) = gaa^{-1} = ge = g $$
+
+Thus, let $Z_{a^{-1}}$ be an arbitrary tangent vector at $a^{-1}$ and via yet another curve $d(0) = a^{-1}, d'(0) = Z_{a^{-1}}$, we can see that:
+
+$$((r_{a^{-1}})_{*, e} \circ (r_a)_{*, a^{-1}}) ( Z_{a^{-1}}) = \frac{d}{dt} \bigg|_{t=0} r_{a^{-1}} \circ r_{a} \circ d(t) =  \frac{d}{dt} \bigg|_{t=0} d(t) a a^{-1} =  \frac{d}{dt} \bigg|_{t=0} d(t) = d'(0) = Z_{a^{-1}} $$
+
+where we've used the chain rule on $((r_{a^{-1}})_{*, e} \circ (r_a)_{*, a^{-1}})  = (r_{a^{-1}} \circ r_a)_{*, a^{-1}}$ 
+
+Thus, since $Z_{a^{-1}}$ was arbitrary, we may conclude that $((r_{a^{-1}})_{*, e} \circ (r_a)_{*, a^{-1}})$ acts as identity.
+
+Therefore, applying $(r_{a^{-1}})_{*, e}$ on the left to both side of the above differential equation we find that:
+
+$$  (r_a)_*( i_{*, a}(Y_a)) ) = -(l_{a^{-1}})_*(Y_a) \implies (r_{a^{-1}})_{*, e}\circ  (r_a)_*( i_{*, a}(Y_a)) ) = (r_{a^{-1}})_{*, e}\circ -(l_{a^{-1}})_*(Y_a) \implies $$
+
+$$ ( (r_{a^{-1}})_{*, e}\circ  (r_a)_{*, a^{-1}}) \circ i_{*, a}(Y_a) = - (r_{a^{-1}})_{*, e}(l_{a^{-1}})_*(Y_a) \implies \text{id}  \circ i_{*, a}(Y_a) = - (r_{a^{-1}})_{*, e}(l_{a^{-1}})_*(Y_a) \implies$$
+
+$$  i_{*, a}(Y_a) = - (r_{a^{-1}})_{*, e}(l_{a^{-1}})_*(Y_a) $$
+
+as desired.
+\end{proof}
+
+\begin{problem}{Question 4}
+
+Define the unitary group as:
+
+$$U(n) = \{ A \in GL_n(\mathbb{C}) : A^\dag A = I \}$$
+
+where $A^\dag$ denotes the conjugate transpose of $A$ that is $[A^\dag]_{ij} = [\overline{a}_{ji} ]$.
+
+Show that $U(n)$ is a regular submanifold of $GL_n(\mathbb{C})$ with dimension $n^2$.
+
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+In the same style as the orthogonal group, we first notice that for any $D \in GL_n(\mathbb{C})$, that:
+
+$$ (D^\dag D)^\dag  = D^\dag D^{\dag^\dag} = D^\dag D $$
+
+where we get the order reversing part from the properties of the transpose, and the fact that $ D^{\dag^\dag} = D$ as $\overline{\overline{a}} = a$ and $A^{T^T} = A$.
+
+Thus, we have that matrices of the form $ D^\dag D$ are Hermitian.
+
+Denote the set of Hermitian matrices as $H_n = \{ A \in GL_n(\mathbb{C}) : A = A^\dag \}$. We first notice that Hermitian matrices form a real vector space where we inherit the operations from $GL_n(\mathbb{R})$ and so we need only check closure under these operations. Clearly, the sum of two Hermitian is Hermitian  since the transpose and complex conjugation distribute over addition. The 0 matrix is clearly Hermitian, as the complex conjugate of 0 is itself. And for any Hermitian matrix $A$, of course $-A$ and $kA$ are Hermitian, since real scalars factor out from complex conjugation. Thus, these matrices form a real vector space.
+
+In particular, we notice that because of the transpose, a Hermitian matrix is completely determined by its upper triangular entries. Moreover, examining the entries on the diagonal, since the transpose keeps these entries constant, the condition $\overline{a}_{ii} = a_{ii}$ forces $a_{ii}$ to be purely real. Thus, as a real vector space, we have that:
+
+$$ \dim(H_n) = n + 2( 1 + ... + n-1) = n + n(n-1) = n^2$$ 
+
+Then, in the same vein, we consider the map:
+
+$$ F: GL_n(\mathbb{C}) \to H_n \text{ via } A \mapsto A^\dag A$$
+
+and we wish to show that the differential is surjective, where we identify $T H_n \cong H_n$ as vector spaces:
+
+$$F_{*, A}: T_A GL_n(\mathbb{C}) \to T_{f(A)}(H_n) \cong H_n $$
+
+Using a curve $c(0) = A, c'(0) = X$ for $X \in T_A(GL_n(\mathbb{C})) \cong \mathbb{R}^{2(n \times n)}$, we see that:
+
+$$ F_{*, A} (X) = \frac{d}{dt}\bigg|_{t=0} F(c(t)) = \frac{d}{dt}\bigg|_{t=0} c(t)^\dag c(t)  = c'(0)^\dag c(0) + c(0)^\dag c'(0) = X^\dag A + A^\dag X $$
+
+where we justify the product rule by seeing that for $A = [a_{jk}(t) + b_{jk}(t)i]_{jk}, C = [c_{lm}(t) + d_{lm}(t)i]_{lm}$
+
+$$(AC)_{pq} = \sum_{r = 1}^n A_{pr} C_{rq} = \sum_{r = 1}^n [a_{pr}(t) + b_{pr}(t)i]_{pr} [c_{rq}(t) + d_{rq}(t)i]_{rq}$$
+
+And here, taking the derivative with respect to these scalar functions, we use the product rule to regroup as: $$\sum_{r = 1}^n [a_{pr}'(t) + b_{pr}'(t)i]_{pr} [c_{rq}(t) + d_{rq}(t)i]_{rq} +  [a_{pr}(t) + b_{pr}(t)i]_{pr} [c_{rq}'(t) + d_{rq}'(t)i]_{rq}$$
+
+In any case, we see that for $F_{*, A}$ to be surjective on $U(n)$, we need that for an arbitrary $C \in H_n, A \in U(n)$ to find a $X \in M_n(\mathbb{C})$ such that:
+
+ $$X^\dag A + A^\dag X = C$$
+
+In the same fashion, we notice that $(X^\dag A)^\dag = A^\dag X$, so we need only show that there is an $X$ such that $A^\dag X =\frac{1}{2} C$. Since $A \in U(n)$, we have that:
+
+$$ AA^\dag X = AC \implies X =\frac{1}{2} AC$$
+
+Thus, the differential is surjective, and since the only property of the point $A$ we used was the defining property of $U(n)$,  every point of $U(n)$ is a regular point, hence a regular level set of $F$. By the regular level set theorem then, $U(n)$ is a regular submanifold of $GL_n(\mathbb{C})$, with real dimension $\dim(U(n)) = \dim(GL_n(\mathbb{C})) - \dim(H_n) = 2n^2 - n^2 = n^2$
+\end{proof}
+
+\begin{problem}{Question 5}
+Let $\mathbb{H}$ denote the skew field of quaternions. Define the sympletic group as:
+
+$$ Sp(n) = \{ A \in GL_n(\mathbb{H}) : A^\dag A = I \}$$
+
+where $A^\dag$ denotes the quaternionic conjugate transpose of $A$. Show that $Sp(n)$ is a regular submanifold of $GL_n(\mathbb{H})$ and compute its dimension.
+
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+In the same fashion as problem 4, we start by showing that for $A, B \in GL_n(\mathbb{H})$, that $(AB)^\dag = B^\dag A^\dag$.
+
+First, we prove that conjugation is an antihomomorphism.
+
+%Let $p, q \in \mathbb{H}$. Then, we may express this as $p = p_0 + p_1i + p_2 j + p_3k, q = q_0 + q_1i + q_2 j + q_3k$.
+
+%We see then that:
+
+%$$pq = (p_0q_0 - p_1q_1 - p_2 q_2 - p_3 q_3) + i(p_0q_1 + p_1q_0 +p_2q_3 - p_3 q_2) + j(p_0q_2 - p_1q_3 + p_2 q_0 + p_3 q_1) + k (p_0 q_3 + p_1q_2 - p_2 q_1 + q_3 p_0) $$
+
+%On the other hand, we look at $\overline{q} * \overline{p}$:
+
+%$$(q_0 - q_1i - q_2 j - q_3k)(p_0 - p_1i - p_2 j - p_3k) = 
+
+Since conjugation distributes over addition and we may factor (real) scalars, and $\mathbb{H}$ is simply a real vector space with respect to $1, i, j, k$, we need only prove this true for the basis.
+
+It is clear that this is true for any combination with $1$, as $\overline{1} = 1$, so wlog, choosing $i$, $\overline{1i} = \overline{i} = \overline{1}\overline{i}$.
+
+Similarly, this is true for any two of the same. WLOG choosing $i$, we have that $\overline{ii} = \overline{-1} = -1 = -i -i = \overline{i}\overline{i}$.
+
+Thus, we need only show this for two different choices of $i,j,k$. First, choose $i,j$. We have that $\overline{ij} = \overline{k} = -k = ji = (-j)(-i) = \overline{j}\overline{i}$.
+
+Without too much trouble, we can see that this is true for any cyclic choices of $i,j,k$, i.e. $(i,j), (j,k), (k,i)$. And, without too much convincing, this is true for the anti-cyclic permutations, where we introduce a negative: $\overline{ji} = \overline{-k} = k = ij = (-i)(-j) = \overline{i}\overline{j}$. Thus, due to the linear properties of the quaternion conjugation, we have that $\overline{pq} = \overline{q}\overline{p}$.
+
+Next, we prove our desired result that $(AB)^\dag = B^\dag A^\dag$:
+
+We look at $[(AB)^\dag]_{ij}$. By the definition of matrix multiplication, this is:
+
+$$[(AB)^\dag]_{ij} = \overline{AB}_{ji} = \overline{\sum_{m=1}^n A_{jm}B_{mi} } = \sum_{m=1}^n \overline{A_{jm}B_{mi}} = \sum_{m=1}^n \overline{B}_{mi} \nobreakspace \overline{A}_{jm}$$
+
+and on the other hand, we have that:
+
+$$[B^\dag A^\dag]_{ij} = \sum_{m=1}^n B^\dag_{im} A^\dag_{mj} = \overline{B}_{mi} \overline{A}_{jm}$$
+
+Therefore, going across entries, we conclude that $(AB)^\dag = B^\dag A^\dag$.
+
+Now, we consider the set:
+
+$$ H_n(\mathbb{H}) = \{ A \in GL_n(\mathbb{H}) : A = A^\dag \}$$
+
+Clearly, we see that for any $A \in GL_n(\mathbb{H})$, that since $\overline{\overline{p}} = p$ for $p \in \mathbb{H}$, and $A^{T^T} = A$ for any matrix, that:
+
+$$ (A^\dag A)^\dag = A^\dag (A^\dag)^\dag = A^\dag A $$
+
+Defining the map:
+
+$$ G: GL_n(\mathbb{H}) \to H_n(\mathbb{H}) $$
+
+that sends a matrix $A \mapsto A^\dag A$, clearly, $Sp(n) = G^{-1}(I)$. So, we wish to show that this level set is actually regular.
+
+To do so, we examine the differential:
+
+$$ G_{*, A} T_A GL_n(\mathbb{H}) \to T_{G(A)}(H_n(\mathbb{H})) \cong H_n(\mathbb{H}) $$
+
+Using a curve $c$ such that $c(0) = A, c'(0) = X$ for an arbitrary vector $X \in GL_n(\mathbb{H})$, we see that:
+
+$$ G_{*, A}(X) = \frac{d}{dt} \bigg|_{t=0} F(c(t)) = \frac{d}{dt} \bigg|_{t=0} c(t)^\dag c(t) = c'(0)^\dag c(0) + c(0)^\dag c'(0)  = X^\dag A + A^\dag X$$
+
+Again, this time without proof, we justify the product rule in the same way as in problem 4.
+
+Again, for this to be surjective on the set $Sp(n)$, we would need that for an arbitrary $C \in H_n(\mathbb{H}), A \in Sp(n)$, we may find a $X \in M_n(\mathbb{H})$, where we recognize that as isomoprhic to the tangent space of $GL_n(\mathbb{H})$, such that:
+
+$$ X^\dag A + A^\dag X = C$$
+
+In the same fashion as question 4, because $(X^\dag A)^\dag = A^\dag X$, this is equivalent to showing that there exists $X$ such that $A^\dag X =\frac{1}{2} C$. Because $A \in Sp(n)$, multiplying on the left by $A$, we obtain on the left hand side:
+
+$$ AA^\dag X = (A^\dag A)^\dag X = I^\dag X= IX = X $$
+
+And therefore, we conclude that the desired $X$ is $\frac{1}{2} AC$.
+
+Therefore, the differential is surjective at every point $A$. Since the only property we used about $A$ was that it lived in $Sp(n)$, this is true for all points in $Sp(n)$, and therefore we conclude that this is a regular level set of $F$, and hence a regular submanifold.
+
+By the rank-nullity theorem, we compute the dimension as:
+
+$$ \dim(Sp(n)) = \dim(GL_n(\mathbb{H})) - \dim(H_n(\mathbb{H})) = 4n^2 - (n + 4(1 + .... + n-1)) = 4n^2 - \left(n + 4 \frac{n(n-1)}{2}\right) $$
+$$ = 4n^2 - (n + 2n^2 -2n) = 2n^2 +n $$
+
+where $GL_n(\mathbb{H})$ has dimension $4n^2$ as it has $n^2$ entries and each entry is a $4$ dimensional real vector, and $H_n(\mathbb{H})$ follows the same argument as in problem 4, where the diagonal is strictly real, the strictly lower diagonal entries are determined exactly by the striclty upper diagonal entries.
+
+
+\end{proof}
+
+
+
+\begin{problem}{Question 6}
+Let $X \in M_n(\mathbb{C})$. We call it skew-Hermitian if its complex transpose $X^\dag$ is equal to $-X$.
+
+Let $V$ be the vector space of $n\times n$ skew-Hermitian matrices. Show that $\dim(V) = n^2$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+We use the same procedure as determining the dimension of the Hermitian matrices as done in Question 5.
+
+We notice that because of the condition $X^\dag =- X$, that we have for off-diagonal entries: $[a_{ij}] = [-\overline{a}_{ji}]$. Therefore, we have that the strictly lower triangular entries are completely determined by the strictly upper triangular entries.
+
+Furthermore, looking at the diagonal entries, since the transpose keeps these entries fixes, we have that for $a = x + yi$, that: 
+
+$$x + yi = a_{ii} = -\overline{a}_{ii} = -x +yi \implies x = 0 $$
+
+That is, the diagonal entries must be strictly imaginary.
+
+Hence, in terms of dimensionality as a real vector space, we have $1 + ... + n-1$ free complex numbers in the strictly upper triangular entiries, and $n$ strictly imaginary numbers along the diagonal. Thus, the real dimension is:
+
+$$ \dim(V) = n + 2(1 + ... + n-1) = n + 2 \frac{(n-1)(n-1+1)}{2} = n + n(n-1) = n^2 $$
+
+as desired. 
+
+\end{proof}
+
+
+\begin{problem}{Question 7}
+
+Show that the tangent space of $U(n)$ at the identity $I \in U(n)$ can be identified with the vector space of $n\times n$ skew-Hermitian matrices.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+First, let $X$ be a tangent vector that lives in $T_I(U(n))$.
+
+We know that there exists a curve $c: (-\epsilon, \epsilon) \to U(n)$ such that $c(0) = I, c'(0) = X$.
+
+Because $c(t) \in U(n)$, this implies then that for all $t$, that for the map:
+
+$$ F: GL_n(\mathbb{C}) \to GL_n(\mathbb{C}) \text{ via } F(A) = A^\dag A $$
+
+that $ F(c(t)) = I$
+
+Taking the derivative of the left hand side, evidently, we have that:
+
+$$ \frac{d}{dt}\bigg|_{t=0} F(c(t)) = (F \circ c)_{*} \frac{d}{dt} \bigg|_{t=0} = F_{*, I} \circ c_{*, 0} \frac{d}{dt}\bigg|_{t=0} $$
+
+where the first equality is simply the definition of the differential, viewing $\frac{d}{dt}\bigg|_{t=0}$ as a tangent vector in $T_0 (-\epsilon, \epsilon)$, and the second equality comes from the chain rule.
+
+We see then that $ c_{*, 0} \frac{d}{dt}\bigg|_{t=0} = \frac{d}{dt} \bigg|_{t=0} c(t) = c'(0)$, again, by definition of the differential, so we have that:
+
+$$  \frac{d}{dt}\bigg|_{t=0} F(c(t))  = F_{*, I} (c'(0)) = F_{*, I}(X) = X^\dag + X$$
+
+where we use the differential $F_{*, A} = X^\dag A + A^\dag X$ computed in problem 4, with $A = I$.
+
+However, the right hand side is simply:
+
+$$\frac{d}{dt}\bigg|_{t=0} I = 0 $$
+
+So, we have that:
+
+$$ \frac{d}{dt}\bigg|_{t=0} \left(  F(c(t)) = I \right) \implies X^\dag + X = 0 \implies X^\dag = -X $$
+
+Thus, as a subspace of $T GL_n(\mathbb{C})$, we have that $X \in TU(n)$ implies that $X^\dag = -X$, that is, $TU(n) \subseteq V$ where we identify this copy of the skew-Hermitian matrices living in $TGL_n(\mathbb{C}) \cong M_n(\mathbb{C})$. 
+
+However, the dimensionality of $U(n)$ as a real vector space as computed in problem 4 is $n^2$, and the dimensionality of $V$ viewed as a real vector as computed in problem 6 is $n^2$. Therefore, since $TU(n), V$ have the same dimension as real vector spaces and $\dim(U(n)) = \dim(TU(n)) = \dim(V)$, we must have that $TU(n) = V$, and therefore, the tangent space of $U(n)$ can be identified with a copy of the skew-Hermitian matrices, with some identification of the tangent space of $GL_n(\mathbb{C}) \cong M_n(\mathbb{C})$.
+
+\end{proof}
+
+\end{document}
