@@ -368,7 +368,7 @@ $$\sum_{k=1}^N \Vert f_k \Vert_2^2 = \sum_{k=1}^N\int_{[0,1]} | f_k |^2 dx = \in
 
 On the other hand, using the normality, we have that:
 
-$$ \sum_{k=1}^N \Vert f_k \Vert_2^2 = N$.
+$$ \sum_{k=1}^N \Vert f_k \Vert_2^2 = N$$
 
 Hence, we have that $N \leq C^2$, and any finite sequence of orthonormal vectors has at most $C^2$ vectors. Since any orthogonal sequence must give rise to a orthonormal sequence, by dividing out by a norm, and we may always look at finite subsequences of infinite sequence, this must be true for arbitrary orthogonal sequences of $\{ f_k \}$. Thus, the maximal number of distinct elements in an orthogonal sequence is $C^2$, hence the dimensionality of $M$ is at most $C^2$ as a vector space.
 
@@ -389,11 +389,11 @@ Let $f \in L^p, g \in L^q$, with $1/p + 1/q = 1$, $\Vert f \Vert_{L^p} = 1, \Ver
 
 $$ \int fg d\mu = 1$$ 
 
-then f(r) = $\text{sgn}(g(x)) | g(x)|^{q-1}$.
+then f(x) = $\text{sign}(g(x)) | g(x)|^{q-1}$.
 
 20.2)
 
-Suppose that $\Vert f_{t'} \Vert_{L^p} = 1$ for some $0 < t' < 1$. Suppose that we have $g \in L^q$ with $\Vert g \Vert_{L^q} = 1$, such that:
+Suppose that $\Vert f_{t'} \Vert_{L^p} = 1$ for some $0 < t' < 1$. Find $g \in L^q$ with $\Vert g \Vert_{L^q} = 1$, such that:
 
 $$ \int f_{t'}g d\mu = 1$$
 
@@ -406,6 +406,70 @@ Show that this fails when $p = 1, p = \infty$. What can we say in these cases?
 \end{problem}
 
 \begin{proof}[Solution]
+
+20.1)
+
+Clearly, we have the following string of inequalities:
+
+$$ \int fg d\mu \leq \int |fg| d\mu \leq \Vert f \Vert_p \Vert g\Vert_q $$
+
+where we identify $|fg| = \Vert fg\Vert_1$ when $f, g$ are real-valued, and apply H\"older's inequality.
+
+However, by hypothesis, $\int fg d\mu = 1$, and $\Vert f \Vert_p = 1 = \Vert g \Vert_q$. Hence, this implies that $\int |fg| d\mu = 1 = \Vert f\Vert_p \Vert g \Vert_q$.
+
+Then, from 6.2 in Folland, we recall that equality in H\"older's inequality holds if and only if $|f|^p  = c |g|^q$ almost everywhere for some non-0 constant $c$.
+
+With some algebraic manipulation, we can see that since $1/p + 1/q = 1$, that $q/p + 1 = q \implies q/p = q-1$.
+
+$$ |f| = ( c |g|^q)^{1/p} = c^{1/p} |g|^{q/p} = c^{1/p} |g|^{q - 1}$$
+
+From the fact that $\int fg d\mu = 1 = \int |fg| d\mu $, we may conclude that $fg = |fg|$ a.e. Furthermore, we see that:
+
+$$ \Vert f \Vert_p^p = \int |f|^p d\mu = \int c |g|^q d\mu = c \int |g|^q d\mu = c \Vert g \Vert_q^q $$
+
+which implies that $c = 1$.
+
+Therefore, we can conclude that $f(x) =h(x) g(x)^{q-1}$ a.e., for $h(x) = \pm 1$. But again, since $fg = |fg|$, $f,g$ must carry the same sign. Thus, we can safely replace $h(x) = \text{sign}{(g(x)}$, as desired.
+
+20.2)
+
+From 20.1), we take $g =  \text{sign}(f_{t'}(x)) | f_{t'}(x)|^{p-1}$. Evidently:
+
+$$ \int |g|^q d\mu = \int |f_{t'}|^{qp - q} d\mu  =  \int |f_{t'}|^p d\mu = \Vert f_{t'} \Vert_p^p = 1 $$
+
+that is $\Vert g \Vert_q^q = 1 \implies \Vert g \Vert_q^q = 1$.
+
+Furthermore, we may evaluate $\int f_{t'}g d\mu$:
+
+$$ \int f_{t'}g d\mu = \int f_{t'} \text{sign}(f_{t'}(x)) | f_{t'}(x)|^{p-1} d\mu = \int |f_{t'}|^p d\mu = \Vert f_{t'}\Vert_p^p = 1$$
+
+where we use the fact that $f_{t'} * \text{sign}(f_{t'}) = |f_{t'}|$.
+
+Now, looking at $F(t)$, we can expand to find that:
+
+$$ F(t) = \int f_t g d\mu = \int (1-t) f_0 g + t f_1 g d\mu = (1-t) \int f_0 g d\mu + t \int f_1 g d\mu $$
+
+In particular, we see that with respect to $t$, $\int f_0 g d\mu$ and $\int f_1 g d\mu$ are constants, hence $F$ is linear with respect to $t$.
+
+Moreover, again from H\"older's inequality, we see that:
+
+$$ F(t) =  \int f_t g d\mu \leq \int |f_t g | d\mu \leq \Vert f_t\Vert_p \Vert g\Vert_q = \Vert (1-t)f_0 + t f_1 \Vert_p \leq (1-t) \Vert f_0 \Vert_p + t \Vert f_1 \Vert_p = 1 $$
+
+And, of course, at $t'$, $F(t') = 1$. $F(t)$ then is a linear function that attains an extrema within the interior of its (connected) domain, $[0,1]$ and hence is constant; i.e. $F(t) = 1$.
+
+Now, since $F(t) = 1$ for all $0 \leq t \leq 1$, we can conclude from 20.1 that $f_t = \text{sign}(g(x)) | g(x) |^{q-1} = f_0$, for all $t$.
+
+20.3)
+
+Suppose $p=1$, and take our set to be $[0,1]$. Then, we can consider the functions $f_0 = 1, f_1 = 2x$. Of course, these both have unit norm. Looking at the integral, we see that:
+
+$$ \Vert f_t \Vert_1 = \int |f_t| dx = \int (1-t) + 2tx dx = tx^2 + (1-t)x |_{0}^1 = t + (1-t) = 1$$
+
+and hence, strict convexity fails.
+
+Similarly, take $p = \infty$, and take our set to be any measurable set $E$. Let $A \subset E$ be a proper measurable subset, and take $f_0 = \chi_A, f_1 = 1$, where $\chi_A$ takes on $1$ on $A$ and $0$ on $E \setminus A$. Again, $\Vert f_0 \Vert_{\infty} = 1 = \Vert f_1 \Vert_\infty$, clearly. Looking at any points $x \in A$, clearly, for any $t$, $| (1-t)f_0(x) + tf_1(x) | = | (1-t) + t | = 1$, and hence $\Vert f_t \Vert_\infty = 1$ for all $t \in (0,1)$, and strict convexity fails. 
+
+Thus, in such a case, we can only expect to have convexity, where convexity still follows from Minkowski's inequality.
 
 
 \end{proof}
