@@ -1,0 +1,180 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+
+\newenvironment{problem}[2][]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#2}
+\author{Eric Tao\\
+Math 237: Homework \#2}
+\maketitle
+
+\begin{problem}{Question 4}
+
+Let $X$ be the space of $C^1$ functions on $[0,1]$ such that $f(0) = 0$. Define the bilinear function:
+
+$$\langle f, x \rangle = \int_0^1 f'(x) \overline{g'(x)} dx$$
+
+4.1
+
+Prove that $H$, the completion of $X$, is a reproducing kernel Hilbert space.
+
+4.2
+
+Prove that $K(x,y) = \min(x,y)$.
+
+\end{problem}
+\begin{proof}[Solution]
+
+\end{proof}
+
+\begin{problem}{Question 6}
+
+Let $Y = l^1(\mathbb{N})$, and define $X = \{ f \in Y : \sum n |f(n)| < \infty \}$, equipped with the $l^1$ norm.
+
+6.1
+
+Prove that $X$ is a proper dense subspace of $Y$, and hence $X$ is not complete. 
+
+6.2
+
+Define $T: X \to Y$ that sends $f(n) \mapsto nf(n)$. Show that $T$ is a closed map, but not bounded.
+
+6.3
+
+Let $S = T^{-1}$. Prove that $S: Y \to X$ is bounded, surjective, but not open.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+6.1)
+
+Without too much trouble, we can see $X$ is a vector subspace of $Y$. Of course, the sequence of all 0s satisfies this condition. Further, if $f, g \in X$, then, looking at partial sums, we have that:
+
+$$ \sum_{i=1}^k i|f + g(i) | = \sum_{i=1}^k i | f(i) + g(i) | \leq \sum_{i=1}^k i | f(i)| + i|g(i)| = \sum_{i=1}^k i |f(i)| + \sum_{j=1}^\infty j | g(j) |$$  
+
+Since the right side converges as $ k \to \infty$, due to $f, g \in X$, and all quantities being positive, so too must $\sum i |f + g(i)| < \infty$.
+
+Similarly, we can see scalar multiplication as:
+
+$$ \sum_{i=1}^k i |af(i)| = \sum_{i=1}^k i |a| |f(i)| = |a| \sum_{i=1}^k i |f(i)|$$
+
+and again, since the right side converges, so too must the left.
+
+Furthermore, this inclusion is proper. Consider the sequence $\{ 1/n^2 \} \in Y$. Clearly, via the integral test, the series $\sum_{n=1}^\infty 1/n^2 < \infty$. However, on the other hand, $\sum_{n=1}^\infty n 1/n^2 = \sum_{n=1}^\infty 1/n$ diverges, and hence this sequence is not in $X$.
+
+Lastly, we want to show this subspace is dense. Let $g(n)$ be a sequence in $Y \setminus X$. Because we have that $\sum_{n=1}^\infty |g(n)| < \infty$, for every $\epsilon > 0$, there exists $M$ such that for all $m > M$, $\sum_{n=m}^\infty |g(n)| < \epsilon$. Thus, construct the sequence $f$ such that $f(n) = g(n)$ for all $n \leq M$, and $0$ for all $n > M$. Clearly, $f$ resides in $X$, as only finitely many terms are non-0, hence $\sum_{n=1}^\infty n |f(n)|$ is a finite sum, and therefore finite.
+
+Without too much trouble, by definition, we have that:
+
+$$ \Vert f - g \Vert_1 = \sum_{n=1}^\infty |f(n) - g(n)| = \sum_{n=M+1} | -g(n)| < \epsilon $$
+
+Thus, since $\epsilon$ can be as small as we want, for every open ball around our $g \in Y \setminus X$, we may find an $f$ in such an open ball. Hence, $X$ is dense.
+
+However, $X$ cannot be complete then. As above, take a sequence of $f_n \to g$, where $\Vert f_n - g \Vert_1 < 1/n$. Evidently, this is a Cauchy sequence from the argument above, and it converges to an element in $Y \setminus X$.
+
+6.2)
+
+It should be clear that $T$ must be a closed map. If $f_k \to f$, and $T f_k$ is convergent, we show that $Tf_k \to Tf$. Indeed, we see that:
+
+$$ \Vert Tf - Tf_k \Vert_1 = \sum_{n=1}^\infty | Tf(n) - Tf_k(n) | = \sum_{n=1}^\infty |n f(n) - n f_k(n)| = \sum_{n=1}^\infty |n| |f(n)  - f_k(n) | $$
+
+Now, since $f_k \to f$, we have that $\sum_{n=1}^\infty | f(n) - f_k(n) | \to 0$. In particular, that means we can choose $k$ such that for each n, $| f(n) - f_k(n) | < \frac{1}{n} \frac{\epsilon}{2^n}$. Under this choice, the above inequality becomes:
+
+$$ \sum_{n=1}^\infty |n| |f(n)  - f_k(n) | \leq \sum_{n=1}^\infty |n| \frac{1}{n} \frac{\epsilon}{2^n} = \epsilon$$
+
+Thus, we have that $Tf_k \to Tf$, and thus $T$ is closed.
+
+However, it is clear that $T$ is not bounded. Let $f_i$ be the family of sequences with $0$ everywhere, except for at the $i$-th position. Evidently, $\Vert f_i \Vert_1 = 1$. However, $\Vert Tf_i \Vert_1 = i$, and since in this family, we can choose $i$ arbitrarily large, $T$ cannot be bounded.
+
+6.3)
+
+Clearly, $S$ is surjective, since as we saw, $T$ is a map that takes $f \in X$ to $Tf$, and evidently, $S \circ T(f) = f \in X$. Hence, we can always find a sequence in $Y$ that maps to any sequence in $X$.
+
+Moreover, $S$ must be bounded. If we look at the action of $S$, $S$ sends $f(n) \in Y$ to $\frac{1}{n} f(n) \in X$. Evidently then, we have that:
+
+$$ \Vert Sf \Vert_1 = \sum_{k=1}^\infty | 1/k f(k) | \leq \sum_{k=1}^\infty | f(k)| = \Vert f \Vert_1$$
+
+and so $S$ is bounded, at least by $1$.
+
+However, $S$ is certainly not open. By Folland, we may say that $S$ is open if and only if, for $B$ the open ball of radius 1 around 0 in $Y$, $S(B)$ contains a ball centered around $0$ in $X$.
+
+Fix an $i \in \mathbb{N}$. We can then consider the family of sequences $g_i$ such that $g(i) = 2/i$, and 0 otherwise. Evidently, we may find a sequence as close to 0 as we want, since $\Vert g_i \Vert_1 = 2/i$. However, for no $i$ does there exists a $y \in B$ such that $Sy = g_i$, since under the map $T$, we see that $Tg_i(n)$ is $2$ when $n=i$ and $0$ otherwise, outside of $B$. Hence, $S$ is not open.
+
+\end{proof}
+
+\begin{problem}{Question 16}
+
+Define $\operatorname{Lip}[0,1] = \{ f \in C[0,1] : f \text{ is Lipschitz } \}$. For each $n \geq 1$, define $F_n = \{ f \in C[0,1] : |f(x) - f(y)| \leq n | x - y| \text{ for all } x, y \in [0,1] \}$.
+
+16.1
+
+Prove that for each $n \geq 1$, $F_n$ is a closed, nowhere dense subset of $\operatorname{Lip}[0,1]$.
+
+16.2
+
+Conclude that  $\operatorname{Lip}[0,1]$ is a countable union of nowhere dense subsets of $C[0,1]$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+Obviously, $F_n \subset \operatorname{Lip}[0,1]$, as we may just take $n$ to be a Lipschitz constant.
+
+Consider $U_n = (F_n)^c$, the compliment of $F_n$. We wish to show that this set is open.
+
+Let $f \in U_n$. Evidently then, there exists $x, y \in [0,1]$ such that $| f(x) - f(y) | > n | x - y| $. Fix a choice $x_0,y_0$ (where, evidently, $x_0 \not = y_0$ as the inequality always holds then), without loss of generality, we may assume $f(x_0) > f(y_0)$ and otherwise swap labels, and call $d = f(x_0) - f(y_0) - n | x_0 - y_0|$.
+
+Now, let $g$ be in the open ball around $f$ with radius at most $d/2$. From the condition of being in the ball of radius at most $d/2$, we must have that $g(y_0) > g(x_0)$, since $d < | f(x_0) - f(y_0)|$, and hence, from the supremum norm, $g(y_0) \geq f(y_0) - d/2  > [f(x_0) + f(y_0)]/2$ and similarly, $g(x_0) \leq f(x_0) + d/2 < [f(x_0) + f(y_0)]/2$. Thus, we have that at $x_0, y_0$ for $g$, that:
+
+$$ g(y_0) - g(x_0) \geq f(y_0) - d/2  - f(x_0) - d/2  = f(y_0) - f(x_0) - d = n |x_0 - y_0| $$
+
+Since we can arbitrarily shrink the ball to have radius smaller than $d/2$, say $d/3$, this shows that we may find an open ball around any $f \in U_n$, hence $U_n$ is open, and thus $F_n$ is closed.
+
+Now, we need to show that $F_n$ is nowhere dense. Let $f \in F_n$. Let $\epsilon > 0$, and suppose without loss of generality that $f(0) \geq f(\epsilon/n+1)$. Consider the continuous function $g_\epsilon$ such that it takes on $\epsilon$ at 0, joined linearly to $0$ at $\epsilon/n+1$, and constantly $0$ otherwise. Of course, this is continuous, with $\Vert g_\epsilon \Vert_u = \epsilon$. Furthermore, we can consider the function $f + g_\epsilon$, and in particular, compute $f + g_\epsilon(0) - [f + g_\epsilon(\epsilon/n+1)]$. We have that:
+
+$$ f + g_\epsilon(0) - [ f+ g_\epsilon(\epsilon/n+1)] = f(0) - f(\epsilon/n+1) + g_n(0) - g_n(\epsilon/n+1) \geq g_n(0) - g_n(\epsilon/n+1) = \epsilon > \epsilon/n+1$$
+
+where we use the fact that $f(0) \geq f(\epsilon/n+1)$ for one inequality, and the fact that $n \geq 1$ for the other. Hence, $f + g_n$ is not Lipschitz. If $f(0) < f(\epsilon/n+1)$, the same argument holds by taking $-g_\epsilon$.
+
+Since the choice of $f$ was arbitrary, this implies that $F_n$ contains no non-trivial open subsets, and thus, as it is its own closure, $F_n$ is nowhere dense.
+
+Clearly, $\operatorname{Lip}[0,1] = \cup F_n$. We have that $F_n \subseteq \operatorname{Lip}[0,1]$ for each $n$, since we may take $n$ as a Lipschitz constant. Hence, $\cup F_n \subseteq \operatorname{Lip}[0,1]$.
+
+On the other hand, let $g \in \operatorname{Lip}[0,1]$. Then, there exists a constant $K \geq 0$ such that $| g(x) - g(y) | \leq K | x - y | $ for all $x, y \in [0,1]$. Then, since this inequality clearly holds for $K' \geq K$, taking any integer $k \geq K$, we see that $g \in F_k$. Hence, $\operatorname{Lip}[0,1] \subseteq \cup F_n$, and we are done.
+
+\end{proof}
+
+\begin{problem}{Question 17}
+
+Let $f$ be a nonnegative Lebesgue measurable function defined on $\mathbb{R}$. Assume that for all $g \in L^2(\mathbb{R})$, $fg \in L^1(\mathbb{R})$. Prove that $T_f(g) = \int_{\mathbb{R}} gf$ is a bounded linear functional on $L^2$, and conclude that $f \in L^2$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+\end{proof}
+
+
+\begin{problem}{Question 19}
+
+Suppose $\mathcal{B}$ is a Banach space, and let $S$ be a closed proper subspace. Fix some $f_0 \not \in S$. Show that there exists a continuous linear functional $\gamma$ such that $\gamma(f) = 0$ for all $f \in S$, and $\gamma(f_0) = 1$. Moreover, show that we may choose the linear functional such that $\Vert \gamma \Vert = 1/d$, where $d$ is the distance from $f_0$ to $S$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+
+\end{proof}
+
+\end{document}
