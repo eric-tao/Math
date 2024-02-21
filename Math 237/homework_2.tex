@@ -174,7 +174,47 @@ Suppose $\mathcal{B}$ is a Banach space, and let $S$ be a closed proper subspace
 
 \begin{proof}[Solution]
 
+First, we notice that $d$, the distance between $f_0, S$ must be positive as otherwise, we could find a descending series of $s_n$ such that $\Vert f_0 - s_n \Vert \to 0$. In such a case, $S$ being closed would imply that $f_0 \in S$, a contradiction.
 
+Now, consider the vector subspace $T = \operatorname{span}\{ S, f_0 \}$. We claim that for every $t \in T$, there exists a unique representation $t = s_{t} + a_{t} f_0$,  for $s_{t} \in S$ and $a_{t}$ a scalar.
+
+Suppose we had that $s_{t} + a_{t} f_0 = t = s'_t + a'_t f_0$. Then, we must have that $(s_t - s'_t) + (a_t - a'_t) f_0 = 0$. Since $f_0 \not \in S$, we must have that $(s_t - s'_t) = 0, (a_t - a'_t) f_0 = 0$. Hence, we must have that $s_t = s'_t$, and that $a_t - a'_t = 0 \implies a_t = a'_t$.
+
+Now, define a functional $\lambda: T \to F$ that sends $t \mapsto a_t$, where $a_t$ comes from the representation above. Clearly, we see from the representation that this must be linear:
+
+$$ \lambda( t + t') = \lambda(s_t + a_t f_0 + s_{t'} + a_{t'} f_0) = \lambda((s_t + s_{t'}) + (a_t + a_{t'}) f_0) = a_t + a_{t'} = \lambda(t) + \lambda(t')$$
+
+where we've used the fact that $S$ is a subspace to conclude $s_t + s_{t'} \in S$, and:
+
+$$ \lambda(bt) = \lambda(b(s_t + a_t f_0)) =\lambda(bs_t + ba_t f_0) = b a_t = b\lambda(t)$$
+
+and we omit $\lambda(0)  = 0 $, as of course, $ 0 = 0 + 0f_0$. 
+
+Also, certainly, $\lambda |_{S} = 0$, since for any $s \in S$, we have the representation in $T$, $s = s + 0 f_0$, and of course then, $\lambda(s) = 0$. Finally, in a similar fashion, we have that $f_0 = 0 + f_0$, and hence $\lambda(f_0) = 1$.
+
+Thus, we need only show that $\lambda$ is bounded, with norm $\frac{1}{d}$.
+
+Let $t$ be an arbitrary non-0 vector in $T$, with non-0 component of $f_0$, as of course, if that were true, $\lambda(t) = 0$. We notice that, since $t = s_t + a_t f_0 = a_t( a_t^{-1} s_t + f_0)$, that:
+
+$$ \Vert t \Vert = \Vert a_t( a_t^{-1} s_t + f_0) \Vert = | a_t | \Vert (a_t^{-1} s_t + f_0 \Vert$$
+
+and since $a_t^{-1} s_t \in S$ due to being a scalar multiple, we must have that $\Vert a_t^{-1} s_t + f_0 \Vert \geq d$, as $d$ is the infimum of $\Vert f_0 - s \Vert$, and we can always replace $s$ with $-s_t$, as necessary. Hence, using the fact that $a_t = \lambda(t)$, we have that:
+
+$$ \Vert t \Vert \geq |a_t| d = |\lambda(t) | d \implies |\lambda(t)| \leq \frac{1}{d} \Vert t \Vert $$
+
+Since this is true for all $t$, including when $a_t = 0$ due to the observation earlier, we have that $\lambda$ is bounded, and $\Vert \lambda \Vert_{T^*} \leq \frac{1}{d}$ by definition.
+
+Now, again, since $d$ is the infimum of $\Vert f_0 - s \Vert$ for $s \in S$, we may find $\{ s_n \} \subset S$ such that $\Vert f_0 - s_n \Vert \to d$. Then, considering the action of lambda on each of these, we have that:
+
+$$ 1 = | \lambda(f_0) | = | \lambda(f_0 - s_n) |   \leq \Vert \lambda \Vert_{T^*} \Vert f_0 - s_n \Vert_T  $$
+
+Taking the limit as $n \to \infty$ then, we retrieve the inequality
+
+$$ 1 \leq \Vert \lambda \Vert_{T^*} d \implies \Vert \lambda \Vert_{T^*} \geq \frac{1}{d}$$
+
+Hence, $\Vert \lambda \Vert_{T^*} = \frac{1}{d}$.
+
+Now, by Corollary 2.2 in Heil, since $\mathcal{B}$ is a Banach space, $T$ a subspace of $\mathcal{B}$, $\lambda \in T^*$, there exists a $\gamma \in \mathcal{B}^*$ such that $\gamma(f_0) = \lambda(f_0) = 1$, $\gamma(s) = \lambda(s) = 0$ for all $s \in S$, and $\Vert \gamma \Vert_{\mathcal{B}^*} = \Vert \lambda \Vert_{T^*} = \frac{1}{d}$ as desired.
 \end{proof}
 
 \end{document}
