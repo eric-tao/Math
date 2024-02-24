@@ -163,6 +163,60 @@ Let $f$ be a nonnegative Lebesgue measurable function defined on $\mathbb{R}$. A
 
 \begin{proof}[Solution]
 
+First, we use the $\sigma$-finiteness of $\mathbb{R}$, and consider the compact sets $E_i = [ -i, i ]$. Additionally, for each $E_i$, we define $f_n$ in the following fashion:
+
+$$ f_n(x) = \begin{cases} 0 & x \not \in E_n \\ \min(f(x), n) & x \in E_n \end{cases}$$
+
+Certainly, if $f$ is measurable, so too are each $f_n$, as if we look at, for $a > 0$, $\{ f_n > a \}$, if $ a \geq n$, then this is exactly $\{ f \geq n \}$, if $ a < n$, then it aligns exactly with $ \{ f > a \}$. And lastly, if $a \leq 0$, then the preimage is the entire codomain, hence still measurable.
+
+Moreover, each $f_n$ is clearly in $L^2$, as it has compact support, contained within $E_n$, and is bounded above by $n$. Hence, we can say that:
+
+$$ \Vert f_n \Vert_2^2 = \int_{\mathbb{R}} f_n = \int_{E_n} f_n \leq \int_{E_n} n = 2n^2 < \infty $$
+
+Now, consider the family of linear functionals determined as:
+
+\begin{align*}
+T_n: & L^2(\mathbb{R}) \to \mathbb{R} \\
+T_n: & g \mapsto \int f_n g
+\end{align*}
+
+where this is clearly linear in terms of $g$, due to the linearity of the integral and distributivity of mutliplication.
+
+%Since $f_n \leq f$ everywhere, we have that $|f_n g | \leq |fg|$ everywhere. Hence, we have that $\int f_n g \leq \int fg < \infty$, due to $fg \in L^1$, and so $f_n g \in L^1$.
+
+By H\"older's inequality then, since $f_n, g \in L^2$, we have that:
+
+$$ \Vert f_n g \Vert_1 \leq \Vert f_n \Vert_2 \Vert g \Vert_2$$
+
+However, we've already computed $\Vert f_n \Vert_2 \leq 2n^2$. Hence, we have that:
+
+$$ | T_n(g) | = \left| \int f_n g \right| \leq \int |f_n g | = \Vert f_n g \Vert_1 \leq \Vert f_n \Vert_2 \Vert g \Vert_2 \leq 2n^2 \Vert g \Vert_2 $$
+
+Hence, for each $n$, $T_n$ is a bounded linear functional, with norm at most $2n^2$.
+
+Now, fix any $g \in L^2$, and consider $| T_n(g)|$ again. For every $n$, we have that due to the fact that $f_n \leq f$ everywhere:
+
+$$ | T_n(g) | = \left| \int f_n g \right | \leq \int | f_n g |  \leq \int |f||g| = \Vert fg \Vert_1 < \infty $$
+
+Since this is true for all $n$, we may conclude that for all $g \in L^2$, that $\sup_{n} | T_n(g) | < \infty$. Since $L^2$ is a Banach space, we may now apply the Uniform Boundedness Principle and conclude that
+
+$$ \sup_{n} \Vert T_n \Vert < \infty$$
+
+Thus, we need only show that $ \Vert T_f \Vert = \sup_{n} \Vert T_n \Vert$. Of course, $f_ng \to fg$ almost everywhere, by the definition of $f_n$, and further, $fg$ itself is integrable and then so is $|fg|$, and $| f_n g | \leq |fg|$ by the definition of $f_n$. Hence, we may use an application of the Dominated Convergence Theorem, as well as picking an arbitrary $g \in L^2$ with $\Vert g \Vert = 1$, to see that:
+
+%$$\lim_{n \to \infty} T_n(g) = \lim_{n \to \infty} \int |f_n g| = \int |fg| = T_f(g)$$
+
+%Since this is true for all $g \in L^2$, we may restrict ourselves to where $\Vert g \Vert_2  = 1$, and so we have that:
+
+$$ | T_f(g) | = \left| \int fg \right| = \left|  \lim_{n \to \infty} \int f_n g \right| = \left| \lim_{n \to \infty} T_n(g) \right| = \lim_{n \to \infty} | T_n(g)| \leq \lim_{n \to \infty} \Vert T_n \Vert \leq \sup_{n} \Vert T_n \Vert$$
+
+Since this is true for all $g \in L^2$ with unit norm, we may conclude then that $\Vert T_f \Vert \leq \sup_{n} \Vert T_n \Vert$. However, earlier, we already showed that $|T_n(g)| \leq |T_f(g)|$ due to the fact that $f_n \leq f$ everywhere. Hence, we have that $\Vert T_f \Vert = \sup_{n} \Vert T_n \Vert < \infty$, and hence $T_f$ is a bounded linear functional. 
+
+Now, by the Riesz Representation Theorem, since $L^2$ is a Hilbert space, this implies that we may find an $h \in L^2$ such that $T_n(g) = \langle g, h \rangle$. In particular then, we have that:
+
+$$ T_n(g) = \int fg = \langle g, h \rangle = \int gh \implies \int fg - \int gh = 0 \implies \int g(f-h) = 0 \implies f = h \; a.e.$$
+
+Where because this works for all $g \in L^2$, we are free to pick $g$ to be non-negative, and $f = h$ follows because this single function $h$ must work regardless of the choice of $g$. Hence, $f$ may be identified as a member of an equivalence class in $L^2$.
 \end{proof}
 
 
