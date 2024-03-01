@@ -26,7 +26,7 @@ $$\langle f, x \rangle = \int_0^1 f'(x) \overline{g'(x)} dx$$
 
 4.1
 
-Prove that $H$, the completion of $X$, is a reproducing kernel Hilbert space.
+Prove that $\mathcal{H}$, the completion of $X$, is a reproducing kernel Hilbert space.
 
 4.2
 
@@ -34,6 +34,66 @@ Prove that $K(x,y) = \min(x,y)$.
 
 \end{problem}
 \begin{proof}[Solution]
+
+4.1)
+
+We see quickly that due to the linearity of the integral, that this bilinear function is linear in at least the first argument. Moreover, if we consider $\langle g, f \rangle$, denoting $g = g_1 + i g_2, f = f_1 + i f_2$, we see that:
+
+$$ \langle g, f \rangle = \int_0^1 g' \overline{f'} = \int_0^1 (g_1' + i g_2') \overline{f_1' + i f_2'} = \int_0^1 (f_1' g_1' + f_2' g_2') + i(g_2' f_1' - g_1' f_2') =$$
+
+$$ \int_0^1 (f_1' g_1' + f_2' g_2')   + i \int_0^1 (g_2' f_1' - g_1' f_2') = \overline{  \int_0^1 (f_1' g_1' + f_2' g_2')   - i \int_0^1 (g_2' f_1' - g_1' f_2') } = $$
+
+$$\overline{ \int_0^1  (f_1' g_1' + f_2' g_2')   - i (g_2' f_1' - g_1' f_2') } =\overline{\int_0^1 (f_1' + i f_2') \overline{(g_1' + i g_2')}  } = \overline{ \langle f, g \rangle }$$
+
+as desired. Finally, of course, we have that $\langle f, f \rangle = \int f' \overline{f'} = \int |f'|^2 \geq 0 $ since $|f'|^2 \geq 0$ regardless of $x, f$. Furthermore, we have that this integral is 0 if and only if $|f'|^2 = 0$ for all $x$. But, since $f(0) = 0$, this implies that $\int_0^1 |f'|^2 =  0$ if and only if $f = 0$. Hence, we can see that $X$ equipped with this function is a pre-Hilbert space.
+
+First, restrict ourselves to $f \in X$, and fix any $x \in [0,1]$. We wish to show that $|f(x)| \leq C_x \sqrt{ \langle f, f \rangle }$ for some constant $C_x > 0$.
+
+By the Fundamental Theorem of calculus, we have that
+
+$$ | f(x) | \leq \left| \int_0^x f'(y) dy \right| \leq \int_0^x | f'(y)| dy \leq \int_0^1 | f'(y)| dy $$
+
+where the final inequality is reasonable since $|f'(y)| \geq 0$ for all $y \in [0,1]$, and $[0,x] \subseteq [0,1]$.
+
+Now, using the fact that the constant function $1$ is a $L^2$ function on $[0,x]$, we have that by H\"older's inequality
+
+$$ \int_0^1 | f'(y) * 1| dy  \leq \sqrt{\int_0^1 |f'(y)|^2} \sqrt{\int_0^1 |1|^2} =  \sqrt{\int_0^1 |f'(y)|^2} = \sqrt{\langle f, f \rangle }$$
+
+and therefore, for any $x$, we may choose $C_x = 1$.
+
+Now, we need to make an argument for the completion of $X$. Let $f_n \in \mathcal{H} \setminus X$, and take a sequence $f_n \to f$ such that $f_n \in X$ for each $n$. We notice that since $|f(x)| \leq \Vert f \Vert$, then $| f_m(x) - f_n(x) | \leq \Vert f_m - f_n \Vert$ for all $x$, as $f_n$ must be Cauchy. Hence, $\Vert f_m - f_n \Vert_u \leq \Vert f_m - f_n \Vert$, and $f_m, f_n$ actually uniformly converges to $f$, and thus pointwise converges.
+
+Thus, we can say that since $|f_n(x)| \leq \Vert f_n \Vert$ for each $n$, due to both pointwise convergence on the left, and the continuity of the norm in a Hilbert space, we may take the limit of both sides and conclude that $|f(x)| \leq \Vert f \Vert$. 
+
+4.2)
+
+Fix any $x \in [0,1]$. We notice that the function $L_x: \mathcal{H} \to \mathbb{R}$ that sends $f \mapsto f(x)$ is a bounded linear functional, linear due to how evaluating the sum of functions is just the sum of the evaluations, and bounded due to 4.1. Hence, by the Riesz Representation Theorem, there exists a unique element $k_x \in \mathcal{H}$ for each $L_x$ such that:
+
+$$ L_x(f) = \langle f, k_x \rangle$$
+
+We claim that the function $k_x(y) = \max(x,y)$ satisfies this condition. To see that this belongs to $\mathcal{H}$, we consider the family of functions $g_n \in C^1$ given by:
+
+$$ g_n(y) = \begin{cases} y & y \leq x - 1/n \\ x &   x+ 1/n \leq y \leq 1 \end{cases} $$
+
+and for $x - 1/n < y < x + 1/n$, we smoothly join the point $(x-1/n, x-1/n)$ to the point $(x+1/n, 1)$. Evidently, $g_n = k_x$ on $[0,x-1/n] \cup [x+1/n, 1]$. Hence, we have that:
+
+$$ \Vert g_n - k_x \Vert^2 = \int_0^1 (g_n' - k_x')^2 = \int_{[x-1/n, x+1/n]} (g_n' - k_x')^2  $$
+
+Since by definition, $g_n', k_x'$ range from $0, 1$ since they both are $1$ on $[0, x-1/n]$ and $0$ on $[x+ 1/n, 1]$, we must have that $(g_n' - k_x')^2 \leq 1^2 = 1$. Hence, we have that:
+
+$$ \int_{[x-1/n, x+1/n]} (g_n' - k_x')^2 \leq 2/n $$
+
+Taking $n \to \infty$, we see that $\Vert g_n - k_x \Vert^2 \to 0$, and hence, since $\mathcal{H}$ is complete under its norm, $k_x \in \mathcal{H}$.
+
+Now, let $f$ be any function in $C^1$. Then, we may evaluate, since $k'_x(y) = y$  on $[0,x)$ and $x$ on $(x,1]$, with a discontinuity at $x$, a set of measure 0, we have that: 
+
+$$\langle f, k_x \rangle = \int_0^1 f' \overline{k_x'} = \int_0^x f' = f(x) - f(0) = f(x)$$
+
+as desired. Similarly, if $f \in \mathcal{H} \setminus C^1$, then we may take a sequence of $f_n \in C^1$ such that $f_n \to f$ in $\mathcal{H}$. By the work done in the previous section, $f_n \to f$ pointwise as well and due to the continuity of the inner product in both arguments, because we have that $f_n(x) = \langle f_n, k_x \rangle$, taking the limit on both sides as $n \to \infty$, we have that:
+
+$$ f(x) = \langle f, k_x \rangle $$
+
+Since the kernel $K(x,y)$ is the function $K: \mathcal{H} \times \mathcal{H}  \to \mathcal{H}$ that sends $(x,y) \mapsto k_x(y)$, from the work done with $k_x$, we can see that the kernel is exactly $K(x,y)= \max(x,y)$ as desired.
 
 \end{proof}
 
