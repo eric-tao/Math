@@ -229,6 +229,25 @@ $$ A(u, v-u) \geq \langle f, v - u \rangle $$
 
 \begin{proof}[Solution]
 
+First, we show that if $\langle x - z, y - z \rangle \leq 0$, then we get that $\Vert x - z \Vert = \min \Vert x - y \Vert$.
+
+We have the following sequence of equalities, for arbitrary $y$:
+
+$$ \langle x - z, y - z \rangle = \langle x - z, y + (x - x) - z \rangle = \langle x - z, x - z \rangle + \langle x - z, y - x \rangle = \Vert x - z \Vert^2 + \langle x - z, y - x\rangle$$
+
+Then, we have that:
+
+$$ \langle x - z, y - z \rangle \leq 0 \implies \Vert x - z \Vert^2 + \langle x - z, y - x\rangle \leq 0 \implies \Vert x - z \Vert^2 \leq -\langle x - z, y - x\rangle $$
+
+Since the norm is positive, we may harmlessly replace $\langle x - z, y - x \rangle $ with its absolute value. Then, by the Cauchy-Schwarz inequality, we retrieve:
+
+$$ \Vert x - z \Vert^2 \leq \Vert x - z \Vert \Vert y - x \Vert  \implies \Vert x - z \Vert \leq \Vert y - x \Vert = \Vert x - y \Vert$$
+
+Since this is true for all $y \in K$, including $z$ itself, we conclude that $\Vert x - z \Vert = \min_{y \in K } \Vert x - y \Vert$.
+
+
+
+
 
 
 
