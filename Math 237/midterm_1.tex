@@ -99,6 +99,18 @@ Let $X, Y$ be Banach spaces. Let $T \in L(X,Y)$. Show that $T$ is surjective if 
 
 One direction is trivial. Suppose $T$ is surjective. Then, $Y = \operatorname{range}(T)$. But, by the Baire Category Theorem (2.21, Heil), $Y$ is nonmeager in $Y$, and we are done.
 
+Now, suppose $\operatorname{range}(T)$ is not meager. Consider open balls in $X$ centered on the origin, $B_n^X(0) = \{ x \in X : \Vert x \Vert < n \}$, where we use the superscript to remind ourselves this is in $X$. Clearly, $X = \cup_{n=1}^\infty B_n^X(0)$. Therefore, we have that the range of $T$ can be expressed as:
+
+$$ \operatorname{range}(T) = \cup_{n=1}^\infty T(B_n^X(0)) $$
+
+Since $T$ is non-meager, there exists an $m$ such that the closure $\overline{T(B_m^X(0)}$ contains an open ball, as its complement is not dense. We can consider the operator $mT$, and the closure $\overline{mT(B_1^X(0))}$ contains an open ball in $Y$, as $T(B_m^X(0) = mT(B_1^X(0))$ by linearity. Then, by Lemma 2.26 in Heil, we have that $mT(B_1^X(0))$ contains an open ball $B_r^Y(0)$ for some $r > 0$. Again, by linearity then, we have that $T(B_m^X(0)$ contains an open ball $B_{r/m}^Y(0)$.
+
+So now, let $y \in Y$. In particular, consider $\frac{y}{\Vert y \Vert} * \frac{r}{2m}$. Evidently, the norm of this vector is $r/2m$, and hence is contained within $B_{r/m}^Y(0)$. Thus, there exists an $x \in X$ such that $T(x) = \frac{y}{\Vert y \Vert} * \frac{r}{2m}$. By linearity then, we have that:
+
+$$T\left( \frac{2mx \Vert y \Vert}{r} \right) = \frac{2m\Vert y \Vert}{r} T(x) =  \frac{2m\Vert y \Vert}{r} \frac{y}{\Vert y \Vert}  \frac{r}{2m} = y$$
+
+Hence, $Y \subseteq \operatorname{range}(T)$, and therefore, $Y = \operatorname{range}(T)$. Thus, $T$ is surjective. 
+
 \end{proof}
 
 \begin{problem}{Question 3}
@@ -229,6 +241,8 @@ $$ A(u, v-u) \geq \langle f, v - u \rangle $$
 
 \begin{proof}[Solution]
 
+4.1)
+
 First, we show that if $\langle x - z, y - z \rangle \leq 0$, then we get that $\Vert x - z \Vert = \min \Vert x - y \Vert$.
 
 We have the following sequence of equalities, for arbitrary $y$:
@@ -245,7 +259,112 @@ $$ \Vert x - z \Vert^2 \leq \Vert x - z \Vert \Vert y - x \Vert  \implies \Vert 
 
 Since this is true for all $y \in K$, including $z$ itself, we conclude that $\Vert x - z \Vert = \min_{y \in K } \Vert x - y \Vert$.
 
+Now, suppose that $z \in K$ is such that $\Vert x - z \Vert = \min_{y \in K} \Vert x - y \Vert$. By convexity, for any $y \in K$, we may reexpress $y = (1-t)z + tw$ for at least some $w \in K, t \in [0,1]$, hence, we have that:
 
+$$ \Vert x - z \Vert \leq \Vert x - (1-t)z + tw \Vert = \Vert x - z - t(w - z) \Vert $$
+
+We may safely square both sides and examine the inner product instead. Thus, we have that:
+
+$$ \langle x - z, x - z \rangle \leq \langle x - z - t(w - z), x - z - t(w - z) \rangle $$
+
+Using the linearity and conjugate linearity of the inner product, we see that the RHS can be rewritten as:
+
+$$   \langle x - z - t(w - z), x - z - t(w - z) \rangle = \langle x - z, x - z \rangle -  t\langle x - z, w - z \rangle - t \langle  w - z, x - z \rangle + t^2 \langle w - z, w - z \rangle$$
+
+Hence, we have that:
+
+$$  \langle x - z, x - z \rangle \leq \langle x - z - t(w - z), x - z - t(w - z) \rangle  \implies \langle x - z, w - z \rangle + \langle w - z, x - z \rangle \leq t \langle w - z , w - z \rangle $$
+
+Wait, uhhhh.
+
+4.2.1)
+
+Let $u  \in \mathcal{H}$. By the bilinearity of $A$, we have that:
+\begin{center}
+\begin{tabular}{c c} $A_u : \mathcal{H} \to \mathbb{R}$ & $A_u: v \mapsto A(u,v) $\end{tabular}
+\end{center}
+
+is a linear functional on $\mathcal{H}$. Moreover, since $A$ is continuous, it is continuous in each variable, and hence $A_u$ is a continuous linear functional. Thus, since $\mathcal{H}, \mathbb{R}$ are normed linear spaces, and $A_u$ is a continuous linear operators, $A_u$ is bounded (1.63, Heil).
+
+Since $\mathcal{H}$ is a Hilbert space, we can identify a $w_u$ such that $A_u(v) = \langle v, w_u \rangle$ by the Riesz Representation Theorem (Folland, 5.25). Since $A$ is real-valued, we can freely pick $w_u$ to be in the first or second argument due to conjugate symmetry - we will from now on use $A_u(v) = \langle w_u, v\rangle$.
+
+So now, we may define $T: \mathcal{H} \to \mathcal{H}$ that sends $u \mapsto w_u$. Evidently, due to the bilinearity of $A$, $T$ is linear:
+
+$$\begin{cases} \langle T(u + u'), v \rangle = A(u + u', v) = A(u, v) + A(u', v) = \langle T(u), v \rangle + \langle T(u'), v \rangle \\ \langle T(ku), v \rangle =A(ku, v) = k A(u, v) = k \langle T(u), v \rangle \end{cases} $$ 
+
+By the Cauchy-Schwarz inequality:
+
+$$\alpha \Vert f \Vert^2 \leq A(f,f) = \langle Tf, f \rangle \leq \Vert Tf \Vert \Vert f \Vert \implies \alpha \Vert f \Vert \leq \Vert Tf \Vert $$
+
+4.2.2)
+
+First of all, using the equivalent statement in 4.1, we see that:
+
+$$ \langle \rho f - \rho Tv + v - S_\rho(v), y - S_\rho(v) \rangle \leq 0$$
+
+for every $y \in K$.
+
+Then, letting $v_1, v_2 \in \mathcal{H}$, we have the following statements:
+
+$$ \begin{cases} \langle \rho f - \rho Tv_1 + v_1 - S_\rho(v_1), S_\rho(v_2) - S_\rho(v_1) \rangle \leq 0 \\ \langle \rho f - \rho Tv_2 + v_2 - S_\rho(v_2), S_\rho(v_1) - S_\rho(v_2) \rangle \leq 0 \end{cases}$$
+
+Summing these equations then, and pulling out a factor of $-1$ from the second argument in the second equation, we find that:
+
+$$ \langle \rho f - \rho Tv_1 + v_1 - S_\rho(v_1) -  \rho f + \rho Tv_2 - v_2 + S_\rho(v_2), S_\rho(v_2) - S_\rho(v_1) \rangle \leq 0  \implies $$
+
+$$ \langle \rho T(v_2 - v_1) + v_2 - v_1 + S_\rho(v_2) - S_\rho(v_1), S_\rho(v_2) - S_\rho(v_1) \rangle \leq 0  \implies \langle \rho T(v_2 - v_1) + v_2 - v_1 + S_\rho(v_2) - S_\rho(v_1), S_\rho(v_1) - S_\rho(v_2) \rangle \geq 0$$
+
+where we've used the linearity of $T$, and then multiplied through by $-1$, bringing it into the second argument.
+
+We examine the square of the norm, to leverage the inner product.
+
+We have that:
+
+$$ \langle S_\rho(v_1) - S_\rho(v_2),S_\rho(v_1) - S_\rho(v_2) \rangle \leq $$
+
+$$ \langle S_\rho(v_1) - S_\rho(v_2),S_\rho(v_1) - S_\rho(v_2) \rangle +  \langle \rho T(v_2 - v_1) + v_2 - v_1 + S_\rho(v_2) - S_\rho(v_1), S_\rho(v_1) - S_\rho(v_2) \rangle =   $$
+
+$$  \langle  S_\rho(v_1) - S_\rho(v_2) + \rho T(v_2 - v_1) + v_2 - v_1 + S_\rho(v_2) - S_\rho(v_1), S_\rho(v_1) - S_\rho(v_2) \rangle = $$
+
+$$ \langle \rho T(v_2 - v_1) + v_2 - v_1, S_\rho(v_1) - S_\rho(v_2) \rangle \leq \Vert \rho T(v_2 - v_1) + v_2 - v_1 \Vert \Vert  S_\rho(v_1) - S_\rho(v_2)  \Vert$$
+
+where we add the positive quantity determined above in line 2, and the final inequality comes from the Cauchy-Schwarz inequality.
+
+Hence, we conclude that:
+
+$$ \Vert  S_\rho(v_1) - S_\rho(v_2)  \Vert^2 \leq \Vert \rho T(v_2 - v_1) + v_2 - v_1 \Vert \Vert  S_\rho(v_1) - S_\rho(v_2)  \Vert \implies  \Vert  S_\rho(v_1) - S_\rho(v_2)  \Vert \leq \Vert \rho T(v_2 - v_1) + v_2 - v_1 \Vert $$
+
+But now, let's examine the right side a bit more. By the triangle inequality and the definition of the operator norm, we find that:
+
+$$ \Vert \rho T(v_2 - v_1) + v_2 - v_1 \Vert \leq \Vert \rho T(v_2 - v_1) \Vert +  \Vert v_2 - v_1 \Vert \leq (\rho \Vert T \Vert + 1) \Vert v_2 - v_1 \Vert $$
+
+Clearly something has gone horribly wrong.
+
+4.2.3)
+
+By definition then, since the $\rho$ in 4.2.2 gives rise to a $k \in (0,1)$ such that $ \Vert  S_\rho(v_1) - S_\rho(v_2)  \Vert \leq k  \Vert v_1 - v_2 \Vert$, we see that $S_\rho$ is a contraction on the metric. Hence, by the Banach fixed-point Theorem, there exists a unique fixed point $u \in K$ such that $S_\rho(u) = u$.
+
+4.2.4)
+
+Identifying $ \rho f - \rho T u + u$ as $x$, $P( \rho f - \rho T u + u) = z = S_\rho(u) = u$, and renaming $y$ to $v$, we see that:
+
+$$\langle \rho f - \rho Tu + u - u, v - u \rangle \leq 0 \implies \langle \rho f - \rho Tu, v - u \rangle \leq 0$$
+
+4.2.5)
+
+Ok, from here, consider $\rho A(u, v - u)$, where $\rho$ is small enough such that we may find $u$, the unique fixed point associated to $S_\rho$ determined by $f$. From 4.2.1, we have that:
+
+$$ \rho A(u, v -u) = \rho \langle Tu, v - u \rangle = \langle \rho f - \rho f + \rho T u, v - u \rangle = $$
+
+$$ \rho \langle f, v - u \rangle + \langle - \rho f + \rho Tu, v - u \rangle$$
+
+But, from 4.2.4, we see that:
+
+$$ \langle - \rho f + \rho Tu, v - u \rangle  = -  \langle \rho f - \rho Tu, v - u \rangle \geq 0 $$
+
+Hence, we conclude that:
+
+$$ \rho \langle f, v - u \rangle \leq \rho A(u, v - u) \implies \langle f, v - u \rangle \leq A(u, v - u) $$
 
 
 
