@@ -275,11 +275,11 @@ Hence, we have that:
 
 $$  \langle x - z, x - z \rangle \leq \langle x - z - t(w - z), x - z - t(w - z) \rangle  \implies \langle x - z, w - z \rangle + \langle w - z, x - z \rangle \leq t \langle w - z , w - z \rangle $$
 
-Well, ok, assuming that $\langle x - z, w - z \rangle$ is purely real, then as we vary $t$, since the inner products are constants, this must hold for all $t \in (0,1]$, and hence, we have that:
+Assuming that $\langle x - z, w - z \rangle$ is purely real as we live in a real Hilbert space, then as we vary $t$, since the inner products are constants, this must hold for all $t \in (0,1]$, and hence, we have that:
 
-$$ 2 \langle x - z, w - z \rangle \leq 0$$
+$$ 2 \langle x - z, w - z \rangle \leq 0 \implies \langle x - z, w - z \rangle \leq 0 $$
 
-as desired. I'm not sure why that inner product is purely real.
+as desired.
 
 4.2.1)
 
@@ -296,15 +296,15 @@ So now, we may define $T: \mathcal{H} \to \mathcal{H}$ that sends $u \mapsto w_u
 
 $$\begin{cases} \langle T(u + u'), v \rangle = A(u + u', v) = A(u, v) + A(u', v) = \langle T(u), v \rangle + \langle T(u'), v \rangle = \langle T(u) + T(u'), v \rangle \\ \langle T(ku), v \rangle =A(ku, v) = k A(u, v) = k \langle T(u), v \rangle \end{cases} $$ 
 
-%Now, we wish to use the closed graph theorem to show that this is actually continuous, and hence, bounded.
+Now, we wish to use the closed graph theorem to show that this is actually continuous, and hence, bounded.
 
-%Let $f_n \to f$, and $Tf_n \to g$. Consider $A(f - f_n, f - f_n)$. We have the following sequence of equalities and inequalities: 
+Let $f_n \to f$, and $Tf_n \to g$. Consider $A(f - f_n, f - f_n)$. We have the following sequence of equalities and inequalities: 
 
-%$$  \Vert T(f - f_n) \Vert \Vert f - f_n \Vert  \geq \langle T(f - f_n), f - f_n \rangle=A(f - f_n, f - f_n) \geq \Vert f - f_n \Vert_2^2 \alpha $$
+$$  \Vert T(f - f_n) \Vert \Vert f - f_n \Vert  \geq \langle T(f - f_n), f - f_n \rangle=A(f - f_n, f - f_n) \geq \Vert f - f_n \Vert_2^2 \alpha $$
 
-%which is not helpful.
+which is not helpful.
 
-%Now, by the Baire Category Theorem, since we can write $\mathcal{H} = \cup_{n=1}^\infty B_n(0)$, there exists a $N$ such that $B_N(0)$ is non-meagre. 
+Now, by the Baire Category Theorem, since we can write $\mathcal{H} = \cup_{n=1}^\infty B_n(0)$, there exists a $N$ such that $B_N(0)$ is non-meagre. 
 
 4.2.2)
 
