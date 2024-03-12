@@ -298,15 +298,39 @@ So now, we may define $T: \mathcal{H} \to \mathcal{H}$ that sends $u \mapsto w_u
 
 $$\begin{cases} \langle T(u + u'), v \rangle = A(u + u', v) = A(u, v) + A(u', v) = \langle T(u), v \rangle + \langle T(u'), v \rangle = \langle T(u) + T(u'), v \rangle \\ \langle T(ku), v \rangle =A(ku, v) = k A(u, v) = k \langle T(u), v \rangle \end{cases} $$ 
 
-Now, we wish to use the closed graph theorem to show that this is actually continuous, and hence, bounded.
+%Now, we wish to use the closed graph theorem to show that this is actually continuous, and hence, bounded.
 
-Let $f_n \to f$, and $Tf_n \to g$. Consider $A(f - f_n, f - f_n)$. We have the following sequence of equalities and inequalities: 
+%Let $f_n \to f$, and $Tf_n \to g$. Consider $A(f - f_n, f - f_n)$. We have the following sequence of equalities and inequalities: 
 
-$$  \Vert T(f - f_n) \Vert \Vert f - f_n \Vert  \geq \langle T(f - f_n), f - f_n \rangle=A(f - f_n, f - f_n) \geq \Vert f - f_n \Vert_2^2 \alpha $$
+%$$  \Vert T(f - f_n) \Vert \Vert f - f_n \Vert  \geq \langle T(f - f_n), f - f_n \rangle=A(f - f_n, f - f_n) \geq \Vert f - f_n \Vert_2^2 \alpha $$
 
-which is not helpful.
+%which is not helpful.
 
-Now, by the Baire Category Theorem, since we can write $\mathcal{H} = \cup_{n=1}^\infty B_n(0)$, there exists a $N$ such that $B_N(0)$ is non-meagre. 
+%Now, by the Baire Category Theorem, since we can write $\mathcal{H} = \cup_{n=1}^\infty B_n(0)$, there exists a $N$ such that $B_N(0)$ is non-meagre. 
+
+Now, we wish to show that $T$ is bounded. First, restrict ourselves to $u \in \mathcal{H}$ such that $\Vert u \Vert =1$, and consider the related family of operators as defined above $A_u$.
+
+Fix any $v \in \mathcal{H}$, and consider $\sup_{\Vert u \Vert = 1} \Vert A_u(v) \Vert$. By considering the related bounded linear function $\tilde{A}_v: \tilde{A}_v(u) = A(u, v)$, bounded and linear for the same reasons as $A_u$ due to the bilinearity and continuity of $A$, we can see that:
+
+$$\sup_{\Vert u \Vert = 1} \Vert A_u(v) \Vert = \sup_{\Vert u \Vert = 1} \Vert \tilde{A}_v(u) \Vert = \Vert \tilde{A}_v \Vert < \infty$$
+
+Since we may repeat this argument for each fixed $v$, we satisfy the conditions for the uniform boundedness principle. Hence, we have that:
+
+$$ \sup \Vert A_u \Vert < \infty $$
+
+Call this supremum $N_A$.
+
+Now, for each $u$ then, we may consider the value of $A_u(Tu)$. We have the following sequence of inequalities:
+
+$$ \Vert Tu \Vert^2 = \langle Tu, Tu \rangle=A_u(Tu) \leq \Vert A_u \Vert \Vert Tu \Vert \leq N_A \Vert Tu \Vert$$
+
+which of course, implies that:
+
+$$ \Vert Tu \Vert \leq N_A < \infty$$
+
+Since this is true for arbitrary unit norm $u$, this is true for all, and hence, $T$ is bounded.
+
+Somehow, I didn't use the $\alpha$ condition, and now I'm confused.
 
 4.2.2)
 
@@ -350,7 +374,7 @@ But now, let's examine the right side a bit more. By the triangle inequality and
 
 $$ \Vert \rho T(v_2 - v_1) + v_2 - v_1 \Vert \leq \Vert \rho T(v_2 - v_1) \Vert +  \Vert v_2 - v_1 \Vert \leq (\rho \Vert T \Vert + 1) \Vert v_2 - v_1 \Vert $$
 
-Clearly something has gone horribly wrong.
+Clearly, this bound isn't good enough hrm.
 
 4.2.3)
 
