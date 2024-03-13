@@ -18,6 +18,13 @@
 Math 237: Midterm \#1}
 \maketitle
 
+\begin*{}
+The Tufts University statement on academic integrity holds that: “Academic integrity is the joint responsibility of faculty, students, and staff. Each member of the community is responsible for integrity in their own behavior and for contributing to an overall environment of integrity at the university.”  I accept this responsibility, affirm that I am an honest person who can be trusted with to do the right thing, and certify that the work I will do on this exam is mine alone. I pledge that I have used only the reference sources I have cited in my answers.
+
+Digital Signature: Eric Tao
+\end*{}
+\pagebreak
+
 \begin{problem}{Question 1}
 
 Let $(X, \rho)$ be a compact metric space, and $f: X \to X$ a function such that:
@@ -88,7 +95,7 @@ Another example is to take the open interval $(0,1)$, equipped with the standard
 We can see $g$ does not have a minimum as for any $\epsilon > 0$, we may choose $N \geq 1$ such that $1/N < \epsilon$. Then, $g(1/N) = \rho(1/N, f(1/N)) = | 1/N - 1/2N | = 1/2N < 1/N < \epsilon$. Hence, $g(x)$ can be arbitrarily small. However, we can see that for $x = 1/2x$, this is satisfied only at $x = 0$, outside of $(0,1)$. Hence, there is no $x$ such that $g(x) = 0$ on $(0,1)$, and no fixed point of $f$ on $(0,1)$.
 
 \end{proof}
-
+\pagebreak
 \begin{problem}{Question 2}
 
 Let $X, Y$ be Banach spaces. Let $T \in L(X,Y)$. Show that $T$ is surjective if and only if $\operatorname{range}(T)$ is not meager in $Y$.
@@ -112,7 +119,7 @@ $$T\left( \frac{2mx \Vert y \Vert}{r} \right) = \frac{2m\Vert y \Vert}{r} T(x) =
 Hence, $Y \subseteq \operatorname{range}(T)$, and therefore, $Y = \operatorname{range}(T)$. Thus, $T$ is surjective. 
 
 \end{proof}
-
+\pagebreak
 \begin{problem}{Question 3}
 
 Let $C_b(\mathbb{R})$ be the space of bounded, continuous, real-valued functions. Let $C^1_b(\mathbb{R})$ be the space of functions such that $f, f' \in C_b(\mathbb{R})$. Equip both of these spaces with the uniform norm.
@@ -175,12 +182,12 @@ and finally, we can apply $D$ to both sides of this equation, and since $g$ is c
 
 $$ D(f(x) - f(a)) = D\left(\int_a^x g(y) dy \right) \implies D(f)(x) = g(x) $$
 
-Since the choice of $a$ were arbitrary, we may repeat this argument for every $x$. Hence, varying across all $x \in \mathbb{R}$, we obtain an equality of functions, and conclude that $Df = g$.
+Since the choice of $a$ were arbitrary, we may repeat this argument for every $x$. Hence, varying across all $x \in \mathbb{R}$, we obtain an equality of functions, and conclude that $Df$ exists, and is equal to $g$ everywhere.
 
 Since this is true for an arbitrary $f_n \to f, f'_n \to g$, this is true for all cases where both sequences simultaneously converge, and hence $D$ has a closed graph.
 
 \end{proof}
-
+\pagebreak
 \begin{problem}{Question 4}
 
 Let $\mathcal{H} = L^2[0,1]$, the Lebesgue measurable and square-integrable functions defined on $[0,1]$. Let $K$ be a non-empty, closed, convex subset of $\mathcal{H}$. Define $P = P_K$ as the orthogonal projection of $H$ onto $K$.
@@ -435,9 +442,9 @@ $$ \rho \langle f, v - u \rangle \leq \rho A(u, v - u) \implies \langle f, v - u
 \bibitem{ClassCollab}
   Class collaborators
   Not all were consulted, but all were in the same room so best to be as comprehensive.
-  \begin{figure}
-    \includegraphics[width=\paperwidth]{FuNtional exam group}
-  \end{figure}
+  \begin{center}
+    \includegraphics[width=0.5\paperwidth]{FuNtional exam group}
+  \end{center}
   
   
 
