@@ -341,41 +341,42 @@ Since this is true for arbitrary unit norm $u$, this is true for all, and hence,
 
 4.2.2)
 
-%First of all, using the equivalent statement in 4.1, we see that:
+First of all, using the equivalent statement in 4.1.ii, we see that:
 
-%$$ \langle \rho f - \rho Tv + v - S_\rho(v), y - S_\rho(v) \rangle \leq 0$$
+$$ \langle \rho f - \rho Tv + v - S_\rho(v), y - S_\rho(v) \rangle \leq 0$$
 
-%for every $y \in K$.
+for every $y \in K$.
 
-%Then, letting $v_1, v_2 \in K$, we have the following statements:
+Then, letting $v_1, v_2 \in K$, we have the following statements:
 
-%$$ \begin{cases} \langle \rho f - \rho Tv_1 + v_1 - S_\rho(v_1), S_\rho(v_2) - S_\rho(v_1) \rangle \leq 0 \\ \langle \rho f - \rho Tv_2 + v_2 - S_\rho(v_2), S_\rho(v_1) - S_\rho(v_2) \rangle \leq 0 \end{cases}$$
+$$ \begin{cases} \langle \rho f - \rho Tv_1 + v_1 - S_\rho(v_1), S_\rho(v_2) - S_\rho(v_1) \rangle \leq 0 \\ \langle \rho f - \rho Tv_2 + v_2 - S_\rho(v_2), S_\rho(v_1) - S_\rho(v_2) \rangle \leq 0 \end{cases}$$
 
-%Summing these equations then, and pulling out a factor of $-1$ from the second argument in the second equation, we find that:
+Summing these equations then, and pulling out a factor of $-1$ from the second argument in the second equation, we find that:
 
-%$$ \langle \rho f - \rho Tv_1 + v_1 - S_\rho(v_1) -  \rho f + \rho Tv_2 - v_2 + S_\rho(v_2), S_\rho(v_2) - S_\rho(v_1) \rangle \leq 0  \implies $$
+$$ \langle \rho f - \rho Tv_1 + v_1 - S_\rho(v_1) -  \rho f + \rho Tv_2 - v_2 + S_\rho(v_2), S_\rho(v_2) - S_\rho(v_1) \rangle \leq 0  \implies $$
 
-%$$ \langle \rho T(v_2 - v_1) + v_2 - v_1 + S_\rho(v_2) - S_\rho(v_1), S_\rho(v_2) - S_\rho(v_1) \rangle \leq 0  \implies \langle \rho T(v_2 - v_1) + v_2 - v_1 + S_\rho(v_2) - S_\rho(v_1), S_\rho(v_1) - S_\rho(v_2) \rangle \geq 0$$
+$$ \langle -\rho T(v_1 - v_2) + v_1 - v_2 + S_\rho(v_2) - S_\rho(v_1), S_\rho(v_2) - S_\rho(v_1) \rangle \leq 0  \implies $$
+$$\langle -\rho T(v_1 - v_2) + (v_1 - v_2) + S_\rho(v_2) - S_\rho(v_1), S_\rho(v_1) - S_\rho(v_2) \rangle \geq 0$$
 
-%where we've used the linearity of $T$, and then multiplied through by $-1$, bringing it into the second argument.
+where we've used the linearity of $T$, and then multiplied through by $-1$, bringing it into the second argument.
 
-%We examine the square of the norm, to leverage the inner product.
+We examine the square of the norm, to leverage the inner product.
 
-%We have that:
+We have that:
 
-%$$ \langle S_\rho(v_1) - S_\rho(v_2),S_\rho(v_1) - S_\rho(v_2) \rangle \leq $$
+$$ \langle S_\rho(v_1) - S_\rho(v_2),S_\rho(v_1) - S_\rho(v_2) \rangle \leq $$
 
-%$$ \langle S_\rho(v_1) - S_\rho(v_2),S_\rho(v_1) - S_\rho(v_2) \rangle +  \langle \rho T(v_2 - v_1) + v_2 - v_1 + S_\rho(v_2) - S_\rho(v_1), S_\rho(v_1) - S_\rho(v_2) \rangle =   $$
+$$ \langle S_\rho(v_1) - S_\rho(v_2),S_\rho(v_1) - S_\rho(v_2) \rangle + \langle -\rho T(v_1 - v_2) + (v_1 - v_2) + S_\rho(v_2) - S_\rho(v_1), S_\rho(v_1) - S_\rho(v_2) \rangle =   $$
 
-%$$  \langle  S_\rho(v_1) - S_\rho(v_2) + \rho T(v_2 - v_1) + v_2 - v_1 + S_\rho(v_2) - S_\rho(v_1), S_\rho(v_1) - S_\rho(v_2) \rangle = $$
+$$  \langle  S_\rho(v_1) - S_\rho(v_2)  -\rho T(v_1 - v_2) + (v_1 - v_2) + S_\rho(v_2) - S_\rho(v_1), S_\rho(v_1) - S_\rho(v_2) \rangle = $$
 
-%$$ \langle \rho T(v_2 - v_1) + v_2 - v_1, S_\rho(v_1) - S_\rho(v_2) \rangle \leq \Vert \rho T(v_2 - v_1) + v_2 - v_1 \Vert \Vert  S_\rho(v_1) - S_\rho(v_2)  \Vert$$
+$$ \langle -\rho T(v_1 - v_2) + (v_1 - v_2), S_\rho(v_1) - S_\rho(v_2) \rangle \leq \Vert -\rho T(v_1 - v_2) + (v_1 - v_2) \Vert \Vert  S_\rho(v_1) - S_\rho(v_2)  \Vert$$
 
-%where we add the positive quantity determined above in line 2, and the final inequality comes from the Cauchy-Schwarz inequality.
+where we add the positive quantity determined above in line 2, and the final inequality comes from the Cauchy-Schwarz inequality.
 
-%Hence, we conclude that:
+Hence, we conclude that:
 
-%$$ \Vert  S_\rho(v_1) - S_\rho(v_2)  \Vert^2 \leq \Vert \rho T(v_2 - v_1) + v_2 - v_1 \Vert \Vert  S_\rho(v_1) - S_\rho(v_2)  \Vert \implies  \Vert  S_\rho(v_1) - S_\rho(v_2)  \Vert \leq \Vert \rho T(v_2 - v_1) + v_2 - v_1 \Vert $$
+$$ \Vert  S_\rho(v_1) - S_\rho(v_2)  \Vert^2 \leq \Vert  -\rho T(v_1 - v_2) + (v_1 - v_2)  \Vert \Vert  S_\rho(v_1) - S_\rho(v_2)  \Vert \implies  \Vert  S_\rho(v_1) - S_\rho(v_2)  \Vert \leq \Vert  -\rho T(v_1 - v_2) + (v_1 - v_2) \Vert $$
 
 %But now, let's examine the right side a bit more. By the triangle inequality and the definition of the operator norm, we find that:
 
@@ -383,54 +384,54 @@ Since this is true for arbitrary unit norm $u$, this is true for all, and hence,
 
 %Clearly, this bound isn't good enough hrm.
 
-First, we prove a lemma:
+%First, we prove a lemma:
 
-\begin{lemma}
+%\begin{lemma}
 
-Let $x, y \in \mathcal{H}$. Then, we have that, for $P$ the projection onto a closed, convex set $K$:
+%Let $x, y \in \mathcal{H}$. Then, we have that, for $P$ the projection onto a closed, convex set $K$:
 
-$$ \Vert P(x) - P(y) \Vert \leq \Vert x - y \Vert $$
+%$$ \Vert P(x) - P(y) \Vert \leq \Vert x - y \Vert $$
 
-\end{lemma}
+%\end{lemma}
 
-\begin{proof}
+%\begin{proof}
 
-First, suppose $P(x) = P(y)$. Then, for any $x, y$ this is true, due to the non-negativity of the norm.
+%First, suppose $P(x) = P(y)$. Then, for any $x, y$ this is true, due to the non-negativity of the norm.
 
-Let $x, y$ be given. From the statement 4.1.ii, we have the following equations:
+%Let $x, y$ be given. From the statement 4.1.ii, we have the following equations:
 
-$$  \begin{cases} \langle x - P(x), P(y) - P(x) \rangle \leq 0 \\ \langle y - P(y), P(x) - P(y) \rangle \leq 0 \end{cases}$$
+%$$  \begin{cases} \langle x - P(x), P(y) - P(x) \rangle \leq 0 \\ \langle y - P(y), P(x) - P(y) \rangle \leq 0 \end{cases}$$
 
-where in the first equation, we let $P(y) \in K$ play the role of $y$ in 4.1.ii, and $P(x)$ be $y$.
+%where in the first equation, we let $P(y) \in K$ play the role of $y$ in 4.1.ii, and $P(x)$ be $y$.
 
-Now, summing these two equations, we have that:
+%Now, summing these two equations, we have that:
 
-$$ \langle -x + P(x), P(x) - P(y) \rangle + \langle y - P(y), P(x) - P(y) \rangle \leq 0 \implies \langle (-x + y) + (P(x) - P(y)), P(x) - P(y) \rangle \leq 0 $$
+%$$ \langle -x + P(x), P(x) - P(y) \rangle + \langle y - P(y), P(x) - P(y) \rangle \leq 0 \implies \langle (-x + y) + (P(x) - P(y)), P(x) - P(y) \rangle \leq 0 $$
 
-Hence, looking at $\Vert P(y) - P(x) \Vert^2$, we have that:
+%Hence, looking at $\Vert P(y) - P(x) \Vert^2$, we have that:
 
-$$ \Vert P(x) - P(y) \Vert^2  = \langle P(x) - P(y), P(x) - P(y) \rangle \leq \langle P(x) - P(y),P(x) -  P(y) \rangle - \langle (-x + y) + (P(x) - P(y)), P(x) - P(y) \rangle$$
+%$$ \Vert P(x) - P(y) \Vert^2  = \langle P(x) - P(y), P(x) - P(y) \rangle \leq \langle P(x) - P(y),P(x) -  P(y) \rangle - \langle (-x + y) + (P(x) - P(y)), P(x) - P(y) \rangle$$
 
-as the second quantity is at most 0, so subtracting it off creates a larger quantity. Now, combining these inner products, and pulling out two factors of $-1$ from the first term, we have that this is equal to:
+%as the second quantity is at most 0, so subtracting it off creates a larger quantity. Now, combining these inner products, and pulling out two factors of $-1$ from the first term, we have that this is equal to:
 
-$$ \langle P(x) - P(y) + x - y - P(x) + P(y), P(x) - P(y) \rangle = \langle x - y, P(x) - P(y) \rangle$$
+%$$ \langle P(x) - P(y) + x - y - P(x) + P(y), P(x) - P(y) \rangle = \langle x - y, P(x) - P(y) \rangle$$
 
-By Cauchy-Schwarz then, we have that:
+%By Cauchy-Schwarz then, we have that:
 
-$$ \langle x - y, P(x) - P(y) \rangle \leq \Vert x - y \Vert \Vert P(x) - P(y) \Vert $$
+%$$ \langle x - y, P(x) - P(y) \rangle \leq \Vert x - y \Vert \Vert P(x) - P(y) \Vert $$
 
-where we do not worry about the absolute value, as this must be non-negative, being larger than a norm.
+%where we do not worry about the absolute value, as this must be non-negative, being larger than a norm.
 
-Hence, we have that:
+%Hence, we have that:
 
-$$  \Vert P(x) - P(y) \Vert^2  \leq \Vert x - y \Vert \Vert P(x) - P(y) \Vert \implies \Vert x - y \Vert$$
-\end{proof}
+%$$  \Vert P(x) - P(y) \Vert^2  \leq \Vert x - y \Vert \Vert P(x) - P(y) \Vert \implies \Vert x - y \Vert$$
+%\end{proof}
 
-Now, we apply the previous lemma on the vectors $\rho f - \rho Tv_1 + v_1, \rho f - \rho Tv_2 + v_2$, and their projections. We have that:
+%Now, we apply the previous lemma on the vectors $\rho f - \rho Tv_1 + v_1, \rho f - \rho Tv_2 + v_2$, and their projections. We have that:
 
-$$ \Vert S_\rho(v_1) - S_\rho(v_2) \Vert = \Vert P(\rho f - \rho Tv_1 + v_1) - P(\rho f - \rho Tv_2 + v_2) \Vert \leq $$
+%$$ \Vert S_\rho(v_1) - S_\rho(v_2) \Vert = \Vert P(\rho f - \rho Tv_1 + v_1) - P(\rho f - \rho Tv_2 + v_2) \Vert \leq $$
 
-$$ \Vert \rho f - \rho Tv_1 + v_1 - \rho f + \rho Tv_2 - v_2 \Vert  = \Vert (v_1  - v_2) - \rho T(v_1 - v_2) \Vert $$
+%$$ \Vert \rho f - \rho Tv_1 + v_1 - \rho f + \rho Tv_2 - v_2 \Vert  = \Vert (v_1  - v_2) - \rho T(v_1 - v_2) \Vert $$
 
 Now, since norms are non-negative, we may examine the square of this quantity and apply a polarization identity. We have that:
 
@@ -441,15 +442,15 @@ Using the definition of the operator norm as well as the hypothesis on $A$, we m
 
 $$ \Vert v_1 - v_2 \Vert^2 + \rho^2 \Vert T\Vert^2 \Vert v_1 - v_2 \Vert^2 - 2 \rho \alpha \Vert v_1 - v_2 \Vert^2 \leq \Vert v_1 - v_2 \Vert^2 ( 1 + \rho^2 \Vert T\Vert^2 - 2 \rho \alpha) $$
 
-Looking at that coefficient, we see that to have $ 1 + \rho^2 \Vert T\Vert^2 - 2 \rho \alpha < 1$, this implies that, since this is a parabola in $\rho$ opening upwards:
+Looking at that coefficient, we see that to have $ 1 + \rho^2 \Vert T\Vert^2 - 2 \rho \alpha < 1$, this implies that, since this is a parabola in $\rho$ opening upwards due to $\Vert T \Vert > 0$:
 
-$$ \rho^2 T^2 - 2 \rho \alpha < 0 \implies \rho(\rho T^2 - 2 \alpha) < 0 \implies \rho \in \left( 0, \frac{ 2\alpha}{\Vert T\Vert^2}\right)$$
+$$ \rho^2 \Vert T\Vert^2 - 2 \rho \alpha < 0 \implies \rho(\rho \Vert T \Vert^2 - 2 \alpha) < 0 \implies \rho \in \left( 0, \frac{ 2\alpha}{\Vert T\Vert^2}\right)$$
 
 Hence, for any $\rho$ in this range, we have that:
 
 $$  \Vert S_\rho(v_1) - S_\rho(v_2) \Vert^2 \leq \Vert v_1 - v_2 \Vert^2 ( 1 + \rho^2 \Vert T\Vert^2 - 2 \rho \alpha) < \Vert v_1 - v_2 \Vert^2  k $$
 
-for some $k \in (0,1)$. Hence, taking the square root of both sides, for this choice of $\rho$, $k$ remains a bound.
+for some $k \in (0,1)$. Hence, taking the square root of both sides, for this choice of $\rho$, $\sqrt{k}$ remains a bound for $\Vert  S_\rho(v_1) - S_\rho(v_2) \Vert \leq \sqrt{k} \Vert v_1 - v_2 \Vert$, and if $k \in (0,1)$, then $\sqrt{k} \in (0,1)$. 
 
 4.2.3)
 
