@@ -444,11 +444,15 @@ $$ \Vert v_1 - v_2 \Vert^2 + \rho^2 \Vert T\Vert^2 \Vert v_1 - v_2 \Vert^2 - 2 \
 
 Looking at that coefficient, we see that to have $ 1 + \rho^2 \Vert T\Vert^2 - 2 \rho \alpha < 1$, this implies that, since this is a parabola in $\rho$ opening upwards due to $\Vert T \Vert > 0$:
 
-$$ \rho^2 \Vert T\Vert^2 - 2 \rho \alpha < 0 \implies \rho(\rho \Vert T \Vert^2 - 2 \alpha) < 0 \implies \rho \in \left( 0, \frac{ 2\alpha}{\Vert T\Vert^2}\right)$$
+$$ \rho^2 \Vert T\Vert^2 - 2 \rho \alpha < 0 \implies \rho(\rho \Vert T \Vert^2 - 2 \alpha) < 0 \implies \rho < \frac{ 2\alpha}{\Vert T\Vert^2}$$
+
+On the other hand, if we force $1 + \rho^2 \Vert T\Vert^2 - 2 \rho \alpha > 0$, assuming the discriminant to be non-negative, we require, by the quadratic formula, for $\rho \not \in [\frac{\alpha - \sqrt{\alpha^2 - \Vert T \Vert^2}}{\Vert T \Vert^2},\frac{\alpha + \sqrt{\alpha^2 - \Vert T \Vert^2}}{\Vert T \Vert^2}] $
+
+Hence, we can safely take something of the form $\rho \in \left(\frac{\alpha + \sqrt{\alpha^2 - \Vert T \Vert^2}}{\Vert T \Vert^2}, \frac{ 2\alpha}{\Vert T\Vert^2} \right)$ - the full possibilities for $\rho$ may be a larger set, but we take at least this set, for $0 <  1 + \rho^2 \Vert T\Vert^2 - 2 \rho \alpha < 1 $
 
 Hence, for any $\rho$ in this range, we have that:
 
-$$  \Vert S_\rho(v_1) - S_\rho(v_2) \Vert^2 \leq \Vert v_1 - v_2 \Vert^2 ( 1 + \rho^2 \Vert T\Vert^2 - 2 \rho \alpha) < \Vert v_1 - v_2 \Vert^2  k $$
+$$  \Vert S_\rho(v_1) - S_\rho(v_2) \Vert^2 \leq \Vert v_1 - v_2 \Vert^2 ( 1 + \rho^2 \Vert T\Vert^2 - 2 \rho \alpha) = \Vert v_1 - v_2 \Vert^2  k $$
 
 for some $k \in (0,1)$. Hence, taking the square root of both sides, for this choice of $\rho$, $\sqrt{k}$ remains a bound for $\Vert  S_\rho(v_1) - S_\rho(v_2) \Vert \leq \sqrt{k} \Vert v_1 - v_2 \Vert$, and if $k \in (0,1)$, then $\sqrt{k} \in (0,1)$. 
 
@@ -456,7 +460,6 @@ for some $k \in (0,1)$. Hence, taking the square root of both sides, for this ch
 
 By definition then, since the $\rho$ in 4.2.2 gives rise to a $k \in (0,1)$ such that $ \Vert  S_\rho(v_1) - S_\rho(v_2)  \Vert \leq k  \Vert v_1 - v_2 \Vert$, we see that $S_\rho$ is a contraction on the metric. Hence, by the Banach fixed-point Theorem, there exists a unique fixed point $u \in K$ such that $S_\rho(u) = u$.
 
-Alternatively, if we do not wish to appeal to the Banach fixed point Theorem for Metric spaces, we notice that that condition for $\rho$ implies that we have satisfied the conditions for problem 1. Hence, by 1.2, there exists a unique fixed point, as we simply consider the metric induced by the norm.
 
 4.2.4)
 
