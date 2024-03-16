@@ -433,7 +433,7 @@ $$ \Vert  S_\rho(v_1) - S_\rho(v_2)  \Vert^2 \leq \Vert  -\rho T(v_1 - v_2) + (v
 
 %$$ \Vert \rho f - \rho Tv_1 + v_1 - \rho f + \rho Tv_2 - v_2 \Vert  = \Vert (v_1  - v_2) - \rho T(v_1 - v_2) \Vert $$
 
-Now, since norms are non-negative, we may examine the square of this quantity and apply a polarization identity. We have that:
+Now, since norms are non-negative, we may examine the square of this quantity on the right hand side and apply a polarization identity. We have that:
 
 $$  \Vert (v_1  - v_2) - \rho T(v_1 - v_2) \Vert^2 = \Vert v_1 - v_2 \Vert^2 + \rho \Vert T(v_1 - v_2) \Vert^2 + 2\rho \langle v_1 - v_2, -T(v_1 - v_2) \rangle =$$
 $$ \Vert v_1 - v_2 \Vert^2 + \rho \Vert T(v_1 - v_2) \Vert^2 - 2\rho A(v_1 - v_2, v_1 - v_2) $$ 
@@ -442,7 +442,7 @@ Using the definition of the operator norm as well as the hypothesis on $A$, we m
 
 $$ \Vert v_1 - v_2 \Vert^2 + \rho^2 \Vert T\Vert^2 \Vert v_1 - v_2 \Vert^2 - 2 \rho \alpha \Vert v_1 - v_2 \Vert^2 \leq \Vert v_1 - v_2 \Vert^2 ( 1 + \rho^2 \Vert T\Vert^2 - 2 \rho \alpha) $$
 
-Looking at that coefficient, we see that to have $ 1 + \rho^2 \Vert T\Vert^2 - 2 \rho \alpha < 1$, this implies that, since this is a parabola in $\rho$ opening upwards due to $\Vert T \Vert > 0$:
+Looking at that coefficient, we see that to have $ 1 + \rho^2 \Vert T\Vert^2 - 2 \rho \alpha < 1$, this implies that, since this is a parabola in $\rho$ opening upwards, with vertex under the $y$-axis due to $\Vert T \Vert > 0, \alpha > 0$:
 
 $$ \rho^2 \Vert T\Vert^2 - 2 \rho \alpha < 0 \implies \rho(\rho \Vert T \Vert^2 - 2 \alpha) < 0 \implies \rho \in \left( 0, \frac{ 2\alpha}{\Vert T\Vert^2}\right)$$
 
