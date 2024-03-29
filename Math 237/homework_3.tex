@@ -1,0 +1,185 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+
+\newenvironment{problem}[2][]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#3}
+\author{Eric Tao\\
+Math 237: Homework \#3}
+\maketitle
+
+\begin{problem}{Question 1}
+
+Show that the only function $f \in L^1(\mathbb{R})$ such that $f  = f \ast f$ is $f = 0$ almost everywhere.
+
+\end{problem}
+\begin{proof}[Solution]
+
+Let $f \in L^1(\mathbb{R})$. Suppose we have that $f = f \ast f$. We recall that the Fourier transform distributes pointwise over convolution, hence we have that:
+
+$$ \hat{f}(\zeta ) = \widehat{f \ast f}(\zeta)  = \hat{f}(\zeta) \hat{f}(\zeta) $$
+
+Hence, we already have that at each $\zeta$, $\hat{f} = 0, 1$, by solving the equation $\hat{f}(\zeta)^2 - \hat{f}(\zeta) = 0$. 
+
+From Lemma 9.2.3 in Heil, we have that $\hat{f}$ is continuous. Moreover, from the Riemann-Lesbesgue lemma, since $f \in L^1$, we already know that $\hat{f} \in C_0(\mathbb{R})$. Hence, by continuity, since $\hat{f}$ may only take on values $0,1$, and that it is continuous, $\hat{f} = 0$ everywhere.
+
+Thus, by Corollary 9.2.12 in Heil, since $\hat{f} = 0$ everywhere, it is true almost everywhere of course, and hence $f= 0$ almost everywhere.
+
+\end{proof}
+
+\begin{problem}{Question 6}
+
+Suppose that $f \in \operatorname{AC}(\mathbb{T})$, that is, $1$ periodic and absolutely continuous on $[0,1]$.
+
+6.1)
+
+Prove that $\hat{f}'(n) = 2\pi i n \hat{f}(n)$ for all $n \in \mathbb{Z}$. Conclude that $\lim_{|n| \to \infty} n \hat{f}(n) = 0$.
+
+6.2)
+
+Show that if $\int_0^1 f(x) dx = 0$, then:
+
+$$ \int_0^1 |f(x)|^2 dx \leq \frac{1}{4\pi^2} \int_0^1 |f'(x)|^2 dx $$
+
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+6.1)
+
+First, we recall that by Corollary 6.1.5 in Heil, that since $f$ is absolutely continuous on $[0,1]$, we have that $f$ is differentiable almost everywhere, and $f' \in L^1[0,1]$. Since $f'$ is at least $L^1$, we may look at its Fourier transform:
+
+$$ \hat{f'}(n) = \int_0^1 f'(x) \exp(-2\pi i n x) dx $$
+
+We notice that for a fixed value of $n \in \mathbb{Z}$, that we may compute the derivative of $g =\exp(-2 \pi i nx)$ as $g' =- 2 \pi i n\exp(-2\pi i nx) $. Hence, $g$ is differentiable everywhere on $[0,1]$, and of course, since $|- 2 \pi i n\exp(-2\pi i nx)| = 2\pi n$ always, it is bounded. Hence, by Lemma 5.2.5, $g$ is Lipschitz on $[0,1]$. Thus, since Lipschitz functions are absolutely continuous (6.1.3), we may apply integration by parts on $f, g$. We have then that:
+
+$$ \int_0^1 f'(x) \exp(-2\pi i nx ) dx = f(1) \exp(-2\pi i n) - f(0) \exp(0) - \int_0^1 f(x) [ - 2 \pi i n \exp(-2\pi i nx)] dx $$
+
+Now, because $f$ is 1-periodic, we have that $f(0) = f(1)$. Further, $\exp(-2\pi in ) = \exp(0)$, of course, since $2\pi n$ is a multiple of $2\pi $ for any $n$. Hence, the first terms vanish.
+
+We are left then with, after using the linearity of the integral:
+
+$$ 2 \pi i n \int_0^1 f(x) \exp(- 2 \pi i nx) dx $$
+
+However, we recognize the integral as exactly the Fourier transform of $f$ at $n$. Hence, we have our result, that:
+
+$$ \hat{f'}(n) = 2 \pi in \hat{f}(n) $$
+
+Again, by the Riemann-Lebesgue lemma, we have that since $f' \in L^1$, that $\lim_{|n| \to \infty} \hat{f'}(n) = 0 $. But, from our result, we have that:
+
+$$ \lim_{|n| \to \infty} 2 \pi i n \hat{f}(n) = \lim_{|n| \to \infty} \hat{f'}(n) =  0 \implies \lim_{|n| \to \infty} n \hat{f}(n) = 0 $$
+
+6.2)
+
+
+
+
+
+\end{proof}
+
+\begin{problem}{Question 12}
+
+Fix a $g \in L^2(\mathbb{R})$. Let $a \in \mathbb{R}$, and define the operator $T_a$ on $g$ that sends $T_a (g(x)) \mapsto g(x - a)$. Prove that the family $\{ T_ag \}_{a \in \mathbb{R}}$ is complete in $L^2$ if and only if $\hat{g}(\zeta) \not = 0$ almost everywhere.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+\end{proof}
+
+\begin{problem}{Question 14}
+
+Let $p(x) = \chi_{[0,1)}(x)$, $h(x) = \chi_{[0,1/2)}(x) - \chi_{[1/2,1)}(x)$. Let $j, k \in\mathbb{Z}$, and define $I_{jk} = [2^{-j}k, 2^{-j}(k+1))$. Further define the following functions:
+
+$$ \begin{cases} p_{jk} = 2^{j/2} p (2^{j} x - k) \\ h_{jk} = 2^{j/2} k (2^{j} x - k) \end{cases}$$
+
+14.1)
+
+Prove that $\{ h_{jk} \}$ is an orthonormal sequence in $L^2$.
+
+14.2)
+
+For each fixed $j \in \mathbb{Z}$, prove that $\{ p_{jk} \}_{k \in \mathbb{Z}}$ is an orthonormal sequence in $L^2$.  
+
+14.3)
+
+Fix a $j \in \mathbb{Z}$. Let $g_j$ be any step function, constant on each interval $I_{jk}$ for $k \in \mathbb{Z}$. Show that we may express $g_j(x) = g_{j-1}(x) + r_{j-1}(x)$, where
+
+$$ r_{j-1}(x) = \sum_{k \in \mathbb{Z}} a_{j-1}(k)h_{j-1, k}(x) $$
+
+for some coefficients $a_{j-1}(k)$ and some step function $g_{j-1}(x)$, constant on intervals $I_{j-1,k}$.
+
+14.4)
+
+Fix a $J \geq 0$. Consider the set:
+
+$$ \{ p_{Jk} : 0 \leq k \leq 2^J - 1 \} \cup \{ h_{j,k} : j \geq J, 0 \leq k \leq 2^j - 1 \}$$
+
+Prove that this set is an orthonormal sequence in $L^2[0,1]$.
+
+14.5)
+
+For $f \in L^2[0,1]$, and a fixed $J \geq 0$, show that we may find $g_j$ step functions for $j \geq J$, such that they are constant on each $I_{j,k}$, and that $g_j$ approximates $f$ in the $L^2$ norm.
+
+Use this result and the result of 14.4 to show that the set in 14.4 is an orthonormal basis for $L^2[0,1]$.
+
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+\end{proof}
+
+
+\begin{problem}{Question 16}
+
+Let $\phi$ be a non-0 function in $L^2(\mathbb{R})$. For any $f \in L^2(\mathbb{R})$, define $V_\phi f$ via:
+
+$$ V_\phi(f)(x, \zeta) = \int_{\mathbb{R}} f(t) \overline{\phi(t-x)} \exp(-2 \pi i t \zeta) dt $$
+
+For $a, b \in \mathbb{R}$, let $T_a$ be the translation operator that sends $T_a(f(x)) \mapsto f(x -a )$ and let $M_b$ the modulation operator that sends $M_b(f(x)) \mapsto \exp(2 \pi bx)f(x)$.
+
+16.1)
+
+Prove that for each $f\in L^2$, $V_\phi f$ is uniformly continuous on $\mathbb{R}^2$, and that $\lim_{|(x, \zeta)| \to \infty} V_\phi f = 0$.
+
+16.2)
+
+Recall that the Schwarz space $\mathcal{S}(\mathbb{R})$ is defined as:
+
+$$ \mathcal{S}(\mathbb{R}) = \{ f \in C^\infty(\mathbb{R}) : x^m f^{(n)}(x) \in L^\infty(\mathbb{R}) \text{ for all } m, n \geq 0 \}$$
+
+Prove that if $f \in \mathcal{S}(\mathbb{R})$, then $V_\phi \in S(\mathbb{R}^2)$.
+
+16.3)
+
+Prove that $V_\phi$ acts as an isometry from $L^2(\mathbb{R})$ to $L^2(\mathbb{R}^2)$, and that $\Vert V_\phi f \Vert_{L^2(\mathbb{R}^2)} = \Vert \phi \Vert_{L^2(\mathbb{R})} \Vert f \Vert_{L^2(\mathbb{R})}$ for every $f \in L^2$.
+
+16.4)
+
+Show that the operator $V_\phi^*$ defined by:
+
+$$ V_\phi^* F(t) - \Vert \phi\Vert_2^{-2} \iint_{\mathbb{R}^2} F(x, \zeta) \exp(2\pi i \zeta t) \phi(t - x) dx d\zeta $$
+
+takes $L^2(\mathbb{R}^2)$ to $L^2(\mathbb{R})$, and that for each $f \in L^2(\mathbb{R})$, we can make sense of the following inversion formula:
+
+$$ f(t) = \Vert \phi \Vert_2^{-2} \iint_{\mathbb{R}^2} V_\phi f(x, \zeta) \exp(2 \pi i \zeta t) \phi(t - x) dx d\zeta $$
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+\end{proof}
+
+\end{document}
