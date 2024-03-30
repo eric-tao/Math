@@ -125,7 +125,7 @@ Then, we assume $f \not \in L^2(\mathbb{T})$ but $f \in L^1(\mathbb{T})$. Then, 
 
 \begin{problem}{Question 12}
 
-Fix a $g \in L^2(\mathbb{R})$. Let $a \in \mathbb{R}$, and define the operator $T_a$ on $g$ that sends $T_a (g(x)) \mapsto g(x - a)$. Prove that the family $\{ T_ag \}_{a \in \mathbb{R}}$ is complete in $L^2$ if and only if $\hat{g}(\zeta) \not = 0$ almost everywhere.
+Fix a $g \in L^2(\mathbb{R})$. Let $k \in \mathbb{Z}$, and define the operator $T_k$ on $g$ that sends $T_k (g(x)) \mapsto g(x - k)$. Prove that the family $\{ T_k g \}_{k \in \mathbb{Z}}$ is an orthonormal sequence if and only if $\sum_{k \in \mathbb{Z}} | \hat{g}(\zeta - k)| = 1$ almost everywhere.
 
 \end{problem}
 
@@ -173,6 +173,54 @@ Use this result and the result of 14.4 to show that the set in 14.4 is an orthon
 \end{problem}
 
 \begin{proof}[Solution]
+
+14.1)
+
+Fix a $j \in \mathbb{Z}$, and consider the family of $\{ h_{jk} \}$ iterating across $k$.
+
+First, we wish to show that $\Vert h_{jk} \Vert_2 = 1$, regardless of the choice of $j,k$. Fix a choice of $j,k$. We see that, by the definition of $h$, that $h(2^jx - k)$ takes on $1$ on $I_{j+1, 2k}$, as we can see at the endpoints, $h(2^j 2^{-j - 1} 2k - k ) = h(k - k ) = h(0)= 1$. Further, $I_{j+1, 2k}$  has a length $2^{-j-1}$, and we can see that if $h(x) = 1$ on $[0,1/2)$, then $h(2^{j}x)$ takes on $1$ on an interval of length $2^{-j-1}$, from $[0,2^{-j-1})$. Translating this interval over by $k$, we see that this is exactly $I_{j+1, 2k}$. In a similar argument, we see that $h$ takes on $-1$ on $I_{j+1, 2k+1}$. Hence, we may rewrite $h_{jk}$ as:
+
+$$ h_{jk} = 2^{j/2} (\chi_{I_{j+1, 2k}} - \chi_{I_{j+1, 2k+1}} ) $$
+
+Thus, we can look at the $L^2$ norm of this function. We have that:
+
+$$ \Vert h_{jk} \Vert_2^2 = \int_{\mathbb{R}} | h_{jk} | ^2 = \int_{I_{j+1, 2k}} 2^j \chi_{I_{j+1, 2k}} + \int_{I_{j+1, 2k+1}} 2^j \chi_{I_{j+1, 2k}} = 2^j (2^{-j-1}+ 2^{-j-1}) = 1 $$
+
+where we've used the fact that the square of a characteristic function is itself, the measure of $I_{j+1, 2k}$ is equal to $2^{-j-1}$.
+
+Now, we want to take $h_{jk}, h_{jk'}$, and look at $\langle h_{jk}, h_{jk'} \rangle$. Computing directly, and dropping the complex conjugate as this family is strictly real-valued, we see that:
+
+$$ \langle h_{jk}, h_{jk'} \rangle = \int_{\mathbb{R}} 2^{j/2} (\chi_{I_{j+1, 2k}} - \chi_{I_{j+1, 2k+1}} )  2^{j/2} (\chi_{I_{j+1, 2k'}} - \chi_{I_{j+1, 2k'+1}} ) = $$
+
+$$ 2^j \int_{\mathbb{R}}  \chi_{I_{j+1, 2k}}\chi_{I_{j+1, 2k'}} - \chi_{I_{j+1, 2k}} \chi_{I_{j+1, 2k'+1}} - \chi_{I_{j+1, 2k+1}} \chi_{I_{j+1, 2k'}} + \chi_{I_{j+1, 2k+1}} \chi_{I_{j+1, 2k'+1}} $$
+
+By definition though, $I_{j+1, 2k} \cap I_{j+1, 2k'} = [2^{-j-1}2k, 2^{-j-1}(2k+1)) \cap [2^{-j-1}k', 2^{-j-1}(2k'+1))$, which is non-empty if and only if $k = k'$, as $j, k$ are integers, and so we have endpoints exactly at multiples of $2^{-j-1}$. We may disregard this case, as this means $h_{jk} = h_{jk'}$, and we wish to look at distinct elements of this family. Hence, if we have distinct elements, we have that $\chi_{I_{j+1, 2k}}\chi_{I_{j+1, 2k'}}, \chi_{I_{j+1, 2k+1}} \chi_{I_{j+1, 2k'+1}}$ are identically 0.
+
+Then, we need only look at the terms $ - \chi_{I_{j+1, 2k}} \chi_{I_{j+1, 2k'+1}} - \chi_{I_{j+1, 2k+1}} \chi_{I_{j+1, 2k'}}$. However, in a similar fashion to the previous terms, these can be non-0 if and only if either $2k = 2k' + 1$, or $2k' = 2k + 1$. However, $k, k' \in \mathbb{Z}$, and hence there are no values of $k, k'$ such that these are non-0.
+
+Thus, if we have two distinct elements $h_{jk}, h_{jk'}$, we have that  $\langle h_{jk}, h_{jk'} \rangle = 0$. Hence, the family $\{ h_{jk} \}_{k \in \mathbb{Z}}$ for fixed $j$ is a orthonormal sequence in $L^2$.
+
+14.2)
+
+In a similar fashion to 14.1, but maybe slightly cleaner, we do the same procedure. Fix a choice of $j \in \mathbb{Z}$. First, we reexpress $p_{jk}$ in terms of characteristic functions. We see that, in analogy to 14.1, that
+
+$$  p_{jk} = 2^{j/2} \chi_{I_{jk}} $$
+
+as we can see that $2^j x - k$ takes $2^{-j}k$ to $0$ and $2^{-j} k+1$ to $1$, hence takes $[2^{-j}k, 2^{-j}k+1)$ to $[0,1)$ as this is linear in $x$. 
+
+Then, considering $\langle p_{jk}, p_{jk'} \rangle$, dropping the complex conjugate again, we see that:
+
+$$ \langle p_{jk}, p_{jk'} \rangle = \int_{\mathbb{R}} 2^{j/2}  \chi_{I_{jk}} 2^{j/2}  \chi_{I_{jk'}} = 2^{j} \int_\mathbb{R}  \chi_{I_{jk}}  \chi_{I_{jk'}}$$
+
+By definition, we may look at $I_{jk} \cap I_{jk'}$. We have that:
+
+$$ I_{jk} \cap I_{jk'} =  [2^{-j}k, 2^{-j}(k+1)) \cap  [2^{-j}k', 2^{-j}(k'+1))$$
+
+Since $j, k \in \mathbb{Z}$, these intervals have endpoints at multiple of $2^{-j}$, and hence these have overlap if and only if $k = k'$. Hence, we can say that:
+
+$$ 2^{j} \int_\mathbb{R}  \chi_{I_{jk}}  \chi_{I_{jk'}} = 2^{j} \int_\mathbb{R}  \chi_{I_{jk}}  \delta_k^{k'} = 2^j | 2^{-j}(k+1) - 2^{-j} k| \delta_k^{k'} = 2^j 2^{-k} \delta_k^{k'} = \delta_k^{k'} $$
+
+Therefore, $\{ p_{jk} \}_{k \in \mathbb{Z}}$ is an orthonormal sequence in $L^2$ for fixed $j \in \mathbb{Z}$. 
 
 \end{proof}
 
