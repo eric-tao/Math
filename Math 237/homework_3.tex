@@ -82,6 +82,41 @@ $$ \lim_{|n| \to \infty} 2 \pi i n \hat{f}(n) = \lim_{|n| \to \infty} \hat{f'}(n
 
 6.2)
 
+First, we use the result from Heil Problem 9.3.24 (b) that the Plancherel equality holds for $f \in L^1(\mathbb{T})$. and prove that later.
+
+Then, since $f' \in L^1(\mathbb{T})$, we have that:
+
+$$ \sum_{n \in \mathbb{Z}} | \hat{f'}(n)|^2 = \Vert f' \Vert_2^2 = \int_0^1 |f'(x)|^2 dx $$
+
+Now, from 6.1, we have that $\hat{f'}(n) =  2\pi i n \hat{f}(n)$ for each $n$. Hence, we have that:
+
+$$  \sum_{n \in \mathbb{Z}} | \hat{f'}(n)|^2 =  \sum_{n \in \mathbb{Z}} 4 \pi^2 n^2| \hat{f}(n)|^2 = 4 \pi^2 \sum_{n \in \mathbb{Z}} n^2| \hat{f}(n)|^2$$
+
+Now, we notice that since $\int_0^1 f(x) dx = 0$, that evidently, $\hat{f}(0) = 0$, as $\hat{f}(0) = \int_0^1 f(x) \exp(-2\pi i 0 x) dx = \int_0^1 f(x) dx = 0$.
+
+Because this is 0, and for all $n \in \mathbb{Z}, n \not = 0$, we have that $|\hat{f}(n)| \leq | n \hat{f}(n)|$, we can conclude that:
+
+$$  4 \pi^2 \sum_{n \in \mathbb{Z}} n^2| \hat{f}(n)|^2 \geq 4 \pi^2 \sum_{n \in \mathbb{Z}} | \hat{f}(n) |^2 $$
+
+Finally, applying Plancherel's equaity again for $f$, as $f \in L^1(\mathbb{T})$, we see that:
+
+$$ 4 \pi^2 \sum_{n \in \mathbb{Z}} | \hat{f}(n) |^2  = 4 \pi^2 \Vert f \Vert_2^2 = 4 \pi^2 \int_0^1 |f(x)|^2 dx $$
+
+And rewriting all of these inequalities together, we have that:
+
+$$ 4\pi^2 \int_0^1 |f(x)|^2 \leq \int_0^1 |f'(x)|^2 dx \implies \int_0^1 |f(x)|^2 \leq \frac{1}{4\pi^2} \int_0^1 |f'(x)|^2 dx$$
+
+as desired.
+
+Now, we return to proving 9.3.24.
+
+First, we wish to show that if $f \in L^1(\mathbb{T})$, and $\hat{f} \in L^2(\mathbb{Z})$, then $f \in L^2(\mathbb{T})$.
+
+
+
+Next, we want to show that the Plancherel equality holds, either both sides being finite or infinite. If $f \in L^2 \cap L^1$, then we're fine, by Corollary 9.3.14.
+
+Then, we assume $f \not \in L^2(\mathbb{T})$ but $f \in L^1(\mathbb{T})$. Then, by the previous result, we have that $\hat{f} \not \in L^2(\mathbb{Z})$. Hence, we have that both sides of the Plancherel equality are infinite, and we are done.
 
 
 
@@ -102,7 +137,7 @@ Fix a $g \in L^2(\mathbb{R})$. Let $a \in \mathbb{R}$, and define the operator $
 
 Let $p(x) = \chi_{[0,1)}(x)$, $h(x) = \chi_{[0,1/2)}(x) - \chi_{[1/2,1)}(x)$. Let $j, k \in\mathbb{Z}$, and define $I_{jk} = [2^{-j}k, 2^{-j}(k+1))$. Further define the following functions:
 
-$$ \begin{cases} p_{jk} = 2^{j/2} p (2^{j} x - k) \\ h_{jk} = 2^{j/2} k (2^{j} x - k) \end{cases}$$
+$$ \begin{cases} p_{jk} = 2^{j/2} p (2^{j} x - k) \\ h_{jk} = 2^{j/2} h (2^{j} x - k) \end{cases}$$
 
 14.1)
 
