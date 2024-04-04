@@ -125,11 +125,67 @@ Then, we assume $f \not \in L^2(\mathbb{T})$ but $f \in L^1(\mathbb{T})$. Then, 
 
 \begin{problem}{Question 12}
 
-Fix a $g \in L^2(\mathbb{R})$. Let $k \in \mathbb{Z}$, and define the operator $T_k$ on $g$ that sends $T_k (g(x)) \mapsto g(x - k)$. Prove that the family $\{ T_k g \}_{k \in \mathbb{Z}}$ is an orthonormal sequence if and only if $\sum_{k \in \mathbb{Z}} | \hat{g}(\zeta - k)| = 1$ almost everywhere.
+Fix a $g \in L^2(\mathbb{R})$. Let $k \in \mathbb{Z}$, and define the operator $T_k$ on $g$ that sends $T_k (g(x)) \mapsto g(x - k)$. Prove that the family $\{ T_k g \}_{k \in \mathbb{Z}}$ is an orthonormal sequence if and only if $\sum_{k \in \mathbb{Z}} | \hat{g}(\zeta - k)|^2 = 1$ almost everywhere.
 
 \end{problem}
 
 \begin{proof}[Solution]
+
+First, suppose $T_k g$ is orthonormal. Consider the function $h(\zeta) = \sum_{k \in \mathbb{Z}} | \hat{g}(\zeta - k)|^2$. Since $k$ varies over all $\mathbb{Z}$, evidently, $h$ is 1-periodic. Moreover, since we know that the Fourier transform brings $L^2$ to $L^2$, we must have that $\hat{g} \in L^2$, and hence, $|\hat{g}|^2$ is in $L^1$. Since this integral converges, by the integral test then, so too must $h$ at each point $\zeta \in [0,1]$. In fact, since the integral over $[0,1]$ is actually:
+
+$$\int_0^1 |h(\zeta)| = \int_0^1 \sum_{k} | \hat{g}(\zeta - k) |^2 d\zeta = \sum_{k} \int_0^1 | \hat{g}(\zeta - k )|^2 d\zeta = \sum_{k} \int_k^{k+1} | \hat{g}(\zeta)|^2 d\zeta = \int_{\mathbb{R}} |\hat{g}(\zeta)|^2 d\zeta$$
+
+Where we justify interchanging the sum and integral by taking partial sums, and noting that of course, for the partial sums, their integral over $[0,1]$ is bounded by above by the integral of $|\hat{g}|^2$ over all of $\mathbb{R}$. Thus, $h \in L^1(\mathbb{T})$.
+
+Then, consider the Fourier transform of $h$. We have that:
+
+$$ \hat{f}(n) = \int_0^1 h(\zeta) \exp(-2 \pi i n \zeta) d\zeta = \int_0^1 \left (\sum_{k} |\hat{g}(\zeta - k)|^2 \right) \exp(-2 \pi i n \zeta) d\zeta $$ 
+
+Here, since we know that $\exp(-2\pi i nk) = 1$ for every $k \in \mathbb{Z}$ regardless of $n$, we may scale the phase such that $\zeta = \zeta - k$ when distributing the exponential. Thus, we have that this equals:
+
+$$ \int_0^1 \sum_{k} \left( |\hat{g}(\zeta - k)|^2 \exp(-2 \pi in (\zeta - k) \right) d\zeta $$
+
+Playing the same trick with interchanging sums and integrals, by using the fact that the exponential has modulus 1, we see that this is simply an integral over all of $\mathbb{R}$ again, and doing some algebra with the modulus, we see:
+
+$$  \int_0^1 \sum_{k} \left( |\hat{g}(\zeta - k)|^2 \exp(-2 \pi in (\zeta - k) \right) d\zeta = \int_{\mathbb{R}} | \hat{g}(\zeta)|^2 \exp(-2\pi i n \zeta) d\zeta = \int_{\mathbb{R}} [\hat{g}(\zeta) \exp(-2\pi i n \zeta)] \overline{\hat{g}(\zeta)} d\zeta$$
+
+Since $\hat{g} \in L^2$, of course $\overline{\hat{g}} \in L^2$, and so too is $\hat{g} \exp(-2\pi i n \zeta)$. Thus, we may view this as, in the lanugage of Heil  9.2.21, if $M_{a}$ is the modulation operator that sends $f(x)$ to $\exp(2\pi i a x) f(x)$, as:
+
+$$ \int_{\mathbb{R}} [\hat{g}(\zeta) \exp(-2\pi i n \zeta)] \overline{\hat{g}(\zeta)} d\zeta = \langle M_{-n} \hat{g}, \hat{g} \rangle $$
+
+Now, by Theorem 9.4.6, the Fourier transform on $L^2$ functions obeys the Parseval Identity. Moreover, by Heil 9.2.21, if $T_b$ is the translation operator that sends $f(x) \mapsto f(x-b)$, then $\hat{T_a f} = M_{-a} \hat{f}$. (We will prove this separately). Thus, we have that:
+
+$$ \langle M_{-n} \hat{g} \hat{g} \rangle = \langle T_n g , g \rangle $$
+
+By hypothesis then, this is exactly $\delta_n^0$, as we had that $\{ T_k g \}$ was orthonormal. We know that the function $1$ has $1$ as the zeroth coefficient, and 0 else. By the uniqueness theorem (9.3.12) then, we must have that $h = 1$ almost everywhere.
+
+Now, suppose that  $\sum_{k \in \mathbb{Z}} | \hat{g}(\zeta - k)|^2 = 1$ almost everywhere. Consider $\langle T_k g, T_{k'} g \rangle $ for some $k \in \mathbb{Z}$. Again, by the Parseval identity, we have that:
+
+$$ \langle T_k g, T_{k'} g \rangle = \langle M_{-k} \hat{g}, M_{-k'} \hat{g} \rangle = \int_{\mathbb{R}} \exp(-2\pi i \zeta k) \hat{g}(\zeta) \overline{ \exp(-2\pi i \zeta k') \hat{g}(\zeta)} d\zeta =\int_{\mathbb{R}} \exp(-2\pi i \zeta (k - k')) |\hat{g}(\zeta)|^2 $$
+
+Now, playing the same trick to convert this into $h$ and changing the integral into an integral over $[0,1]$ by slicing across intervals like $[k, k+1]$, we have this to be equal to:
+
+$$ \sum_{n}  \int_0^1 \exp(-2\pi i \zeta (k - k' -n))| \hat{g}(\zeta - n)|^2 d\zeta = \int_0^1 \sum_{n}\left(  \exp(-2\pi i \zeta (k - k' -n))| \hat{g}(\zeta - n)|^2 \right) d\zeta  $$
+
+Factoring out the exponential, and using again that integer shifts are equivalent to multiplying by $1$, we have that:
+
+$$ \int_0^1 \sum_{n}\left( | \hat{g}(\zeta - n)|^2 \right)  \exp(-2\pi i \zeta (k- k') ) d\zeta  = \hat{h}(k - k') = \delta_{k-k'}^0$$
+
+where we get that $\hat{h}(k-k')$ aligns with $\delta_{k - k'}^0$ almost everywhere, but since we're working over $\mathbb{Z}$, this is true everywhere as the only sets of measure 0 are empty.
+
+Hence, we have that $ \{ T_k g \}$ is orthonormal.
+
+Now, we need to prove that $\hat{T_a f} = M_{-a} \hat{f}$, for $f \in L^1$, as the $L^2$ part comes from the continuity of these operators, and convergence in the $L^2$ Fourier transform sense.
+
+Well, computing this directly, we see that by a change of variables $x \mapsto x +a$
+
+$$ \hat{T_a f}(\zeta) = \int_{\mathbb{R}} f(x-a) \exp(-2\pi i n \zeta x ) dx = \int_{\mathbb{R}} f(x) \exp(-2\pi i n \zeta (x + a)) dx =$$
+
+$$\exp(-2\pi i n \zeta a) \int_{\mathbb{R}} f(x) \exp(-2\pi i n \zeta x) dx =\exp(-2\pi i n \zeta a) \hat{f}(\zeta) = M_{-a} \hat{f}(\zeta) $$
+
+as desired.
+
+
 
 \end{proof}
 
@@ -176,29 +232,72 @@ Use this result and the result of 14.4 to show that the set in 14.4 is an orthon
 
 14.1)
 
-Fix a $j \in \mathbb{Z}$, and consider the family of $\{ h_{jk} \}$ iterating across $k$.
+%Fix a $j \in \mathbb{Z}$, and consider the family of $\{ h_{jk} \}$ iterating across $k$.
 
-First, we wish to show that $\Vert h_{jk} \Vert_2 = 1$, regardless of the choice of $j,k$. Fix a choice of $j,k$. We see that, by the definition of $h$, that $h(2^jx - k)$ takes on $1$ on $I_{j+1, 2k}$, as we can see at the endpoints, $h(2^j 2^{-j - 1} 2k - k ) = h(k - k ) = h(0)= 1$. Further, $I_{j+1, 2k}$  has a length $2^{-j-1}$, and we can see that if $h(x) = 1$ on $[0,1/2)$, then $h(2^{j}x)$ takes on $1$ on an interval of length $2^{-j-1}$, from $[0,2^{-j-1})$. Translating this interval over by $k$, we see that this is exactly $I_{j+1, 2k}$. In a similar argument, we see that $h$ takes on $-1$ on $I_{j+1, 2k+1}$. Hence, we may rewrite $h_{jk}$ as:
+%First, we wish to show that $\Vert h_{jk} \Vert_2 = 1$, regardless of the choice of $j,k$. Fix a choice of $j,k$. We see that, by the definition of $h$, that $h(2^jx - k)$ takes on $1$ on $I_{j+1, 2k}$, as we can see at the endpoints, $h(2^j 2^{-j - 1} 2k - k ) = h(k - k ) = h(0)= 1$. Further, $I_{j+1, 2k}$  has a length $2^{-j-1}$, and we can see that if $h(x) = 1$ on $[0,1/2)$, then $h(2^{j}x)$ takes on $1$ on an interval of length $2^{-j-1}$, from $[0,2^{-j-1})$. Translating this interval over by $k$, we see that this is exactly $I_{j+1, 2k}$. In a similar argument, we see that $h$ takes on $-1$ on $I_{j+1, 2k+1}$. Hence, we may rewrite $h_{jk}$ as:
+
+%$$ h_{jk} = 2^{j/2} (\chi_{I_{j+1, 2k}} - \chi_{I_{j+1, 2k+1}} ) $$
+
+%Thus, we can look at the $L^2$ norm of this function. We have that:
+
+%$$ \Vert h_{jk} \Vert_2^2 = \int_{\mathbb{R}} | h_{jk} | ^2 = \int_{I_{j+1, 2k}} 2^j \chi_{I_{j+1, 2k}} + \int_{I_{j+1, 2k+1}} 2^j \chi_{I_{j+1, 2k}} = 2^j (2^{-j-1}+ 2^{-j-1}) = 1 $$
+
+%where we've used the fact that the square of a characteristic function is itself, the measure of $I_{j+1, 2k}$ is equal to $2^{-j-1}$.
+
+%Now, we want to take $h_{jk}, h_{jk'}$, and look at $\langle h_{jk}, h_{jk'} \rangle$. Computing directly, and dropping the complex conjugate as this family is strictly real-valued, we see that:
+
+%$$ \langle h_{jk}, h_{jk'} \rangle = \int_{\mathbb{R}} 2^{j/2} (\chi_{I_{j+1, 2k}} - \chi_{I_{j+1, 2k+1}} )  2^{j/2} (\chi_{I_{j+1, 2k'}} - \chi_{I_{j+1, 2k'+1}} ) = $$
+
+%$$ 2^j \int_{\mathbb{R}}  \chi_{I_{j+1, 2k}}\chi_{I_{j+1, 2k'}} - \chi_{I_{j+1, 2k}} \chi_{I_{j+1, 2k'+1}} - \chi_{I_{j+1, 2k+1}} \chi_{I_{j+1, 2k'}} + \chi_{I_{j+1, 2k+1}} \chi_{I_{j+1, 2k'+1}} $$
+
+%By definition though, $I_{j+1, 2k} \cap I_{j+1, 2k'} = [2^{-j-1}2k, 2^{-j-1}(2k+1)) \cap [2^{-j-1}k', 2^{-j-1}(2k'+1))$, which is non-empty if and only if $k = k'$, as $j, k$ are integers, and so we have endpoints exactly at multiples of $2^{-j-1}$. We may disregard this case, as this means $h_{jk} = h_{jk'}$, and we wish to look at distinct elements of this family. Hence, if we have distinct elements, we have that $\chi_{I_{j+1, 2k}}\chi_{I_{j+1, 2k'}}, \chi_{I_{j+1, 2k+1}} \chi_{I_{j+1, 2k'+1}}$ are identically 0.
+
+%Then, we need only look at the terms $ - \chi_{I_{j+1, 2k}} \chi_{I_{j+1, 2k'+1}} - \chi_{I_{j+1, 2k+1}} \chi_{I_{j+1, 2k'}}$. However, in a similar fashion to the previous terms, these can be non-0 if and only if either $2k = 2k' + 1$, or $2k' = 2k + 1$. However, $k, k' \in \mathbb{Z}$, and hence there are no values of $k, k'$ such that these are non-0.
+
+%Thus, if we have two distinct elements $h_{jk}, h_{jk'}$, we have that  $\langle h_{jk}, h_{jk'} \rangle = 0$. Hence, the family $\{ h_{jk} \}_{k \in \mathbb{Z}}$ for fixed $j$ is a orthonormal sequence in $L^2$.
+
+Let $j, k \in\mathbb{Z}$, and take two $h_{j,k}, h_{j', k'}$. We first notice by the definition of $h_{jk}$, that we may rewrite $h_{jk}$ in terms of characteristic functions of $I_{j+1, k}$:
 
 $$ h_{jk} = 2^{j/2} (\chi_{I_{j+1, 2k}} - \chi_{I_{j+1, 2k+1}} ) $$
 
-Thus, we can look at the $L^2$ norm of this function. We have that:
 
-$$ \Vert h_{jk} \Vert_2^2 = \int_{\mathbb{R}} | h_{jk} | ^2 = \int_{I_{j+1, 2k}} 2^j \chi_{I_{j+1, 2k}} + \int_{I_{j+1, 2k+1}} 2^j \chi_{I_{j+1, 2k}} = 2^j (2^{-j-1}+ 2^{-j-1}) = 1 $$
+Consider $\langle h_{j,k}, h_{j', k'} \rangle$, where I will drop the complex conjugate as these are real-valued functions. In terms of characteristic functions of $I_{j,k}$, we have that:
 
-where we've used the fact that the square of a characteristic function is itself, the measure of $I_{j+1, 2k}$ is equal to $2^{-j-1}$.
+$$  \langle h_{j,k}, h_{j', k'} \rangle = \int_{\mathbb{R}}  h_{j,k}  h_{j', k'} = \int_{\mathbb{R}}  2^{j/2} (\chi_{I_{j+1, 2k}} - \chi_{I_{j+1, 2k+1}} ) 2^{j'/2} (\chi_{I_{j'+1, 2k'}} - \chi_{I_{j'+1, 2k'+1}} )$$
 
-Now, we want to take $h_{jk}, h_{jk'}$, and look at $\langle h_{jk}, h_{jk'} \rangle$. Computing directly, and dropping the complex conjugate as this family is strictly real-valued, we see that:
+Without loss of generality, suppose $j \geq j'$, and switch labels if this is not true. First, suppose $j = j'$. Then, looking at the integrand and factoring out the $2^{j/2}$, we have that:
 
-$$ \langle h_{jk}, h_{jk'} \rangle = \int_{\mathbb{R}} 2^{j/2} (\chi_{I_{j+1, 2k}} - \chi_{I_{j+1, 2k+1}} )  2^{j/2} (\chi_{I_{j+1, 2k'}} - \chi_{I_{j+1, 2k'+1}} ) = $$
+$$  (\chi_{I_{j+1, 2k}} - \chi_{I_{j+1, 2k+1}} )  (\chi_{I_{j+1, 2k'}} - \chi_{I_{j+1, 2k'+1}} ) = \chi_{I_{j+1, 2k}}\chi_{I_{j+1, 2k'}} - \chi_{I_{j+1, 2k+1}}\chi_{I_{j+1, 2k'}} - \chi_{I_{j+1, 2k}}\chi_{I_{j+1, 2k'+1}} + \chi_{I_{j+1, 2k+1}} \chi_{I_{j+1, 2k'+1}}  $$
 
-$$ 2^j \int_{\mathbb{R}}  \chi_{I_{j+1, 2k}}\chi_{I_{j+1, 2k'}} - \chi_{I_{j+1, 2k}} \chi_{I_{j+1, 2k'+1}} - \chi_{I_{j+1, 2k+1}} \chi_{I_{j+1, 2k'}} + \chi_{I_{j+1, 2k+1}} \chi_{I_{j+1, 2k'+1}} $$
+First, suppose $k = k'$. Then, we have that this is equal to:
 
-By definition though, $I_{j+1, 2k} \cap I_{j+1, 2k'} = [2^{-j-1}2k, 2^{-j-1}(2k+1)) \cap [2^{-j-1}k', 2^{-j-1}(2k'+1))$, which is non-empty if and only if $k = k'$, as $j, k$ are integers, and so we have endpoints exactly at multiples of $2^{-j-1}$. We may disregard this case, as this means $h_{jk} = h_{jk'}$, and we wish to look at distinct elements of this family. Hence, if we have distinct elements, we have that $\chi_{I_{j+1, 2k}}\chi_{I_{j+1, 2k'}}, \chi_{I_{j+1, 2k+1}} \chi_{I_{j+1, 2k'+1}}$ are identically 0.
+$$ \chi_{I_{j+1, 2k}} +  \chi_{I_{j+1, 2k+1}} $$
 
-Then, we need only look at the terms $ - \chi_{I_{j+1, 2k}} \chi_{I_{j+1, 2k'+1}} - \chi_{I_{j+1, 2k+1}} \chi_{I_{j+1, 2k'}}$. However, in a similar fashion to the previous terms, these can be non-0 if and only if either $2k = 2k' + 1$, or $2k' = 2k + 1$. However, $k, k' \in \mathbb{Z}$, and hence there are no values of $k, k'$ such that these are non-0.
+as the square of a characteristic function is itself, and the cross terms vanish as $I_{j,k}$ and $I_{j, k'}$ are disjoint unless $k = k'$.
 
-Thus, if we have two distinct elements $h_{jk}, h_{jk'}$, we have that  $\langle h_{jk}, h_{jk'} \rangle = 0$. Hence, the family $\{ h_{jk} \}_{k \in \mathbb{Z}}$ for fixed $j$ is a orthonormal sequence in $L^2$.
+Then, in the case $j = j', k = k'$, we have that the integral evaluates as $2^j \int_{\mathbb{R}}  \chi_{I_{j+1, 2k}} +  \chi_{I_{j+1, 2k+1}} = 2^j( 2^{-j-1} + 2^{ -j -1} ) =  1$.
+
+Else, suppose $k \not = k'$. Then, we have that $\chi_{I_{j+1, 2k}}\chi_{I_{j+1, 2k'}},   \chi_{I_{j+1, 2k+1}} \chi_{I_{j+1, 2k'+1}}$ vanish. Looking at the remaining terms, we have:
+
+$$  - \chi_{I_{j+1, 2k+1}}\chi_{I_{j+1, 2k'}} - \chi_{I_{j+1, 2k}}\chi_{I_{j+1, 2k'+1}} $$
+
+which, again, may be non-0 if and only if either $2k + 1 = 2k'$ or $2k = 2k' + 1$. However, since $k, k' \in \mathbb{Z}$, this is impossible. Hence, for all $k \not = k', j = j'$, this integral vanishes as desired.
+
+Now, suppose $j < j'$. Due to the nested structure of dyadic intervals, for each $I_{j',2k'}, I_{j', 2k'+1}$, these fit exactly within a single $I_{j, l}$ for some $l$. Hence, we can say that at least one of:
+
+$$ \begin{cases} \chi_{I_{j+1, 2k}}[\chi_{I_{j'+1, 2k'}} - \chi_{I_{j'+1, 2k'+1}}] \\ \chi_{I_{j+1, 2k+1}} [\chi_{I_{j'+1, 2k'}} - \chi_{I_{j'+1, 2k'+1}}] \end{cases}$$
+
+vanishes.
+
+If both vanish, then we are done, as the integral disappears as desired. WLOG, suppose the first term survives. Then, we have our integral as:
+
+$$ 2^{j/2 + j'/2} \int_{\mathbb{R}} \chi_{I_{j+1, 2k}}\chi_{I_{j'+1, 2k'}} -  \chi_{I_{j+1, 2k}}\chi_{I_{j'+1, 2k'+1}} $$
+
+Evidently, then, the first term takes on $1$ on an interval of measure $2^{-j'-1}$ and the second term takes on $-1$ on an interval of measure $2^{-j'-1}$. Hence, they cancel out, and we have that for all $j < j'$, $k \in \mathbb{Z}$, that $ \langle h_{j,k}, h_{j', k'} \rangle$. Hence, we have that:
+
+$$  \langle h_{j,k}, h_{j', k'} \rangle = \delta_j^{j'} \delta_k^{k'}$$
+
+as desired.
 
 14.2)
 
@@ -220,7 +319,47 @@ Since $j, k \in \mathbb{Z}$, these intervals have endpoints at multiple of $2^{-
 
 $$ 2^{j} \int_\mathbb{R}  \chi_{I_{jk}}  \chi_{I_{jk'}} = 2^{j} \int_\mathbb{R}  \chi_{I_{jk}}  \delta_k^{k'} = 2^j | 2^{-j}(k+1) - 2^{-j} k| \delta_k^{k'} = 2^j 2^{-k} \delta_k^{k'} = \delta_k^{k'} $$
 
-Therefore, $\{ p_{jk} \}_{k \in \mathbb{Z}}$ is an orthonormal sequence in $L^2$ for fixed $j \in \mathbb{Z}$. 
+Therefore, $\{ p_{jk} \}_{k \in \mathbb{Z}}$ is an orthonormal sequence in $L^2$ for fixed $j \in \mathbb{Z}$.
+
+14.3)
+
+Fix a $j$, and a step function $g_j$, and consider the dyadic intervals one larger, $I_{j-1, k}$. Of course, each $I_{j-1,k}$ may be broken into $I_{j,2k} \cup I_{j, 2k+1}$, as we may split the interval as:
+
+$$[2^{-j+1}k, 2^{-j+1}(k+1)) = [2^{-j} 2k, 2^{-j}(2k+2))) = [ 2^{-j} 2k, 2^{-j} 2k + 1) \cup [ 2^{-j} 2k+1, 2^{-j} 2k+2) $$
+
+Call $g_j(I_{j, 2k}) = c$ and $g_j(I_{j, 2k+1}) = d$. Define $g_{j-1}(I_{j-1, k}) = \frac{c+d}{2}$ and define $a_{j-1}(k) = \frac{c - d}{2}$. Then, on $I_{j, 2k},I_{j, 2k+1} $, we have that:
+
+$$ \begin{cases} g_{j-1}(I_{j, 2k}) + r_{j-1}(I_{j, 2k}) = \frac{c + d}{2} + \frac{c - d}{2} \chi_{I_{j, 2k}}(I_{j, 2k}) = c \\ g_{j-1}(I_{j, 2k+1}) + r_{j-1}(I_{j, 2k+1}) = \frac{c + d}{2} - \frac{c - d}{2} \chi_{I_{j, 2k}}(I_{j, 2k}) = d \end{cases} $$
+
+We may continue this construction for each $I_{j, k}$, and determine $g_{j-1}, r_{j-1}, a_{j-1}$ on the entire real line, with $g_{j-1}$ a step function constant on $I_{j-1, k}$, $a_{j-1}(k)$ coefficients, and $r_{j-1} = \sum a_{j-1}(k) h_{j-1, k} $
+
+14.4)
+
+We have already shown $\{ p_{Jk} : 0 \leq k \leq 2^J - 1 \}$ to be orthonormal for $k \in \mathbb{Z}$, so of course this is orthonormal on its own, and similarly for $\{ h_{j,k} : j \geq J, 0 \leq k \leq 2^j - 1 \}$ for $j,k \in \mathbb{Z}$. So, we only need to show that $\langle p_{Jk}, h_{j, k'} \rangle = 0$ for any $j \geq J, 0 \leq k \leq 2^J - 1, 0 \leq k' \leq 2^j - 1 $
+
+Thus, we have that:
+
+$$\langle  p_{J,k}, h_{j, k'} \rangle = \int_{\mathbb{R}}p_{J,k} h_{j, k'} = \int_{\mathbb{R}} 2^{J/2} \chi_{I_{Jk}}[ 2^{j/2} (\chi_{I_{j+1, 2k'}} - \chi_{I_{j+1, 2k'+1}} ) = $$
+
+$$ 2^{J/2 + j/2} \int_{\mathbb{R}}  \chi_{I_{Jk}} \chi_{I_{j+1, 2k'}} -  \chi_{I_{Jk}} \chi_{I_{j+1, 2k' + 1}} $$
+
+Now, in the same vein as 14.1 and the nesting of dyadic intervals, since $j+1 > j \geq J$, we must have that either both $I_{j+1, 2k' + 1}, I_{j+1, 2k' + 1} \subseteq I_{Jk}$ or neither are. If neither are, then this integral vanishes, and we are done.
+
+Suppose then that both terms survive. Then, the first term takes on $1$ on the interval $ I_{j+1, 2k'}$, and the second term takes on $-1$ on the interval $I_{j+1, 2k' + 1}$. Since these intervals have the same measure, the integral vanishes due to the opposite sign. Hence, we have that $\langle p_{Jk}, h_{j, k'} \rangle = 0$ for any $p_{Jk}, h_{j, k'}$ and thus, $\{ p_{Jk} : 0 \leq k \leq 2^J - 1 \} \cup \{ h_{j,k} : j \geq J, 0 \leq k \leq 2^j - 1 \}$ is a orthonormal sequence.
+
+14.5)
+
+Since $[0,1]$ is compact, any step functions on dyadic intervals is aleady square integrable, including $p_{jk}, h_{jk}$. 
+
+%First, suppose $f$ is non-negative. Then, define $g_j$ as the step function on $I_{j,k}$ such that $g_j(I_{j,k})$ takes on the $\operatorname{ess\,inf}_{x \in I_{j,k}} f(x)$, the essential infimum of $f$ on $I_{j,k}$. Evidently, the sequence $g_j$ converges to $f$ pointwise almost everywhere. Moreover, since $f \in L^2$, the sequence of $\Vert g_j \Vert_2$ is bounded above, and non-decreasing, hence convergent to $\Vert f \Vert_2$ via the monotone convergence sequence, as $\Vert f \Vert_2$ must be the supremum, due to the pointwise almost everywhere convergence.
+
+%Now, from 14.3), we have already seen that we may express $g_j = g_{j-1} + \sum a_{j-1}(k) h_{j-1, k}$. We may perform this step recursively then to some $g_J$, a step function on $I_{J,k}$ and a sum of $a_{l} h_{l, k_l}$ for $J \leq l \leq j$ and $ 0 \leq k_l \leq 2^l - 1$. Hence, we see that $g_j$ is expressable as a linear combination of the sequence found in 14.4). In fact, we see that this argument works for all $j \geq J$.
+
+%Moreover, from the construction of these step functions, we see that $g_{j-1}$ is nested within
+
+First, suppose $f$ is at least continuous. Construct $g_j$ in the following way. Define $g_J = \sum_{k} \langle f, p_{J,k} \rangle p_{J,k}$. Then, define $g_{j+1} = g_{j} + \sum_{k} \langle f, h_{j, k} \rangle h_{j,k}$. 
+
+
 
 \end{proof}
 
