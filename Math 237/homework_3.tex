@@ -112,7 +112,13 @@ Now, we return to proving 9.3.24.
 
 First, we wish to show that if $f \in L^1(\mathbb{T})$, and $\hat{f} \in L^2(\mathbb{Z})$, then $f \in L^2(\mathbb{T})$.
 
-% fill in this argument
+Consider the function defined by:
+
+$$ g(x) = \sum_{n \in \mathbb{Z}} \hat{f}(n) \exp(2 \pi i n x) $$
+
+Since $\hat{f}(n) \in L^2(\mathbb{Z})$, if we were to consider $\langle g, g \rangle_2$ in the $L^2(\mathbb{T})$ norm, since the trigonometric system is a basis for $L^2(\mathbb{T})$, we see that $\langle g, g \rangle = \sum_n |\hat{f}(n)|^2 \langle \exp(2 \pi i n x), \exp(2\pi i n x) \rangle = \Vert \hat{f} \Vert_2$ where we understand $\Vert \hat{f} \Vert_2$ as meaning the $L^2(\mathbb{Z})$ norm.
+
+Hence, $g \in L^2(\mathbb{T})$. However, since $\mathbb{T}$ is compact, we have the inclusion $L^2(\mathbb{T}) \subset L^1(\mathbb{T})$. Hence, $g \in L^1$. Thus, we may take a Fourier transform of $g$, and we notice by definition $\hat{g}(n) = \hat{f}(n)$. Thus, we have that $f = g$ almost everywhere, and hence, since $g \in L^2(\mathbb{T})$, so must be $f$.
 
 Next, we want to show that the Plancherel equality holds, either both sides being finite or infinite. If $f \in L^2 \cap L^1$, then we're fine, by Corollary 9.3.14.
 
@@ -357,7 +363,61 @@ Since $[0,1]$ is compact, any step functions on dyadic intervals is aleady squar
 
 %Moreover, from the construction of these step functions, we see that $g_{j-1}$ is nested within
 
-First, suppose $f$ is at least continuous. Construct $g_j$ in the following way. Define $g_J = \sum_{k} \langle f, p_{J,k} \rangle p_{J,k}$. Then, define $g_{j+1} = g_{j} + \sum_{k} \langle f, h_{j, k} \rangle h_{j,k}$. 
+First, suppose $f$ is a real function (i.e. $L^2$ is a real Hilbert space), and at least continuous. Construct $g_j$ in the following way. Define $g_J = \sum_{k} \langle f, p_{J,k} \rangle p_{J,k}$. Then, define $g_{j+1} = g_{j} + \sum_{k} \langle f, h_{j, k} \rangle h_{j,k}$. 
+
+First, we remark that $g_j$ approximates $f$ in the $L^2$ sense in the following way. %We notice that $\Vert g_J \Vert_2^2$ has the following form:
+
+%$$\Vert g_J \Vert_2^2 =  \int_{[0,1]} \sum_{k} \langle f, p_{J,k} \rangle \overline{\langle f, p_{J,k} \rangle } p_{J,k} \overline{p_{J,k}} = 2^J \sum_{k} \int_{I_{J,k}} \langle f, p_{J,k} \rangle^2  $$
+
+%$$\Vert g_J \Vert_2^2 = \langle g_J, g_J \rangle = \langle \sum_{k}\langle f, p_{J,k} \rangle p_{J,k}, \sum_{k} \langle f, p_{J,k} \rangle p_{J,k} \rangle = \sum_{k}\langle f, p_{J,k} \rangle^2 $$
+
+%due to the $p_{J,k}$ being orthonormal.
+
+First looking at $g_J$ and expanding the inner product of the $\langle f, p_{J,k}\rangle$, we see that:
+
+$$ \langle f, p_{J,k} \rangle =  \int_{[0,1]} f p_{J,k} = \int_{I_{J,k}} f 2^{J/2} $$
+
+We note that since $[0,1]$ is compact, $L^2 \subseteq L^1$, so this integral makes sense to do.
+
+Hence, we see that on the interval $I_{J,k}$, $g_J$ takes on the value, for $x \in I_{J,k}$:
+
+$$g_J(x) =  \langle f, p_{J,k} \rangle p_{J,k}(x) = 2^{J/2}\chi_{I_{J,k}}(x) \int_{I_{J,k}} f 2^{J/2} = 2^J \int_{I_{J,k}} f  $$
+
+Recognizing that the measure of the interval $I_{J,k}$ is $2^{-J}$, we see that $g_J$ takes on the average value of $f$ over each $I_{J,k}$.
+
+Now, doing this same procedure for $g_{J+1}$, and looking at intervals $I_{J+1,k}$, we first compute the value of $\langle f, h_{J, k} \rangle$. We have that:
+
+$$\langle f, h_{J,k} \rangle = \int_{[0,1]} f 2^{J/2} (\chi_{I_{J+1, 2k}} - \chi_{I_{J+1, 2k+1}} ) = 2^{J/2} \left( \int_{I_{J+1, 2k}} f - \int_{I_{J+1, 2k+1}} f \right)$$
+
+Thus, we see that $g_{J+1}$ takes on the value, for $x \in I_{J+1, k}$:
+
+$$ g_{J+1}(x) = \langle f, p_{J,\lfloor k/2 \rfloor} \rangle p_{J,\lfloor k/2 \rfloor } + \langle f, h_{J,\lfloor k/2 \rfloor} \rangle h_{J,\lfloor k/2 \rfloor}  = \begin{cases}  2^{J/2} (\langle f, p_{J,\lfloor k/2 \rfloor} \rangle +  \langle f, h_{J,\lfloor k/2 \rfloor} \rangle) &  k \equiv 0 \operatorname{mod} 2 \\ 2^{J/2} (\langle f, p_{J,\lfloor k/2 \rfloor}\rangle -  \langle f, h_{J,\lfloor k/2 \rfloor}\rangle)  &  k \equiv 1 \operatorname{mod} 2  \end{cases}$$
+
+Looking at $ k \equiv 0 \operatorname{mod} 2$, we see that $g_{J+1}$ looks like:
+
+$$ 2^{J}\left( \int_{I_{J,\lfloor k/2 \rfloor}} f + \int_{I_{J+1, k}} f - \int_{I_{J+1, k+1}} f \right) =  2^{J}\left( \int_{I_{J+1,k}} f + \int_{I_{J+1, k+1}}f + \int_{I_{J+1, k}} f - \int_{I_{J+1, k+1}}f \right) = $$
+
+$$ 2^{J+1} \int_{I_{J+1, k}} f $$
+
+i.e. exactly the average value of $f$ over $I_{J+1, k}$. We can see that the same idea holds for $k \equiv 1 \operatorname{mod} 2$, due to the sign difference.
+
+Now, I don't want to write out the inductive step, but we see that we have that $g_{J+n}$ takes on the average value of $f$ over each $I_{J+n, k}$ and since we see that $h_{J+n, k}$ represents a difference of the averages over the $I_{J+n+1, 2k}, I_{J+n+1, 2k+1}$ intervals, a similar calculation to the above passes through to conclude that $g_{J+n+1}$ takes on the average value of $f$ over each $I_{J+n+1, k}$ interval as well.
+
+Hence, due to the (uniform) continuity of $f$, being on a compact set, we have the following.
+
+Let $x \in [0,1]$ be arbitrary, and take $\epsilon > 0$ as given. Since $f$ is uniformly continuous, we have that for all $|x - y | < \delta$, that $|f(x) - f(y)| < \epsilon$. For $x$ that is not a Dyadic endpoint, we choose a Dyadic interval scale $J$ such that $I_{J, k}$ contains $x$, and for all $y \in I_{J,k}$, $|x - y| < \delta$. Since the choice of scale is independent of the point due to uniform continuity, we may conclude that $g_J$ converges uniformly to $f$ on all but potentially a set of measure 0, the Dyadic endpoints.
+
+Now, we have that:
+
+$$ \Vert f - g_J \Vert^2 = \int_{[0,1]} | f - g_J |^2 \leq \operatorname{esssup} | f - g_J |^2 < \epsilon^2 $$
+
+and hence we may approximate any continuous function with a step function, composed of the $p_{J,k}, h_{j,k}$. However, we also know that we may approximate any $L^2$ function with continuous functions, and so we can approximate any $L^2$ function with the $p, h$. Hence, this sequence is an orthonormal basis.
+
+We extend this to complex valued functions in the normal way, where we break this into the real and imaginary parts, and play the same game.
+
+%$$ \Vert g_J \Vert_2^2 = \sum_{k} \int_{I_{J,k}} \left( \int_{I_{J,k}} f \right)^2 $$
+
+%and noticing that $2^{-J}$ is the measure of $I_{J,k}$, we realize that $ \langle f, p_{J,k} \rangle$ may be interpreted as the average value of $f$ on $I_{J,k}$. Hence, we have that $\Vert g_J \Vert_2^2$ is the sum over the squares of the average values of $f$ over each $I_{J,k}$.
 
 
 
@@ -382,7 +442,7 @@ Recall that the Schwarz space $\mathcal{S}(\mathbb{R})$ is defined as:
 
 $$ \mathcal{S}(\mathbb{R}) = \{ f \in C^\infty(\mathbb{R}) : x^m f^{(n)}(x) \in L^\infty(\mathbb{R}) \text{ for all } m, n \geq 0 \}$$
 
-Prove that if $f \in \mathcal{S}(\mathbb{R})$, then $V_\phi \in S(\mathbb{R}^2)$.
+Prove that if $f \in \mathcal{S}(\mathbb{R})$, then $V_\phi f \in S(\mathbb{R}^2)$.
 
 16.3)
 
@@ -392,7 +452,7 @@ Prove that $V_\phi$ acts as an isometry from $L^2(\mathbb{R})$ to $L^2(\mathbb{R
 
 Show that the operator $V_\phi^*$ defined by:
 
-$$ V_\phi^* F(t) - \Vert \phi\Vert_2^{-2} \iint_{\mathbb{R}^2} F(x, \zeta) \exp(2\pi i \zeta t) \phi(t - x) dx d\zeta $$
+$$ V_\phi^* F(t) = \Vert \phi\Vert_2^{-2} \iint_{\mathbb{R}^2} F(x, \zeta) \exp(2\pi i \zeta t) \phi(t - x) dx d\zeta $$
 
 takes $L^2(\mathbb{R}^2)$ to $L^2(\mathbb{R})$, and that for each $f \in L^2(\mathbb{R})$, we can make sense of the following inversion formula:
 
@@ -401,6 +461,9 @@ $$ f(t) = \Vert \phi \Vert_2^{-2} \iint_{\mathbb{R}^2} V_\phi f(x, \zeta) \exp(2
 \end{problem}
 
 \begin{proof}[Solution]
+
+16.1)
+
 
 \end{proof}
 
