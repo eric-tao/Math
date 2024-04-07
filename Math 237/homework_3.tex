@@ -110,13 +110,13 @@ as desired.
 
 Now, we return to proving 9.3.24.
 
-First, we wish to show that if $f \in L^1(\mathbb{T})$, and $\hat{f} \in L^2(\mathbb{Z})$, then $f \in L^2(\mathbb{T})$.
+First, we wish to show that if $f \in L^1(\mathbb{T})$, and $\hat{f} \in l^2(\mathbb{Z})$, then $f \in L^2(\mathbb{T})$.
 
 Consider the function defined by:
 
 $$ g(x) = \sum_{n \in \mathbb{Z}} \hat{f}(n) \exp(2 \pi i n x) $$
 
-Since $\hat{f}(n) \in L^2(\mathbb{Z})$, if we were to consider $\langle g, g \rangle_2$ in the $L^2(\mathbb{T})$ norm, since the trigonometric system is a basis for $L^2(\mathbb{T})$, we see that $\langle g, g \rangle = \sum_n |\hat{f}(n)|^2 \langle \exp(2 \pi i n x), \exp(2\pi i n x) \rangle = \Vert \hat{f} \Vert_2$ where we understand $\Vert \hat{f} \Vert_2$ as meaning the $L^2(\mathbb{Z})$ norm.
+Since $\hat{f}(n) \in l^2(\mathbb{Z})$, if we were to consider $\langle g, g \rangle_2$ in the $L^2(\mathbb{T})$ norm, since the trigonometric system is a basis for $L^2(\mathbb{T})$, we see that $\langle g, g \rangle = \sum_n |\hat{f}(n)|^2 \langle \exp(2 \pi i n x), \exp(2\pi i n x) \rangle = \Vert \hat{f} \Vert_2$ where we understand $\Vert \hat{f} \Vert_2$ as meaning the $l^2(\mathbb{Z})$ norm.
 
 Hence, $g \in L^2(\mathbb{T})$. However, since $\mathbb{T}$ is compact, we have the inclusion $L^2(\mathbb{T}) \subset L^1(\mathbb{T})$. Hence, $g \in L^1$. Thus, we may take a Fourier transform of $g$, and we notice by definition $\hat{g}(n) = \hat{f}(n)$. Thus, we have that $f = g$ almost everywhere, and hence, since $g \in L^2(\mathbb{T})$, so must be $f$.
 
