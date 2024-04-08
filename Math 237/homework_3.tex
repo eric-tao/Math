@@ -464,6 +464,75 @@ $$ f(t) = \Vert \phi \Vert_2^{-2} \iint_{\mathbb{R}^2} V_\phi f(x, \zeta) \exp(2
 
 16.1)
 
+First, we notice that we may recast this integral as the $L^2$ inner product with some operators:
+
+$$ V_\phi(f)(x, \zeta) = \int_{\mathbb{R}} f(t) \overline{\phi(t-x)} \exp(-2 \pi i t \zeta) dt  = \langle f, M_\zeta T_x \phi \rangle $$
+
+Next, we prove that, for $f \in L^2$, that $\Vert M_\zeta f - f \Vert_2 \to 0$, as $\zeta \to 0$, for fixed $x$.
+
+We recall, that via Plancherel's, we have the following:
+
+$$ \Vert M_\zeta f - f \Vert_2 = \Vert \hat{M_\zeta f} - \hat{f} \Vert_2 = \Vert T_\zeta \hat{f} - \hat{f} \Vert_2 $$
+
+where we've used the linearity of the Fourier transform on $L^2$, and that the Fourier transform takes modulation into translation. However, we know already that $T_\zeta$ is continuous on $L^2$, hence, $\Vert M_\zeta f - f \Vert_2 \to 0$ as $\zeta \to 0$.
+
+Now, fix an arbitrary $(x, \zeta)$ and consider $|V_\phi(f)(x', \zeta') - V_\phi(f)(x, \zeta) |$. Let $\epsilon > 0$ be given. We see that:
+
+$$ |V_\phi(f)(x', \zeta') - V_\phi(f)(x, \zeta) | = | \langle f, M_{\zeta'} T_{x'} \phi \rangle - \langle f, M_\zeta T_x \phi \rangle| = $$
+
+$$ |\langle f, M_{\zeta'}T_{x'} \phi - M_\zeta T_x \phi \rangle | \leq \Vert f \Vert \Vert  M_{\zeta'}T_{x'} \phi - M_\zeta T_x \phi \Vert $$
+
+%Examining the second term, we see that after a transformation $t \mapsto x + t$:
+
+%$$ M_{\zeta'}T_{x'} \phi(t) - M_\zeta T_x  \phi(t) = \exp(2 \pi i t \zeta') \phi(t - x') - \exp(2 \pi i t \zeta) \phi(t - x) =  $$
+
+%$$\exp(2 \pi i (t+x) \zeta') \phi(t + x - x') - \exp(2 \pi i (t+x) \zeta) \phi(t )$$
+
+%Next, we factor out $\exp(2\pi i (t+x) \zeta)$ and see that:
+
+%$$ \exp(2 \pi i (t+x) \zeta') \phi(t + x - x') - \exp(2 \pi i (t+x) \zeta) \phi(t ) = \exp(2 \pi i (t + x) \zeta) \left[ \exp(2 \pi i (t+x)(\zeta' - \zeta) \phi(t + x - x')  - \phi(t) \right] $$
+
+%Hence, we can say that:
+
+%$$  \Vert  M_{\zeta'}T_{x'} \phi - M_\zeta T_x \phi \Vert  = | \exp(2 \pi i (t + x) \zeta)| \Vert T_{-x} M_{\zeta' - \zeta} T_{x'} \phi - \phi \Vert = \Vert T_{-x} M_{\zeta' - \zeta} T_{x'} \phi - \phi \Vert  $$
+
+%Examining the second term at a point $t \in \mathbb{R}$, we see that:
+
+%$$  M_{\zeta'}T_{x'} \phi(t) - M_\zeta T_x \phi(t) =  \exp(2 \pi i t \zeta') \phi(t - x') - \exp(2 \pi i t \zeta) \phi(t - x)  = $$
+
+%$$\exp(2 \pi i t \zeta) \left[  \exp(2 \pi i t (\zeta' - \zeta)) \phi(t - x') - \phi(t - x) \right] $$
+
+We then split the second term, via a triangle inequality:
+
+$$  \Vert  M_{\zeta'}T_{x'} \phi - M_\zeta T_x \phi \Vert \leq \Vert M_{\zeta'} T_{x'} \phi - M_{\zeta} T_{x'} \phi \Vert + \Vert M_{\zeta} T_{x'}\phi - M_{\zeta} T_x \phi \Vert$$
+
+We notice that for the first term, at each point $t$, we have that:
+
+$$  M_{\zeta'} T_{x'} \phi(t) - M_{\zeta} T_{x'} \phi (t) =  \exp(2 \pi i t \zeta') \phi(t - x') -  \exp(2 \pi i t \zeta) \phi(t - x') = \exp(2 \pi i t \zeta)\left[ \exp(2 \pi i t (\zeta' - \zeta)) \phi(t - x') - \phi(t - x')\right]  $$
+
+Hence, in terms of modulus, we have that this is at most $M_{\zeta'  - \zeta} T_{x'} \phi - T_{x'} \phi$. Then, we have that:
+
+$$ \Vert M_{\zeta'} T_{x'} \phi - M_{\zeta} T_{x'} \phi \Vert \leq \Vert M_{\zeta'  - \zeta} T_{x'} \phi - T_{x'} \phi \Vert \leq \epsilon/2\Vert f \Vert $$ for some choice of $|\zeta' - \zeta| < \delta(x')$, from what we proved about the continuity of the modulation.
+
+Similarly, we have that, at a point $t$ for the second term, that since we modulate by the same $\zeta$ for each term, we factor out the same phase difference, and we have that:
+
+$$  \Vert M_{\zeta} T_{x'}\phi - M_{\zeta} T_x \phi \Vert \leq  \Vert T_{x'}\phi - T_x \phi \Vert \leq \Vert T_{x' - x} \phi - \phi \Vert$$
+
+By the continuity of translations, then, we can find a $\delta > 0 $ such that $| x' - x| < \delta \implies \Vert T_{x' - x} \phi - \phi \Vert < \epsilon/2\Vert f \Vert$.
+
+Thus, since we can control both of these, where we need only choose how close $x'$ is first so we can control $\zeta'$, and since this is independent of the actual point $(x, \zeta)$, we may conclude that $V_\phi(f)$ is uniformly continuous over $\mathbb{R}^2$.
+
+Next, we see that since $\phi, f \in L^2$, that $\langle f, T_x \phi \rangle < \infty$, since the translation of a $L^2(\mathbb{R})$ function is still a $L^2(\mathbb{R})$ function. Hence, $f(t) \overline{\phi(t - x)} \in L^1$, and we may recognize that $V_\phi(f)(x, \zeta)$ is its Fourier transform for fixed values of $x$. Hence, by Riemann-Lebesgue, we already have that as $|\zeta| \to \infty$ for any $x$, that $V_\phi(f) \to 0$.
+
+16.2)
+
+Let $f \in \mathcal{S}(\mathbb{R})$. We notice that by a translation of the integral, sending $t \mapsto t + x$, we may rewrite $V_\phi(f)(x, \zeta)$ as:
+
+$$ V_\phi(f)(x, \zeta) = \int_{\mathbb{R}} f(t) \overline{\phi(t - x)} \exp(-2 \pi i t \zeta) dt = \int_\mathbb{R} f(t + x) \overline{\phi(t)} \exp(-2 \pi i (t + x) \zeta) dt = $$
+
+$$ \exp(-2\pi i x \zeta) \int_\mathbb{R} f(t + x) \overline{\phi(t)} \exp(2\pi i t \zeta) dt $$
+
+
 
 \end{proof}
 
