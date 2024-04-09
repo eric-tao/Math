@@ -533,6 +533,81 @@ $$ V_\phi(f)(x, \zeta) = \int_{\mathbb{R}} f(t) \overline{\phi(t - x)} \exp(-2 \
 $$ \exp(-2\pi i x \zeta) \int_\mathbb{R} f(t + x) \overline{\phi(t)} \exp(2\pi i t \zeta) dt $$
 
 
+16.3)
+
+Ok, I'm not sure how this could be an isometry, unless we have that $\Vert \varphi \Vert_2 = 1$, so we're just going to prove the norm aspect.
+
+We proceed here by proving the equivalent Parseval's identity. Let $\phi_1, \phi_2, f_1, f_2 \in L^2(\mathbb{R})$. We wish to show that $\langle V_{\phi_1} f_1, V_{\phi_2} f_2 \rangle = \langle f_1, f_2 \rangle \overline{\langle \phi_1, \phi_2 \rangle}$.
+
+Well, we have that:
+
+$$ \langle V_{\phi_1} f_1, V_{\phi_2} f_2 \rangle = \iint  \left( \int_{\mathbb{R}} f_1(t) \overline{\phi_1(t - x)} \exp( -2 \pi i t \zeta) dt \right) \overline{\left( \int_{\mathbb{R}}  f_2(t) \overline{\phi_2(t - x)} \exp(-2 \pi i t \zeta) dt \right)} d\zeta dx $$
+
+Now, we identify $\int_{\mathbb{R}} f_1(t) \overline{\phi_1(t - x)} \exp( -2 \pi i t \zeta) dt, \int_{\mathbb{R}}  f_2(t) \overline{\phi_2(t - x)} \exp(-2 \pi i t \zeta) dt $ as $L^1$ Fourier transforms of $f_1 \overline{T_x \phi_1}, f_2 \overline{T_x \phi_2}$, respectively. Hence, we have that this is equal to:
+
+$$ \iint \mathcal{F}( f_1 \overline{T_x \phi_1}( \zeta)) \overline{\mathcal{F}(f_2 \overline{T_x \phi_2})(\zeta)} d \zeta dx $$
+
+Now, taking this with this with the integral over $\zeta$, with respect to $x$ as a constant, we notice that $ \int   \mathcal{F}( f_1 \overline{T_x \phi_1}( \zeta)) \overline{\mathcal{F}(f_2 \overline{T_x \phi_2})(\zeta)} d \zeta$ is exactly the $L^2(\mathbb{R})$ inner product $\langle \mathcal{F}( f_1 \overline{T_x \phi_1}), \mathcal{F}(f_2 \overline{T_x \phi_2}) \rangle $. Here, since $|f_1|^2, |\phi_1|^2$ are $L^2$ functions, we may look at their convolution:
+
+$$ (|f_1|^2 \ast |\phi_2|^2)(x) = \int_{\mathbb{R}} |f_1(y)|^2 |\phi_1(x - y)|^2 dy $$
+
+ -- Finish justifying why these are $L^2$ functions - probably need something like $\phi$ to be either $L^\infty, C_0$.
+ 
+ Then, since $ f_1 \overline{T_x \phi_1},  f_2\overline{T_x \phi_2}$ are $L^2(\mathbb{R})$ functions, we may apply Plancherel's equality to instead examine:
+ 
+ $$  \iint \mathcal{F}( f_1 \overline{T_x \phi_1}( \zeta)) \overline{\mathcal{F}(f_2 \overline{T_x \phi_2})(\zeta)} d \zeta dx = \int \langle f_1 \overline{T_x \phi_1}, f_2 \overline{T_x \phi_2} \rangle dx = $$
+ 
+ $$ \int \left( \int f_1(y) \overline{\phi_1(y - x)} \overline{ f_2(y) \overline{\phi_2(y-x)}} dy \right) dx $$
+ 
+ Here, we apply a Fubini's theorem, where we are guaranteed integrability due to the $L^2$ ness of the interior functions with respect to $y$ and $x$. Thus, we have that this is equal to:
+ 
+ $$ \int_{\mathbb{R}}\left( \int_{\mathbb{R}} f_1(y)\overline{\phi_1(y-x)} \overline{f_2(y)} \phi_2(y-x) dx \right) dy = \int_{\mathbb{R}} f_1(y) \overline{f_2(y)} \left( \int_{\mathbb{R}}\overline{\phi_1(y-x)} \phi_2(y-x) dx \right) dy$$
+ 
+ where we pull out the $f_1(y), \overline{f_2(y)}$, as they are constant with respect to $x$. Here, we notice that the inside integral is now simply the inner product $ \langle T_x \phi_2, T_x \phi_1 \rangle$, which, after a change of variables, we see as equal to $\langle \phi_2, \phi_1 \rangle$. But, the inner product is merely a constant, so we can pull that out, so we have this to be equal to:
+ 
+ $$ \langle \phi_2, \phi_1 \rangle \int_{\mathbb{R}} f_1(y)\overline{f_2(y)} dy = \langle \phi_2, \phi_1 \rangle  \langle f_1, f_2 \rangle $$
+ 
+ as desired.
+ 
+ Now, setting $\phi_1 = \phi_2 = \phi, f_1 = f_2 = f$, we get the desired result of:
+ 
+ $$\Vert V_\phi(f) \Vert_{L^2(\mathbb{R}^2)}^2 = \Vert f \Vert_{L^2(\mathbb{R})}^2  \Vert \phi \Vert_{L^2(\mathbb{R})}^2  \implies  \Vert V_\phi f \Vert_{L^2(\mathbb{R}^2)} = \Vert \phi \Vert_{L^2(\mathbb{R})} \Vert f \Vert_{L^2(\mathbb{R})}$$
+ 
+16.4)
+
+Here, we recall that if for all $g \in L^2(\mathbb{R})$, if $\langle f, g \rangle = \langle h, g \rangle$, then, by choosing $g = f - h$, we see that $f = h$ in the $L^2$ sense, as:
+
+$$ \langle f, f - h \rangle - \langle h, f - h \rangle = 0 \implies \langle f - h, f -h \rangle = 0 \implies \Vert f- h \Vert_2^2 = 0 \implies f - h= 0 \implies f = h$$
+
+So, let $g$ be an arbitrary $L^2(\mathbb{R})$ function, and consider the inner product $\langle V^*_\phi(f), g \rangle$. We have that:
+
+$$ \langle V^*_\phi(f), g \rangle = \frac{1}{ \langle \phi, \phi \rangle } \left\langle \iint_{\mathbb{R}^2} V_\phi(f)(x, \zeta) \exp(2\pi i \zeta t) \phi(t - x) dx d\zeta, g \right\rangle  = $$
+
+$$  \frac{1}{ \langle \phi, \phi \rangle }\int_{\mathbb{R}} \left(\iint_{\mathbb{R}^2} V_\phi(f)(x, \zeta) \exp(2\pi i \zeta t) \phi(t - x) dx d\zeta\right)(t) \; \overline{g(t)} dt  = $$
+
+$$   \frac{1}{ \langle \phi, \phi \rangle } \iiint_{\mathbb{R}^3} V_\phi(f)(x, \zeta) \exp(2\pi i \zeta t )\phi(t - x)\overline{g(t)} dx d\zeta dt $$
+
+We interchange integrals first, and justify using the finiteness afterwards via Fubini's. We switch the order such that $dt$ goes first. Pulling out the $V_\phi(f)(x, \zeta)$, as it is constant with respect to $t$, we see that:
+
+$$  \frac{1}{ \langle \phi, \phi \rangle } \iint_{\mathbb{R}^2} V_\phi(f)(x, \zeta) \left( \int_{\mathbb{R}} \exp(2 \pi i \zeta t) \phi(t - x) \overline{g(t)} dt \right) d\zeta dx $$
+
+But here, we notice that the inside integral is exactly the value of $\overline{V_\phi(g)(\zeta, x)}$, where we can bring the complex conjugation outside by viewing this as:
+
+$$ \langle M_\zeta T_x \phi, g \rangle = \overline{\langle g, M_\zeta T_x \phi \rangle} = \overline{V_\phi(g)(\zeta, x)}$$
+
+Hence, we can then look at this whole thing as the $L^2(\mathbb{R}^2)$ inner product:
+
+$$ \frac{1}{ \langle \phi, \phi \rangle } \iint_{\mathbb{R}^2} V_\phi(f)(x, \zeta) \overline{V_\phi(g)(\zeta, x)} d\zeta dx =  \frac{1}{ \langle \phi, \phi \rangle } \langle V_\phi(f), V_\phi(g) \rangle $$
+
+and here, we see our usage of Fubini's theorem is justified, due to the finiteness of this integral. Now, backing up a second, and taking $V_\phi(f) = F$ as any $L^2(\mathbb{R}^2)$ function, we see that since $V_\phi(g) \in L^2$, that this takes on a finite value, and hence $\langle V^*_\phi(F), g \rangle < \infty$ for any $g \in L^2(\mathbb{R})$, and hence $V^*_\phi(F) \in L^2(\mathbb{R}^2)$, so $V^*_\phi: L^2(\mathbb{R}^2) \to L^2(\mathbb{R})$. 
+
+However, we already showed in 16.3 that $\langle V_\phi(f), V_\phi(g) \rangle = \langle f, g\rangle \langle \phi, \phi \rangle $. Thus, we have that:
+
+$$ \frac{1}{ \langle \phi, \phi \rangle } \langle V_\phi(f), V_\phi(g) \rangle  = \frac{1}{ \langle \phi, \phi \rangle } \langle f, g \rangle \langle \phi, \phi \rangle = \langle f, g \rangle $$
+
+Hence, we have that the inversion formula makes sense in an $L^2$ sense, differing potentially only on a set of measure 0:
+
+$$ f(t) = \Vert \phi \Vert_2^{-2} \iint_{\mathbb{R}^2} V_\phi f(x, \zeta) \exp(2 \pi i \zeta t) \phi(t - x) dx d\zeta $$ 
 
 \end{proof}
 
