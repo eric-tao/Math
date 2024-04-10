@@ -151,7 +151,7 @@ Here, since we know that $\exp(-2\pi i nk) = 1$ for every $k \in \mathbb{Z}$ reg
 
 $$ \int_0^1 \sum_{k} \left( |\hat{g}(\zeta - k)|^2 \exp(-2 \pi in (\zeta - k) \right) d\zeta $$
 
-Playing the same trick with interchanging sums and integrals, by using the fact that the exponential has modulus 1, we see that this is simply an integral over all of $\mathbb{R}$ again, and doing some algebra with the modulus, we see:
+Playing the same trick with interchanging sums and integrals, by using the fact that the exponential has period $2\pi$, we see that this is simply an integral over all of $\mathbb{R}$ again, and doing some algebra with the modulus, we see:
 
 $$  \int_0^1 \sum_{k} \left( |\hat{g}(\zeta - k)|^2 \exp(-2 \pi in (\zeta - k) \right) d\zeta = \int_{\mathbb{R}} | \hat{g}(\zeta)|^2 \exp(-2\pi i n \zeta) d\zeta = \int_{\mathbb{R}} [\hat{g}(\zeta) \exp(-2\pi i n \zeta)] \overline{\hat{g}(\zeta)} d\zeta$$
 
@@ -159,7 +159,7 @@ Since $\hat{g} \in L^2$, of course $\overline{\hat{g}} \in L^2$, and so too is $
 
 $$ \int_{\mathbb{R}} [\hat{g}(\zeta) \exp(-2\pi i n \zeta)] \overline{\hat{g}(\zeta)} d\zeta = \langle M_{-n} \hat{g}, \hat{g} \rangle $$
 
-Now, by Theorem 9.4.6, the Fourier transform on $L^2$ functions obeys the Parseval Identity. Moreover, by Heil 9.2.21, if $T_b$ is the translation operator that sends $f(x) \mapsto f(x-b)$, then $\hat{T_a f} = M_{-a} \hat{f}$. (We will prove this separately). Thus, we have that:
+Now, by Theorem 9.4.6, the Fourier transform on $L^2$ functions obeys the Parseval Identity. Moreover, by Heil 9.2.21, if $T_b$ is the translation operator that sends $f(x) \mapsto f(x-b)$, then $\widehat{T_a f} = M_{-a} \hat{f}$. (We will prove this separately). Thus, we have that:
 
 $$ \langle M_{-n} \hat{g} \hat{g} \rangle = \langle T_n g , g \rangle $$
 
@@ -530,7 +530,7 @@ Let $f \in \mathcal{S}(\mathbb{R})$. We notice that by a translation of the inte
 
 $$ V_\phi(f)(x, \zeta) = \int_{\mathbb{R}} f(t) \overline{\phi(t - x)} \exp(-2 \pi i t \zeta) dt = \int_\mathbb{R} f(t + x) \overline{\phi(t)} \exp(-2 \pi i (t + x) \zeta) dt = $$
 
-$$ \exp(-2\pi i x \zeta) \int_\mathbb{R} f(t + x) \overline{\phi(t)} \exp(2\pi i t \zeta) dt $$
+$$ \exp(-2\pi i x \zeta) \int_\mathbb{R} f(t + x) \overline{\phi(t)} \exp(-2\pi i t \zeta) dt $$
 
 
 16.3)
