@@ -271,7 +271,7 @@ Consider $\langle h_{j,k}, h_{j', k'} \rangle$, where I will drop the complex co
 
 $$  \langle h_{j,k}, h_{j', k'} \rangle = \int_{\mathbb{R}}  h_{j,k}  h_{j', k'} = \int_{\mathbb{R}}  2^{j/2} (\chi_{I_{j+1, 2k}} - \chi_{I_{j+1, 2k+1}} ) 2^{j'/2} (\chi_{I_{j'+1, 2k'}} - \chi_{I_{j'+1, 2k'+1}} )$$
 
-Without loss of generality, suppose $j \geq j'$, and switch labels if this is not true. First, suppose $j = j'$. Then, looking at the integrand and factoring out the $2^{j/2}$, we have that:
+Without loss of generality, suppose $j \leq j'$, and switch labels if this is not true. First, suppose $j = j'$. Then, looking at the integrand and factoring out the $2^{j/2}$, we have that:
 
 $$  (\chi_{I_{j+1, 2k}} - \chi_{I_{j+1, 2k+1}} )  (\chi_{I_{j+1, 2k'}} - \chi_{I_{j+1, 2k'+1}} ) = \chi_{I_{j+1, 2k}}\chi_{I_{j+1, 2k'}} - \chi_{I_{j+1, 2k+1}}\chi_{I_{j+1, 2k'}} - \chi_{I_{j+1, 2k}}\chi_{I_{j+1, 2k'+1}} + \chi_{I_{j+1, 2k+1}} \chi_{I_{j+1, 2k'+1}}  $$
 
@@ -279,7 +279,7 @@ First, suppose $k = k'$. Then, we have that this is equal to:
 
 $$ \chi_{I_{j+1, 2k}} +  \chi_{I_{j+1, 2k+1}} $$
 
-as the square of a characteristic function is itself, and the cross terms vanish as $I_{j,k}$ and $I_{j, k'}$ are disjoint unless $k = k'$.
+as the square of a characteristic function is itself, and the cross terms vanish as, generically, $I_{j,n}$ and $I_{j, m}$ are disjoint unless $n = m$ for $n,m \in \mathbb{Z}$.
 
 Then, in the case $j = j', k = k'$, we have that the integral evaluates as $2^j \int_{\mathbb{R}}  \chi_{I_{j+1, 2k}} +  \chi_{I_{j+1, 2k+1}} = 2^j( 2^{-j-1} + 2^{ -j -1} ) =  1$.
 
@@ -287,7 +287,7 @@ Else, suppose $k \not = k'$. Then, we have that $\chi_{I_{j+1, 2k}}\chi_{I_{j+1,
 
 $$  - \chi_{I_{j+1, 2k+1}}\chi_{I_{j+1, 2k'}} - \chi_{I_{j+1, 2k}}\chi_{I_{j+1, 2k'+1}} $$
 
-which, again, may be non-0 if and only if either $2k + 1 = 2k'$ or $2k = 2k' + 1$. However, since $k, k' \in \mathbb{Z}$, this is impossible. Hence, for all $k \not = k', j = j'$, this integral vanishes as desired.
+which, again, may be non-0 if and only if either $2k + 1 = 2k'$ or $2k = 2k' + 1$. However, since $k, k' \in \mathbb{Z}$, this is impossible. Hence, for all $k, k', j = j'$, this integral vanishes as desired.
 
 Now, suppose $j < j'$. Due to the nested structure of dyadic intervals, for each $I_{j',2k'}, I_{j', 2k'+1}$, these fit exactly within a single $I_{j, l}$ for some $l$. Hence, we can say that at least one of:
 
@@ -442,7 +442,7 @@ Recall that the Schwarz space $\mathcal{S}(\mathbb{R})$ is defined as:
 
 $$ \mathcal{S}(\mathbb{R}) = \{ f \in C^\infty(\mathbb{R}) : x^m f^{(n)}(x) \in L^\infty(\mathbb{R}) \text{ for all } m, n \geq 0 \}$$
 
-Prove that if $f \in \mathcal{S}(\mathbb{R})$, then $V_\phi f \in S(\mathbb{R}^2)$.
+Prove that if $f, \phi \in \mathcal{S}(\mathbb{R})$, then $V_\phi f \in S(\mathbb{R}^2)$.
 
 16.3)
 
@@ -526,12 +526,71 @@ Next, we see that since $\phi, f \in L^2$, that $\langle f, T_x \phi \rangle < \
 
 16.2)
 
-Let $f \in \mathcal{S}(\mathbb{R})$. We notice that by a translation of the integral, sending $t \mapsto t + x$, we may rewrite $V_\phi(f)(x, \zeta)$ as:
+Let $f, \phi \in \mathcal{S}(\mathbb{R})$. %We notice that by a translation of the integral, sending $t \mapsto t + x$, we may rewrite $V_\phi(f)(x, \zeta)$ as:
 
-$$ V_\phi(f)(x, \zeta) = \int_{\mathbb{R}} f(t) \overline{\phi(t - x)} \exp(-2 \pi i t \zeta) dt = \int_\mathbb{R} f(t + x) \overline{\phi(t)} \exp(-2 \pi i (t + x) \zeta) dt = $$
+%$$ V_\phi(f)(x, \zeta) = \int_{\mathbb{R}} f(t) \overline{\phi(t - x)} \exp(-2 \pi i t \zeta) dt = \int_\mathbb{R} f(t + x) \overline{\phi(t)} \exp(-2 \pi i (t + x) \zeta) dt = $$
 
-$$ \exp(-2\pi i x \zeta) \int_\mathbb{R} f(t + x) \overline{\phi(t)} \exp(-2\pi i t \zeta) dt $$
+%$$ \exp(-2\pi i x \zeta) \int_\mathbb{R} f(t + x) \overline{\phi(t)} \exp(-2\pi i t \zeta) dt $$
 
+We notice that clearly, $f \overline{T_x \phi} (t) = f(t)\overline{ T_x \phi (t)}$ is a Schwartz function as a function of $t$. It is infinitely differentiable, as $\phi, f$ as infinitely differentiable, and if we consider functions of the form $t^m \partial^n_t (f \overline{T_x \phi} )$, we notice that due to a Leibniz rule, this will look exactly like $t^m \sum_{i=0^n} a_i f^{(i)}\overline{ T_x \phi^{(n-i)}}$, due to the product rule for derivatives, where $a_i$ generally is something like $n$ choose $i$, but we're content with just viewing it as a constant.
+
+Then, for each term, we may group $t^m f^{(i)}$ and see that as $L^\infty$ as $f \in \mathcal{S}(\mathbb{R})$. Then, since $\overline{\phi^{(n-i)}} \in L^\infty$ as well, due to $\phi \in L^\infty$, we have that each term is just the product of two $L^\infty$ functions, with a translation and a constant, and the product of these is still $L^\infty$. But, the finite sum of $L^\infty$ functions is finite almost everywhere, hence $L^\infty$. Thus, $f \overline{T_x \phi} \in \mathcal{S}(\mathbb{R})$.
+
+From the groupwork on problem 15 then, we know that $\widehat{f T_x \phi} \in \mathcal{S}(\mathbb{R})$, as a function of $\zeta$. Hence, in terms of $\zeta$, $V_\phi(x, \zeta)$ is $C^\infty$ and each $\zeta^m \partial^n_\zeta V_\phi(x, \zeta) \in L^\infty$. Looking more closely at a single derivative, we see that:
+
+$$ \lim_{h \to 0} \frac{ V_\phi(f)(x, \zeta + h) - V_\phi(f) (x, \zeta)}{h} = \int f(t) \overline{\phi(t - x)}\frac{\exp(-2\pi i t (\zeta + h)) - \exp(-2 \pi i t \zeta)}{h} $$
+
+Here, looking more closely at the integrand, we know that since $| \exp(i \theta) - 1| \leq |\theta|$ for all $\theta \in \mathbb{R}$, we may bound the integrand by:
+
+$$ |f(t) \overline{\phi(t - x)}| \left| \frac{\exp(-2\pi i t (\zeta + h)) - \exp(-2 \pi i t \zeta)}{h}\right|  =  |f(t) \overline{\phi(t - x)}| |\exp(-2\pi i t \zeta)| \left| \frac{ \exp(-2\pi i t h) - 1}{h} \right| \leq 2 \pi  |t f(t) \overline{\phi(t - x)}| $$
+
+Again, by the groupwork done for problem 15, we have shown that $t f(t) \in \mathcal{S}(\mathbb{R})$ for any $f \in \mathcal{S}(\mathbb{R})$, so this is bounded above by a Schwartz, and thus $L^1$ function.
+
+Thus, we may interchange differentiation and integration by the DCT to see that:
+
+$$ \partial_\zeta V_\phi(f)(x, \zeta) = \int - 2\pi i t f(t) \overline{\phi(t - x)} \exp(-2 \pi i t \zeta) dt \in L^\infty $$
+
+In particular, then, a inductive argument on this integrand, where we play the same trick to bound the derivative by something like $4\pi^2 |t^2 f(t) \overline{\phi(t - x)}|$, we can continue to interchange derivatives, and show that $$\zeta^m \int (-2 \pi i t)^n f(t) \overline{\phi(t - x)}  \exp(-2 \pi i \zeta) dt \in L^\infty$$ for all $m, n \in \mathbb{N}$. In particular, we notice that for $m = 0$, and for any $n$, since $t^n f \in \mathcal{S}(\mathbb{R})$, this is $L^2$, and hence, by part 16.1, this is uniformly continuous in $\zeta, x$.
+
+Now, we want to show that $\partial_x^i V_\phi$ exists for each $i$. Playing the same game, we look at
+
+$$ \lim_{h \to 0} \frac{ V_\phi(f) (x + h, \zeta) - V_\phi(f)  (x, \zeta)}{h} = \int f(t) \exp(-2\pi i t \zeta) \frac{\overline{\phi(t - x - h)} - \overline{\phi(t - x)}}{h} dt $$ 
+
+Since $\phi \in C^\infty$, so must be $\overline{\phi}$. Hence, we may apply the mean value theorem at any $t$ to conclude that $$\frac{\overline{\phi(t - x - h)} - \overline{\phi(t - x)}}{h} \leq \Vert \overline{\phi}' \Vert_\infty < \infty $$
+
+finite, due to $\overline{\phi} \in \mathcal{S}(\mathbb{R})$. But, since $f \in \mathcal{S}(\mathbb{R})$, and hence, in $L^1$, $\Vert \overline{\phi}' \Vert_\infty f \in L^1$, and bounds the integrand. Hence, we may interchange differentiation and integration again via DCT, and see that:
+
+$$\partial_x V_\phi(f)(x, \zeta) = \int -f(t) \overline{\phi'(t - x)} \exp(-2\pi i t \zeta) dt $$
+
+Again, we may play this trick any number of times, since $\phi \in C^\infty$ and bring in any number of derivatives into the integral. Since $\phi \in \mathcal{S}(\mathbb{R})$, so is $\overline{T_x \phi'}$, hence, is $L^2$, and thus, every partial derivative in terms of $x$ is uniformly continuous.
+
+Since we have continuous partials of every order, we may freely swap the order of differentiation.
+
+Now, we are prepared to attack $x^m \zeta^n \partial_x^i \partial_\zeta^j V_\phi(f)(x, \zeta)$ for $i, j, m, n \in \mathbb{N}$.
+
+First, assume $i = j = 0$. Then, we need only look at $x^m \zeta^n V_\phi(f)$. Bringing in the $x^m$ first, we first notice tha twe may rewrite $x^m = (t - (t-x))^m$. I do not want to write this out explicitly, but we notice that this becomes some linear combination of $t, (t-x)$. We notice, for any power of $(t-x)$, that:
+
+$$ \int (t-x)^m f(t) \overline{\phi(t - x)} \exp(-2\pi i t \zeta) dt  = \int f(t) \overline{(t-x)^m\phi(t-x)} \exp(-2\pi i t \zeta) dt $$
+
+and since $\phi \in \mathcal{S}(\mathbb{R})$, so is $(t-x)^m \phi(t-x)$. Hence, whatever $(t- x)^m \phi(t-x)$ is is Schwartz, hence $L^2$, and we see that this entire thing is bounded, by Cauchy-Schwartz, by $\Vert f \Vert \Vert M_\zeta T_x \tilde{\phi} \Vert  = \Vert f \Vert \Vert \tilde{\phi} \Vert$ for $\tilde{\phi} = t^m \phi(t)$. Hence, this thing is bounded. 
+
+So, we would have that we may split $ x^m V_\phi(f)(x, \zeta)$ into a finite linear combination of things that look like:
+
+$$ \int t^k f(t) \overline{ \tilde{\phi}_l(t - x)} \exp(-2 \pi i t \zeta) dt $$
+
+where $\tilde{\phi}_l$ denotes the Schwartz function we retrieve by considering $(t-x)^m \phi(t-x)$. Absorbing the $t^k$ by combining it with $f(t)$, since $f \in \mathcal{S}(\mathbb{R})$, we may view each of these individually as the Fourier transform of some Schwartz function. Hence, this is the linear combination of some Fourier transforms of some Schwartz functions, hence bounded  by the Cauchy-Schwarz argument as before.
+
+Since each of these are Fourier transforms of a Schwartz function, we can freely multiply by $\zeta$ and it remains bounded.
+
+The same argument passes when $j \not = 0$, since we saw that we may pass the derivative inside, and just retrieve a power of $t$, which we can absorb into $f(t)$. So, now we just need to consider $i \not = 0$.
+
+We see that once we pass the derivatives into the inside, we get something of the form:
+
+$$  \partial_x^i \partial_\zeta^j V_\phi(f)(x, \zeta)  = \int (-1)^i (-2 \pi i t)^j f(t) \overline{\phi^{(i)}(t - x)} \exp(-2 \pi i t \zeta) dt $$
+
+We see here, that we can play the same game with absorbing the $t$ into $f(t)$, and then once we bring in the $\zeta^n, x^m$, we play yet again the same game of absorption and linear combinations. I think I've gotten lazy, but the conclusion being that we end up with the linear combination of bounded functions, hence bounded.
+
+Hence, $V_\phi(f)(x, \zeta) \in \mathcal{S}(\mathbb{R}^2)$. 
 
 16.3)
 
