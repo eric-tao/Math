@@ -522,7 +522,32 @@ By the continuity of translations, then, we can find a $\delta > 0 $ such that $
 
 Thus, since we can control both of these, where we need only choose how close $x'$ is first so we can control $\zeta'$, and since this is independent of the actual point $(x, \zeta)$, we may conclude that $V_\phi(f)$ is uniformly continuous over $\mathbb{R}^2$.
 
-Next, we see that since $\phi, f \in L^2$, that $\langle f, T_x \phi \rangle < \infty$, since the translation of a $L^2(\mathbb{R})$ function is still a $L^2(\mathbb{R})$ function. Hence, $f(t) \overline{\phi(t - x)} \in L^1$, and we may recognize that $V_\phi(f)(x, \zeta)$ is its Fourier transform for fixed values of $x$. Hence, by Riemann-Lebesgue, we already have that as $|\zeta| \to \infty$ for any $x$, that $V_\phi(f) \to 0$.
+%Next, we see that since $\phi, f \in L^2$, that $\langle f, T_x \phi \rangle < \infty$, since the translation of a $L^2(\mathbb{R})$ function is still a $L^2(\mathbb{R})$ function. Hence, $f(t) \overline{\phi(t - x)} \in L^1$, and we may recognize that $V_\phi(f)(x, \zeta)$ is its Fourier transform for fixed values of $x$. Hence, by Riemann-Lebesgue, we already have that as $|\zeta| \to \infty$ for any $x$, that $V_\phi(f) \to 0$.
+
+Now, we use the result from 16.3 that $V_\phi(f)$ is $L^2(\mathbb{R}^2)$ to show the result in the limit, as we do not use this limit result at all in 16.3. Suppose $|V_\phi(f)|$ does not converge to $0$ as $|(x, \zeta)| \to \infty$. Then, this implies that we may find a sequence $y_n = (x_n, \zeta_n)$ such that $|y_n| \to \infty$ and that for some $\epsilon > 0$, $| V_\phi(f)| \geq \epsilon$. By uniform continuity then, we have that there exists a $\delta > 0$ such that for all $|y_n - z| < \delta$, we have that $|V_\phi(f)(y_n) - V_\phi(f)(z)| < \epsilon/2$, which implies that for all $|y_n - z| < \delta$, that $|V_\phi(f)(z)| \geq \epsilon/2$.
+
+ The fact that this is $L^2$ implies that for some $a$, we can say that:
+
+$$ \iint_{\mathbb{R}^2} | V_\phi(f)|^2 dx d\zeta - \iint_{[-a,a] \times [-a,a]} |V_\phi(f)|^2 dx d\zeta < \epsilon' $$
+
+as the convergence of this integral guarantees this to be possible.
+
+However, from the uniform continuity argument we just made, if we pick a subsequence of $y_n$ such that $|y_{n_i}|$ is strictly increasing, the distance between $y_{n_i}$ and $[-a, a] \times [-a, a]$ is at least $2 \delta$ for all $n_i$, and $|y_{n_k} - y_{n_{k'}}| > 2\delta$ for all $n_k, n_{k'}$, we can look at, for $y_{n_i} = (x_{n_i}, \zeta_{n_i})$:
+
+$$ \iint_{[x_{n_i} - \delta/2, x_{n_i} + \delta/2] \times [\zeta_{n_i} - \delta/2, \zeta_{n_i} + \delta/2]} |V_{\phi}(f)|^2 dx d\zeta \geq \frac{\epsilon^2}{4}\delta^2 $$
+
+where we justify this as, for every point in $[x_{n_i} - \delta/2, x_{n_i} + \delta/2] \times [\zeta_{n_i} - \delta/2, \zeta_{n_i} + \delta/2]$, this is at most $\sqrt{2\delta^2/4} = \delta/\sqrt{2} < \delta$ away from $(x_{n_i}, \zeta_{n_i})$, and hence that lower bound is accurate.
+
+Moreover, by our choice of subsequence, we are guaranteed, that no point $y_{n_i}$ is within $\delta/2$ of the bounded interval that we set. Further, we are also guaranteed by our choice of subsequence that each $[x_{n_i} - \delta/2, x_{n_i} + \delta/2] \times [\zeta_{n_i} - \delta/2, \zeta_{n_i} + \delta/2]$ is disjoint from each other, due to enforcing that they are at least $2\delta$ apart in terms of center - we may do this again, since the modulus $|y_n | \to \infty$.
+
+Thus, we would have that:
+
+$$ \iint_{\mathbb{R}^2 \setminus [-a,a] \times [-a,a]} |V_\phi(f)|^2 dx d\zeta \leq \sum_{i=1}^\infty \iint_{[x_{n_i} - \delta/2, x_{n_i} + \delta/2] \times [\zeta_{n_i} - \delta/2, \zeta_{n_i} + \delta/2]} | V_\phi(f)|^2 dx d\zeta = \sum_{i=1}^\infty \frac{\epsilon^2}{4} \delta^2 = \infty$$
+
+a contradiction. Thus, we have that $|V_\phi(f)| \to 0$, and hence, $V_\phi(f) \to 0$, as $|(x, \zeta)| \to \infty$ as desired.
+
+
+
 
 16.2)
 
