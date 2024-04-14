@@ -333,9 +333,9 @@ Fix a $j$, and a step function $g_j$, and consider the dyadic intervals one larg
 
 $$[2^{-j+1}k, 2^{-j+1}(k+1)) = [2^{-j} 2k, 2^{-j}(2k+2))) = [ 2^{-j} 2k, 2^{-j} 2k + 1) \cup [ 2^{-j} 2k+1, 2^{-j} 2k+2) $$
 
-Call $g_j(I_{j, 2k}) = c$ and $g_j(I_{j, 2k+1}) = d$. Define $g_{j-1}(I_{j-1, k}) = \frac{c+d}{2}$ and define $a_{j-1}(k) = \frac{c - d}{2}$. Then, on $I_{j, 2k},I_{j, 2k+1} $, we have that:
+Call $g_j(I_{j, 2k}) = c_k$ and $g_j(I_{j, 2k+1}) = d_k$. Define $g_{j-1}(I_{j-1, k}) = \frac{c_k+d_k}{2}$ and define $a_{j-1}(k) = 2^{(-j+1)/2} \frac{c_k - d_k}{2}$, where the power of 2 is simply to cancel out the power of 2 from the definition of $h_{j-1, k}$. Then, on $I_{j, 2k},I_{j, 2k+1} $, we have that:
 
-$$ \begin{cases} g_{j-1}(I_{j, 2k}) + r_{j-1}(I_{j, 2k}) = \frac{c + d}{2} + \frac{c - d}{2} \chi_{I_{j, 2k}}(I_{j, 2k}) = c \\ g_{j-1}(I_{j, 2k+1}) + r_{j-1}(I_{j, 2k+1}) = \frac{c + d}{2} - \frac{c - d}{2} \chi_{I_{j, 2k}}(I_{j, 2k}) = d \end{cases} $$
+$$ \begin{cases} g_{j-1}(I_{j, 2k}) + r_{j-1}(I_{j, 2k}) = \frac{c_k + d_k}{2} +  2^{(-j+1)/2}\frac{c_k - d_k}{2} 2^{(j-1)/2}\chi_{I_{j, 2k}}(I_{j, 2k}) = c_k \\ g_{j-1}(I_{j, 2k+1}) + r_{j-1}(I_{j, 2k+1}) = \frac{c_k + d_k}{2} -  2^{(-j+1)/2}\frac{c_k - d_k}{2} 2^{(j-1)/2} \chi_{I_{j, 2k}}(I_{j, 2k}) = d_k \end{cases} $$
 
 We may continue this construction for each $I_{j, k}$, and determine $g_{j-1}, r_{j-1}, a_{j-1}$ on the entire real line, with $g_{j-1}$ a step function constant on $I_{j-1, k}$, $a_{j-1}(k)$ coefficients, and $r_{j-1} = \sum a_{j-1}(k) h_{j-1, k} $
 
