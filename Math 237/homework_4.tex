@@ -1,0 +1,284 @@
+\documentclass[10pt]{article}
+\setlength{\parskip}{0.25\baselineskip}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array}
+\usepackage[font=small,labelfont=bf]{caption}
+
+\newcommand{\supp}{{\text{supp}}} 
+\newcommand{\bv}{{\text{BV}}}
+\newcommand{\ac}{{\text{AC}}}
+
+\newenvironment{problem}[2][]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+ 
+\title{Homework \#4}
+\author{Eric Tao\\
+Math 237: Homework \#4}
+\maketitle
+
+\begin{problem}{Question 2}
+
+Suppose that $f$ is a continuously differentiable function on $\mathbb{R}$ except at $x_1,...,x_m$, where $f$ suffers jump discontinuities, and that its point-wise derivative, $d f/ d x$, defined except at $x_i$, is $L^1_{loc}(\mathbb{R})$.
+
+Show that the distribution derivative of $f$ is given by:
+
+$$ f' = \left( \frac{d f}{dx} \right) + \sum_{j=1}^m [ f(x_j+) - f(x_j-)] \delta_{x_j} $$
+
+\end{problem}
+\begin{proof}[Solution]
+
+Without loss of generality, we may assume that $x_1 < x_2 < ... < x_m$, and otherwise sort these so that this is true, as we have only countably many.
+
+Let $\phi \in C^\infty_c(\mathbb{R})$. Take $K > \max(|x_1|, |x_m|)$ such that the support of $\phi$ is contained within $[-K, K]$. By definition, we have that:
+
+$$ \langle f', \phi \rangle = - \int_{[-K, K]} f(x) \partial_x \phi dx $$
+
+We may break up this integral over each $[x_i, x_{i+1}]$ as well as $[-K, x_1]$ and $[x_m, K]$. Let's focus on a single $[x_i, x_{i+1}]$.
+
+On this interval, we have that $f, \phi$ are differentiable on all of $[x_i,x_{i+1}]$, except for potentially $x_i, x_{i+1}$ for $f$. $\phi$ is evidently continuous, hence bounded, and hence integrable on $[x_i, x_{i+1}]$.
+
+In a similar fashion, let $Z$ be any subset of $[x_i, x_{i+1}]$ of measure 0 that excludes the endpoints and do not have the endpoints as limit points. Then, we may restrict to an $[a,b], a > x_i, b < x_{i+1}$ such that $f$ is differentiable on all of $[a,b]$. Then, by the second growth lemma (6.2.4, Heil), we have that $|f(Z)|_e \leq \int_Z |f'| = 0$. Then, for any set of measure 0 $Z$, we may look at $Z \cap [x_i + 1/n, x_{i+1} - 1/n]$ for $n \in \mathbb{N}$ combined with the fact that at the endpoints, $f(x_i), f(x_{i+1})$ are singletons, hence measure 0, where we interpret this as the limit, not necessarily as the value taken, to conclude that $|f(Z)| = 0$, where we use the fact that $f'$ is locally integrable to ensure that this makes sense.
+
+Then, by Banach-Zaretsky, we may conclude that $f$ is also absolutely continuous on $[x_i, x_{i+1}]$.
+
+Thus, we may apply integration by parts. Looking specifically at the compact set $[x_i + 1/n, x_{i+1} - 1/n]$, to start, by integration by parts, we have that this is exactly equal to:
+
+$$\int_{x_i + 1/n}^{x_{i+1}-1/n} f \partial_x \phi dx =  f(x_{i+1}-1/n) \phi(x_{i+1}-1/n) - f(x_i + 1/n) \phi(x_i + 1/n) - \int_{x_i + 1/n}^{x_{i+1}-1/n} \partial_x(f) \phi dx $$
+
+By a dominated convergence theorem, looking at the sequence $\chi_{[x_i + 1/n, x_{i+1}-1/n]} f \partial_x \phi$, for $n \to \infty$, we see that each one is at most $f \partial_x \phi$ everywhere, and the product of continuous functions being continuous and hence integrable on this compact set, we may take the limit and claim that:
+ 
+$$ \int_{[x_i, x_{i+1}]} f \partial_x \phi = \lim_{n \to \infty}  f(x_{i+1}-1/n) \phi(x_{i+1}-1/n) - f(x_i + 1/n) \phi(x_i + 1/n) - \int_{x_i + 1/n}^{x_{i+1}-1/n} \partial_x(f) \phi dx = $$
+
+$$f(x_{i+1}-)\phi(x_{i+1}) - f(x_i+)\phi(x_i) -  \int_{[x_i, x_{i+1}]} \partial_x(f) \phi dx $$
+
+where we denote that $\lim_{x \to x_{i}^+}f(x)  = f(x_i+)$ and similarly from the negative side, and that since $\partial_x(f)$ is only potentially undefined on a set of measure 0 on the endpoints, it's fine to say this. We note that since the only properties we've used is the compactness of each set, this applies for each of the compact sets earlier.
+
+Repeating this argument for each compact interval then, we have that:
+
+$$ \int_{[-K, K]} f(x) \partial_x \phi dx = \int_{[-K, x_1]} f \partial_x \phi + \sum_{i=1}^{m-1} \int_{[x_i, x_{i+1}]} f \partial_x \phi + \int_{[x_m, K]} f \partial_x \phi =  $$
+
+$$ f(x_1-)\phi(x_1) - f(-K)\phi(-K) - \int_{[-K, x_1]} \partial_x(f) \phi + f(K)\phi(K) - f(x_m+)\phi(x_m) - \int_{[x_m, K]} \partial_x(f) \phi  +$$
+
+$$ \sum_{i=1}^{m-1} f(x_{i+1}-) \phi(x_{i+1}) - f(x_i+)\phi(x_i)- \int_{[x_i, x_{i+1}]} \partial_x(f) \phi dx$$
+
+Since the set of discontinuities is a set of measure 0, we may combine the integrals into:
+
+$$ \int_{[-K, K]} \partial_x(f) \phi dx = \int_{[-K, K]} \frac{df}{dx} \phi dx $$
+
+Further, since $\phi$ is continuous with compact support, since we know that $\phi(K + 1/n) = 0$ for all $n \to \infty$, we may conclude that $\phi(K) = 0$, and similarly for $\phi(-K)$. Thus, we obtain:
+
+$$ - \int_{[-K, K]} \frac{df}{dt} \phi dx +  \sum_{i=1}^{m} f(x_i-)\phi(x_i) - f(x_i+)\phi(x_i)$$
+
+and finally, incorporating the negative sign from the beginning, we have that:
+
+$$ \langle f', \phi \rangle = - \int_{[-K, K]} f(x) \partial_x \phi dx =  \int_{[-K, K]} \frac{df}{dt} \phi dx +  \sum_{i=1}^{m} f(x_i+)\phi(x_i) - f(x_i-)\phi(x_i)$$
+
+Now, compare against the action:
+
+$$ \left \langle \left( \frac{d f}{dx} \right) + \sum_{j=1}^m [ f(x_j+) - f(x_j-)] \delta_{x_j}, \phi \right \rangle $$
+
+Clearly, these are exactly equal, and since this was true for an arbitrary $\phi \in C^\infty_c$, we can conclude that the derivative of $f$ as a distribution is equal to the expression as functionals acting on $C^\infty_c$. 
+
+\end{proof}
+
+\begin{problem}{Question 4}
+
+Define $G$ on $\mathbb{R}^n \times \mathbb{R}$ via $G(x,t) = (4\pi t)^{-n/2} \exp(-|x|^2/4t) \chi_{(0,\infty)}(t)$. Denote $G^\epsilon(x,t) = (4\pi t)^{-n/2} \exp(-|x|^2/4t) \chi_{(\epsilon,\infty)}(t)$.
+
+4.1)
+
+Prove that $G^\epsilon \to G$ in $\mathcal{D}'$.
+
+4.2)
+
+For each $\phi \in C^\infty_c(\mathbb{R}^n \times \mathbb{R})$, compute $\langle (\partial_t - \Delta) G^\epsilon, \phi \rangle$, where $\Delta$ is the Laplacian on $\mathbb{R}^n$ given by $\Delta = \sum_{k=1}^n \partial^2_k$
+
+4.3)
+
+Prove that $(\partial_t - \Delta)G = \delta$
+
+4.4)
+
+Prove that for $\phi \in C^\infty_c(\mathbb{R}^n \times \mathbb{R})$, then $f = G \ast \phi$ satisfies $(\partial_t - \Delta)f = \phi$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+
+\end{proof}
+
+\begin{problem}{Question 9}
+
+Recall that $l^2 = \{ x = (x_n)_{n=0}^\infty : \sum_{n=0}^\infty |x_n|^2 < \infty \}$. Define the following operators:
+
+$$\begin{cases} Rx = (0, x_0, x_1,....) \\ Lx = (x_1,x_2,...) \end{cases} $$
+
+9.1)
+
+Prove that $LR = I$, but $RL \not = I$, and hence neither $R, L$ are invertible.
+
+9.2)
+
+For an operator $T$, denote $T'$ as its transpose. Prove that $R' = L$, and $L' = R$.
+
+9.3)
+
+Prove that the spectrum of $L, R$ consists of the unit disk $ \{ x \in \mathbb{C} : |x| \leq 1 \}$.
+
+9.4)
+
+Show that $R$ has no eigenvalues.
+
+9.5)
+
+Show that the spectrum of $R, L$ acting on the $l^p$ spaces for $1 \leq p \leq \infty$ consists of every point of the unit circle. 
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+9.1)
+
+Let $x  = (x_n)_{n=0}^\infty  \in l^2$, and consider the action of $LR(x)$. We have that:
+
+$$ LR((x_0,x_1,...,x_n,...)) = L((0,x_0,x_1,....,x_n,...)) = (x_0,x_1,....,x_n) = x $$
+
+Since the choice of $x$ was totally arbitrary, we may conclude that $LR$ acts as identity on $l^2$.
+
+On the other hand, consider the sequence $(1,0,...,0,...)$. This is clearly a $l^2$ sequence, and we have that:
+
+$$ RL((1,0,...0,...)) = R(0,0,...,0,...) = (0,0,...,0,...) \not = (1,0,...,0,...) $$
+
+Hence, $RL \not = I$.
+
+We see that neither $L, R$ are invertible easily, as $L$ is not injective - take $x = (0,x_1,x_2,...)$ and $x' = (1,x_1,x_2,...)$ in $l^2$. Of course $L(x) = L(x') = (x_1,x_2,...)$ but $x \not = x'$.
+
+Similarly, $R$ is not surjective. Take for example the sequence $(1,0,....)$. Since $R$ replaces the first sequence element with $0$, there cannot exist any $x \in l^2$ such that $R(x) = (1,0,0,...)$. Since linear operators are invertible if and only if they are both injective and surjective, we conclude that neither $L, R$ are invertible.
+
+9.2)
+
+First, we recall that we have a natural identification of $(l^2)^*$ as isomorphic to $l^2$. Thus since by definition, we identify the action of the transpose on functional $f$ as $T'(f) = f \circ T$, we can identify the transpose of $T$ as the function $T'$ such that $T'(x)(y) = x(T(y))$, for $x, y \in l^2$.
+
+So first, let $T = L$. Then, we have that for $x = (x_0,x_1,....), y = (y_0,y_1,...)$, that:
+
+$$ x L(y) =(x_0,x_1,...)(y_1,y_2,...) =  \sum_{n=0}^\infty x_n y_{n+1} $$
+
+On the other hand, consider $R(x)$ acting on $y$. We have that:
+
+$$ R(x)(y) = (0, x_0,x_1,...)(y_0,y_1,...) = 0 * y_0 + \sum_{n=1}^\infty x_{n-1}y_n =  \sum_{n=1}^\infty x_{n-1}y_n$$
+
+Reindexing, we see that these sums coincide. Since this is true for arbitrary $x, y$, we conclude that $R = L'$ as functions.
+
+In a similar fashion, letting $T = R$:
+
+$$ x R(y) =(x_0,x_1,...)(0,y_0,y_1,y_2,...) = x_0 * 0 +  \sum_{n=1}^\infty x_n y_{n-1} = \sum_{n=1}^\infty x_n y_{n-1} $$
+
+and looking at $L(x)(y)$:
+
+$$ L(x)(y) = (x_1,x_2,...)(y_0,y_1,...) = \sum_{n=0}^\infty x_{n+1}y_n $$
+
+Again, reindexing, we see these coincide, and iterating across $x, y$ we conclude that $R' = L$ as functions.
+
+9.3)
+
+9.4)
+
+First, suppose $R(x) =\lambda x$. This equation implies then that $(0,x_0,x_1,...) = (\lambda x_0, \lambda x_1,...)$, which implies that $0 =\lambda  x_0$, and that for $ i \geq 0$, $x_i = \lambda x_{i+1}$. Of course, if $\lambda = 0$, then $x = 0$ immediately. On the other hand, assume $\lambda \not = 0$, then we have that $x_0 = 0$, and due to the recurrence relation, $x_{i+1} = 0$ for each $i \geq 0$. Hence, the only vector that satisfies this equation for any $\lambda$ is $x = 0$, and thus $R$ has no eigenvectors or eigenvalues.
+
+\end{proof}
+
+\begin{problem}{Question 12}
+
+Let $X$ be a Banach space, $C$ a compact operator on $X$, $I$ the identity operator. Define $T = I - C$.
+
+12.1)
+
+Prove that the nullspace of $T$ is finite dimensional.
+
+12.2)
+
+Let $N_j$ denote the nullspace of $T^j$ for $j \in \mathbb{N}$. Show that there exists an $i$ such that $N_k = N_i$ for all $k \geq i$. 
+
+12.3)
+
+Show that the range of $T$ is closed.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+
+\end{proof}
+
+
+\begin{problem}{Question 15}
+
+Let $K$ be a measurable function on $[0,1]^2$, and let $f$ be a measurable function on $[0,1]$. Define $T$ as the map that sends:
+
+$$ T(f(x)) = \int_0^1 K(x,y)f(y) dy $$
+
+15.1)
+
+Prove that if $K$ is continuous, then $T$ is a compact operator from $C[0,1] \to C[0,1]$, and that $\sigma(T) = \{ 0 \}$.
+
+15.2)
+
+Prove that if $K \in L^2$, then $T$ is a compact operator on $L^2[0,1]$.
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+
+\end{proof}
+
+\begin{problem}{Question 18}
+
+Let $\mathcal{H}$ be a Hilbert space, $T$ a bounded linear operator on $\mathcal{H}$. We call $T$ symmetric if $\langle Tx, y \rangle = \langle  x, Ty\rangle$ for all $x, y \in \mathcal{H}$. 
+
+18.1)
+
+Show that if $T$ is symmetric and invertible, then $T^{-1}$ is also symmetric.
+
+18.2)
+
+Show that if $S, T$ are commuting and symmetric, then their product is also symmetric.
+
+18.3)
+
+Show that the set of symmetric operators is closed under the weak topology of operators.
+
+18.4)
+
+Let $T$ be a symmetric, bounded operator on $\mathcal{H}$. Show that the spectrum of $T$ is real, and that $\sigma(T) \subset [m, M]$. where:
+
+$$ \begin{cases} m = \inf_{\Vert x \Vert = 1}\langle Tx , x \rangle \\ M = \sup_{\Vert x \Vert = 1} \langle Tx, x \rangle \end{cases}$$
+
+\end{problem}
+
+\begin{proof}[Solution]
+
+18.1)
+
+Suppose $T$ is symmetric, invertible. Let $x, y \in \mathcal{H}$, and for $y$, we can uniquely determine $z$ such that $Tz = y, z = T^{-1}(y)$ as invertibility implies bijectivity.
+
+Consider the value of $\langle T^{-1}(x), y \rangle$. We have the following sequence of equalities:
+
+$$ \langle T^{-1}(x), y \rangle = \langle T^{-1}(x), Tz \rangle = \langle T \circ T^{-1}(x), z \rangle = \langle x, z \rangle = \langle x, T^{-1}(y) \rangle$$
+
+Since this procedure may be done for every $x, y \in \mathcal{H}$, we conclude that $T^{-1}$ is also symmetric.
+
+18.2)
+
+Suppose $S, T$ commute, and are individually symmetric. Since $ST = TS$, we need only prove that $ST$ is symmetric. For any $x, y \in \mathcal{H}$, we have that:
+
+$$ \langle ST(x), y \rangle = \langle T(x), S(y) \rangle = \langle x, T (S(y) \rangle = \langle x, ST(y) \rangle $$
+
+where we use the symmetric property of $S, T$ in the 2nd and 3rd equalities, and the commutativity in the last one. Since the choice of $x, y $ were arbitrary, we conclude that $ST$ is symmetric.
+
+\end{proof}
+
+\end{document}

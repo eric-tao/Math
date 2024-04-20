@@ -542,7 +542,7 @@ Moreover, by our choice of subsequence, we are guaranteed, that no point $y_{n_i
 
 Thus, we would have that:
 
-$$ \iint_{\mathbb{R}^2 \setminus [-a,a] \times [-a,a]} |V_\phi(f)|^2 dx d\zeta \leq \sum_{i=1}^\infty \iint_{[x_{n_i} - \delta/2, x_{n_i} + \delta/2] \times [\zeta_{n_i} - \delta/2, \zeta_{n_i} + \delta/2]} | V_\phi(f)|^2 dx d\zeta = \sum_{i=1}^\infty \frac{\epsilon^2}{4} \delta^2 = \infty$$
+$$ \iint_{\mathbb{R}^2 \setminus [-a,a] \times [-a,a]} |V_\phi(f)|^2 dx d\zeta \geq \sum_{i=1}^\infty \iint_{[x_{n_i} - \delta/2, x_{n_i} + \delta/2] \times [\zeta_{n_i} - \delta/2, \zeta_{n_i} + \delta/2]} | V_\phi(f)|^2 dx d\zeta = \sum_{i=1}^\infty \frac{\epsilon^2}{4} \delta^2 = \infty$$
 
 a contradiction. Thus, we have that $|V_\phi(f)| \to 0$, and hence, $V_\phi(f) \to 0$, as $|(x, \zeta)| \to \infty$ as desired.
 
@@ -694,5 +694,6 @@ Hence, we have that the inversion formula makes sense in an $L^2$ sense, differi
 $$ f(t) = \Vert \phi \Vert_2^{-2} \iint_{\mathbb{R}^2} V_\phi f(x, \zeta) \exp(2 \pi i \zeta t) \phi(t - x) dx d\zeta $$ 
 
 \end{proof}
+
 
 \end{document}
