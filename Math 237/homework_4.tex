@@ -205,6 +205,26 @@ Again, reindexing, we see these coincide, and iterating across $x, y$ we conclud
 
 9.3)
 
+First, we notice that since $L$ deletes the $0$-th term, we must have that:
+
+$$ \Vert Lx \Vert = \sum_{n=1}^\infty | x_n|^2 \leq \sum_{n=0}^\infty |x_n|^2 = \Vert x \Vert$$
+
+which implies that the norm of $L$ is at most 1. Considering the sequence $y_1 = (0,1,0,...)$, which is clearly in $l^2$ with norm $1$, $L(y_1) = (1,0,0,...)$ which has norm 1, and hence $\Vert L \Vert = 1$.
+
+Moreover, for each $k \in \mathbb{N}$, we may consider the sequence $y_k$ such that the sequence is $0$ except in the $k$-th position. Evidently, $L^k(y_k) = (1,0...)$ and hence, $\Vert L^k \Vert$ achieves $1$, since we know that it is bounded above by $\Vert L\Vert^k$ by submultiplicativity, and we demonstrate a unit vector that achieves this maximum. Since we may do this for all $k \in \mathbb{N}$, we conclude that:
+
+$$ \lim_{k \to \infty} \Vert L^k \Vert^{1/k} = \lim_{k \to \infty} 1^{1/k} = 1$$
+
+that is, the spectral radius of $L$ is $1$.
+
+So, now, consider $\lambda \in \mathbb{C}$ such that $|\lambda | < 1$. We show that each of these $\lambda$ are eigenvalues of $L$.
+
+Consider the sequence $x = (1, \lambda, \lambda^2,...., \lambda^k,...)$. Of course, this is in $l^2$, since $\sum_{n=0}^\infty | x_n|^2 \leq \sum_{n=0}^\infty |x_n| = \frac{1}{1 - \lambda}$, since if $|\lambda| < 1$, we have that $|\lambda|^2 \leq |\lambda|$, and the second sum is a geometric series with ratio with modulus less than 1.
+
+Now, considering $L(x)$, we have that $L(x) = (\lambda, \lambda^2,...,\lambda^{k},...) = \lambda( 1, \lambda, ... \lambda^{k-1},...) = \lambda x$. But, of course, if we consider $(L - \lambda I )(x)$, we have that $(L - \lambda I)x = \lambda x - \lambda x = 0$. Hence, $(L - \lambda I)$ is not injective, thus not invertible, and $\lambda \in \sigma(L)$. Since we may do this for all $\lambda$ with modulus strictly less than $1$, and the spectrum is closed, we conclude $\sigma(L) = \overline{\{ \lambda \in \mathbb{C} : |\lambda| < 1 \}} = \{ \lambda \in \mathbb{C} : |\lambda | \leq 1 \}$.
+
+-- something something I pray the spectrum of the transpose is equal to the spectrum.
+
 9.4)
 
 First, suppose $R(x) =\lambda x$. This equation implies then that $(0,x_0,x_1,...) = (\lambda x_0, \lambda x_1,...)$, which implies that $0 =\lambda  x_0$, and that for $ i \geq 0$, $x_i = \lambda x_{i+1}$. Of course, if $\lambda = 0$, then $x = 0$ immediately. On the other hand, assume $\lambda \not = 0$, then we have that $x_0 = 0$, and due to the recurrence relation, $x_{i+1} = 0$ for each $i \geq 0$. Hence, the only vector that satisfies this equation for any $\lambda$ is $x = 0$, and thus $R$ has no eigenvectors or eigenvalues.
