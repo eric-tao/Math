@@ -107,6 +107,27 @@ Prove that for $\phi \in C^\infty_c(\mathbb{R}^n \times \mathbb{R})$, then $f = 
 
 \begin{proof}[Solution]
 
+4.1)
+
+First, assume that $G(x,t)$ is $L^1_{loc}$ and we'll come back for this part. Of course then, since $G^\epsilon$ is simply $G$ times a characteristic function, $G^\epsilon$ is $L^1_{loc}$ for any $\epsilon > 0$.
+
+Thus, let $\phi$ be an arbitrary $C^\infty_c$ function on $\mathbb{R}^n \times \mathbb{R}$. Restrict ourselves to some $\cup_{i=1}^n [-K_i, K_i] \times [0, K_t]$ such that this contains the support of $\phi$; call this set $K$. Then, we may consider $\langle G^\epsilon, \phi \rangle$. By the DCT, integrating over $K$, since $G^\epsilon \phi \to G \phi$ pointwise everywhere, and $\phi G^\epsilon$ differs from $\phi G$ only on $\mathbb{R}^n \times (0, \epsilon]$, where $G^\epsilon = 0$, we can say that:
+
+$$ \lim_{\epsilon \to 0} \int_K G^\epsilon \phi = \int_K G \phi $$
+
+where we extend the argument continously on the limit $\epsilon \to 0$ by using the above argument for any sequence of $\epsilon_n \to 0$ as $n \to \infty$. Hence, by definition then, we have that:
+
+$$ \lim_{\epsilon \to 0} \langle G^\epsilon, \phi \rangle = \langle G, \phi \rangle $$
+
+and thus, $G^\epsilon \to G$ in $\mathcal{D}'(\mathbb{R}^n \times \mathbb{R})$.
+
+-- Add something about how $G$ is locally integrable.
+
+4.2)
+
+Here, we need to compute both $\langle \partial_t G^\epsilon, \phi \rangle$ and $\langle \partial_{x_i}^2 G^\epsilon, \phi \rangle$ and we will put this together to retrieve our result.
+
+-- do integration by parts like 3 times, I'll write this out later.
 
 \end{proof}
 
