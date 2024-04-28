@@ -129,6 +129,26 @@ Here, we need to compute both $\langle \partial_t G^\epsilon, \phi \rangle$ and 
 
 -- do integration by parts like 3 times, I'll write this out later.
 
+4.3)
+
+4.4)
+
+By proposition 9.3 in Folland, we have that $\partial^\alpha(F \ast \psi) = (\partial^\alpha F) \ast \psi$, for $F \in \mathcal{D}$ and $\psi \in C^\infty_c$.
+
+Thus, we have that, at any point $x$, and any test function $\phi$ that:
+
+$$ ( \partial_t - \Delta)f(x) = (\partial_t - \Delta)(G \ast \phi)(x) = (\partial t - \Delta (G)) \ast \phi(x) = \delta \ast \phi(x)$$
+
+Now, by definition in Folland, we have that:
+
+$$ \delta \ast \phi(x) = \langle \delta, \tau_x(\tilde{\phi}) \rangle$$
+
+where $\tau_x$ sends $f(y) \mapsto f(y - x)$, $\tilde{f}(x) = f(-x)$. Hence, we have that:
+
+$$ \langle \delta, \tau_x(\tilde{\phi}) \rangle = \int \delta(y) \phi(x - y) dy = \phi(x) $$
+
+as this integral disappears except for the value at $y = 0$.
+
 \end{proof}
 
 \begin{problem}{Question 9}
@@ -244,9 +264,41 @@ First, suppose $R(x) =\lambda x$. This equation implies then that $(0,x_0,x_1,..
 
 9.5)
 
+Let $p \in [1, \infty]$.
+
 We notice that the arguments in 9.3 for $L$ pass without modification for $l^p$, and that in any $l^p$, $\sigma(L)$ is exactly the unit disk.
 
--- something about showing that $L' = R$ in $l^p$ more generically, and then modifying the transpose argument.
+Now, we examine $R$ more closely. Firstly, we see that since $R$ merely inserts a $0$, and leaves the rest of the sequence unchanged, we have that for any $x \in l^p$, that $\Vert Rx \Vert = \Vert x \Vert$ after a reindexing of the sum. Thus, we have that $\Vert R^n \Vert \leq 1$.
+
+Now, considering the action of $R^n$ on $y =(1,0,...0)$, this merely sends us to $R^n(y) = (0,0,...,0,1,0,....) = y_n$, that is, $y_n$ has a $1$ in the $n$-th location, where we started our index at $n=0$, and $0$ otherwise. However, this clearly has norm $1$ for any $p$. Hence, $\Vert R^n \Vert =1$.
+
+Thus, for each $n$, we have that $\Vert R^n \Vert ^{1/n} = 1^{1/n} = 1$, and hence, by the spectral radius formula, we have that 
+
+$$\sup_{\lambda \in \sigma(R} |\lambda |= \lim_{n \to \infty} \Vert R^n \Vert^{1/n} = 1$$
+
+Now, let $\lambda \in \mathbb{C}$ such that $|\lambda | < 1$, and consider the preimage of the vector $(1,0,0,...) \in l^p$ under the action of the operator $R - \lambda I$. For such a $y$, we would have that:
+
+$$ (R - \lambda I)y = (1,0,...) \implies (0, y_0, y_1,...) - \lambda(y_0, y_1,...) = (1,0,...)$$
+
+which gives us the following relations, for $i \geq 0$:
+
+$$ \begin{cases} - \lambda y_0 = 1 \\ y_{i} - \lambda y_{i+1} = 0 \end{cases} \implies \begin{cases} y_0 = -\lambda^{-1} \\ y_{i+1} = y_i \lambda^{-1} \end{cases} \implies y_i = -\lambda^{-(i+1)} $$
+
+However, $y \not \in l^p$ for any $p$. Since $|\lambda| < 1$, we must have that $|\lambda^{-1}| > 1$, and hence, the series:
+
+$$ \sum_{n=1}^\infty | \lambda^{-n}| $$
+
+diverges. This immediately gives us the result for $p=1$, and for $p \in [1,\infty)$, we see that since $|\lambda| > 1$, $| \lambda^n|^p > |\lambda^n|$ for each $n \in \mathbb{N}$. Hence, we have that:
+
+$$ \sum_{n=1}^\infty | \lambda^{-n}|^p \geq \sum_{n=1}^\infty |\lambda^{-n}|  = \infty $$
+
+Lastly, of course, for $p = \infty$, viewing $\lambda = r e^{i \theta}$, since $r > 1$ for any $M \in \mathbb{R}$, we may find $N$ such that $r^N > M$. Hence, then, for all $n \geq N$, we have that
+
+$$|\lambda^n| =  | r^n e^{i n \theta} | = r^n > r^N > M $$
+
+completing our result. Thus, under the condition $| \lambda| < 1$, we have that $(R - \lambda I )$ is not surjective, hence, not invertible, and therefore $\lambda \in \sigma(R)$.
+
+Thus, we already have that $\{ \lambda \in \mathbb{C} : |\lambda | < 1 \} \subseteq \sigma(R)$, and since we know the spectrum is closed, we may conclude that the (closed) unit disk is contained within $\sigma(R)$. Moreover, from the spectral radius, we have that the spectrum is contained within the unit disk, and hence $\sigma(R) = \{ \lambda \in \mathbb{C} : | \lambda| \leq 1 \}$.
 
 \end{proof}
 
@@ -269,6 +321,43 @@ Prove that if $K \in L^2$, then $T$ is a compact operator on $L^2[0,1]$.
 
 \begin{proof}[Solution]
 
+15.1)
+
+We omit the proof that $T$ is linear, since this is trivial, coming out from the linearity of the integral.
+
+First, we should show that $Tf(x)$ is actually a continuous function, for $f \in C[0,1]$.
+
+Let $\epsilon > 0$ be given. 
+
+Since $f$ is a continuous function over a compact set, we have that $\Vert f \Vert_\infty$ is finite over $[0,1]$. If $\Vert f \Vert_\infty = 0$, then $f = 0$, and $Tf = 0$, continuous. So instead, assume $\Vert f \Vert_\infty \not = 0$. Since $K$ is continuous, for $\epsilon/\Vert f \Vert_\infty$, we may find $\delta > 0$ such that $| K(x, y) - K(x’,y) | < \epsilon/\Vert f \Vert_\infty$ whenever $|(x, y) - (x’,y)| < \delta$.
+
+Thus, consider $| x - x’| < \delta$. We have that:
+
+$$ | Tf(x) - Tf(x’) | = \left| \int_0^1 K(x,y) f(y) dy - \int_0^1 K(x’,y) f(y) dy \right| = \left| \int_0^1 (K(x,y) - K(x’,y)) f(y) dy \right|  \leq $$
+
+$$ \int_0^1 | K(x,y) - K(x’, y)| |f(y)| dy \leq \int_0^1 \frac{\epsilon}{\Vert f \Vert_\infty} \Vert f \Vert_\infty dy = \epsilon$$
+
+Since this procedure may be done for any $f \in C[0,1]$, we see $T$ as an operator from $C[0,1] \to C[0,1]$.
+
+Now, consider the unit ball $\mathcal{B} = \{ f \in C[0,1] : \Vert f \Vert_\infty \leq 1 \}$ and in particular, the image in $C[0,1]$ of $T\mathcal{B}$.
+
+We see that $T\mathcal{B}$ is pointwise bounded, as for any fixed $x \in [0,1]$ and every $f \in \mathcal{B}$, we have that:
+
+$$ \left| \int_0^1 K(x,y) f(y) dy \right| \leq \int_0^1 | K(x,y)| | f(y)| dy \leq \int_0^1 \Vert K(x,y) \Vert_{\infty} \Vert f \Vert_\infty = \Vert K(x,y) \Vert_\infty \Vert f \Vert_\infty \leq \Vert K(x,y) \Vert_\infty < \infty $$
+
+where it is understood that $\Vert K(x,y)\Vert$ is the norm over $[0,1]^2$ for $K$ and $\Vert f \Vert$ is the norm over $[0,1]$ for $f$.
+
+Now, again, fix any $x \in [0,1]$, and let $\epsilon > 0$. Since $K$ is continuous, we may find $\delta$ such that $| (x,y) - (x’,y) | < \delta \implies | K(x,y) - K(x’, y) | < \epsilon$. We have that, for any $f \in \mathcal{B}$:
+
+$$ | Tf(x) - Tf(x’) | = \left| \int_0^1 K(x,y) f(y) dy - \int_0^1 K(x’,y) f(y) dy \right| = \left| \int_0^1 (K(x,y) - K(x’,y)) f(y) dy \right|  \leq $$
+
+$$ \int_0^1 | K(x,y) - K(x’, y)| |f(y)| dy \leq \int_0^1 \epsilon \Vert f \Vert_\infty dy \leq \int_0^1 \epsilon = \epsilon $$
+
+Since this procedure can be done for every $x$, we conclude that $T\mathcal{B}$ is equicontinuous, as the neighborhood is independent of the choice of $f \in \mathcal{B}$.
+
+Thus, by the Arzel\`{a}-Ascoli Theorem I (Folland, 4.43), we conclude that the closure of $T \mathcal{B}$ is compact, and hence, $T$ is a compact operator.
+
+-- wait why in the world is the spectrum just 0. Spectral radius?
 
 \end{proof}
 
