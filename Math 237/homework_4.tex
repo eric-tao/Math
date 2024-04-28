@@ -127,7 +127,53 @@ and thus, $G^\epsilon \to G$ in $\mathcal{D}'(\mathbb{R}^n \times \mathbb{R})$.
 
 Here, we need to compute both $\langle \partial_t G^\epsilon, \phi \rangle$ and $\langle \partial_{x_i}^2 G^\epsilon, \phi \rangle$ and we will put this together to retrieve our result.
 
--- do integration by parts like 3 times, I'll write this out later.
+First, since we will need these, we compute derivatives of $G$. We have that:
+
+$$ \begin{cases} \partial_t(G) = -\frac{n}{2} 4\pi (4 \pi t)^{-n/2 - 1} \exp\left(-\frac{| x|^2}{4t}\right) + (4\pi t)^{-n/2}\exp\left(-\frac{| x|^2}{4t}\right) \frac{|x|^2}{4t^2} = \exp\left(-\frac{| x|^2}{4t}\right) \frac{(4\pi t)^{-n/2}}{t} \left[ \frac{|x|^2}{4t} - \frac{n}{2} \right] \\ \partial_{x_i}(G) = (4\pi t)^{-n/2}\exp\left(-\frac{| x|^2}{4t}\right)\left( -\frac{x_i}{2t}\right) \\ \partial_{x_i}^2(G) = \partial_{x_i}\left[(4\pi t)^{-n/2}\exp\left(-\frac{| x|^2}{4t}\right)\left( -\frac{x_i}{2t}\right) \right] = (4\pi t)^{-n/2} \left[  \exp\left(-\frac{| x|^2}{4t}\right)\left( -\frac{x_i}{2t}\right)^2 +\exp\left(-\frac{| x|^2}{4t}\right)\left( -\frac{1}{2t}\right) \right] = 
+\\ \exp\left(-\frac{| x|^2}{4t}\right) \frac{(4\pi t)^{-n/2}}{t}  \left[ \frac{x_i^2}{4t} - \frac{1}{2} \right] \end{cases}$$
+
+We have the following:
+
+$$ \langle \partial_t G^\epsilon, \phi \rangle = - \int_{\mathbb{R}^n \times \mathbb{R}} (4\pi t)^{-n/2} \exp\left(-\frac{| x|^2}{4t}\right) \chi(t) \partial_t(\phi) = $$
+
+$$- \int_{\mathbb{R}^n} \left( (4\pi t)^{-n/2} \exp\left(-\frac{| x|^2}{4t}\right) \chi(t) \phi(x,t) \bigg|_{t=\epsilon}^{t=K_t} - \int_{\epsilon}^{K_t} \exp\left(-\frac{| x|^2}{4t}\right) \frac{(4\pi t)^{-n/2}}{t} \left[ \frac{|x|^2}{4t} - \frac{n}{2} \right] \phi(x,t) dt  \right)$$
+
+where we take the compact support to be contained within $\Pi_{i=1}^n [-K_{i}, K_{i}] \times [-K_t, K_t] $. Since we’re working with infinitely differentiable functions over a compact set, we may freely use integration by parts.
+
+and
+
+$$ \langle \partial_{x_i}^2 G^\epsilon, \phi \rangle = \int_{\mathbb{R}^n \times \mathbb{R}} (4\pi t)^{-n/2} \exp\left(-\frac{| x|^2}{4t}\right) \chi(t) \partial_{x_i}^2(\phi) = $$
+
+$$ \int_{\mathbb{R}^{n-1} \times \mathbb{R}} \int_{x_i = -K_i}^{x_i = K_i} (4\pi t)^{-n/2} \exp\left(-\frac{| x|^2}{4t}\right) \chi(t) \partial_{x_i}^2(\phi)  = $$
+
+$$ \int_{\mathbb{R}^{n-1} \times \mathbb{R}}  \left[ (4\pi t)^{-n/2} \exp\left(-\frac{| x|^2}{4t}\right) \chi(t) \partial_{x_i}(\phi) \bigg|_{x_i= -K_i}^{x_i = K_i}  - \int_{-K_i}^{K_i} \partial_{x_i}(G^\epsilon) \partial_{x_i}(\phi) \right] = $$
+
+$$ \int_{\mathbb{R}^{n-1} \times \mathbb{R}}  (4\pi t)^{-n/2} \exp\left(-\frac{| x|^2}{4t}\right) \chi(t) \partial_{x_i}(\phi) \bigg|_{x_i= -K_i}^{x_i = K_i}  - (4\pi t)^{-n/2}\exp\left(-\frac{| x|^2}{4t}\right)\left( -\frac{x_i}{2t}\right) \chi \phi \bigg|_{x_i = -K_i}^{x_i = K_i} + $$
+
+$$\int_{-K_i}^{K_i} \exp\left(-\frac{| x|^2}{4t}\right) \frac{(4\pi t)^{-n/2}}{t}  \left( \frac{x_i^2}{4t} - \frac{1}{2} \right) \chi(t) \phi $$
+
+Here, we notice that since $-K_i, K_i$ represent the boundary of the support, that both $\partial_{x_i}(\phi)(K_i) = 0 = \partial_{x_i}(\phi)(-K_i)$ and same with $\phi(-K_i) = 0 = \phi(K_i)$. Hence, we may reduce this to:
+
+$$ \langle \partial_{x_i}^2 G^\epsilon, \phi \rangle =  \int_{\mathbb{R}^{n-1} \times \mathbb{R}} \int_{-K_i}^{K_i} \exp\left(-\frac{| x|^2}{4t}\right) \frac{(4\pi t)^{-n/2}}{t}  \left( \frac{x_i^2}{4t} - \frac{1}{2} \right) \chi(t) \phi $$
+
+We notice that summing across $x_i$, that this integral term cancels out with the integral term from the $\partial_t$ computation, and hence we get that:
+
+$$ \langle ( \partial_t - \Delta) G^\epsilon, \phi \rangle = - \int_{\mathbb{R}^n} \left( (4\pi t)^{-n/2} \exp\left(-\frac{| x|^2}{4t}\right) \chi(t) \phi(x,t) \bigg|_{t=\epsilon}^{t=K_t} - \int_{\epsilon}^{K_t} \exp\left(-\frac{| x|^2}{4t}\right) \frac{(4\pi t)^{-n/2}}{t} \left[ \frac{|x|^2}{4t} - \frac{n}{2} \right] \phi(x,t) dt  \right) -  $$
+
+$$ \sum_{x_i}  \int_{\mathbb{R}^{n-1} \times \mathbb{R}} \int_{-K_i}^{K_i} \exp\left(-\frac{| x|^2}{4t}\right) \frac{(4\pi t)^{-n/2}}{t}  \left( \frac{x_i^2}{4t} - \frac{1}{2} \right) \chi(t) \phi dx_i  = $$
+
+$$ - \int_{\mathbb{R}^n} (4\pi t)^{-n/2} \exp\left(-\frac{| x|^2}{4t}\right) \chi(t) \phi(x,t) \bigg|_{t=\epsilon}^{t=K_t} + $$
+
+$$ \int_{\epsilon}^{K_t} \exp\left(-\frac{| x|^2}{4t}\right) \frac{(4\pi t)^{-n/2}}{t} \left[ \frac{|x|^2}{4t} - \frac{n}{2} \right] \phi(x,t) dt -  \sum_{x_i}  \int_{\mathbb{R}^{n-1} \times \mathbb{R}} \int_{-K_i}^{K_i} \exp\left(-\frac{| x|^2}{4t}\right) \frac{(4\pi t)^{-n/2}}{t}  \left( \frac{x_i^2}{4t} - \frac{1}{2} \right)\chi(t) \phi dx_i  =$$
+
+$$ -  \int_{\mathbb{R}^n} (4\pi t)^{-n/2} \exp\left(-\frac{| x|^2}{4t}\right) \chi(t) \phi(x,t) \bigg|_{t=\epsilon}^{t=K_t}$$
+
+where we enforce our compact support to make the limits of integration line up, and apply $\chi$ to restrict $t$ to $(\epsilon, K_t)$.
+
+Now, again, since this is the boundary of the compact support, we see that $\phi(x, K_t) = 0$ for any $x \in \mathbb{R}^n$, and so we reduce this to:
+
+$$ \langle ( \partial_t - \Delta) G^\epsilon, \phi \rangle = \int_{\mathbb{R}^n} (4 \pi \epsilon)^{n/2} \exp\left(-\frac{| x|^2}{4\epsilon}\right)\phi(x, \epsilon) dx $$ 
+
 
 4.3)
 
