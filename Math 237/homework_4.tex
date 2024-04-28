@@ -97,7 +97,7 @@ For each $\phi \in C^\infty_c(\mathbb{R}^n \times \mathbb{R})$, compute $\langle
 
 4.3)
 
-Prove that $(\partial_t - \Delta)G = \delta$
+Conclude that $(\partial_t - \Delta)G = \delta$
 
 4.4)
 
@@ -223,34 +223,30 @@ Consider the sequence $x = (1, \lambda, \lambda^2,...., \lambda^k,...)$. Of cour
 
 Now, considering $L(x)$, we have that $L(x) = (\lambda, \lambda^2,...,\lambda^{k},...) = \lambda( 1, \lambda, ... \lambda^{k-1},...) = \lambda x$. But, of course, if we consider $(L - \lambda I )(x)$, we have that $(L - \lambda I)x = \lambda x - \lambda x = 0$. Hence, $(L - \lambda I)$ is not injective, thus not invertible, and $\lambda \in \sigma(L)$. Since we may do this for all $\lambda$ with modulus strictly less than $1$, and the spectrum is closed, we conclude $\sigma(L) = \overline{\{ \lambda \in \mathbb{C} : |\lambda| < 1 \}} = \{ \lambda \in \mathbb{C} : |\lambda | \leq 1 \}$.
 
--- something something I pray the spectrum of the transpose is equal to the spectrum.
+Here, we argue that a operator is invertible if and only if its transpose is invertible in $l^2$.
+
+Suppose we have that $AB = BA = I$. Then, looking at the transpose, we would see that for $x, y \in l^2$
+
+$$x(y) =  x (AB(y)) = A'(x) B(y)  = B'A'(x) (y)$$
+
+Hence, since this holds for all $y$, for a fixed $x$, since the action of $B'A'(x)$ is identical to the action of $x$, iterating over $x$, this implies that $B' A' = I'$. The same follows for $A'B'$, as we play the same argument with $BA = I$.
+
+Since $l^2$ is a Hilbert space, and hence reflexive, taking another transpose, we identify $A^{ ''} = A$ and same with $B^{''} = B$. Hence, we have our result that in $l^2$, $A$ invertible if and only if $A'$ is invertible.
+
+From 9.2, we have that $L' = R$, and we have already shown that $L - \lambda I$ is not invertible when $| \lambda| < 1$. Hence, for $| \lambda| < 1$, $(L - \lambda I )' = L' - \lambda I' = R - \lambda I$ is not invertible, and thus $\lambda \in \sigma(R)$. Thus, taking the closure again, we conclude that:
+
+$$\sigma(R) = \sigma(L) =  \{ \lambda \in \mathbb{C} : |\lambda | \leq 1 \}$$
+
 
 9.4)
 
 First, suppose $R(x) =\lambda x$. This equation implies then that $(0,x_0,x_1,...) = (\lambda x_0, \lambda x_1,...)$, which implies that $0 =\lambda  x_0$, and that for $ i \geq 0$, $x_i = \lambda x_{i+1}$. Of course, if $\lambda = 0$, then $x = 0$ immediately. On the other hand, assume $\lambda \not = 0$, then we have that $x_0 = 0$, and due to the recurrence relation, $x_{i+1} = 0$ for each $i \geq 0$. Hence, the only vector that satisfies this equation for any $\lambda$ is $x = 0$, and thus $R$ has no eigenvectors or eigenvalues.
 
-\end{proof}
+9.5)
 
-\begin{problem}{Question 12}
+We notice that the arguments in 9.3 for $L$ pass without modification for $l^p$, and that in any $l^p$, $\sigma(L)$ is exactly the unit disk.
 
-Let $X$ be a Banach space, $C$ a compact operator on $X$, $I$ the identity operator. Define $T = I - C$.
-
-12.1)
-
-Prove that the nullspace of $T$ is finite dimensional.
-
-12.2)
-
-Let $N_j$ denote the nullspace of $T^j$ for $j \in \mathbb{N}$. Show that there exists an $i$ such that $N_k = N_i$ for all $k \geq i$. 
-
-12.3)
-
-Show that the range of $T$ is closed.
-
-\end{problem}
-
-\begin{proof}[Solution]
-
+-- something about showing that $L' = R$ in $l^p$ more generically, and then modifying the transpose argument.
 
 \end{proof}
 
@@ -273,52 +269,6 @@ Prove that if $K \in L^2$, then $T$ is a compact operator on $L^2[0,1]$.
 
 \begin{proof}[Solution]
 
-
-\end{proof}
-
-\begin{problem}{Question 18}
-
-Let $\mathcal{H}$ be a Hilbert space, $T$ a bounded linear operator on $\mathcal{H}$. We call $T$ symmetric if $\langle Tx, y \rangle = \langle  x, Ty\rangle$ for all $x, y \in \mathcal{H}$. 
-
-18.1)
-
-Show that if $T$ is symmetric and invertible, then $T^{-1}$ is also symmetric.
-
-18.2)
-
-Show that if $S, T$ are commuting and symmetric, then their product is also symmetric.
-
-18.3)
-
-Show that the set of symmetric operators is closed under the weak topology of operators.
-
-18.4)
-
-Let $T$ be a symmetric, bounded operator on $\mathcal{H}$. Show that the spectrum of $T$ is real, and that $\sigma(T) \subset [m, M]$. where:
-
-$$ \begin{cases} m = \inf_{\Vert x \Vert = 1}\langle Tx , x \rangle \\ M = \sup_{\Vert x \Vert = 1} \langle Tx, x \rangle \end{cases}$$
-
-\end{problem}
-
-\begin{proof}[Solution]
-
-18.1)
-
-Suppose $T$ is symmetric, invertible. Let $x, y \in \mathcal{H}$, and for $y$, we can uniquely determine $z$ such that $Tz = y, z = T^{-1}(y)$ as invertibility implies bijectivity.
-
-Consider the value of $\langle T^{-1}(x), y \rangle$. We have the following sequence of equalities:
-
-$$ \langle T^{-1}(x), y \rangle = \langle T^{-1}(x), Tz \rangle = \langle T \circ T^{-1}(x), z \rangle = \langle x, z \rangle = \langle x, T^{-1}(y) \rangle$$
-
-Since this procedure may be done for every $x, y \in \mathcal{H}$, we conclude that $T^{-1}$ is also symmetric.
-
-18.2)
-
-Suppose $S, T$ commute, and are individually symmetric. Since $ST = TS$, we need only prove that $ST$ is symmetric. For any $x, y \in \mathcal{H}$, we have that:
-
-$$ \langle ST(x), y \rangle = \langle T(x), S(y) \rangle = \langle x, T (S(y) \rangle = \langle x, ST(y) \rangle $$
-
-where we use the symmetric property of $S, T$ in the 2nd and 3rd equalities, and the commutativity in the last one. Since the choice of $x, y $ were arbitrary, we conclude that $ST$ is symmetric.
 
 \end{proof}
 
