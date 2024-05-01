@@ -172,10 +172,18 @@ where we enforce our compact support to make the limits of integration line up, 
 
 Now, again, since this is the boundary of the compact support, we see that $\phi(x, K_t) = 0$ for any $x \in \mathbb{R}^n$, and so we reduce this to:
 
-$$ \langle ( \partial_t - \Delta) G^\epsilon, \phi \rangle = \int_{\mathbb{R}^n} (4 \pi \epsilon)^{n/2} \exp\left(-\frac{| x|^2}{4\epsilon}\right)\phi(x, \epsilon) dx $$ 
+$$ \langle ( \partial_t - \Delta) G^\epsilon, \phi \rangle = \int_{\mathbb{R}^n} (4 \pi \epsilon)^{-n/2} \exp\left(-\frac{| x|^2}{4\epsilon}\right)\phi(x, \epsilon) dx $$ 
 
 
 4.3)
+
+Here, we look at the action of $\int_{\mathbb{R}^n} (4 \pi \epsilon)^{-n/2} \exp\left(-\frac{| x|^2}{4\epsilon}\right)\phi(x, \epsilon) dx$ on an arbitrary $\phi(x, t)$. In particular, we focus on the action of $ (4 \pi \epsilon)^{n/2} \exp\left(-\frac{| x|^2}{4\epsilon}\right)$.
+
+We notice that as $\epsilon \to 0$, for $|x| \not = 0$, that this goes to $0$, as the exponential decays faster than the polynomial blows up.
+
+On the other hand, if $|x| = 0$, then the exponential disappears, and this goes to $\infty$. Hence, we can say that as $\epsilon \to 0$, the action of this guy goes to $\delta$.
+
+However, we've already proven that $\lim_{\epsilon \to 0} G^\epsilon = G$ from part 1. Since the action after the derivatives coincides with $\delta$ then for all $\phi \in C^\infty_c(\mathbb{R}^n \times \mathbb{R})$, after an interchange of limit and derivative, since $\epsilon$ merely controls the support of $G^\epsilon$, we have that $(\partial_t - \Delta) G = \delta$ in the distribution sense, that is, they have the same action on compactly support infinitely smooth functions.
 
 4.4)
 
@@ -353,7 +361,7 @@ Thus, we already have that $\{ \lambda \in \mathbb{C} : |\lambda | < 1 \} \subse
 
 Let $K$ be a measurable function on $[0,1]^2$, and let $f$ be a measurable function on $[0,1]$. Define $T$ as the map that sends:
 
-$$ T(f(x)) = \int_0^1 K(x,y)f(y) dy $$
+$$ T(f(x)) = \int_0^x K(x,y)f(y) dy $$
 
 15.1)
 
@@ -375,13 +383,15 @@ First, we should show that $Tf(x)$ is actually a continuous function, for $f \in
 
 Let $\epsilon > 0$ be given. 
 
-Since $f$ is a continuous function over a compact set, we have that $\Vert f \Vert_\infty$ is finite over $[0,1]$. If $\Vert f \Vert_\infty = 0$, then $f = 0$, and $Tf = 0$, continuous. So instead, assume $\Vert f \Vert_\infty \not = 0$. Since $K$ is continuous, for $\epsilon/\Vert f \Vert_\infty$, we may find $\delta > 0$ such that $| K(x, y) - K(x’,y) | < \epsilon/\Vert f \Vert_\infty$ whenever $|(x, y) - (x’,y)| < \delta$.
+Since $f$ is a continuous function over a compact set, we have that $\Vert f \Vert_\infty$ is finite over $[0,1]$. If $\Vert f \Vert_\infty = 0$, then $f = 0$, and $Tf = 0$, continuous. So instead, assume $\Vert f \Vert_\infty \not = 0$. Since $K$ is continuous, for $\epsilon/\Vert f \Vert_\infty$, we may find $\delta > 0$ such that $| K(x, y) - K(x’,y) | < \epsilon/2\Vert f \Vert_\infty $ whenever $|(x, y) - (x’,y)| < \delta$.
 
-Thus, consider $| x - x’| < \delta$. We have that:
+Thus, let $\delta' = \min(\delta,\epsilon/2\Vert f \Vert_\infty \Vert K \Vert_\infty)$. Take $| x - x’| < \delta'$, and WLOG, suppose $x' > x$. We have that:
 
-$$ | Tf(x) - Tf(x’) | = \left| \int_0^1 K(x,y) f(y) dy - \int_0^1 K(x’,y) f(y) dy \right| = \left| \int_0^1 (K(x,y) - K(x’,y)) f(y) dy \right|  \leq $$
+$$ | Tf(x) - Tf(x’) | = \left| \int_0^x K(x,y) f(y) dy - \int_0^{x'} K(x’,y) f(y) dy \right| = \left| \int_0^x (K(x,y) - K(x’,y)) f(y) dy - \int_x^{x'} K(x', y)f(y) \right|  \leq $$
 
-$$ \int_0^1 | K(x,y) - K(x’, y)| |f(y)| dy \leq \int_0^1 \frac{\epsilon}{\Vert f \Vert_\infty} \Vert f \Vert_\infty dy = \epsilon$$
+$$ \int_0^x | K(x,y) - K(x’, y)| |f(y)| dy + \int_x^{x'} |K(x', y)| |f(y)| \leq \int_0^1 \frac{\epsilon}{2\Vert f \Vert_\infty} \Vert f \Vert_\infty dy  + \Vert K \Vert \Vert f \Vert \frac{\epsilon}{2 \Vert K \Vert \Vert f \Vert} = \epsilon$$
+
+Note that of course, in the case $x' < x$, then we merely suffer a negative in the second integral - the same triangle inequality applies.
 
 Since this procedure may be done for any $f \in C[0,1]$, we see $T$ as an operator from $C[0,1] \to C[0,1]$.
 
@@ -389,17 +399,19 @@ Now, consider the unit ball $\mathcal{B} = \{ f \in C[0,1] : \Vert f \Vert_\inft
 
 We see that $T\mathcal{B}$ is pointwise bounded, as for any fixed $x \in [0,1]$ and every $f \in \mathcal{B}$, we have that:
 
-$$ \left| \int_0^1 K(x,y) f(y) dy \right| \leq \int_0^1 | K(x,y)| | f(y)| dy \leq \int_0^1 \Vert K(x,y) \Vert_{\infty} \Vert f \Vert_\infty = \Vert K(x,y) \Vert_\infty \Vert f \Vert_\infty \leq \Vert K(x,y) \Vert_\infty < \infty $$
+$$ \left| \int_0^x K(x,y) f(y) dy \right| \leq \int_0^1 | K(x,y)| | f(y)| dy \leq \int_0^1 \Vert K(x,y) \Vert_{\infty} \Vert f \Vert_\infty = \Vert K(x,y) \Vert_\infty \Vert f \Vert_\infty \leq \Vert K(x,y) \Vert_\infty < \infty $$
 
 where it is understood that $\Vert K(x,y)\Vert$ is the norm over $[0,1]^2$ for $K$ and $\Vert f \Vert$ is the norm over $[0,1]$ for $f$.
 
-Now, again, fix any $x \in [0,1]$, and let $\epsilon > 0$. Since $K$ is continuous, we may find $\delta$ such that $| (x,y) - (x’,y) | < \delta \implies | K(x,y) - K(x’, y) | < \epsilon$. We have that, for any $f \in \mathcal{B}$:
+Now, again, fix any $x \in [0,1]$, and let $\epsilon > 0$. We have that, for any $f \in \mathcal{B}$, and again assuming $x' > x$:
 
-$$ | Tf(x) - Tf(x’) | = \left| \int_0^1 K(x,y) f(y) dy - \int_0^1 K(x’,y) f(y) dy \right| = \left| \int_0^1 (K(x,y) - K(x’,y)) f(y) dy \right|  \leq $$
+$$ | Tf(x) - Tf(x’) | = \left| \int_0^x K(x,y) f(y) dy - \int_0^{x'} K(x’,y) f(y) dy \right| = \left| \int_0^x (K(x,y) - K(x’,y)) f(y) dy - \int_x^{x'} K(x', y) f(y) dy  \right|  \leq $$
 
-$$ \int_0^1 | K(x,y) - K(x’, y)| |f(y)| dy \leq \int_0^1 \epsilon \Vert f \Vert_\infty dy \leq \int_0^1 \epsilon = \epsilon $$
+$$ \int_0^x | K(x,y) - K(x’, y)| |f(y)| dy + \int_x^{x'} |K(x', y)||f(y)| dy  \leq  \int_0^1 | K(x,y) - K(x’, y)| \Vert f\Vert dy + \int_x^{x'} \Vert K \Vert \Vert f \Vert dy$$
 
-Since this procedure can be done for every $x$, we conclude that $T\mathcal{B}$ is equicontinuous, as the neighborhood is independent of the choice of $f \in \mathcal{B}$.
+We may control the first integral due to the continuity of $K$, and control the second integral via the measure. Hence, we conclude that we can control this to be smaller than any $\epsilon$.
+
+Since this procedure can be done for every $x$, we conclude that $T\mathcal{B}$ is equicontinuous, as the neighborhood is independent of the choice of $f \in \mathcal{B}$, due to this argument passing for any $ \Vert f \Vert \leq 1$.
 
 Thus, by the Arzel\`{a}-Ascoli Theorem I (Folland, 4.43), we conclude that the closure of $T \mathcal{B}$ is compact, and hence, $T$ is a compact operator.
 
