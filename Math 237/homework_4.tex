@@ -121,7 +121,13 @@ $$ \lim_{\epsilon \to 0} \langle G^\epsilon, \phi \rangle = \langle G, \phi \ran
 
 and thus, $G^\epsilon \to G$ in $\mathcal{D}'(\mathbb{R}^n \times \mathbb{R})$.
 
--- Add something about how $G$ is locally integrable.
+Now, we see that $G$ is locally integrable because we may, via Folland 8.24, view this as the Fourier transform of the function $f(x) = \exp(- \pi (4t \pi) |x|^2)$, which has transform:
+
+$$ \hat{f}(\xi) = (4t\pi)^{-n/2} \exp(- \pi |\xi|^2/(4\pi t)) = (4 t \pi )^{n/2} \exp(-|\xi|^2/4t) = G(\xi) $$
+
+where we note that this is true on $t \in (0, \infty)$ by the condition in 8.24.
+
+Evidently, $f$ is $L^1$, being a Gaussian times a constant, hence $G \in C_\infty$, that is, continuous and decaying to 0 at $\infty$ with respect to $\xi$. Then, on each compact set, since this is evidently also continuous on $t$ away from $t = 0$, $G$ is bounded, and hence $L^1_{loc}$.
 
 4.2)
 
@@ -415,7 +421,73 @@ Since this procedure can be done for every $x$, we conclude that $T\mathcal{B}$ 
 
 Thus, by the Arzel\`{a}-Ascoli Theorem I (Folland, 4.43), we conclude that the closure of $T \mathcal{B}$ is compact, and hence, $T$ is a compact operator.
 
--- wait why in the world is the spectrum just 0. Spectral radius?
+Now, we examine the spectral radius. %First, fix any $f \in C[0,1]$. We notice that we may write $f = Tf + g$ for some $g \in C[0,1]$, just by defining $g = f - Tf$.
+
+%Without too much trouble then, applying $T$ to both sides of this equation, we retrieve $Tf = T^2 f + Tg$, which then implies that $f = T^2 f + Tg + g$. Inductively, we claim that $f = T^kf + \sum_{n=0}^{k-1} T^n g$ for each natural number $k \geq 0$, where we denote $T^0 = \operatorname{id}$. 
+
+%Suppose this were true up to $k$. Then, we notice that $T^k f = T^{k+1}f + T^k g$, and hence we have that:
+
+%$$ f =  T^kf + \sum_{n=0}^{k-1} T^n g = T^{k+1}f + T^k g + \sum_{n=0}^{k-1} T^n g = T^{k+1} f + \sum_{n=0}^{k} T^n g$$
+
+%as desired.
+
+Consider $T^n f (x)$. We claim that for all $x \in [0,1]$, $n \geq 1$, we have that:
+
+$$ | T^n f(x) | \leq \Vert K \Vert^n \int_0^x \frac{ (x - y)^{n-1}}{(n-1)!} |f(y)| dy $$
+
+where again, $\Vert K \Vert$ is the uniform norm on $K$ over $[0,1]^2$, being a continuous function on a compact set.
+
+Clearly, for $n = 1$, we have that:
+
+$$ | Tf(x) | = \left| \int_0^x K(x,y) f(y) dy \right| \leq \int_0^x |K(x,y)| |f(y)| dy \leq \Vert K \Vert \int_0^x |f(y)| dy$$
+
+as desired.
+
+Now, suppose this is true for all $n \leq k$, we have that:
+
+$$ | T^{k+1} f(x)| = | T (T^k f)(x) | \leq \left| \int_0^x K(x,y) T^k f(y) dy \right| \leq \int_0^x | K(x,y) | |T^k f(y)| dy \leq $$
+
+$$\Vert K \Vert \int_0^x \left( \Vert K \Vert^k \int_0^y \frac{ (y - z)^{k-1}}{(k-1)!} |f(z)| dz\right) dy = \Vert K \Vert^{k+1} \int_0^x \int_0^y   \frac{ (y - z)^{k-1}}{(k-1)!} |f(z)| dz dy = $$
+
+Now, switching the order of integration, where we are justified as we may bound $(y-z)$ by $1$, $|f(z)|$ by $\Vert f \Vert$, and the measure of our set as $1$, so interchanging is reasonable, if we have that $0 \leq z \leq y \leq x$, then, when we interchange, the inner integral will traverse $y: z \to x$ and the outer $z: 0 \to x$.
+
+$$  \Vert K \Vert^{k+1} \int_0^x \int_z^x   \frac{ (y - z)^{k-1}}{(k-1)!} |f(z)| dy dz $$
+
+Finally, integrating over $y$, we retrieve:
+
+$$ \Vert K \Vert^{k+1} \int_0^x  \frac{ (y - z)^{k}}{k!} |f(z)| \bigg|_{y=z}^{y=x} dz = \Vert K \Vert^{k+1} \int_0^x \frac{(x-z)^k}{k!} |f(z)|dz $$
+
+as desired.
+
+Since this is true for each $x$, we may range over $x \in [0,1]$, and notice that $(x - z) \leq 1$ for each $x$ to retrieve the estimate:
+
+$$ \Vert T^n f \Vert \leq \Vert K \Vert^n \int_0^1 \frac{1^{n-1}}{(n-1)!} \Vert f \Vert dz = \Vert K \Vert^n \Vert f \Vert \frac{1}{n!}$$
+
+Since we may repeat this procedure for each $f$, we may conclude that $\Vert T^n \Vert \leq \Vert K \Vert^n \frac{1}{n!}$.
+
+Thus, computing the spectral radius, we have that:
+
+$$ \lim_{n \to \infty} \Vert T^n \Vert ^{1/n} \leq \lim_{n \to \infty} \left(  \Vert K \Vert^n \frac{1}{n!} \right)^{1/n} = \Vert K \Vert \lim_{n \to \infty} \left(\frac{1}{n!}\right)^{1/n}$$
+
+By Stirling's approximation, we know that $(n!)^{1/n}$ grows at least as $n$, hence, the limit here is at most $\lim_{n \to \infty} \frac{1}{n} = 0$.
+
+Thus, the spectral radius is $0$, and therefore, the spectrum, being non-empty for arbitrary operators, must be exactly $\{ 0 \}$. 
+
+15.2)
+
+First, we validate that for $K \in L^2[0,1]^2$, that $Tf(x) = \int_0^x K(x,y) f(y) dy$ is actually an $L^2[0,1]$ function.
+
+So, we have the following:
+
+$$ \int_0^1 \left| \int_0^x K(x,y) f(y) dy \right| dx  \leq \int_0^1 \int_0^x |K(x,y)| |f(y)| dy dx \leq \int_0^1 \int_0^1 |K(x, y)| |f(y)| dy dx $$
+
+We may easily extend $f \in L^2[0,1]$ to be $L^2[0,1]^2$, by taking $f(x,y) = f(y)$, in the sense that it is constant with respect to $x$. In such a way, we would have $\Vert f(x,y) \Vert = \Vert f(y) \Vert$ due to the fact that we're working over $[0,1] \times [0,1]$, and, by recognizing this as a H\"older's inequality, conclude that this integral is at most $\Vert K \Vert \Vert f \Vert$ in the $L^2$ norms.
+
+Hence, we have that for $f \in L^2[0,1]$, $Tf \in L^2[0,1]$, and moreover, we're bounded.
+
+Now, we need to show this to be compact. 
+
+-- yeah I got nothing so far
 
 \end{proof}
 
